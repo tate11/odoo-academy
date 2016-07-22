@@ -1,64 +1,40 @@
 ## Synopsis
 
-Scripts used to automate the generation of learning contents and other related activities.
+Modules used manage the teaching activity.
 
 ## Motivation
 
-The generation of contents for learning is an arduous task and almost always unpaid. Usually I need to design a large amount of learning exercises, tests, manuals and other activities in a very short time.
+I don't know any open source software, and free of charge, to manage learning activities, handle contents, etc...
 
-This situation has led me to develop this set of scripts to do more easy and quickly this tasks, winning time, health and quality of life.
+Now I have need to take a more comprehensive control over training activities in which I participate as teacher and I'm forced to use inadequate handling tools.
+
+In a future I want an integral app to manage, on cloud, all the educational projects and the related activities. This software must be easy to use and agile. I'm trying to develop something like it over the Odoo ERP.
 
 ## Installation
 
-Most of the scripts have been designed to be run directly, a few contain libraries that could be imported and used in other projects, these last ones should be installed through the ``setup.py`` file supplied with them.
-
-All these files can be downloaded cloning this project, you can do it using git like follow:
+Project can be cloned on your server using git command line, following line is an example:
 
 ```
-git clone https://github.com/sotogarcia/Academia.git
+git clone https://github.com/sotogarcia/odoo-academy.git
 ```
-Once you have downloaded the project, you will can find the scripts which can be executed directly under the *scripts* subdirectory. On the other hand the scripts which must be installed first have its own folders, these last ones can be installed using following line inside script folder:
+Once you have downloaded the project, you will can find the modules inside project folder, to install them in Odoo you must copy foldersinto the addons directory, alongside the official modules. 
+
+Once done, you need to update the module list before these new modules are available to install.
+
+For this you need the Technical menu enabled, since the Update Modules List menu option is provided by it. It can be found in the Modules section of the Settings menu.
+
+After running the modules list update you can confirm the new modules are available to install. In the Local Modules list, remove the Apps filter and search for department. You should see the new modules available.
+
+## Modules
 
 ```
-python setup.py install
+├─── modules
+│    └──academy_base                    : base module required to install all others.  It adds the Academy main menu.
+│        ├───academy_public_tendering   : stores information about public tendering  processes.
+│        └───academy_tests              : stores questions and answeres and allows to build manual and random tests.
+└─── scripts
+     └── oaclient.py                    : allow to connect to Odoo server using RPC and manage academy resources.
 ```
-
-> **NOTE:** Python v2.7 must be installed before run some of the scripts, once done, you can download all scripts cloning this Git project.
-
-## Scripts which can be executed directly:
-
-These scripts must be used from command line, all have a quick help you will can see when you run the script with `-h`  modifier.
-
-- **doc2docx.py**: allow to convert from Word 97-2003 to Word 2007-.
-- **doc2pdf.py**: allow to convert from Word to PDF.
-- **filecase.py**: allow to convert from change textcase in filenames.
-- **merge2pdf.py**: allow to merge a set of files in just one PDF.
-- **mergepdf.py**: allow to merge a set of PDF files in just new one.
-- **pdfwatermark.py**: allow to add an image watermark in a PDF file.
-- **xls2ods.py**: allow to convert from Excel to Opendocument Sheet.
-- **xls2pdf.py**: allow to convert from Excel to PDF.
-- **xls2xlsx.py**: allow to convert from Excel 97-2003 to Excel 2007-.
-- **xlsgetformulas.py**: allow to get formulas have been used in one Excel book.
-
-## Scripts which should be installed first:
-
-These scripts must be installed before and they have libraries that you will can use in your own projects, besides they have an entry point to run each one from console.
-
-### Script: sisgap
-
-Performs web scraping over Sisgap platform and retrieves the main information submitted in sections allowed for teachers.
-
-- `google_class.py`: it has a class to access and manage some Google Calendar features.
-- `sigap_class.py`: it has a class to access and manage some Sisgap platform features.
-
-### Script: mktest
-
-Scan Office and Libreoffice documents building a test about the scanned file with predefined questions and with valid answers.
-
-- `answer_class.py`: Test answer representation.
-- `question_class.py`: Test qusetion representation. 
-- `driver_class.py`: Abstract class which defines a general document driver.
-- `docdriver_class.py`: Specific driver for Word documents.
 
 ## Licences
 
