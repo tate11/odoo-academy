@@ -31,7 +31,11 @@ After running the modules list update you can confirm the new modules are availa
 └──academy_base                   : base module required to install all others. It adds the Academy main menu.
     ├───academy_public_tendering  : stores information about public tendering processes.
     └───academy_tests             : stores questions and answeres and allows to build manual and random tests.
+
 ```
+## Scripts
+
+- oaclient.py   : client to connect to Odoo server and manage academy resources using RPC.
 
 ## Licences
 
