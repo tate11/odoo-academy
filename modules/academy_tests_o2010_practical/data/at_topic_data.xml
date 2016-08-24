@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="at_topic_office_2010_practical" model="at.topic">
+            <field name="name">Microsoft Office 2010 - Tests prácticos</field>
+            <field name="description"><![CDATA[
+Preguntas de tipo test para responder en base a documentos existentes de
+Microsoft Word 2010 y libros de Microsoft Excel 2010.
+        ]]></field>
+        </record>
+
+    </data>
+</openerp>

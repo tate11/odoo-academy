@@ -48,6 +48,11 @@
                         </h1>
                     </div>
 
+                    <group col="2">
+                        <field name="preamble" class="oe_field_preamble"
+                            placeholder="Enter new text for Preamble" />
+                    </group>
+
                     <group col="4">
                         <field name="at_topic_id" class="oe_field_at_topic_id" />
                         <field name="at_level_id" class="oe_field_at_level_id"

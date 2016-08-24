@@ -1,0 +1,1365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- QUESTION 1
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_1" model="at.question">
+            <field name="name">¿Cuántas vocales en mayúscula hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [AEIOUÁÉÍÓÚÜ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_1_a" model="at.answer">
+            <field name="name">93</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_1" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_1_b" model="at.answer">
+            <field name="name">83</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_1" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_1_c" model="at.answer">
+            <field name="name">103</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_1" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_1_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_1" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 2
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_2" model="at.question">
+            <field name="name">¿Cuántas vocales en minúscula hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [aeiouáéíóúü]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_2_a" model="at.answer">
+            <field name="name">2245</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_2" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_2_b" model="at.answer">
+            <field name="name">2235</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_2" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_2_c" model="at.answer">
+            <field name="name">2233</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_2" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_2_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_2" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 3
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_3" model="at.question">
+            <field name="name">¿Cuántas vocales hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [aeiouAEIOUáéíóúÁÉÍÓÚüÜ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_3_a" model="at.answer">
+            <field name="name">2338</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_3" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_3_b" model="at.answer">
+            <field name="name">2335</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_3" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_3_c" model="at.answer">
+            <field name="name">2211</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_3" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_3_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_3" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 4
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_4" model="at.question">
+            <field name="name">¿Cuántos caracteres numéricos hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [0-9]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_4_a" model="at.answer">
+            <field name="name">134</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_4" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_4_b" model="at.answer">
+            <field name="name">143</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_4" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_4_c" model="at.answer">
+            <field name="name">103</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_4" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_4_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_4" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 5
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+        <record id="at_question_o2010p_advs_st101_5" model="at.question">
+            <field name="name">¿Cuántas veces aparece alguna de estas letras: «h», «g», «j», «d», «f», «i», «b», «k», «c», «e», en el cuerpo del documento «ST101.docx», haciendo distinción entre mayúsculas y minúsculas?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [hgjdfibkce]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_5_a" model="at.answer">
+            <field name="name">1808</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_5" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_5_b" model="at.answer">
+            <field name="name">1800</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_5" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_5_c" model="at.answer">
+            <field name="name">1080</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_5" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_5_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_5" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 6
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+        <record id="at_question_o2010p_advs_st101_6" model="at.question">
+            <field name="name">¿Cuántas palabras comienzan por alguna de estas letras: «h», «j», en el cuerpo del documento «ST101.docx», haciendo distinción entre mayúsculas y minúsculas?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[hj]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_6_a" model="at.answer">
+            <field name="name">13</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_6" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_6_b" model="at.answer">
+            <field name="name">11</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_6" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_6_c" model="at.answer">
+            <field name="name">18</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_6" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_6_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_6" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 7
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+        <record id="at_question_o2010p_advs_st101_7" model="at.question">
+            <field name="name">¿Cuántas palabras terminan por alguna de estas letras: «i», «g», «d», «e», «c», «h», «j», «a», «b», en el cuerpo del documento «ST101.docx», haciendo distinción entre mayúsculas y minúsculas?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [igdechjab]>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_7_a" model="at.answer">
+            <field name="name">455</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_7" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_7_b" model="at.answer">
+            <field name="name">450</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_7" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_7_c" model="at.answer">
+            <field name="name">445</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_7" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_7_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_7" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 8
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_8" model="at.question">
+            <field name="name">¿Cuántas vocales con acento agudo hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [áéíóúÁÉÍÓÚ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_8_a" model="at.answer">
+            <field name="name">93</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_8" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_8_b" model="at.answer">
+            <field name="name">90</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_8" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_8_c" model="at.answer">
+            <field name="name">96</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_8" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_8_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_8" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 9
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_9" model="at.question">
+            <field name="name">¿Cuántas vocales sin tilde hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [aeiouAEIOU]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_9_a" model="at.answer">
+            <field name="name">2245</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_9" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_9_b" model="at.answer">
+            <field name="name">2240</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_9" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_9_c" model="at.answer">
+            <field name="name">2250</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_9" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_9_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_9" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 10
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_10" model="at.question">
+            <field name="name">¿Cuántas letras mayúsculas hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [A-ZÁÉÍÓÚÜ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_10_a" model="at.answer">
+            <field name="name">283</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_10" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_10_b" model="at.answer">
+            <field name="name">279</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_10" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_10_c" model="at.answer">
+            <field name="name">238</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_10" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_10_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_10" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 11
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_11" model="at.question">
+            <field name="name">¿Cuántas letras minúsculas hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [a-záéíóúü]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_11_a" model="at.answer">
+            <field name="name">4845</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_11" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_11_b" model="at.answer">
+            <field name="name">4548</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_11" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_11_c" model="at.answer">
+            <field name="name">4854</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_11" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_11_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_11" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 12
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_12" model="at.question">
+            <field name="name">¿Cuántas palabras, con sólo letras y escritas en mayúscula, hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[A-ZÁÉÍÓÚÜ]@>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_12_a" model="at.answer">
+            <field name="name">30</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_12" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_12_b" model="at.answer">
+            <field name="name">25</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_12" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_12_c" model="at.answer">
+            <field name="name">35</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_12" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_12_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_12" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 13
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_13" model="at.question">
+            <field name="name">¿Cuántas palabras, con sólo letras y escritas en minúscula, hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[a-záéíóúü]{1;}>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_13_a" model="at.answer">
+            <field name="name">802</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_13" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_13_b" model="at.answer">
+            <field name="name">820</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_13" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_13_c" model="at.answer">
+            <field name="name">812</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_13" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_13_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_13" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 14
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_14" model="at.question">
+            <field name="name">¿Cuántos caracteres, sin contar letras y números, hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [!0-9A-Za-záéíóúÁÉÍÓÚ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_14_a" model="at.answer">
+            <field name="name">1160</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_14" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_14_b" model="at.answer">
+            <field name="name">1060</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_14" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_14_c" model="at.answer">
+            <field name="name">1061</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_14" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_14_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_14" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 15
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_15" model="at.question">
+            <field name="name">¿Cuántos dígitos numéricos impares hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [13579]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_15_a" model="at.answer">
+            <field name="name">45</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_15" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_15_b" model="at.answer">
+            <field name="name">40</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_15" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_15_c" model="at.answer">
+            <field name="name">35</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_15" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_15_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_15" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 16
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_16" model="at.question">
+            <field name="name">¿Cuántos dígitos numéricos pares, contando el cero, hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [02468]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_16_a" model="at.answer">
+            <field name="name">89</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_16" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_16_b" model="at.answer">
+            <field name="name">86</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_16" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_16_c" model="at.answer">
+            <field name="name">96</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_16" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_16_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_16" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 17
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_17" model="at.question">
+            <field name="name">¿Cuántos signos de puntuación como los siguientes: «.», «(» y «)», hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [\.\(\)]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_17_a" model="at.answer">
+            <field name="name">42</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_17" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_17_b" model="at.answer">
+            <field name="name">48</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_17" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_17_c" model="at.answer">
+            <field name="name">38</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_17" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_17_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_17" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 18
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_18" model="at.question">
+            <field name="name">¿Cuántos signos de puntuación como los siguientes: «&lt;» y «&gt;», hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [\ &lt;\&gt;]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_18_a" model="at.answer">
+            <field name="name">0</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_18" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_18_b" model="at.answer">
+            <field name="name">1</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_18" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_18_c" model="at.answer">
+            <field name="name">2</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_18" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_18_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_18" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 19
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_19" model="at.question">
+            <field name="name">¿Cuántas palabras comienzan por «c» en el cuerpo del documento «ST101.docx», sin hacer distinción entre mayúsculas y minúsculas?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[cC]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_19_a" model="at.answer">
+            <field name="name">73</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_19" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_19_b" model="at.answer">
+            <field name="name">68</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_19" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_19_c" model="at.answer">
+            <field name="name">62</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_19" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_19_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_19" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 20
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_20" model="at.question">
+            <field name="name">¿Cuántas palabras terminan por «k» en el cuerpo del documento «ST101.docx», haciendo distinción entre mayúsculas y minúsculas?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    k>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_20_a" model="at.answer">
+            <field name="name">0</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_20" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_20_b" model="at.answer">
+            <field name="name">1</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_20" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_20_c" model="at.answer">
+            <field name="name">2</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_20" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_20_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_20" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 21
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_21" model="at.question">
+            <field name="name">¿Cuántas palabras comienzan por vocal en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[aeiouAEIOUáéíóúÁÉÍÓÚüÜ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_21_a" model="at.answer">
+            <field name="name">248</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_21" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_21_b" model="at.answer">
+            <field name="name">284</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_21" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_21_c" model="at.answer">
+            <field name="name">482</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_21" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_21_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_21" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 22
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_22" model="at.question">
+            <field name="name">¿Cuántas palabras terminan por vocal en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    [aeiouAEIOUáéíóúÁÉÍÓÚüÜ]>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_22_a" model="at.answer">
+            <field name="name">630</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_22" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_22_b" model="at.answer">
+            <field name="name">610</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_22" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_22_c" model="at.answer">
+            <field name="name">650</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_22" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_22_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_22" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 23
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_23" model="at.question">
+            <field name="name">¿Cuántas palabras, en el cuerpo del documento «ST101.docx», tienen una longitud de 5 letras?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[A-Za-z]{5}>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_23_a" model="at.answer">
+            <field name="name">55</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_23" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_23_b" model="at.answer">
+            <field name="name">50</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_23" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_23_c" model="at.answer">
+            <field name="name">45</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_23" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_23_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_23" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 24
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_24" model="at.question">
+            <field name="name">¿Cuántas palabras, en el cuerpo del documento «ST101.docx», tienen una longitud de al menos 4 letras?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[A-Za-z]{4;}>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_24_a" model="at.answer">
+            <field name="name">519</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_24" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_24_b" model="at.answer">
+            <field name="name">509</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_24" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_24_c" model="at.answer">
+            <field name="name">591</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_24" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_24_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_24" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 25
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_25" model="at.question">
+            <field name="name">¿Cuántas palabras, en el cuerpo del documento «ST101.docx», tienen una longitud de entre 5 y 10 letras?</field>
+            <field name="description"><![CDATA[
+        Texto de búsqueda:    <[A-Za-z]{5;10}>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_25_a" model="at.answer">
+            <field name="name">380</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_25" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_25_b" model="at.answer">
+            <field name="name">308</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_25" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_25_c" model="at.answer">
+            <field name="name">830</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_25" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_25_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_25" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 26
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_26" model="at.question">
+            <field name="name">¿Cuántas consonantes hay en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de 1ª búsqueda: [A-Za-z]
+        Texto de 2ª búsqueda: [!aeiouAEIOUáéíóúÁÉÍÓÚüÜ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_26_a" model="at.answer">
+            <field name="name">2790</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_26" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_26_b" model="at.answer">
+            <field name="name">5128</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_26" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_26_c" model="at.answer">
+            <field name="name">4084</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_26" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_26_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_26" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 27
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_28" model="at.question">
+            <field name="name">¿Cuántas palabras comienzan por una consonante seguida de una vocal en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de 1ª búsqueda: <[A-Za-z]*>
+        Texto de 2ª búsqueda: <[!aeiouAEIOUáéíóúÁÉÍÓÚüÜ][aeiouAEIOUáéíóúÁÉÍÓÚüÜ]
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_28_a" model="at.answer">
+            <field name="name">658</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_28" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_28_b" model="at.answer">
+            <field name="name">981</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_28" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_28_c" model="at.answer">
+            <field name="name">685</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_28" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_28_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_28" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 28
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_29" model="at.question">
+            <field name="name">¿Cuántas palabras terminan por una consonante seguida de una vocal en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de 1ª búsqueda: <*>
+        Texto de 2ª búsqueda: <*[A-Za-z]>
+        Texto de 3ª búsqueda: [!aeiouAEIOUáéíóúÁÉÍÓÚüÜ][aeiouAEIOUáéíóúÁÉÍÓÚüÜ]>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_29_a" model="at.answer">
+            <field name="name">534</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_29" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_29_b" model="at.answer">
+            <field name="name">1034</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_29" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_29_c" model="at.answer">
+            <field name="name">933</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_29" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_29_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_29" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 29
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_30" model="at.question">
+            <field name="name">¿Cuántas palabras comienzan y terminan por «k» en el cuerpo del documento «ST101.docx», haciendo distinción entre mayúsculas y minúsculas?</field>
+            <field name="description"><![CDATA[
+        Texto de 1ª búsqueda: <k*>
+        Texto de 2ª búsqueda: <*k>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_30_a" model="at.answer">
+            <field name="name">0</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_30" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_30_b" model="at.answer">
+            <field name="name">1</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_30" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_30_c" model="at.answer">
+            <field name="name">2</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_30" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_30_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_30" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+
+        <!-- QUESTION 30
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="at_question_o2010p_advs_st101_31" model="at.question">
+            <field name="name">¿Cuántas palabras comienzan y terminan por vocal en el cuerpo del documento «ST101.docx»?</field>
+            <field name="description"><![CDATA[
+        Texto de 1ª búsqueda: <[!aeiouAEIOUáéíóúÁÉÍÓÚüÜ]*>
+        Texto de 2ª búsqueda: [!aeiouAEIOUáéíóúÁÉÍÓÚüÜ]>
+        Opciones de búsqueda: Caracteres comodín
+        ]]></field>
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+            <field name="at_category_ids" eval="[(4, ref('at_category_o2010p_search'))]" />
+            <field name="at_tag_ids" eval="[(4, ref('at_tag_o2010p_advanced_search'))]" />
+            <field name="at_level_id" ref="academy_tests.at_level_14" />
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_o2010p_st101_docx'))]" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_31_a" model="at.answer">
+            <field name="name">404</field>
+            <field name="sequence" eval="1" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_31" />
+            <field name="is_correct" eval="True" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_31_b" model="at.answer">
+            <field name="name">786</field>
+            <field name="sequence" eval="2" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_31" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_31_c" model="at.answer">
+            <field name="name">687</field>
+            <field name="sequence" eval="3" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_31" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+        <record id="at_answer_o2010p_advs_st101_31_d" model="at.answer">
+            <field name="name">Ninguna de las anteriores es correcta</field>
+            <field name="sequence" eval="4" />
+            <field name="at_question_id" ref="at_question_o2010p_advs_st101_31" />
+            <field name="is_correct" eval="False" />
+        </record>
+
+    </data>
+</openerp>

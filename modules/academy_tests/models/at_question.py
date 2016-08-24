@@ -42,9 +42,19 @@ class AtQuestion(models.Model):
         index=True,
         default=None,
         help='Text for this question',
-        size=250,
+        size=1024,
         translate=True,
         track_visibility='onchange'
+    )
+
+    preamble = fields.Text(
+        string='Preamble',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='What it is said before beginning to question',
+        translate=True
     )
 
     description = fields.Text(
@@ -155,9 +165,9 @@ class AtQuestion(models.Model):
         default=None,
         help='Attachments needed to solve this question',
         comodel_name='ir.attachment',
-        relation='ir_attachment_this_model_rel',
-        column1='ir_attachment_id',
-        column2='this_model_id',
+        # relation='ir_attachment_this_model_rel',
+        # column1='ir_attachment_id',
+        # column2='this_model_id',
         domain=[],
         context={},
         limit=None

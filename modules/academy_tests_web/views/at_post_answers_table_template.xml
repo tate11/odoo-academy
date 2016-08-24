@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- ROUTE posted-test GLOBAL LAYOUT
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_answers_table" name="TEST">
+            <t t-call="website.layout">
+
+                <t t-set="title" t-value="test.name" />
+
+                <div class="oe_structure">
+                    <div class="container">
+
+                        <div class="page-header">
+
+                            <!-- Header h2: Test name -->
+                            <h2><t t-esc="test.name" /></h2>
+
+                            <!-- Show description if exists -->
+                            <t t-if="test.description">
+                                <div class="well well-sm">
+                                    <t t-esc="test.description" />
+                                </div>
+                            </t>
+
+                        </div> <!-- page-header -->
+
+                        <div class="table-responsive">
+                            <table class="table answers-table table-striped table-hover table-condensed">
+                                <thead>
+                                    <th class="answers-table-question">Question</th>
+                                    <th class="answers-table-answer">Answer</th>
+                                    <th class="answers-table-description">Description</th>
+                                </thead>
+                                <tbody>
+                                <t t-foreach="answers" t-as="answer">
+                                    <tr>
+                                        <th><t t-esc="answer.sequence" /></th>
+                                        <td><t t-esc="answer.name" /></td>
+                                        <td><t t-esc="answer.description" /></td>
+                                    </tr>
+                                </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript" src="/academy_tests_web/static/src/js/at_post_test_template.js"></script>
+
+            </t>
+        </template>
+    </data>
+</openerp>

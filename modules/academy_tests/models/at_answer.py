@@ -38,7 +38,7 @@ class AtAnswer(models.Model):
         index=True,
         default=None,
         help='Text for this answer',
-        size=250,
+        size=1024,
         translate=True
     )
 

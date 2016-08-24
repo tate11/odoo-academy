@@ -21,7 +21,7 @@
     # any module necessary for this one to work correctly
     'depends': [
         'academy_base',
-        'mail'
+        'mail',
     ],
 
     # always loaded
@@ -53,7 +53,7 @@
         'views/at_test_at_question_rel.xml',
         'views/at_test_view.xml',
         'views/at_topic_view.xml',
-        'views/ir_attachment_view.xml'
+        'views/ir_attachment_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

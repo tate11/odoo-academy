@@ -35,7 +35,7 @@ After running the modules list update you can confirm the new modules are availa
 ```
 ## Scripts
 
-- oaclient.py   : client to connect to Odoo server and manage academy resources using RPC.
+- **oaclient.py**   : client to connect to Odoo server and manage academy resources using RPC.
 
 ## Licences
 

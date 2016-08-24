@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="at_tag_o2010p_advanced_search" model="at.tag">
+            <field name="name">Búsquedas con comodines</field>
+            <field name="description"><![CDATA[
+Búsquedas y reemplazo en documentos de Microsoft Word 2010 empleando
+caracteres comodín.
+        ]]></field>
+        </record>
+
+    </data>
+</openerp>

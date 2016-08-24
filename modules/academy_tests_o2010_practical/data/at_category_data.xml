@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="at_category_o2010p_search" model="at.category">
+            <field name="name">Búsqueda y reemplazo</field>
+            <field name="description"><![CDATA[
+Búsquedas y reemplazo en documentos de Microsoft Word 2010.
+        ]]></field>
+            <field name="sequence" eval="27" />
+            <field name="at_topic_id" ref="at_topic_office_2010_practical" />
+        </record>
+
+    </data>
+</openerp>
