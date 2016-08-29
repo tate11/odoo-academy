@@ -8,8 +8,10 @@
 from openerp.http import route, request, Controller
 from openerp.tools.translate import _
 from logging import getLogger
+from openerp.addons.web.controllers.main import serialize_exception, content_disposition
 
 import json
+import base64
 
 _logger = getLogger(__name__)
 
@@ -44,8 +46,9 @@ class PostTests(Controller):
         at_test_domain = [('id', '=', kw['test_id'])]
         at_test_obj = request.env['at.test']
         at_test_set = at_test_obj.search(at_test_domain)
+
         return request.render('academy_tests_web.at_post_test', {
-            'test': at_test_set,
+            'at_test_id': at_test_set,
             'edit': self._has_edit_rights(request.env.context['uid'])
         })
 
@@ -139,6 +142,33 @@ class PostTests(Controller):
             'answers': at_answers_set
         })
 
+
+    @route('/web/binary/download_document', type='http', auth="public")
+    @serialize_exception
+    def download_document(self, **kw):
+        """ Download link for files stored as binary fields.
+        :param str model: name of the model to fetch the binary from
+        :param str field: binary field
+        :param str id: id of the record from which to fetch the binary
+        :param str filename: field holding the file's name, if any
+        :returns: :class:`werkzeug.wrappers.Response`
+        """
+
+
+        ir_attachment_domain = [('id', '=', int(kw['id']))]
+        ir_attachment_obj = request.env['ir.attachment']
+        ir_attachment_set = ir_attachment_obj.search(ir_attachment_domain)
+
+
+
+        filename = ir_attachment_set.datas_fname
+        filecontent = base64.b64decode(ir_attachment_set.datas or '')
+        if not filecontent:
+            return request.not_found()
+        else:
+            return request.make_response(filecontent, \
+                [('Content-Type', ir_attachment_set.mimetype), \
+                ('Content-Disposition', content_disposition(filename))])
 
     # -------------------------- AUXILIAR METHODS -----------------------------
 

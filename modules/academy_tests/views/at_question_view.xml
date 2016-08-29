@@ -73,6 +73,9 @@
                             <field name="ir_attachment_ids" class="oe_field_ir_attachment_ids"
                                 context="{'tree_view_ref' : 'academy_tests.view_ir_attachment_tree'}" />
                         </page>
+                        <page string="Images" class="oe_page_images" accesskey="I">
+                            <field name="ir_attachment_image_ids" class="oe_field_ir_attachment_image_ids" />
+                        </page>
                         <page string="Description" class="oe_page_description" accesskey="D">
                             <field name="description" class="oe_field_description"
                                 placeholder="Enter new text for description" />

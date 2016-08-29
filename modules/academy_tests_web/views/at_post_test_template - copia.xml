@@ -6,108 +6,55 @@
         <!-- ROUTE posted-test GLOBAL LAYOUT
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <template id="at_post_test" name="at_post_test">
+        <template id="at_post_test" name="TEST">
             <t t-call="website.layout">
 
-                <t t-set="title" t-value="at_test_id.name" />
+                <t t-set="title" t-value="test.name" />
 
                 <div class="oe_structure">
                     <div class="container">
-                        <div class="row">
 
-                            <section class="posted-test-body col-xs-12 ">
-                                <header class="page-header at-test-header hidden-print">
-                                    <h2 class="at-test-name"><t t-esc="at_test_id.name" /></h2>
-                                    <p class="at-test-description"><t t-esc="at_test_id.description" /></p>
-                                </header>
+                        <div class="page-header">
 
-                                <div class="at-test-opcions-row">
-                                    <!-- TOOLBAR:: BEGIN -->
-                                    <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
-                                        <button type="button" class="btn btn-default" title="Print" onclick="window.print();">
-                                            <i class="fa fa-print text-info" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-default" title="Download all">
-                                            <i class="fa fa-download text-active" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-default" title="Like">
-                                            <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-                                    <!-- TOOLBAR:: END -->
+                            <!-- Header h2: Test name -->
+                            <h2><t t-esc="test.name" /></h2>
+
+                            <!-- Show description if exists -->
+                            <t t-if="test.description">
+                                <div class="well well-sm">
+                                    <t t-esc="test.description" />
                                 </div>
+                            </t>
 
-                                <ol class="at-question-ids">
+                        </div> <!-- page-header -->
 
-                                    <t t-foreach="at_test_id.at_test_at_question_ids" t-as="at_test_at_question_ids">
+                        <div id="at-post-test-content">
+                            <ol>
+                                <t t-foreach="test.at_test_at_question_ids" t-as="question_rel">
 
                                     <!-- define ``question`` variable will be used in subtemplates -->
-                                    <t t-set="at_question_id" t-value="at_test_at_question_ids.at_question_id" />
+                                    <t t-set="question" t-value="question_rel.at_question_id" />
 
-                                    <li class="at-question">
-                                        <article>
-                                            <p class="at-question-preamble"><t t-esc="at_question_id.preamble" /></p>
+                                    <li class="at-post-test-question" t-attf-tabindex="100{{ question_rel.sequence }}" t-att-data-question="question.id">
 
-                                            <!-- IMAGE-ATTACHMENTS:: BEGIN -->
-                                            <t t-foreach="at_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
-                                            <div class="ir-attachment-ids row">
-                                                <div class="col-xs-12 col-sm-6 col-md-3">
-                                                    <figure class="ir.attachment figure img-thumbnail">
-                                                            <img class="img-responsive"
-                                                                t-attf-src="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
-                                                                alt="A caption for the above image text."
-                                                                title="A caption for the above image text." />
-                                                        <figcaption class="figure-caption"
-                                                            title="A caption for the above image text.">
-                                                            <strong>Figure 1: </strong>A caption for the above image text.
-                                                        </figcaption>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            </t>
+                                        <!-- swap-area: this can show the question or allow to edit it. -->
+                                        <div class="at-question-swap-area" t-attf-id="at-question-{{question.id}}-swap-area">
+                                            <t t-call="academy_tests_web.at_post_test_question_show" />
+                                        </div>
 
-                                            <!-- TOOLBAR:: BEGIN -->
-                                            <div class="at-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
-                                                <button type="button" class="btn btn-default" title="Revise">
-                                                    <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-default" title="Description">
-                                                    <i class="fa fa-info text-info" aria-hidden="true"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-default" title="Impugn">
-                                                    <i class="fa fa-fire text-danger" aria-hidden="true"></i>&#160;
-                                                </button>
-                                                <button type="button" class="btn btn-default" title="Edit">
-                                                    <i class="fa fa-pencil-square-o text-active" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <!-- TOOLBAR:: END -->
-
-                                            <p class="at-question-name"><t t-esc="at_question_id.name" /></p>
-                                            <ol class="at-answer-ids">
-
-                                                <t t-foreach="at_question_id.at_answer_ids" t-as="at_answer_id">
-
-                                                <li class="at-answer"><t t-esc="at_answer_id.name" /></li>
-
-                                                </t>
-
-                                            </ol>
-                                        </article>
                                     </li>
 
-                                    <hr class="hidden-print" />
+                                </t>
+                            </ol>
+                        </div> <!-- at-post-test-content -->
 
-                                    </t><!-- at_test_at_question_ids -->
+                        <t t-call="academy_tests_web.at_post_test_inpugnment_modal" />
+                        <t t-call="academy_tests_web.at_post_test_inpugnment_modal_result" />
 
-                                </ol>
-                            </section>
+                        <script type="text/javascript" src="/academy_tests_web/static/src/js/at_post_test_template.js"></script>
 
-                        </div>
-                    </div><!-- container -->
+                    </div> <!-- container -->
                 </div> <!-- oe_structure -->
-
-                <script type="text/javascript" src="/academy_tests_web/static/src/js/at_post_test_template.js"></script>
 
             </t>
         </template>

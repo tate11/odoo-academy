@@ -173,6 +173,20 @@ class AtQuestion(models.Model):
         limit=None
     )
 
+    ir_attachment_image_ids = fields.Many2many(
+        string='Images',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Images needed to solve this question',
+        comodel_name='ir.attachment',
+        domain=[('index_content', '=', 'image')],
+        context={},
+        limit=None,
+        compute=lambda self: self._compute_ir_attachment_image_ids()
+    )
+
     # ----------------------- AUXILIARY FIELD METHODS -------------------------
 
     def _compute_at_category_ids_domain(self):
@@ -206,6 +220,15 @@ class AtQuestion(models.Model):
 
         return level_id
 
+
+    @api.multi
+    @api.depends('ir_attachment_ids')
+    def _compute_ir_attachment_image_ids(self):
+        for record in self:
+            record.ir_attachment_image_ids = record.ir_attachment_ids.filtered(
+                lambda r: r.index_content == u'image')
+
+
     # --------------------------- ONCHANGE EVENTS -----------------------------
 
     @api.onchange('at_topic_id')
@@ -220,6 +243,13 @@ class AtQuestion(models.Model):
                 'at_category_ids': domain
             }
         }
+
+
+    @api.one
+    @api.onchange('ir_attachment_id')
+    def _onchange_ir_attachment_id(self):
+        self._compute_ir_attachment_image_ids()
+
 
     # -------------------------- PYTHON CONSTRAINS ----------------------------
 
