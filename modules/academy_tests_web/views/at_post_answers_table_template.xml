@@ -14,7 +14,7 @@
                 <div class="oe_structure">
                     <div class="container">
 
-                        <div class="page-header">
+                        <div class="page-header hidden-print">
 
                             <!-- Header h2: Test name -->
                             <h2><t t-esc="test.name" /></h2>

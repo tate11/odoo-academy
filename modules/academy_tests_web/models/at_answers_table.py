@@ -127,7 +127,7 @@ class AtAnswersTable(models.Model):
                             atqr.at_question_id asc
                     )::INT AS "sequence",
                 substr('ABCDEFGHIJKLMNOPQRSTUVWXYZ', ra.answer, 1) as "name",
-                regexp_replace(atq.description, E'[\\r\\n]+', E'\\t', 'g')::TEXT as description
+                description -- regexp_replace(atq.description, E'[\\r\\n]+', E'\\t', 'g')::TEXT as
             FROM
                 at_test_at_question_rel atqr
             LEFT JOIN right_answers AS ra ON atqr.at_question_id = ra.at_question_id

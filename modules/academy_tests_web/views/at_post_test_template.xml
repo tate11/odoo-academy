@@ -65,9 +65,7 @@
 
         <template id="at_post_test_question_show" name="Post a single test">
             <t t-if="question.preamble">
-            <p>
-                <t t-esc="question.preamble" />
-            </p>
+            <p class="at-question-preamble"><t t-esc="question.preamble" /></p>
             </t>
             <p>
                 <span data-toggle="tooltip" data-placement="top" t-att-title="question.description"><t t-esc="question.name" /></span>

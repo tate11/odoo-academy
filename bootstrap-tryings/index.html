@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prueba</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/font-awesome.css" />
+</head>
+<body>
+<style>
+    section.posted-test-body ol.at-question-ids {
+        counter-reset: list;
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    section.posted-test-body li.at-question {
+        list-style-type: none;
+        page-break-inside: avoid;
+    }
+    
+    section.posted-test-body p.at-question-preamble {
+        white-space: pre-line;
+        margin: 0px;
+        text-align: justify;
+    }
+    
+    section.posted-test-body p.at-question-name {
+        margin: 6px 0px;
+        text-align: justify;
+    }
+    
+    section.posted-test-body p.at-question-name:before {
+        list-style-position: inside;
+        counter-increment: list;
+        content: counter(list, decimal) ".- ";
+
+        margin: 6px 0px;
+    }
+    
+    section.posted-test-body ol.at-answer-ids {
+        counter-reset: list;
+        
+        padding: 0px 0px 0px 6mm;
+        margin: 0px;
+    }
+    
+    section.posted-test-body ol.at-answer-ids > li.at-answer {
+        list-style-position: inside;
+        list-style-type: none;
+    }
+    
+    section.posted-test-body ol.at-answer-ids > li:before {
+        content: counter(list, lower-alpha) ") ";
+        counter-increment: list;
+    }
+    
+    section.posted-test-body li.at-question {
+        display: block;
+        margin: 12px 0px;
+        text-align: justify;
+    }
+    
+    section.posted-test-body p.at-question-name {
+        display: list-item;
+    }
+    
+     section.posted-test-body .at-question-options {
+        margin-top: 12pt;
+        vertical-align: bottom;
+    }
+    
+    section.posted-test-body .at-question-options > button {
+        min-width: 24px;
+    }
+    
+    .ir-attachment-ids .figure,
+    .ir-attachment-ids a    {
+        display: block;
+        width: 100%;
+        margin-top: 12px;
+    }
+    
+    .ir-attachment-ids img {
+        margin: 0 auto;
+    }
+    
+    .ir-attachment-ids .figure-caption {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
+    }
+    
+    .at-test-header {
+        margin-bottom: 3px;
+        text-align: justify;
+    }
+    
+    .at-test-opcions-row {
+        text-align: right;
+    }
+    
+    @media print {
+        .ir-attachment-ids .figure {
+            border-style: none;
+        }
+    }
+    
+</style>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <section class="posted-test-body col-xs-12 ">
+                <header class="page-header at-test-header hidden-print">
+                    <h2>Title</h2>
+                    <p>
+                        Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño. 
+                        El punto de usar Lorem Ipsum es que tiene una distribución más o menos normal de las letras, al contrario de usar textos como por ejemplo "Contenido aquí, contenido aquí". 
+                        Estos textos hacen parecerlo un español que se puede leer. 
+                        Muchos paquetes de autoedición y editores de páginas web usan el Lorem Ipsum como su texto por defecto, y al hacer una búsqueda de "Lorem Ipsum" va a dar por resultado muchos sitios web que usan este texto si se encuentran en estado de desarrollo. 
+                    </p>
+                </header>
+            
+                <div class="at-test-opcions-row">
+                    <!-- TOOLBAR:: BEGIN -->
+                    <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
+                        <button type="button" class="btn btn-default" title="Print" onclick="window.print();">
+                            <i class="fa fa-print text-info" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" title="Download all">
+                            <i class="fa fa-download text-active" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" title="Like">
+                            <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <!-- TOOLBAR:: END -->
+                </div>
+                
+                <ol class="at-question-ids">
+                    <li class="at-question"">
+                        <article>
+                            <p class="at-question-preamble">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Vestibulum venenatis sollicitudin mauris, in tincidunt elit ornare 
+                                Morbi at condimentum nunc. Etiam in sem vel mi aliquet fermentum vitae sit amet odio. 
+                            </p>
+                            <!-- IMAGE-ATTACHMENTS:: BEGIN -->
+                            <div class="ir-attachment-ids row">
+                                <div class="col-xs-12 col-sm-6 col-md-3">
+                                    <figure class="ir.attachment figure img-thumbnail">
+                                        <a href="#">
+                                            <img class="img-responsive" 
+                                                src="http://www.w3schools.com/tags/img_pulpit.jpg" 
+                                                alt="A caption for the above image text."
+                                                title="A caption for the above image text.">
+                                        </a>
+                                        <figcaption class="figure-caption" 
+                                            title="A caption for the above image text.">
+                                            <strong>Figure 1: </strong>A caption for the above image text.
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                                
+                            <!-- TOOLBAR:: BEGIN -->
+                            <div class="at-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
+                                <button type="button" class="btn btn-default" title="Revise">
+                                    <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="Description">
+                                    <i class="fa fa-info text-info" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="Impugn">
+                                    <i class="fa fa-fire text-danger" aria-hidden="true"></i>&nbsp;
+                                </button>
+                                <button type="button" class="btn btn-default" title="Edit">
+                                    <i class="fa fa-pencil-square-o text-active" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- TOOLBAR:: END -->
+
+                            <p class="at-question-name">Ut eget est ut sapien placerat posuere. Sed faucibus a dui sed commodo. Pellentesque facilisis condimentum volutpat. Vivamus finibus molestie leo quis dictum. Sed massa nulla, consequat eu libero eu, laoreet dapibus sem. Nunc quis pharetra urna. Etiam tincidunt sapien ac pellentesque gravida. Fusce interdum ultrices libero, sit amet venenatis ligula pulvinar quis.</p>
+                            <ol class="at-answer-ids">
+                                <li class="at-answer">Respuesta 1</li>
+                                <li class="at-answer">Respuesta 2</li>
+                                <li class="at-answer">Respuesta 3</li>
+                                <li class="at-answer">Respuesta 4</li>
+                            </ol>
+                        </article>
+                    </li>
+
+                    <hr class="hidden-print" />
+                    
+                    <li class="at-question">
+                        <article>
+                            <p class="at-question-preamble">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Vestibulum venenatis sollicitudin mauris, in tincidunt elit ornare 
+                                Morbi at condimentum nunc. Etiam in sem vel mi aliquet fermentum vitae sit amet odio. 
+                            </p>
+                            
+                            <!-- TOOLBAR:: BEGIN -->
+                            <div class="at-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
+                                <button type="button" class="btn btn-default" title="Revise">
+                                    <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="Description">
+                                    <i class="fa fa-info text-info" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="Impugn">
+                                    <i class="fa fa-fire text-danger" aria-hidden="true"></i>&nbsp;
+                                </button>
+                                <button type="button" class="btn btn-default" title="Download">
+                                    <i class="fa fa-download text-active" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="Edit">
+                                    <i class="fa fa-pencil-square-o text-info" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- TOOLBAR:: END -->
+
+                            <p class="at-question-name">Ut eget est ut sapien placerat posuere. Sed faucibus a dui sed commodo. Pellentesque facilisis condimentum volutpat. Vivamus finibus molestie leo quis dictum. Sed massa nulla, consequat eu libero eu, laoreet dapibus sem. Nunc quis pharetra urna. Etiam tincidunt sapien ac pellentesque gravida. Fusce interdum ultrices libero, sit amet venenatis ligula pulvinar quis.</p>
+                            <ol class="at-answer-ids">
+                                <li class="at-answer">Respuesta 1</li>
+                                <li class="at-answer">Respuesta 2</li>
+                                <li class="at-answer">Respuesta 3</li>
+                                <li class="at-answer">Respuesta 4</li>
+                            </ol>
+                        </article>
+                    </li>
+
+                </ol>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>
