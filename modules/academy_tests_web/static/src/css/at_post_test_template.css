@@ -55,44 +55,52 @@
         display: list-item;
     }
 
-     section.posted-test-body .at-question-options {
-        margin-top: 12pt;
+    section.posted-test-body .at-question-options {
+        margin-top: 12px;
         vertical-align: bottom;
+    }
+
+    section.posted-test-body .at-question-options:first-child {
+        margin-top: 0pt;
     }
 
     section.posted-test-body .at-question-options > button {
         min-width: 24px;
     }
 
-    .ir-attachment-ids .figure,
-    .ir-attachment-ids a    {
+    section.posted-test-body .ir-attachment-image-ids .figure,
+    section.posted-test-body .ir-attachment-image-ids a {
         display: block;
         width: 100%;
         margin-top: 12px;
     }
 
-    .ir-attachment-ids img {
-        margin: 0 auto;
-    }
-
-    .ir-attachment-ids .figure-caption {
+    section.posted-test-body figcaption.ir-attachment-image-name {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         text-align: center;
     }
 
-    .at-test-header {
+    section.posted-test-body .at-test-header {
         margin-bottom: 3px;
         text-align: justify;
     }
 
-    .at-test-opcions-row {
+    section.posted-test-body .at-test-opcions-row {
         text-align: right;
     }
 
     @media print {
-        .ir-attachment-ids .figure {
+        section.posted-test-body .ir-attachment-image-ids .figure {
             border-style: none;
+            max-width: 25%;
+            padding: 0 5px;
+        }
+
+        section.posted-test-body .ir-attachment-image-ids img {
+            margin: 0 auto;
+            max-width: 320px;
+            max-height:240px;
         }
     }

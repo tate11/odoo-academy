@@ -18,7 +18,13 @@
                             <section class="posted-test-body col-xs-12 ">
                                 <header class="page-header at-test-header hidden-print">
                                     <h2 class="at-test-name"><t t-esc="at_test_id.name" /></h2>
+
+                                    <t t-if="at_test_id.description">
+
                                     <p class="at-test-description"><t t-esc="at_test_id.description" /></p>
+
+                                    </t>
+
                                 </header>
 
                                 <div class="at-test-opcions-row">
@@ -46,20 +52,22 @@
 
                                     <li class="at-question">
                                         <article>
-                                            <p class="at-question-preamble"><t t-esc="at_question_id.preamble" /></p>
 
+                                            <t t-if="at_question_id.preamble">
+                                                <p class="at-question-preamble"><t t-esc="at_question_id.preamble" /></p>
+                                            </t>
                                             <!-- IMAGE-ATTACHMENTS:: BEGIN -->
                                             <t t-foreach="at_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
-                                            <div class="ir-attachment-ids row">
+                                            <div class="ir-attachment-image-ids row">
                                                 <div class="col-xs-12 col-sm-6 col-md-3">
-                                                    <figure class="ir.attachment figure img-thumbnail">
-                                                            <img class="img-responsive"
+                                                    <figure class="ir-attachment-image figure img-thumbnail">
+                                                            <img class="img-responsive ir-attachment-image-datas"
                                                                 t-attf-src="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
                                                                 alt="A caption for the above image text."
                                                                 title="A caption for the above image text." />
-                                                        <figcaption class="figure-caption"
-                                                            title="A caption for the above image text.">
-                                                            <strong>Figure 1: </strong>A caption for the above image text.
+                                                        <figcaption class="figure-caption ir-attachment-image-name"
+                                                            t-attf-title="{{ ir_attachment_image_id.name }}">
+                                                            <t t-esc="ir_attachment_image_id.name" />
                                                         </figcaption>
                                                     </figure>
                                                 </div>
@@ -68,16 +76,16 @@
 
                                             <!-- TOOLBAR:: BEGIN -->
                                             <div class="at-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
-                                                <button type="button" class="btn btn-default" title="Revise">
+                                                <button type="button" class="btn btn-default btn-revise-question" title="Revise" t-attf-data-question-id="{{ at_question_id.id }}" >
                                                     <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-default" title="Description">
+                                                <button type="button" class="btn btn-default btn-describe-question" title="Description" t-attf-data-question-id="{{ at_question_id.id }}">
                                                     <i class="fa fa-info text-info" aria-hidden="true"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-default" title="Impugn">
+                                                <button type="button" class="btn btn-default btn-impugn-question" title="Impugn" t-attf-data-question-id="{{ at_question_id.id }}">
                                                     <i class="fa fa-fire text-danger" aria-hidden="true"></i>&#160;
                                                 </button>
-                                                <button type="button" class="btn btn-default" title="Edit">
+                                                <button type="button" class="btn btn-default btn-edit-question" title="Edit" t-attf-data-question-id="{{ at_question_id.id }}">
                                                     <i class="fa fa-pencil-square-o text-active" aria-hidden="true"></i>
                                                 </button>
                                             </div>
@@ -88,7 +96,13 @@
 
                                                 <t t-foreach="at_question_id.at_answer_ids" t-as="at_answer_id">
 
-                                                <li class="at-answer"><t t-esc="at_answer_id.name" /></li>
+                                                <li class="at-answer">
+                                                    <t t-esc="at_answer_id.name" />
+                                                    <t t-if="at_answer_id.is_correct==True">
+                                                        <span class="text-success fa fa-check" style="display: none" />
+                                                        <!-- NOTE: initial display must be none, later it can be shown with jquery.show() -->
+                                                    </t>
+                                                </li>
 
                                                 </t>
 
