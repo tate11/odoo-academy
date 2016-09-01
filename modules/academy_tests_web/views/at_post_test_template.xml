@@ -50,7 +50,7 @@
                                     <!-- define ``question`` variable will be used in subtemplates -->
                                     <t t-set="at_question_id" t-value="at_test_at_question_ids.at_question_id" />
 
-                                    <li class="at-question" t-attf-id="at-question-{{ at_question_id.id }}">
+                                    <li class="at-question" t-attf-id="at-question-{{ at_question_id.id }}" t-attf-data-question-id="{{ at_question_id.id }}">
                                         <article>
 
                                             <t t-if="at_question_id.preamble">
@@ -157,6 +157,7 @@
 
         <template id="at_post_test_inpugnment_modal">
 
+            <t t-name="caca">
             <div class="modal fade no-print impugnment-dialog" tabindex="-1" role="dialog" id="at-post-test-inpugnment-modal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -195,6 +196,7 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+            </t>
 
         </template>
 

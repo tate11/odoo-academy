@@ -13,13 +13,105 @@ odoo.define('academy_tests_web.service', function (require) {
 
     /* bind double click and single click separately */
     var DELAY = 250, clicks = 0, timer = null;
+    var QWeb = core.qweb;
 
-
-    /*-- Enable Popovers
+    /*-- Question class
     ------------------------------------------------------------------------*/
+    var AtQuestion = core.Class.extend({
 
-    // Contain the popover within the body NOT the element it was called in.
-    $('[data-toggle="popover"]').popover({container: 'body'});
+        obj: null,
+        el : null,
+        at_question_id : null,
+        mode : 'read',
+
+        /** Main class methods
+        ---------------------------------------------------------------------*/
+
+        init : function(at_question) {
+
+            /*-- STEP 1: Initialice this object variables -- */
+            obj = this;
+            obj.el = jQuery(at_question);
+            obj.at_question_id = jQuery(at_question).data('question-id');
+
+            /*-- STEP 2: Initialice Bootstrap javascript elements -- */
+            $('[data-toggle="popover"]').popover({container: 'body'});
+
+            /*-- STEP 2: Bind button events --
+                 not needed for impugment and information buttons*/
+            obj.el.find('.btn-edit-question').on("click", obj.on_btn_edit_question_click);
+            obj.el.find('.btn-revise-question').on("click", obj.on_btn_revise_question_click);
+            obj.el.find('brn-revise-question').on("dblclick", obj.on_btn_revise_question_dblclick);
+        },
+
+
+        /** Button events
+        ---------------------------------------------------------------------*/
+
+        on_btn_edit_question_click : function(e) {
+            html = QWeb.render('caca', {
+            });
+
+            console.log(html);
+        },
+
+        on_btn_revise_question_click : function(e) {
+            self = this;
+
+            clicks++;  //count clicks
+
+            if(clicks === 1) {
+
+                timer = setTimeout(function() {
+
+                    /* STEP 1: Get ID stored in a button DATA attribute  */
+                    at_question_id = jQuery(self).data('question-id');
+
+                    /* STEP 2: Get question LI DOM item */
+                    at_question = jQuery('#at-question-' + at_question_id);
+
+                    /* STEP 3: Toggle visibility */
+                    chksel = '.at-answer-iscorrect-checkmark';
+                    jQuery(at_question).find(chksel).toggle();
+
+                    clicks = 0;             //after action performed, reset counter
+
+                }, DELAY);
+
+            } else {
+
+                clearTimeout(timer);    //prevent single-click action
+
+                /* STEP 1: Get ID stored in a button DATA attribute  */
+                id = jQuery(self).data('question-id');
+
+                /* STEP 2: Get question LI DOM item */
+                at_question = jQuery('#at-question-' + id);
+
+                /* STEP 3: Check if some answer has the check mark visible */
+                chksel = '.at-answer-iscorrect-checkmark:visible';
+                is_checked = jQuery(at_question).find(chksel).length > 0;
+
+                /* STEP 4: Change visibility of all check marks in oposite to the
+                selected question */
+                at_question_ids = jQuery('.at-question-ids')
+
+                if (is_checked == true) {
+                    visible = jQuery(at_question_ids).find('.at-answer-iscorrect-checkmark').hide();
+                } else {
+                    visible = jQuery(at_question_ids).find('.at-answer-iscorrect-checkmark').show();
+                }
+
+                clicks = 0;             //after action performed, reset counter
+
+            }
+        },
+
+        on_btn_revise_question_dblclick : function(e) {
+             e.preventDefault();  //cancel system double-click event
+        }
+
+    });
 
 
     /*-- Impugment modals
@@ -94,73 +186,7 @@ odoo.define('academy_tests_web.service', function (require) {
         console.log(values);
     });
 
-    /*-- Question options toolbar behavior
-    ------------------------------------------------------------------------*/
 
-    jQuery('.btn-edit-question').click(function () {
-        self = this;
-    });
-
-    /*  NOT NEEDED
-    jQuery('.btn-describe-question').click(function(){});
-    jQuery('.btn-impugn-question').click(function(){});
-    */
-
-    jQuery('.btn-revise-question').on("click", function(e){
-        self = this;
-
-        clicks++;  //count clicks
-
-        if(clicks === 1) {
-
-            timer = setTimeout(function() {
-
-                /* STEP 1: Get ID stored in a button DATA attribute  */
-                at_question_id = jQuery(self).data('question-id');
-
-                /* STEP 2: Get question LI DOM item */
-                at_question = jQuery('#at-question-' + at_question_id);
-
-                /* STEP 3: Toggle visibility */
-                chksel = '.at-answer-iscorrect-checkmark';
-                jQuery(at_question).find(chksel).toggle();
-
-                clicks = 0;             //after action performed, reset counter
-
-            }, DELAY);
-
-        } else {
-
-            clearTimeout(timer);    //prevent single-click action
-
-            /* STEP 1: Get ID stored in a button DATA attribute  */
-            id = jQuery(self).data('question-id');
-
-            /* STEP 2: Get question LI DOM item */
-            at_question = jQuery('#at-question-' + id);
-
-            /* STEP 3: Check if some answer has the check mark visible */
-            chksel = '.at-answer-iscorrect-checkmark:visible';
-            is_checked = jQuery(at_question).find(chksel).length > 0;
-
-            /* STEP 4: Change visibility of all check marks in oposite to the
-            selected question */
-            at_question_ids = jQuery('.at-question-ids')
-
-            if (is_checked == true) {
-                visible = jQuery(at_question_ids).find('.at-answer-iscorrect-checkmark').hide();
-            } else {
-                visible = jQuery(at_question_ids).find('.at-answer-iscorrect-checkmark').show();
-            }
-
-            clicks = 0;             //after action performed, reset counter
-
-        }
-
-    })
-    .on("dblclick", function(e){
-        e.preventDefault();  //cancel system double-click event
-    }); /* jQuery('.btn-revise-question') */
-
+    jQuery('.at-question').each(function(i, val){new AtQuestion(val); })
 });
 
