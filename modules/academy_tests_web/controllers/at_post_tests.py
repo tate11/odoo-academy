@@ -47,7 +47,7 @@ class PostTests(Controller):
         at_test_obj = request.env['at.test']
         at_test_set = at_test_obj.search(at_test_domain)
 
-        return request.render('academy_tests_web.at_post_test', {
+        return request.render('academy_tests_web.at_post_test_test', {
             'at_test_id': at_test_set,
             'edit': self._has_edit_rights(request.env.context['uid'])
         })
@@ -85,28 +85,46 @@ class PostTests(Controller):
         return result
 
 
-    @route('/get-question', csrf=True, type='http', auth='user')
+    @route('/get-question', csrf=True, type='json', auth='user')
     def get_question(self, **kw):
-        """ Proccess Ajax request to get question"""
+        """ Proccess Ajax request to get question
+            :return: 400 (Bad Request), 204 (No Content), 200 (Success)
+        """
+
+        result, html = 400, None
+
+        if kw and isinstance(kw, dict) and 'at_question_id' in kw:
+
+            result = 204
+
+            question_id = int(kw['at_question_id'])
+            at_question_obj = request.env['at.question']
+            at_question_set = at_question_obj.browse(question_id)
+
+            if at_question_set:
+                mode = kw.get('mode', 'show')
+
+                if mode == 'edit':
+                    if self._has_edit_rights(request.env.context['uid']):
+                        result = 200
+                        view = request.env['ir.model.data'].get_object(
+                            'academy_tests_web', 'at_post_test_question_edit')
+                        html = view.render(
+                            {'at_question_id': at_question_set}, engine='ir.qweb')
+                    else:
+                        result = 401
+                else:
+                    result = 200
+                    view = request.env['ir.model.data'].get_object(
+                        'academy_tests_web', 'at_post_test_question_show')
+
+                    html = view.render(
+                        {'at_question_id': at_question_set}, engine='ir.qweb')
+
+        return json.dumps({'result': result, 'html': html})
 
 
-        question_id = int(kw['question_id'])
-        at_question_obj = request.env['at.question']
-        at_question_set = at_question_obj.browse(question_id)
-
-        if 'edit' in kw.keys() and self._has_edit_rights(request.env.context['uid']):
-            result = request.render('academy_tests_web.at_post_test_question_edit', {
-                'question': at_question_set,
-            })
-        else:
-            result = request.render('academy_tests_web.at_post_test_question_show', {
-                'question': at_question_set,
-                'edit': self._has_edit_rights(request.env.context['uid'])
-            })
-
-        return result
-
-    @route('/update-question', csrf=False, type='json', auth='user')
+    @route('/update-question', csrf=False, type='json', auth="public")
     def update_question(self, **kw):
         """ Proccess Ajax request to update question"""
 

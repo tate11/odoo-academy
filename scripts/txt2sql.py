@@ -41,6 +41,7 @@ class App(object):
         self._cp = locale.getpreferredencoding()
         self._name = None
         self._description = None
+        self._preamble = None
 
     def _argparse(self):
         """ Detines an user-friendly command-line interface and proccess its
@@ -67,6 +68,8 @@ class App(object):
                             default=u'',
                             help='description for test')
 
+        parser.add_argument('-p', '--preamble', action='store_true',
+                            default=False, help='unknown lines as preamble')
 
         args = parser.parse_args()
 
@@ -75,13 +78,14 @@ class App(object):
             self._out = os.path.abspath(args.out.decode(self._cp, errors='replace'))
         self._name = args.name.decode(self._cp, errors='replace')
         self._description = args.description.decode(self._cp, errors='replace')
+        self._preamble = args.preamble
 
     def _is_question(self, line):
         """ Check if line is for question ^[0-9]+
         """
         return bool(re.match(r'^[0-9]{1,2}[\)\.\- ]+.*$', line, re.IGNORECASE))
 
-    def _new_question(self, line):
+    def _new_question(self, line, preamble=u''):
         """ Creates new question INSERT script for line
         """
 
@@ -95,6 +99,7 @@ class App(object):
                 INSERT INTO "public"."at_question" (
                     "name",
                     "description",
+                    "preamble",
                     "create_uid",
                     "create_date",
                     "write_uid",
@@ -105,6 +110,7 @@ class App(object):
                 ) VALUES (
                     '{}',
                     NULL,
+                    '{}',
                     '1',
                     now()::TIMESTAMP (0),
                     '1',
@@ -117,7 +123,7 @@ class App(object):
                 (at_category_id, at_question_id)
             VALUES
                 ( (SELECT id FROM "public"."at_category" WHERE NAME = 'TEST2SQL'), (SELECT id FROM tmp));
-        """.format(line)
+        """.format(line, preamble)
 
     def _is_answer(self, line):
         """ Check if line is for question ^[ABCDabcd]+
@@ -298,6 +304,7 @@ class App(object):
         self._register_category()
 
         try:
+            preamble = u''
 
             with open(self._file, 'r') as finput: #open the file
                 lines = finput.readlines()
@@ -305,7 +312,8 @@ class App(object):
                     line = line_raw.decode('utf-8', errors='replace')
                     if self._is_question(line):
                         line = self._clear_question(line)
-                        question = self._new_question(line)
+                        question = self._new_question(line, preamble)
+                        preamble = u''
                         if question:
                             self._register_question(question)
                     elif self._is_answer(line):
@@ -313,8 +321,10 @@ class App(object):
                         answer = self._new_answer(line)
                         if answer:
                             self._register_answer(answer)
+                    elif self._preamble and len(line) > 3:
+                        preamble += line
                     else:
-                        print u'Unknown line %s' % line
+                        print u'Skip line %s' % line
 
         except Exception as ex:
             print ex

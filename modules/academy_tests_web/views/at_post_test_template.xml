@@ -3,10 +3,13 @@
 <openerp>
     <data noupdate="0">
 
+
         <!-- ROUTE posted-test GLOBAL LAYOUT
+        This is the general template to publish tests on the Web frontend. It
+        has several subtemplates whose definitions are defined below.
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <template id="at_post_test" name="at_post_test">
+        <template id="at_post_test_test" name="at_post_test_test">
             <t t-call="website.layout">
 
                 <t t-set="title" t-value="at_test_id.name" />
@@ -15,33 +18,18 @@
                     <div class="container">
                         <div class="row">
 
-                            <section class="posted-test-body col-xs-12 ">
+                            <section class="at-post-test-test posted-test-body col-xs-12 ">
                                 <header class="page-header at-test-header hidden-print">
                                     <h2 class="at-test-name"><t t-esc="at_test_id.name" /></h2>
 
                                     <t t-if="at_test_id.description">
-
-                                    <p class="at-test-description"><t t-esc="at_test_id.description" /></p>
-
+                                        <p class="at-test-description"><t t-esc="at_test_id.description" /></p>
                                     </t>
 
                                 </header>
 
-                                <div class="at-test-opcions-row">
-                                    <!-- TOOLBAR:: BEGIN -->
-                                    <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
-                                        <button type="button" class="btn btn-default" title="Print" onclick="window.print();">
-                                            <i class="fa fa-print text-info" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-default" title="Download all">
-                                            <i class="fa fa-download text-active" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-default" title="Like">
-                                            <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-                                    <!-- TOOLBAR:: END -->
-                                </div>
+                                <!-- TEST BUTTONS : Subtemplate -->
+                                <t t-call="academy_tests_web.at_post_test_test_options" />
 
                                 <ol class="at-question-ids">
 
@@ -50,85 +38,12 @@
                                     <!-- define ``question`` variable will be used in subtemplates -->
                                     <t t-set="at_question_id" t-value="at_test_at_question_ids.at_question_id" />
 
-                                    <li class="at-question" t-attf-id="at-question-{{ at_question_id.id }}" t-attf-data-question-id="{{ at_question_id.id }}">
-                                        <article>
+                                    <li class="at-question at-question-swap-content" t-attf-id="at-question-{{ at_question_id.id }}" t-attf-data-question-id="{{ at_question_id.id }}">
 
-                                            <t t-if="at_question_id.preamble">
-                                                <p class="at-question-preamble"><t t-esc="at_question_id.preamble" /></p>
-                                            </t>
+                                    <!-- QUESTION: Subtemplate -->
+                                        <t t-call="academy_tests_web.at_post_test_question_show" />
 
-                                            <!-- IMAGE-ATTACHMENTS:: BEGIN -->
-                                            <t t-foreach="at_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
-                                            <div class="ir-attachment-image-ids row">
-                                                <div class="col-xs-12 col-sm-6 col-md-3">
-                                                    <figure class="ir-attachment-image figure img-thumbnail">
-                                                            <img class="img-responsive ir-attachment-image-datas"
-                                                                t-attf-src="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
-                                                                alt="A caption for the above image text."
-                                                                title="A caption for the above image text." />
-                                                        <figcaption class="figure-caption ir-attachment-image-name"
-                                                            t-attf-title="{{ ir_attachment_image_id.name }}">
-                                                            <t t-esc="ir_attachment_image_id.name" />
-                                                        </figcaption>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                            </t>
-                                            <!-- IMAGE-ATTACHMENTS:: END -->
-
-                                            <!-- TOOLBAR:: BEGIN -->
-                                            <div class="at-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
-                                                <button type="button" class="btn btn-default btn-revise-question" title="Revise" t-attf-data-question-id="{{ at_question_id.id }}" >
-                                                    <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
-                                                </button>
-
-                                                <t t-if="at_question_id.description">
-
-                                                <button type="button"
-                                                    data-toggle="popover"
-                                                    data-placement="right"
-                                                    class="btn btn-default btn-describe-question"
-                                                    t-attf-data-question-id="{{ at_question_id.id }}"
-                                                    t-attf-title="Description"
-                                                    t-attf-data-content="{{ at_question_id.description }}">
-                                                    <i class="fa fa-info text-info" aria-hidden="true"></i>
-                                                </button>
-
-                                                </t>
-
-                                                <button type="button" class="btn btn-default btn-impugn-question"
-                                                    data-toggle="modal"
-                                                    data-target="#at-post-test-inpugnment-modal"
-                                                    title="Impugn"
-                                                    t-attf-data-question-id="{{ at_question_id.id }}">
-                                                    <i class="fa fa-fire text-danger" aria-hidden="true"></i>&#160;
-                                                </button>
-                                                <button type="button" class="btn btn-default btn-edit-question" title="Edit" t-attf-data-question-id="{{ at_question_id.id }}">
-                                                    <i class="fa fa-pencil-square-o text-active" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <!-- TOOLBAR:: END -->
-
-                                            <p class="at-question-name"><t t-esc="at_question_id.name" /></p>
-                                            <ol class="at-answer-ids">
-
-                                                <t t-foreach="at_question_id.at_answer_ids" t-as="at_answer_id">
-
-                                                <li class="at-answer" t-attf-id="at-question-{{ at_answer_id.id }}" t-attf-correct="{{ at_answer_id.is_correct }}">
-                                                    <t t-esc="at_answer_id.name" />
-                                                    <t t-if="at_answer_id.is_correct==True">
-                                                        <span class="text-success fa fa-check at-answer-iscorrect-checkmark" style="display: none" />
-                                                        <!-- NOTE: initial display must be none, later it can be shown with jquery.show() -->
-                                                    </t>
-                                                </li>
-
-                                                </t>
-
-                                            </ol>
-                                        </article>
                                     </li>
-
-                                    <hr class="hidden-print" />
 
                                     </t><!-- at_test_at_question_ids -->
 
@@ -139,9 +54,12 @@
                     </div><!-- container -->
                 </div> <!-- oe_structure -->
 
+                <!-- MODAL DIALOGS -->
                 <t t-call="academy_tests_web.at_post_test_inpugnment_modal" />
                 <t t-call="academy_tests_web.at_post_test_inpugnment_modal_result" />
+                <t t-call="academy_tests_web.at_post_image_zoom_modal" />
 
+                <!-- IMPORT SCRIPTS -->
                 <script type="text/javascript" src="/web/static/lib/bootstrap/js/tooltip.js"></script>
                 <script type="text/javascript" src="/web/static/lib/bootstrap/js/popover.js"></script>
                 <script type="text/javascript" src="/academy_tests_web/static/src/js/at_post_test_template.js"></script>
@@ -151,13 +69,289 @@
 
 
 
+
+
+        <!--  QUESTION: Subtemplate
+        Fragment with needed struct to ONLY show a single question.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_test_question_show" name="at_post_test_question_show">
+
+                <article class="at-post-test-question at-post-test-question-show">
+
+                    <t t-if="at_question_id.preamble">
+                        <p class="at-question-preamble"><t t-esc="at_question_id.preamble" /></p>
+                    </t>
+
+                    <!-- IMAGE-ATTACHMENTS:: BEGIN -->
+                    <t t-foreach="at_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
+                        <t t-call="academy_tests_web.at_post_test_question_image" />
+                    </t>
+                    <!-- IMAGE-ATTACHMENTS:: END -->
+
+                    <!-- QUESTION BUTTONS : Subtemplate -->
+                    <t t-call="academy_tests_web.at_post_test_question_options" />
+
+                    <p class="at-question-name"><t t-esc="at_question_id.name" /></p>
+                    <ol class="at-answer-ids">
+
+                        <t t-foreach="at_question_id.at_answer_ids" t-as="at_answer_id">
+
+                        <li class="at-answer" t-attf-id="at-question-{{ at_answer_id.id }}" t-attf-correct="{{ at_answer_id.is_correct }}" t-attf-data-id="{{ at_answer_id.id }}">
+                            <t t-call="academy_tests_web.at_post_test_answer_show" />
+                        </li>
+
+                        </t>
+
+                    </ol>
+                </article>
+
+        </template>
+
+
+
+
+
+        <!-- ANSWER: Subtemplate
+         Fragment with needed struct to ONLY show a single answer.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_test_answer_show" name="at_post_test_answer_show">
+            <span class="at-post-test-answer at-post-test-answer-show">
+                <t t-esc="at_answer_id.name" />
+                <t t-if="at_answer_id.is_correct==True">
+                    <span class="text-success fa fa-check at-answer-iscorrect-checkmark" style="display: none" />
+                    <!-- NOTE: initial display must be none, later it can be shown with jquery.show() -->
+                </t>
+            </span>
+        </template>
+
+
+
+
+
+        <!--  QUESTION: Subtemplate
+        Fragment with needed struct to EDIT a single question.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_test_question_edit" name="at_post_test_question_edit">
+
+                <article class="at-post-test-question at-post-test-question-edit panel panel-primary">
+
+                    <header class="panel-heading">
+                        <button type="button" class="close btn-edit-question-close" data-dismiss="modal" aria-label="Close" t-attf-data-question-id="{{ at_question_id.id }}"><span aria-hidden="true">&#215;</span></button>
+                        <h3 class="panel-title">Question #<t t-esc="at_question_id.id" /></h3>
+                    </header>
+
+                    <div class="panel-body">
+                        <textarea class="at-question-preamble form-control" rows="4" name="at_question_preamble" placeholder="Text for preamble"><t t-esc="at_question_id.preamble" /></textarea>
+
+                        <!-- IMAGE-ATTACHMENTS:: BEGIN -->
+                        <t t-foreach="at_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
+                            <t t-call="academy_tests_web.at_post_test_question_image" />
+                        </t>
+                        <!-- IMAGE-ATTACHMENTS:: END -->
+
+                        <textarea class="at-question-name form-control"
+                            rows="2" name="at_question_name"
+                            placeholder="Text for name"><t t-esc="at_question_id.name" /></textarea>
+
+                        <textarea class="at-question-description form-control"
+                            rows="2" name="at_question_description"
+                            placeholder="Text for description"><t t-esc="at_question_id.description" /></textarea>
+
+                        <ol class="at-answer-ids">
+
+                            <t t-foreach="at_question_id.at_answer_ids" t-as="at_answer_id">
+
+                            <li class="at-answer" t-attf-id="at-question-{{ at_answer_id.id }}" t-attf-correct="{{ at_answer_id.is_correct }}" t-attf-data-id="{{ at_answer_id.id }}">
+                                <t t-call="academy_tests_web.at_post_test_answer_edit" />
+                            </li>
+
+                            </t>
+
+                        </ol>
+                    </div>
+
+                    <footer class="at-question-edit-footer panel-footer">
+                        <button type="button" class="btn btn-sm btn-edit-question-backend" t-attf-data-question-id="{{ at_question_id.id }}">
+                            <i class="fa fa-external-link text-info" aria-hidden="true"></i> Backend
+                        </button>
+                        <button type="button" class="btn btn-sm btn-default btn-edit-question-discard"  t-attf-data-question-id="{{ at_question_id.id }}">
+                            <i class="fa fa-undo text-warning" aria-hidden="true"></i> Discard
+                        </button>
+                        &#160;
+                        <button type="button" class="btn btn-primary btn-edit-question-save" t-attf-data-question-id="{{ at_question_id.id }}">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                        </button>
+                    </footer>
+
+                </article>
+
+        </template>
+
+
+
+
+
+        <!-- ANSWER: Subtemplate
+        Fragment with needed struct to EDIT a single answer.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_test_answer_edit" name="at_post_test_answer_edit">
+            <div class="at-answer-name-disposition">
+                <input type="text" class="form-control at-answer-name"
+                    placeholder="Required name" required="required"
+                    t-att-value="at_answer_id.name" />
+            </div>
+            <div class="at-answer-is_correct-disposition">
+                <t t-if="at_answer_id.is_correct==True">
+                    <input type="checkbox" checked="checked" class="form-control at-answer-is_correct"></input>
+                </t>
+                <t t-if="at_answer_id.is_correct!=True">
+                    <input type="checkbox" class="form-control at-answer-is_correct"></input>
+                </t>
+            </div>
+        </template>
+
+
+
+
+
+        <!-- QUESTION IMAGE: Subtemplate
+        Show image attachements with responsive behavior.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_test_question_image" name="at_post_test_question_image">
+            <div class="ir-attachment-image-ids row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <figure class="ir-attachment-image figure img-thumbnail">
+                        <a  class='ir-attachment-image-datas'
+                            t-attf-href="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
+                            t-attf-title="{{ ir_attachment_image_id.name }}">
+                            <img class="img-responsive ir-attachment-image-datas"
+                                t-attf-src="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
+                                alt="A caption for the above image text."
+                                title="A caption for the above image text." />
+                        </a>
+                        <figcaption class="figure-caption ir-attachment-image-name"
+                            t-attf-title="{{ ir_attachment_image_id.name }}">
+                            <t t-esc="ir_attachment_image_id.name" />
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </template>
+
+
+
+
+
+        <!-- TEST OPTIONS: Subtemplate
+        Buttons to manage tests, this will be shown at the begining of the page.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_test_test_options" name="at_post_test_test_options">
+            <div class="at-test-opcions-row">
+
+                <!-- TOOLBAR:: BEGIN -->
+                <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
+                    <button type="button" class="btn btn-default" title="Print" onclick="window.print();">
+                        <i class="fa fa-print text-info" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" title="Download all">
+                        <i class="fa fa-download text-active" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" title="Like">
+                        <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <!-- TOOLBAR:: END -->
+
+            </div>
+        </template>
+
+
+
+
+
+        <!-- QUESTION OPTIONS: Subtemplate
+        Buttons to manage questions, this will be shown at top of each question.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+         <template id="at_post_test_question_options" name="at_post_test_question_options">
+
+            <!-- TOOLBAR:: BEGIN -->
+            <div class="at-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
+                <button type="button" class="btn btn-default btn-revise-question" title="Revise" t-attf-data-question-id="{{ at_question_id.id }}" >
+                    <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                </button>
+
+                <t t-if="at_question_id.description">
+
+                <button type="button"
+                    data-toggle="popover"
+                    data-placement="right"
+                    class="btn btn-default btn-describe-question"
+                    t-attf-data-question-id="{{ at_question_id.id }}"
+                    t-attf-title="Description"
+                    t-attf-data-content="{{ at_question_id.description }}">
+                    <i class="fa fa-info text-info" aria-hidden="true"></i>
+                </button>
+
+                </t>
+
+                <button type="button" class="btn btn-default btn-impugn-question"
+                    data-toggle="modal"
+                    data-target="#at-post-test-inpugnment-modal"
+                    title="Impugn"
+                    t-attf-data-question-id="{{ at_question_id.id }}">
+                    <i class="fa fa-fire text-danger" aria-hidden="true"></i>&#160;
+                </button>
+                <button type="button" class="btn btn-default btn-edit-question" title="Edit" t-attf-data-question-id="{{ at_question_id.id }}">
+                    <i class="fa fa-pencil-square-o text-active" aria-hidden="true"></i>
+                </button>
+            </div>
+            <!-- TOOLBAR:: END -->
+
+        </template>
+
+
+
+
+
+        <!-- ROUTE posted-test IMPUGNMENT MODAL DIALOG
+             Bootstrap modal dialog code: http://getbootstrap.com/javascript/#modals
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <template id="at_post_image_zoom_modal">
+
+            <div class="modal fade no-print image-zoom-dialog" tabindex="-1" role="dialog" id="at-post-test-image-zoom">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#215;</span></button>
+                            <h4 class="modal-title"><span class="at-question-ir-attachment-image"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <img src="" title="" alt="" class="img-responsive at-question-ir-attachment-image" />
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+        </template>
+
+
+
+
+
         <!-- ROUTE posted-test IMPUGNMENT MODAL DIALOG
              Bootstrap modal dialog code: http://getbootstrap.com/javascript/#modals
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <template id="at_post_test_inpugnment_modal">
 
-            <t t-name="caca">
             <div class="modal fade no-print impugnment-dialog" tabindex="-1" role="dialog" id="at-post-test-inpugnment-modal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -196,7 +390,6 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            </t>
 
         </template>
 
