@@ -5,7 +5,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 from logging import getLogger
 
 
@@ -74,3 +74,30 @@ class AtTest(models.Model):
         auto_join=False,
         limit=None
     )
+
+    # -------------------------- MANAGEMENT FIELDS ----------------------------
+
+    lang = fields.Char(
+        string='Language',
+        required=True,
+        readonly=True,
+        index=False,
+        help=False,
+        size=50,
+        translate=False,
+        compute=lambda self: self._compute_lang()
+    )
+
+    # ----------------------- AUXILIARY FIELD METHODS -------------------------
+
+    @api.multi
+    @api.depends('model_id')
+    def _compute_lang(self):
+        """ Gets the language used by the current user and sets it as `lang`
+            field value
+        """
+
+        user_id = self.env['res.users'].browse(self.env.uid)
+
+        for record in self:
+            record.lang = user_id.lang

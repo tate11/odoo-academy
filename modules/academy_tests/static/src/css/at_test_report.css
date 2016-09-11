@@ -67,49 +67,6 @@ article.at-post-test-question p.at-question-preamble {
 
 
 
-/*-- Question edit mode
------------------------------------------------------------------------------*/
-
-article.at-post-test-question-edit img.ir-attachment-image-datas {
-    max-height: 120px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-
-/*-- Answer item in edit mode
-Styles applied over each one of the answers and items inside
------------------------------------------------------------------------------*/
-
-article.at-post-test-question-edit li.at-answer {
-    position: relative;
-    vertical-align: middle;
-    height: 34px;
-    margin-top: 6px;
-}
-
-article.at-post-test-question-edit textarea {
-    margin: 6px 0;
-}
-
-article.at-post-test-question-edit div.at-answer-name-disposition {
-    position: absolute;
-    left: 57px;
-    right: 0px;
-    top: 0px;
-}
-
-article.at-post-test-question-edit .at-answer-is_correct-disposition {
-    position: absolute;
-    left: 25px;
-    width: 25px;
-    top: -5px;
-}
-
-article.at-post-test-question-edit .at-question-edit-footer {
-    text-align: right;
-}
 
 /*-- Answer list
 Styles applied over the group of answers
@@ -131,30 +88,6 @@ article.at-post-test-question ol.at-answer-ids > li::before {
     content: counter(list, lower-alpha) ") ";
     counter-increment: list;
 }
-
-
-
-/*-- Question options toolbar
-Styles applied over area, buttons and other related items
------------------------------------------------------------------------------*/
-
-section.posted-test-body .at-question-options {
-    margin-top: 12px;
-    vertical-align: bottom;
-}
-
-section.posted-test-body .at-question-options:first-child {
-    margin-top: 0pt;
-}
-
-section.posted-test-body .at-question-options > button {
-    min-width: 24px;
-}
-
-section.posted-test-body .popover-content {
-    white-space: pre-line;
-}
-
 
 
 /*-- Image attachements subtemplate
@@ -206,7 +139,3 @@ Styles applied when document is printed
 }
 
 
-.popover-content {
-    overflow: auto;
-    white-space: pre-line;
-}
