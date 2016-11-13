@@ -280,8 +280,9 @@ class AtQuestion(models.Model):
         """
         result = u''
         for record in self:
-            matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', record.preamble)
-            if matches:
-                result += matches.group()
+            if record.preamble:
+                matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', record.preamble)
+                if matches:
+                    result += matches.group()
 
         return result
