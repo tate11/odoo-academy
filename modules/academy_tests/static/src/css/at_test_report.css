@@ -1,7 +1,8 @@
+
 /*-- Test
 Styles applied over the test global area, its header and other related items
 -----------------------------------------------------------------------------*/
-section.at-post-test-test .at-test-header {
+/*section.at-post-test-test .at-test-header {
     margin-bottom: 3px;
     text-align: justify;
 }
@@ -9,13 +10,7 @@ section.at-post-test-test .at-test-header {
 section.at-post-test-test .at-test-opcions-row {
     text-align: right;
 }
-
-section.at-post-test-test .at-test-preamble {
-    white-space: pre-line;
-    margin: 0px;
-    text-align: justify;
-    margin-bottom: 12px;
-}
+*/
 
 /*-- Question list
 Styles applied over the group of questions (main OL and LI tags)
@@ -32,10 +27,14 @@ section.at-post-test-test  li.at-question {
     page-break-inside: avoid;
 
     display: block;
-    padding: 0px 0px 12px 0;
     margin: 0px 0px 12px 0;
-    border-bottom: 1px solid #CCCCCC;
+}
+
+section.at-post-test-test .at-test-preamble {
+    white-space: pre-line;
+    margin: 0px;
     text-align: justify;
+    margin-bottom: 12px;
 }
 
 
@@ -76,19 +75,19 @@ article.at-post-test-question p.at-question-preamble {
 
 /*-- Question edit mode
 -----------------------------------------------------------------------------*/
-
+/*
 article.at-post-test-question-edit img.ir-attachment-image-datas {
     max-height: 120px;
     margin-left: auto;
     margin-right: auto;
 }
-
+*/
 
 
 /*-- Answer item in edit mode
 Styles applied over each one of the answers and items inside
 -----------------------------------------------------------------------------*/
-
+/*
 article.at-post-test-question-edit li.at-answer {
     position: relative;
     vertical-align: middle;
@@ -117,7 +116,7 @@ article.at-post-test-question-edit .at-answer-is_correct-disposition {
 article.at-post-test-question-edit .at-question-edit-footer {
     text-align: right;
 }
-
+*/
 /*-- Answer list
 Styles applied over the group of answers
 -----------------------------------------------------------------------------*/
@@ -144,7 +143,7 @@ article.at-post-test-question ol.at-answer-ids > li::before {
 /*-- Question options toolbar
 Styles applied over area, buttons and other related items
 -----------------------------------------------------------------------------*/
-
+/*
 section.posted-test-body .at-question-options {
     margin-top: 12px;
     vertical-align: bottom;
@@ -162,17 +161,14 @@ section.posted-test-body .popover-content {
     white-space: pre-line;
 }
 
-
+*/
 
 /*-- Image attachements subtemplate
 Styles applied over images, figure, figcaption and other related items
 -----------------------------------------------------------------------------*/
 
-div.ir-attachment-image-ids .figure,
-div.ir-attachment-image-ids a {
-    display: block;
-    width: 100%;
-    margin-top: 12px;
+div.ir-attachment-image-ids figure {
+    margin: 6px auto!important;
 }
 
 div.ir-attachment-image-ids figcaption.ir-attachment-image-name {
@@ -180,6 +176,7 @@ div.ir-attachment-image-ids figcaption.ir-attachment-image-name {
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
+    margin-top: 3px;
 }
 
 div.ir-attachment-image-ids img {
@@ -190,7 +187,7 @@ div.ir-attachment-image-ids img {
 /*-- Style for print
 Styles applied when document is printed
 -----------------------------------------------------------------------------*/
-
+/*
 @media print {
     section.posted-test-body .ir-attachment-image-ids .figure {
         border-style: none;
@@ -211,9 +208,61 @@ Styles applied when document is printed
         margin: 0;
     }
 }
-
-
+*/
+/*
 .popover-content {
     overflow: auto;
+    white-space: pre-line;
+}*/
+
+.footer > div.text-center,
+.header > .row {
+    display: none;
+}
+
+.at-test-report-header * {
+    padding: 0px;
+    margin: 0px;
+}
+
+.at-test-report-header .at-test-report-header-title h1 {
+    height: 24px;
+
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+
+    vertical-align: bottom;
+    padding-bottom: 1px;
+    margin-bottom: 1px;
+
+    border-bottom: 5px double black;
+    text-transform: uppercase;
+}
+
+
+.at-test-report-header-date
+.at-test-report-header-category {
+    height: 20px;
+
+    vertical-align: top;
+    padding-top: 1px;
+}
+
+.at-test-report-header-image {
+    height: 45px;
+
+    vertical-align: middle;
+}
+
+
+.at-test-report-footer {
+    border-top: 2px solid black;
+    padding-top: 1px;
+}
+
+
+.answers-table {
+    page-break-before: always;
     white-space: pre-line;
 }

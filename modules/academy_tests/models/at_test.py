@@ -40,6 +40,16 @@ class AtTest(models.Model):
         track_visibility='onchange'
     )
 
+    preamble = fields.Text(
+        string='Preamble',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='What it is said before beginning to test',
+        translate=True
+    )
+
     description = fields.Text(
         string='Description',
         required=False,
@@ -68,6 +78,21 @@ class AtTest(models.Model):
         default=None,
         help=False,
         comodel_name='at.test.at.question.rel',
+        inverse_name='at_test_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
+    )
+
+    at_answers_table_ids = fields.One2many(
+        string='Answers table',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Resume with answers table',
+        comodel_name='at.answers.table',
         inverse_name='at_test_id',
         domain=[],
         context={},

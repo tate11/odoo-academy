@@ -29,6 +29,7 @@
         'data/at_topic_data.xml',
         'data/at_category_data.xml',
         'data/at_level_data.xml',
+        'data/report_paperformat.xml',
 
         'demo/at_answer_demo.xml',
         'demo/at_topic_demo.xml',
@@ -53,7 +54,10 @@
         'views/at_test_at_question_rel.xml',
         'views/at_test_view.xml',
         'views/at_topic_view.xml',
-        'views/ir_attachment_view.xml'
+        'views/ir_attachment_view.xml',
+
+        'views/at_test_report.xml',
+        'views/at_test_report_ayto.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

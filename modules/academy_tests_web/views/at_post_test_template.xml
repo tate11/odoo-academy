@@ -26,6 +26,9 @@
                                         <p class="at-test-description"><t t-esc="at_test_id.description" /></p>
                                     </t>
 
+                                    <t t-if="at_test_id.preamble">
+                                        <p class="at-test-preamble"><t t-esc="at_test_id.preamble" /></p>
+                                    </t>
                                 </header>
 
                                 <!-- TEST BUTTONS : Subtemplate -->
@@ -252,11 +255,11 @@
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <template id="at_post_test_test_options" name="at_post_test_test_options">
-            <div class="at-test-opcions-row">
+            <div class="at-test-opcions-row" style="text-align: right;">
 
                 <!-- TOOLBAR:: BEGIN -->
                 <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
-                    <button type="button" class="btn btn-default" title="Print" onclick="window.print();">
+                    <button type="button" class="btn btn-default btn-at-test-print" title="Print" t-attf-data-test-id="{{ at_test_id.id }}">
                         <i class="fa fa-print text-info" aria-hidden="true"></i>
                     </button>
                     <button type="button" class="btn btn-default" title="Download all">

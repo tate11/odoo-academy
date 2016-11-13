@@ -174,7 +174,7 @@ odoo.define('academy_tests_web.service', function (require) {
                 action_id = action_id[1];
 
                 /** --- THIS MUST BE CHANGED ---**/
-                url = 'http://localhost:30090/web#id=' + at_question_id + '&view_type=form&model=at.question&menu_id=128&action=' + action_id;
+                url = '/web#id=' + at_question_id + '&view_type=form&model=at.question&menu_id=128&action=' + action_id;
                 window.open(url, 'backend').focus();
 
                 obj.requery(at_question_id, 'show');
@@ -201,6 +201,8 @@ odoo.define('academy_tests_web.service', function (require) {
             at_question = jQuery('#at-question-' + at_question_id);
 
             values = obj.get_data(at_question, at_question_id);
+
+            delete values['question_id'];
 
             /* --- PERHAPS THIS SHOULD BE TROUGHT THE CONTROLLER ---*/
             new Model('at.question').call('write', [[at_question_id], values]).done(function(result) {

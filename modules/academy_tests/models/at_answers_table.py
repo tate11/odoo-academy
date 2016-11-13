@@ -95,43 +95,34 @@ class AtAnswersTable(models.Model):
         """
 
         self._sql_query = u"""
-            WITH right_answers AS (
-                WITH answers AS (
-                    SELECT
-                        "id",
-                        "row_number" () OVER (
-                            PARTITION BY at_question_id
-                            ORDER BY
-                                at_question_id ASC,
-                                "sequence" ASC
-                        )::INT as answer,
-                        is_correct,
-                        at_question_id
-                    FROM
-                        at_answer
-                ) SELECT
-                    *
-                FROM
-                    "answers"
-                WHERE
-                    is_correct = TRUE
-            ) SELECT
-                "row_number"() over() as id,
-                atqr.at_test_id as at_test_id,
-                atqr.at_question_id as at_question_id,
-                ra."id" as at_answer_id,
-                ROW_NUMBER () OVER (
-                        PARTITION BY at_test_id
-                        ORDER BY
-                            at_test_id ASC,
-                            atqr.at_question_id asc
-                    )::INT AS "sequence",
-                substr('ABCDEFGHIJKLMNOPQRSTUVWXYZ', ra.answer, 1) as "name",
-                description -- regexp_replace(atq.description, E'[\\r\\n]+', E'\\t', 'g')::TEXT as
-            FROM
-                at_test_at_question_rel atqr
-            LEFT JOIN right_answers AS ra ON atqr.at_question_id = ra.at_question_id
-            inner join at_question as atq on atq.id = atqr.at_question_id
+             WITH ordered_answers AS (
+                     SELECT at_answer.id,
+                        (row_number() OVER (PARTITION BY at_answer.at_question_id ORDER BY at_answer.sequence))::integer AS sequence,
+                        at_answer.at_question_id,
+                        at_answer.is_correct
+                       FROM at_answer
+                      ORDER BY (row_number() OVER (PARTITION BY at_answer.at_question_id ORDER BY at_answer.sequence))::integer
+                    )
+             SELECT row_number() OVER () AS id,
+                att.id AS at_test_id,
+                atq.id AS at_question_id,
+                ata.id AS at_answer_id,
+                rel.sequence,
+                    CASE
+                        WHEN (ata.id IS NOT NULL) THEN substr('ABCDEFGHIJKLMNOPQRSTUVWXYZ'::text, ata.sequence, 1)
+                        ELSE NULL::text
+                    END AS name,
+                atq.description
+               FROM (((at_test_at_question_rel rel
+                 JOIN at_test att ON ((att.id = rel.at_test_id)))
+                 JOIN at_question atq ON ((rel.at_question_id = atq.id)))
+                 LEFT JOIN ( SELECT ordered_answers.id,
+                        ordered_answers.sequence,
+                        ordered_answers.at_question_id,
+                        ordered_answers.is_correct
+                       FROM ordered_answers
+                      WHERE (ordered_answers.is_correct = true)) ata ON ((ata.at_question_id = atq.id)))
+              ORDER BY att.id, rel.sequence, ata.sequence
         """
 
         drop_view_if_exists(cr, self._table)

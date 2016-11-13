@@ -128,10 +128,10 @@ class App(object):
     def _is_answer(self, line):
         """ Check if line is for question ^[ABCDabcd]+
         """
-        return bool(re.match(r'^[abcd][\)\.\- ]+.*$', line, re.IGNORECASE))
+        return bool(re.match(r'^[abcdx][\)\.\- ]+.*$', line, re.IGNORECASE))
 
 
-    def _new_answer(self, line):
+    def _new_answer(self, line, is_correct=False):
         """ Creates new answer INSERT script for line
         """
 
@@ -159,11 +159,11 @@ class App(object):
                 now()::TIMESTAMP (0),
                 '1',
                 now()::TIMESTAMP (0),
-                'f',
+                {},
                 (SELECT "id" FROM at_question ORDER BY ID DESC LIMIT 1),
                 't'
             );
-        """.format(self._answer_sequence, line)
+        """.format(self._answer_sequence, line, u'true' if is_correct else u'false')
 
 
     def _register_question(self, question):
@@ -184,7 +184,8 @@ class App(object):
     def _clear_answer(self, line):
         """ Cliear questions
         """
-        return re.search(r'^[abcdABCD]{1,2}[\)\.\- ]+(.*)$', line).group(1)
+        is_correct = line and line[0].lower() == 'x'
+        return re.search(r'^[abcdxABCDX]{1,2}[\)\.\- ]+(.*)$', line).group(1), is_correct
 
     def _register_topic(self):
         """ SQL to ensure topic
@@ -317,8 +318,8 @@ class App(object):
                         if question:
                             self._register_question(question)
                     elif self._is_answer(line):
-                        line = self._clear_answer(line)
-                        answer = self._new_answer(line)
+                        line, is_correct = self._clear_answer(line)
+                        answer = self._new_answer(line, is_correct)
                         if answer:
                             self._register_answer(answer)
                     elif self._preamble and len(line) > 3:

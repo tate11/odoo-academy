@@ -8,6 +8,8 @@
 import argparse
 import psycopg2
 import locale
+import chardet
+import io
 
 # ------------------------------- DECORATORS ----------------------------------
 
@@ -314,6 +316,15 @@ class App(object):
 
         return result
 
+    @staticmethod
+    def _autodecode(_in_text):
+        """ Encode text in UTF-8 """
+        if _in_text:
+            dbcode = 'utf-8' # chardet.detect(_in_text)['encoding']
+            return _in_text.decode(dbcode, errors='replace')
+        else:
+            return u''
+
 
     def _get_test(self):
         #pylint: disable=I0011,W0703
@@ -336,16 +347,20 @@ class App(object):
 
         os_encoding = locale.getpreferredencoding()
 
-        with open("Output.txt", "w") as text_file:
-            text_file.write(test.name)
+        with io.open('Output.txt', 'w', encoding='UTF-8') as text_file:
+            text_file.write(self._autodecode(test.name))
             text_file.write(u'\n\n')
-            text_file.write(test.description)
+            text_file.write(self._autodecode(test.description))
             text_file.write(u'\n')
 
             question_count = 1
             for question in test.questions:
+                # This works but I don't know why
+                if question.preamble:
+                    text_file.write(u'\n{}'.format(self._autodecode(question.preamble)))
+
                 text_file.write(u'\n{}.- '.format(question_count))
-                text_file.write(question.name)
+                text_file.write(self._autodecode(question.name))
                 text_file.write(u'\n')
 
                 question_count += 1
@@ -355,7 +370,7 @@ class App(object):
                     letter = u' abcdefghijklmnopqrstuvwxyz'[answer_count]
                     text_file.write(u'{}) '.format(letter))
 
-                    text_file.write(answer.name)
+                    text_file.write(self._autodecode(answer.name))
                     text_file.write(u'\n')
 
                     answer_count += 1

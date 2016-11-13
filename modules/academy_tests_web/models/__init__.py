@@ -5,4 +5,3 @@
 ###############################################################################
 
 from . import at_question_impugnment
-from . import at_answers_table

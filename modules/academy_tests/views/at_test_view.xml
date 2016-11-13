@@ -49,6 +49,10 @@
                             </h1>
                         </div>
                         <notebook>
+                            <page string="Preamble" class="oe_page_preamble" accesskey="D">
+                                <field name="preamble" class="oe_field_preamble"
+                                    placeholder="Enter new text for preamble" />
+                            </page>
                             <page string="Description" class="oe_page_description" accesskey="D">
                                 <field name="description" class="oe_field_desription"
                                     placeholder="Enter new text for description" />

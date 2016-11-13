@@ -32,6 +32,7 @@
                                         <th class="span7 col-md-7">Name</th>
                                         <th class="span1 col-md-1">View</th>
                                         <th class="span1 col-md-1">Answers</th>
+                                        <th class="span1 col-md-1">PDF</th>
                                     </tr>
                                 </thead>
 
@@ -55,6 +56,11 @@
                                         <td>
                                             <a t-attf-href="/answers-table?test_id={{ test.id }}" title="Answers table">
                                                 <span class="fa fa-table" />
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a t-attf-href="/report/pdf/academy_tests.view_at_test_qweb/{{ test.id }}" target="_blank" title="Download as PDF">
+                                                <span class="fa fa-file-pdf-o"></span>
                                             </a>
                                         </td>
                                     </tr>

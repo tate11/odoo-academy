@@ -11,6 +11,7 @@ from openerp import models, fields, api
 from openerp.tools.translate import _
 from openerp.exceptions import ValidationError
 from logging import getLogger
+from re import search
 
 _logger = getLogger(__name__)
 
@@ -246,7 +247,7 @@ class AtQuestion(models.Model):
 
 
     @api.one
-    @api.onchange('ir_attachment_id')
+    @api.onchange('ir_attachment_ids')
     def _onchange_ir_attachment_id(self):
         self._compute_ir_attachment_image_ids()
 
@@ -265,10 +266,22 @@ class AtQuestion(models.Model):
 
     # --------------------------- SQL_CONTRAINTS ------------------------------
 
-    _sql_constraints = [
-        (
-            'question_uniq',
-            'UNIQUE(name)',
-            _(u'There is already another question with the same name')
-        )
-    ]
+    # _sql_constraints = [
+    #     (
+    #         'question_uniq',
+    #         'UNIQUE(name)',
+    #         _(u'There is already another question with the same name')
+    #     )
+    # ]
+
+    @api.multi
+    def townhall_file(self):
+        """ Get filename to use in townhall report
+        """
+        result = u''
+        for record in self:
+            matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', record.preamble)
+            if matches:
+                result += matches.group()
+
+        return result
