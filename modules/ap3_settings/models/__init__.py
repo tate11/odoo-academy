@@ -4,5 +4,12 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
+from openerp.http import route, request, Controller
+from openerp.tools.translate import _
+from logging import getLogger
 
-from . import models
+
+_logger = getLogger(__name__)
+
+
+from . import at_question

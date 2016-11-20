@@ -40,10 +40,12 @@
     ],
     'js': [
         'static/src/js/at_post_test_template.js',
+        'static/src/js/at_post_tests_template.js',
         'static/src/js/at_post_answers_table_template.js'
     ],
     'css': [
         'static/src/css/at_post_test_template.css',
+        'static/src/css/at_post_tests_template.css',
         'static/src/css/at_post_answers_table_template.css'
     ],
 

@@ -3,10 +3,10 @@
     'name': "AP3 Settings",
 
     'summary': """
-        Settings will be used in Academia Postal 3""",
+        Settings to be used in Academia Postal 3""",
 
     'description': """
-        Settings will be used in Academia Postal 3
+        Settings to be used in Academia Postal 3
     """,
 
     'author': "Jorge Soto Garcia",
@@ -20,13 +20,19 @@
 
     # any module necessary for this one to work correctly
     'depends': [
-
+        'report',
+        'academy_base',
+        'academy_tests'
     ],
 
     # always loaded
     'data': [
         'data/report_paperformat.xml',
+
         'views/external_layout.xml',
+        'views/at_test_report.xml',
+        'views/at_test_report_ayto.xml',
+        'views/at_post_tests_template.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
@@ -35,4 +41,6 @@
     ],
     'css': [
     ],
+
+    'license': 'AGPL-3'
 }

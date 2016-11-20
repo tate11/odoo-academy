@@ -20,8 +20,9 @@
 
     # any module necessary for this one to work correctly
     'depends': [
-        'academy_base',
         'mail',
+        'report',
+        'academy_base',
     ],
 
     # always loaded

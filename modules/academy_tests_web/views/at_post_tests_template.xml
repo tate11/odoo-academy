@@ -28,11 +28,10 @@
 
                                 <thead>
                                     <tr>
-                                        <th class="span2 col-md-2">ID</th>
-                                        <th class="span7 col-md-7">Name</th>
-                                        <th class="span1 col-md-1">View</th>
-                                        <th class="span1 col-md-1">Answers</th>
-                                        <th class="span1 col-md-1">PDF</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>PDF</th>
+                                        <th>RT</th>
                                     </tr>
                                 </thead>
 
@@ -40,28 +39,35 @@
 
                                 <t t-foreach="tests" t-as="test">
                                     <tr>
-                                        <th class="span2 col-md-2"><t t-esc="test.id"/></th>
-                                        <td class="span8 col-md-8">
+                                        <th><t t-esc="test.id"/></th>
+                                        <td>
 
                                             <a t-attf-href="/posted-test?test_id={{test.id}}">
                                                 <t t-esc="test.name"/>
                                             </a>
 
                                         </td>
-                                        <td class="span1 col-md-1">
-                                            <a t-attf-href="/posted-test?test_id={{test.id}}">
-                                                <span class="fa fa-eye" />
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a t-attf-href="/answers-table?test_id={{ test.id }}" title="Answers table">
-                                                <span class="fa fa-table" />
-                                            </a>
-                                        </td>
                                         <td>
                                             <a t-attf-href="/report/pdf/academy_tests.view_at_test_qweb/{{ test.id }}" target="_blank" title="Download as PDF">
                                                 <span class="fa fa-file-pdf-o"></span>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa fa-bars"></span></a>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                    <li role="presentation">
+                                                        <a role="menuitem" tabindex="-1" t-attf-href="/report/html/academy_tests.view_at_test_qweb/{{ test.id }}" target="_blank" title="View on web">
+                                                            <span class="fa fa-globe"></span> View on web
+                                                        </a>
+                                                    </li>
+                                                    <li role="presentation">
+                                                        <a role="menuitem"  t-attf-href="/answers-table?test_id={{ test.id }}" title="Answers table">
+                                                            <span class="fa fa-table" /> View answers
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 </t> <!-- t-foreach -->
@@ -73,7 +79,7 @@
                     </div>
                 </div>
 
-                <script type="text/javascript" src="/academy_tests_web/static/src/js/at_post_test_template.js"></script>
+                <script type="text/javascript" src="/academy_tests_web/static/src/js/at_post_tests_template.js"></script>
             </t>
         </template>
 

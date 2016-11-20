@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*-
+#pylint: disable=I0011,W0212,E0611,C0103,R0903,C0111,F0401
 ###############################################################################
 #    License, author and contributors information in:                         #
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp.http import route, request, Controller
-from openerp.tools.translate import _
-from logging import getLogger
+from __future__ import division
 
+from openerp import models, api
+from logging import getLogger
+from re import search
 
 _logger = getLogger(__name__)
 
 
-class AtQuestion(models.Model):
-    """ Questions are the academy tests cornerstone. Each one of the questions
-    belongs to a single topic but they can belong to more than one question in
-    the selected topic.
 
-    Fields:
-      name (Char): Human readable name which will identify each record.
+class AtQuestion(models.Model):
+    """ Extends at.question model to use it in townhall reports
 
     """
     _inherit = ['at.question']
