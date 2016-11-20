@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Academy Base",
+    'name': "AP3 Settings",
 
     'summary': """
-        Common information and behavior used by the academy modules""",
+        Settings will be used in Academia Postal 3""",
 
     'description': """
-        Common information and behavior used by the academy modules
+        Settings will be used in Academia Postal 3
     """,
 
     'author': "Jorge Soto Garcia",
@@ -20,11 +20,13 @@
 
     # any module necessary for this one to work correctly
     'depends': [
+
     ],
 
     # always loaded
     'data': [
-        'views/academy_base.xml',
+        'data/report_paperformat.xml',
+        'views/external_layout.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
@@ -33,6 +35,4 @@
     ],
     'css': [
     ],
-
-    'license': 'AGPL-3'
 }

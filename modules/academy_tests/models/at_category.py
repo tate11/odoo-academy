@@ -66,7 +66,7 @@ class AtCategory(models.Model):
         readonly=False,
         index=False,
         default=10,
-        help=('Place of this category in the order of the categories from'
+        help=('Place of this category in the order of the categories from '
               'the topic')
     )
 

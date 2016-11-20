@@ -4,4 +4,3 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import at_question_impugnment

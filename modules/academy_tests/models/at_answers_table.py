@@ -107,7 +107,7 @@ class AtAnswersTable(models.Model):
                 att.id AS at_test_id,
                 atq.id AS at_question_id,
                 ata.id AS at_answer_id,
-                rel.sequence,
+                ROW_NUMBER() OVER(PARTITION BY at_test_id ORDER BY at_test_id, rel."sequence" ASC) AS "sequence",
                     CASE
                         WHEN (ata.id IS NOT NULL) THEN substr('ABCDEFGHIJKLMNOPQRSTUVWXYZ'::text, ata.sequence, 1)
                         ELSE NULL::text

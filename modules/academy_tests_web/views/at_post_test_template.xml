@@ -42,7 +42,6 @@
                                     <t t-set="at_question_id" t-value="at_test_at_question_ids.at_question_id" />
 
                                     <li class="at-question at-question-swap-content" t-attf-id="at-question-{{ at_question_id.id }}" t-attf-data-question-id="{{ at_question_id.id }}">
-
                                     <!-- QUESTION: Subtemplate -->
                                         <t t-call="academy_tests_web.at_post_test_question_show" />
 
@@ -81,6 +80,7 @@
         <template id="at_post_test_question_show" name="at_post_test_question_show">
 
                 <article class="at-post-test-question at-post-test-question-show">
+
 
                     <t t-if="at_question_id.preamble">
                         <p class="at-question-preamble"><t t-esc="at_question_id.preamble" /></p>
@@ -234,8 +234,8 @@
                             t-attf-title="{{ ir_attachment_image_id.name }}">
                             <img class="img-responsive ir-attachment-image-datas"
                                 t-attf-src="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
-                                alt="A caption for the above image text."
-                                title="A caption for the above image text." />
+                                alt="Image tag"
+                                title="Image tag" />
                         </a>
                         <figcaption class="figure-caption ir-attachment-image-name"
                             t-attf-title="{{ ir_attachment_image_id.name }}">

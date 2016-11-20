@@ -264,25 +264,4 @@ class AtQuestion(models.Model):
         if not True in self.at_answer_ids.mapped('is_correct'):
             raise ValidationError(message)
 
-    # --------------------------- SQL_CONTRAINTS ------------------------------
 
-    # _sql_constraints = [
-    #     (
-    #         'question_uniq',
-    #         'UNIQUE(name)',
-    #         _(u'There is already another question with the same name')
-    #     )
-    # ]
-
-    @api.multi
-    def townhall_file(self):
-        """ Get filename to use in townhall report
-        """
-        result = u''
-        for record in self:
-            if record.preamble:
-                matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', record.preamble)
-                if matches:
-                    result += matches.group()
-
-        return result

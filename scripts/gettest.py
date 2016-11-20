@@ -253,6 +253,7 @@ class App(object):
         self._password = None
         self._user = None
         self._test_id = None
+        self._output = None
 
     def _argparse(self):
         """ Detines an user-friendly command-line interface and proccess its
@@ -283,6 +284,10 @@ class App(object):
         parser.add_argument('-p', '--password', type=str, dest='password',
                             default='odoo', help='database password')
 
+        # STEP 3: Determine non positional arguments
+        parser.add_argument('-o', '--output', type=str, dest='output',
+                            default='output.txt', help='output filename')
+
         args = parser.parse_args()
 
         self._host = args.host
@@ -290,10 +295,11 @@ class App(object):
         self._user = args.user
         self._password = args.password
         self._test_id = args.test_id
+        self._output = args.output
 
 
     @staticmethod
-    def _decode(string, cp):
+    def _decode(string, codepage):
         #pylint: disable=I0011,W0702,W0703,C0111
         result = u''
 
@@ -307,10 +313,10 @@ class App(object):
 
         else:
             try:
-                result = result.encode(cp, errors='replace')
+                result = result.encode(codepage, errors='replace')
             except:
                 try:
-                    result = result.encode(cp, errors='ignore')
+                    result = result.encode(codepage, errors='ignore')
                 except Exception as ex:
                     print ex
 
@@ -347,7 +353,7 @@ class App(object):
 
         os_encoding = locale.getpreferredencoding()
 
-        with io.open('Output.txt', 'w', encoding='UTF-8') as text_file:
+        with io.open(self._output, 'w', encoding='UTF-8') as text_file:
             text_file.write(self._autodecode(test.name))
             text_file.write(u'\n\n')
             text_file.write(self._autodecode(test.description))
