@@ -27,6 +27,7 @@
                     <field name="name" />
                     <field name="administration_id" />
                     <field name="announcement" />
+                    <field name="target_date" />
                     <field name="total_of_vacancies" />
                 </tree>
             </field>
@@ -55,7 +56,7 @@
                             <field name="administration_id" />
                             <field name="approval" />
                             <field name="announcement" />
-                            <field name="submissions_deadline" />
+                            <field name="target_date" />
                         </group>
 
                         <group col="2" string="Internet">

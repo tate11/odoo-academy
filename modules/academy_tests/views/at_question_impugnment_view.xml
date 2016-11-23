@@ -81,12 +81,28 @@
             </field>
         </record>
 
+        <record id="view_at_question_impugnment_graph" model="ir.ui.view">
+            <field name="name">Question impugment</field>
+            <field name="model">at.question.impugnment</field>
+            <field name="type">graph</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <graph string="Impugnments" type="pivot">
+                    <field type="row" name="active" />
+                    <field type="col" name="at_question_id" />
+                    <field type="measure" name="id" />
+                </graph>
+            </field>
+        </record>
+
         <!-- Main window action for model.name -->
         <record id="action_question_impugnment_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Question impugnment</field>
             <field name="res_model">at.question.impugnment</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>

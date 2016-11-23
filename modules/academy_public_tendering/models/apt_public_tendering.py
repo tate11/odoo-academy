@@ -89,13 +89,13 @@ class AptPublicTendering(models.Model):
         help='Choose the Announcement date'
     )
 
-    submissions_deadline = fields.Date(
-        string='Deadline for submissions',
+    target_date = fields.Date(
+        string='Target date',
         required=False,
         readonly=False,
         index=False,
         default=lambda self: self.default_submissions_deadline(),
-        help='Choose the last day for submission of requests'
+        help='Choose the last day for training'
     )
 
     apt_vacancy_position_ids = fields.One2many(
