@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Academy Tests",
+    'name': 'Academy Tests',
 
-    'summary': """
-        Store and manage information about tests and their questions""",
+    'summary': '''
+        Store and manage information about tests and their questions''',
 
-    'description': """
+    'description': '''
         Store and manage information about tests and their questions
-    """,
+    ''',
 
-    'author': "Jorge Soto Garcia",
-    'website': "https://github.com/sotogarcia",
+    'author': 'Jorge Soto Garcia',
+    'website': 'https://github.com/sotogarcia',
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml

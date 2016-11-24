@@ -9,6 +9,12 @@
             <field name="parent_id" ref="academy_base.menu_academy" />
         </record>
 
+        <record id="menu_tendering_settings_top" model="ir.ui.menu" >
+            <field name="name">Tendering</field>
+            <field name="sequence" eval="10" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings" />
+        </record>
+
         <record id="view_academy_public_tendering_assets" model="ir.ui.view">
             <field name="name">academy_public_tendering assets</field>
             <field name="model"></field>

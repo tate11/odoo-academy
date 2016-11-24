@@ -126,7 +126,7 @@
             <field name="name">Vacancy positions</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_vacancy_positions_act_window" />
-            <field name="parent_id" ref="academy_public_tendering.menu_tendering_top" />
+            <field name="parent_id" ref="menu_tendering_settings_top" />
         </record>
 
     </data>

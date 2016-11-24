@@ -8,5 +8,12 @@
             <field name="sequence" eval="10" />
         </record>
 
+        <record id="menu_academy_settings" model="ir.ui.menu" >
+            <field name="name">Academy</field>
+            <field name="sequence" eval="10" />
+            <field name="parent_id" ref="base.menu_administration" />
+        </record>
+
+
     </data>
 </openerp>

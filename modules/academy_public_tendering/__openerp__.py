@@ -31,6 +31,12 @@
         'data/apt_kind_data.xml',
         'data/apt_class_data.xml',
 
+        'security/apt_class.xml',
+        'security/apt_group.xml',
+        'security/apt_kind.xml',
+        'security/apt_public_tendering.xml',
+        'security/apt_vacancy_position.xml',
+
         'views/academy_public_tendering.xml',
 
         'views/apt_group_view.xml',

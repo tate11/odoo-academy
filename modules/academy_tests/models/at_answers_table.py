@@ -5,7 +5,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 from openerp.tools import drop_view_if_exists
 from logging import getLogger
 
@@ -56,7 +56,7 @@ class AtAnswersTable(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Test to which this question belongs',
+        help='Test to which this item belongs',
         comodel_name='at.test',
         domain=[],
         context={},
@@ -87,8 +87,8 @@ class AtAnswersTable(models.Model):
         help='Preference order for this question'
     )
 
-
-    def init(self, cr):
+    @api.model_cr
+    def init(self):
         """ Build database view which will be used as module origin
 
             :param cr: database cursor
@@ -125,8 +125,8 @@ class AtAnswersTable(models.Model):
               ORDER BY att.id, rel.sequence, ata.sequence
         """
 
-        drop_view_if_exists(cr, self._table)
-        cr.execute(
+        drop_view_if_exists(self._cr, self._table)
+        self._cr.execute(
             'create or replace view {} as ({})'.format(
                 self._table,
                 self._sql_query
