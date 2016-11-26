@@ -3,10 +3,21 @@
 <openerp>
     <data noupdate="0">
 
-        <record id="access_at_topic_base_group_user" model="ir.model.access">
-            <field name="name">at.topic base_group_user</field>
+        <record id="access_at_topic_base_group_restricted_user" model="ir.model.access">
+            <field name="name">at.topic base_group_restricted_user</field>
             <field name="model_id" ref="academy_tests.model_at_topic"/>
-            <field name="group_id" ref="base.group_user"/>
+            <field name="group_id" ref="academy_base.group_restricted_user"/>
+            <field name="perm_read" eval="True" />
+            <field name="perm_create" eval="False" />
+            <field name="perm_write" eval="False" />
+            <field name="perm_unlink" eval="False" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="access_at_topic_base_group_editor" model="ir.model.access">
+            <field name="name">at.answer base_group_editor</field>
+            <field name="model_id" ref="academy_tests.model_at_topic"/>
+            <field name="group_id" ref="academy_base.group_editor"/>
             <field name="perm_read" eval="True" />
             <field name="perm_create" eval="True" />
             <field name="perm_write" eval="True" />

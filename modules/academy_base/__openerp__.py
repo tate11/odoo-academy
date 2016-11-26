@@ -24,6 +24,7 @@
 
     # always loaded
     'data': [
+        'data/res_groups.xml',
         'views/academy_base.xml',
     ],
     # only loaded in demonstration mode

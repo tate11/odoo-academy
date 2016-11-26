@@ -55,6 +55,7 @@ odoo.define('academy_tests_web.service', function (require) {
         requery : function (at_question_id, mode) {
 
             values = {'at_question_id': at_question_id, mode};
+
             ready = session.rpc("/get-question", values).then(function (result) {
 
                     /* STEP 2: Get question LI DOM item */
@@ -64,7 +65,6 @@ odoo.define('academy_tests_web.service', function (require) {
                     swap_area = jQuery(at_question);
                     json = JSON.parse(result);
                     jQuery(swap_area).html(json['html']);
-                    console.log(json);
 
                     /* STEP 4: bind events of the new items */
                     obj.bind_events(at_question);
@@ -143,7 +143,6 @@ odoo.define('academy_tests_web.service', function (require) {
         },
 
         on_ir_attachment_image_datas : function(e) {
-            console.log('hola');
 
             modal = jQuery('#at-post-test-image-zoom')
             span = modal.find('span.at-question-ir-attachment-image')
@@ -225,14 +224,14 @@ odoo.define('academy_tests_web.service', function (require) {
                 'description': li_obj.find('.at-question-description').val(),
                 'at_answer_ids': []
             }
-            console.log(li_obj.find('.at-answer'));
+
             li_obj.find('.at-answer').each(function(i){
                 id = $(this).data('id');
                 name = $(this).find('.at-answer-name').val();
                 checked = $(this).find('input[type=checkbox]').prop('checked');
                 values['at_answer_ids'].push([1, id, {'name': name, 'is_correct': checked }]);
             });
-            console.log(values['at_answer_ids']);
+
             return values;
         }
     });
@@ -242,8 +241,6 @@ odoo.define('academy_tests_web.service', function (require) {
     ------------------------------------------------------------------------*/
 
     $('#at-post-test-inpugnment-modal').on('show.bs.modal', function (e) {
-        console.log(e.relatedTarget);
-
         self = this;
 
         at_question_id = jQuery(e.relatedTarget).data('question-id');
@@ -309,8 +306,6 @@ odoo.define('academy_tests_web.service', function (require) {
             alert(err);
         }
 
-
-        console.log(values);
     });
 
     /* Inpugnment modal disable send

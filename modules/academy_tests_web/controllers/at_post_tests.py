@@ -132,7 +132,6 @@ class PostTests(Controller):
         at_question_obj = request.env['at.question']
         at_question_set = at_question_obj.browse(question_id)
 
-        print(kw)
         at_question_set.write(kw)
 
         at_question_set = at_question_obj.browse(question_id)
@@ -152,8 +151,6 @@ class PostTests(Controller):
         at_answers_domain = [('at_test_id', '=', int(kw['test_id']))]
         at_answers_obj = request.env['at.answers.table']
         at_answers_set = at_answers_obj.search(at_answers_domain)
-
-        print at_answers_set
 
         return request.render('academy_tests_web.at_answers_table', {
             'test': at_test_set,
@@ -177,8 +174,6 @@ class PostTests(Controller):
         ir_attachment_obj = request.env['ir.attachment']
         ir_attachment_set = ir_attachment_obj.search(ir_attachment_domain)
 
-
-
         filename = ir_attachment_set.datas_fname
         filecontent = base64.b64decode(ir_attachment_set.datas or '')
         if not filecontent:
@@ -194,5 +189,9 @@ class PostTests(Controller):
     def _has_edit_rights(uid):
         """ Get current user
         """
-        return uid == 1
+
+        user_obj = request.env['res.users']
+        user_set = user_obj.browse(uid)
+
+        return user_set.user_has_groups('academy_base.group_editor')
 
