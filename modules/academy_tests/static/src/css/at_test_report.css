@@ -30,7 +30,7 @@ section.at-post-test-test  li.at-question {
     margin: 0px 0px 12px 0;
 }
 
-section.at-post-test-test .at-test-preamble {
+.at-test-preamble {
     white-space: pre-line;
     margin: 0px;
     text-align: justify;

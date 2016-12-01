@@ -68,11 +68,17 @@ class Answer(Entity):
     def name(self):
         return self._name
 
-    def __init__(self, _id, name):
+    @property
+    def is_correct(self):
+        return self._is_correct
+
+
+    def __init__(self, _id, name, is_correct=False):
         super(Answer, self).__init__()
 
         self._id = _id
         self._name = name
+        self._is_correct = is_correct
 
     @classmethod
     def from_question(cls, question_id):
@@ -81,7 +87,8 @@ class Answer(Entity):
         conn_pattern = u'''
             SELECT
                 ata.id,
-                ata.name
+                ata.name,
+                ata.is_correct
             FROM
                 at_answer AS ata
             INNER JOIN at_question AS atq ON ata.at_question_id = atq."id"
@@ -98,7 +105,7 @@ class Answer(Entity):
         assert rows, u'There is not any answer in question %s' % question_id
 
         for row in rows:
-            answer = Answer(row[0], row[1])
+            answer = Answer(row[0], row[1], row[2])
             answers.append(answer)
 
         return answers
@@ -374,7 +381,7 @@ class App(object):
                 answer_count = 1
                 for answer in question.answers:
                     letter = u' abcdefghijklmnopqrstuvwxyz'[answer_count]
-                    text_file.write(u'{}) '.format(letter))
+                    text_file.write(u'{}) '.format(u'x' if answer.is_correct else letter))
 
                     text_file.write(self._autodecode(answer.name))
                     text_file.write(u'\n')
