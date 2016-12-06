@@ -94,41 +94,49 @@ class AtAnswersTable(models.Model):
             :param cr: database cursor
         """
 
-        self._sql_query = u"""
-             WITH ordered_answers AS (
-                     SELECT at_answer.id,
-                        (row_number() OVER (PARTITION BY at_answer.at_question_id ORDER BY at_answer.sequence))::integer AS sequence,
-                        at_answer.at_question_id,
-                        at_answer.is_correct
-                       FROM at_answer
-                      ORDER BY (row_number() OVER (PARTITION BY at_answer.at_question_id ORDER BY at_answer.sequence))::integer
-                    )
-             SELECT row_number() OVER () AS id,
-                att.id AS at_test_id,
-                atq.id AS at_question_id,
-                ata.id AS at_answer_id,
-                ROW_NUMBER() OVER(PARTITION BY at_test_id ORDER BY at_test_id, rel."sequence" ASC) AS "sequence",
-                    CASE
-                        WHEN (ata.id IS NOT NULL) THEN substr('ABCDEFGHIJKLMNOPQRSTUVWXYZ'::text, ata.sequence, 1)
-                        ELSE NULL::text
-                    END AS name,
-                atq.description
-               FROM (((at_test_at_question_rel rel
-                 JOIN at_test att ON ((att.id = rel.at_test_id)))
-                 JOIN at_question atq ON ((rel.at_question_id = atq.id)))
-                 LEFT JOIN ( SELECT ordered_answers.id,
-                        ordered_answers.sequence,
-                        ordered_answers.at_question_id,
-                        ordered_answers.is_correct
-                       FROM ordered_answers
-                      WHERE (ordered_answers.is_correct = true)) ata ON ((ata.at_question_id = atq.id)))
-              ORDER BY att.id, rel.sequence, ata.sequence
+        _sql_query = u"""
+            WITH ordered_answers AS (
+
+            -- Ensure answers sequence
+                SELECT
+                    at_answer."id",
+                    (row_number() OVER (PARTITION BY at_answer.at_question_id ORDER BY at_answer.at_question_id ASC, at_answer."sequence", at_answer."id"))::integer AS "sequence",
+                    at_answer.at_question_id,
+                    at_answer.is_correct
+                FROM at_answer
+                ORDER BY at_answer.at_question_id ASC, at_answer."sequence", at_answer."id"
+
+            ), ordered_quesions AS (
+
+            -- Ensure questions sequence
+                SELECT
+                    rel.at_test_id,
+                    rel.at_question_id,
+                    ROW_NUMBER() OVER(PARTITION BY rel.at_test_id ORDER BY  rel.at_test_id DESC, rel."sequence" ASC, rel.at_question_id ASC) as atq_index
+                    FROM at_test_at_question_rel AS rel
+                ORDER BY rel.at_test_id DESC, rel."sequence" ASC, rel.at_question_id ASC
+
+            )
+
+            -- Main query
+            SELECT
+                ROW_NUMBER() OVER(ORDER BY oq.at_test_id DESC, oq.atq_index ASC, oq.at_question_id ASC, oa."sequence" ASC, oa."id" ASC)::INTEGER AS "id",
+                oq.at_test_id::INTEGER,
+                oq.at_question_id::INTEGER,
+                oa."id"::INTEGER as at_answer_id,
+                oq.atq_index::INTEGER as "sequence",
+                SUBSTRING('ABCDEFGHIJKLMNOPQRSTUVWXYZ' FROM oa."sequence" FOR 1)::VARCHAR AS "name",
+                atq."description"::TEXT
+            FROM ordered_quesions as oq
+            LEFT JOIN (SELECT * FROM ordered_answers WHERE is_correct IS TRUE) as oa on oq.at_question_id = oa.at_question_id
+            LEFT JOIN at_question as atq on atq."id" = oq.at_question_id
+            ORDER BY oq.at_test_id DESC, oq.atq_index ASC, oq.at_question_id ASC, oa."sequence" ASC, oa."id" ASC
         """
 
         drop_view_if_exists(self._cr, self._table)
         self._cr.execute(
             'create or replace view {} as ({})'.format(
                 self._table,
-                self._sql_query
+                _sql_query
             )
         )

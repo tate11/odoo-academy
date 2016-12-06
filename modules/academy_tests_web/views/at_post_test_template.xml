@@ -259,15 +259,27 @@
 
                 <!-- TOOLBAR:: BEGIN -->
                 <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
-                    <button type="button" class="btn btn-default btn-at-test-print" title="Print" t-attf-data-test-id="{{ at_test_id.id }}">
-                        <i class="fa fa-print text-info" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="btn btn-default" title="Download all">
-                        <i class="fa fa-download text-active" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="btn btn-default" title="Like">
-                        <i class="fa fa-thumbs-o-up text-success" aria-hidden="true"></i>
-                    </button>
+                    <a class="btn btn-default btn-at-test-print"
+                        t-attf-href="/report/pdf/academy_tests.view_at_test_qweb/{{ at_test_id.id }}"
+                        target="_blank" title="Download as PDF"
+                        t-attf-data-test-id="{{ at_test_id.id }}">
+                        <span class="fa fa-file-pdf-o"></span>
+                    </a>
+                    <div class="dropdown btn btn-default">
+                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#"><span class="fa fa fa-bars"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" t-attf-href="/report/html/academy_tests.view_at_test_qweb/{{ at_test_id.id }}" target="_blank" title="View on web">
+                                    <span class="fa fa-globe"></span> View on web
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem"  t-attf-href="/answers-table?test_id={{ at_test_id.id }}" title="Answers table">
+                                    <span class="fa fa-table" /> View answers
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- TOOLBAR:: END -->
 

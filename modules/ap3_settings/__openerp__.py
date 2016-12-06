@@ -32,7 +32,8 @@
         'views/external_layout.xml',
         'views/at_test_report.xml',
         'views/at_test_report_ayto.xml',
-        'views/at_post_tests_template.xml'
+        'views/at_post_tests_template.xml',
+        'views/at_post_test_template.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
