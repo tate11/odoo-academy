@@ -44,7 +44,6 @@
                                     <li class="at-question at-question-swap-content" t-attf-id="at-question-{{ at_question_id.id }}" t-attf-data-question-id="{{ at_question_id.id }}">
                                     <!-- QUESTION: Subtemplate -->
                                         <t t-call="academy_tests_web.at_post_test_question_show" />
-
                                     </li>
 
                                     </t><!-- at_test_at_question_ids -->

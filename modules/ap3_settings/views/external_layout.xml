@@ -21,7 +21,7 @@
                                     <h1><t t-esc="at_test_id.name" /></h1>
                                 </div>
                                 <div class="col-xs-6 at-test-report-header-date">
-                                   <strong>ÚLTIMA REVISIÓN:</strong>&#160;<span t-field="at_test_id.write_date" t-field-options='{"format": "d/MM/y"}'/>
+                                   <strong>IMPRESIÓN:</strong>&#160;<span t-esc="datetime.datetime.today().strftime('%d/%m/%Y')"/>
                                 </div>
                                 <div class="col-xs-6 at-test-report-header-category">
                                     EJERCICIO DE TIPO TEST

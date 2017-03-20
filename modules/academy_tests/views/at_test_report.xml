@@ -74,8 +74,13 @@
                         </t>
 
                         <!-- IMAGE-ATTACHMENTS:: BEGIN -->
-                        <t t-foreach="at_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
-                            <t t-call="academy_tests.view_ir_attachment_qweb" />
+                        <t t-set="display_image_ids" t-value="at_question_id.ir_attachment_image_ids" />
+                        <!-- Prevent the same image was displayed in consecutive questions -->
+                        <t t-if="at_test_at_question_ids_index > 0">
+                            <t t-set="display_image_ids" t-value="display_image_ids - at_test_id.at_test_at_question_ids[at_test_at_question_ids_index - 1].at_question_id.ir_attachment_image_ids" />
+                        </t>
+                        <t t-foreach="display_image_ids" t-as="ir_attachment_image_id">
+                            <t t-call="academy_tests_web.at_post_test_question_image" />
                         </t>
                         <!-- IMAGE-ATTACHMENTS:: END -->
 

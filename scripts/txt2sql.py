@@ -12,6 +12,7 @@ import re
 import locale
 
 from datetime import datetime
+from sys import exit
 
 # -------------------------- MAIN SCRIPT BEHAVIOR -----------------------------
 
@@ -306,6 +307,8 @@ class App(object):
 
         try:
             preamble = u''
+            previous = None
+            question = None
 
             with open(self._file, 'r') as finput: #open the file
                 lines = finput.readlines()
@@ -319,6 +322,9 @@ class App(object):
                             self._register_question(question)
                     elif self._is_answer(line):
                         line, is_correct = self._clear_answer(line)
+                        if line == previous or len(line) < 1:
+                            exit_msg = u'Duplicate or empty answer: {} for question: {}'
+                            exit(exit_msg.format(line, question))
                         answer = self._new_answer(line, is_correct)
                         if answer:
                             self._register_answer(answer)
