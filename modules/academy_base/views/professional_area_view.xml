@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <!-- VIEWS: "Professional Area"
+
+            - Model·········: academy.professional.area
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: academy_base.menu_academy_catalog_settings
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not professional areas in catalog
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "academy.professional.area" -->
+        <record id="view_academy_professional_area_tree" model="ir.ui.view">
+            <field name="name">view.academy.professional.area.tree</field>
+            <field name="model">academy.professional.area</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_professional_area_tree" create="1" delete="1" edit="1">
+                    <field name="name" />
+                    <!-- ··· -->
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "academy.professional.area" -->
+        <record id="view_academy_professional_area_form" model="ir.ui.view">
+            <field name="name">view.academy.professional.area.form</field>
+            <field name="model">academy.professional.area</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_professional_area_form" create="1" delete="1" edit="1">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="Name" />
+                            </h1>
+                        </div>
+                        <!-- ··· -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "academy.professional.area" -->
+        <record id="view_academy_professional_area_search" model="ir.ui.view">
+            <field name="name">view.academy.professional.area.search</field>
+            <field name="model">academy.professional.area</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="academy_professional_area_search">
+                    <field name="name" />
+                    <!-- ··· -->
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_professional_area_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Professional Area</field>
+            <field name="res_model">academy.professional.area</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_academy_professional_area_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Professional Area
+                </p><p>
+                    There are not professional areas in catalog
+                </p>
+            </field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_professional_area" model="ir.ui.menu" >
+            <field name="name">Professional Area</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_professional_area_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_catalog_settings" />
+        </record>
+
+    </data>
+</openerp>
