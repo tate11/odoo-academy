@@ -4,17 +4,22 @@
 <notebook xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://localhost:8069/academy_online_assets/static/mapxml/v1/notebook.xsd">
 
-    <name>MAP - Simulacro 03</name>
+    <name>MAP - Simulacro</name>
     <description>Simulacro de Examen para el segundo ejercicio de Auxiliar Administrativo para la
         Administración General del Estado</description>
     <author>Jorge Soto Garcia</author>
 
-    <activity>
+
+    <!-- PRUEBA DE MECANOGRAFÍA
+    = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+    <activity> 
+        
         <name>PRUEBA DE TRANSCRIPCIÓN</name>
 
-        <block>
 
+        <block>
             <name>Mecanografía</name>
+
             <description>Copie el texto propuesto a continuación. Si en el texto a transcribir
                 detectase faltas de ortografía o acentuación, DEBERÁ corregirlas. Respete la
                 estructura de párrafos del texto original y no altere los signos de
@@ -24,149 +29,192 @@
             <division>
 
                 <target>
-                    <value><![CDATA[
-<p>Texto</p>]]></value>
+                    <value>
+                    <![CDATA[
+                        
+<p>Texto</p>
+                    ]]>
+                    </value>
                 </target>
 
             </division>
 
-        </block>
+        </block> <!-- Mecanografía::end  - - - - - - - - - - - - - - - - - - -->
+
 
     </activity>
 
+
+
+    <!-- PRUEBA DE WORD
+    = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
     <activity>
+        
         <name>PRUEBA DE MAQUETACIÓN</name>
+
 
         <block>
             <name>Propiedades de página</name>
+            
             <division>
-
+                
+                
             </division>
-        </block>
+            
+        </block> <!-- Mecanografía::end  - - - - - - - - - - - - - - - - - - -->
+
 
         <block>
             <name>Título</name>
-            
+
             <division>
-                <target>
-                    <name>Texto 1</name>
-                    <value></value>
-                </target>
                 
+                <target><name>Texto 1</name><value/></target>
+                                
             </division>
-        </block>
-        
+            
+        </block> <!-- Title::end - - - - - - - - - - - - - - - - - - - - - -->
+
+
         <block>
             <name>Lista tabulada</name>
-            
-            <division>
 
-            </division>
-            
             <division>
                 <name>Párrafo</name>
-                <target>
-                    <name>Texto 2</name>
-                    <value></value>
-                </target>
+                
+                <target><name>Texto 2</name><value/></target>
+                                
             </division>
-            
+
             <division>
                 <name>Resto de párrafos</name>
-                <target>
-                    <name>Texto 3</name>
-                    <value></value>
-                </target>
+                
+                <target><name>Texto 3</name><value/></target>
+                
             </division>
-            
-            
-        </block>
-        
+
+        </block> <!-- Tab list::end  - - - - - - - - - - - - - - - - - - - -->
+
+
         <block>
             <name>Lista ordenada</name>
-            
-            <division>
+
+            <division> 
                 
-            </division>
             
+            </division>
+
             <division>
                 <name>Párrafos Nivel 1</name>
-                <target>
-                    <name>Texto 4</name>
-                    <value></value>
-                </target>
+                
+                <target><name>Texto 4</name><value/></target>
+                                
             </division>
-            
+
             <division>
                 <name>Párrafos Nivel 2</name>
-                <target>
-                    <name>Texto 5</name>
-                    <value></value>
-                </target>
-            </division>
-            
-            <division>
-                <name>Párrafos Nivel 3</name>
-                <target>
-                    <name>Texto 6</name>
-                    <value></value>
-                </target>
-            </division>
-            
-        </block>
-        
-        <block>
-            <name>Tabla</name>
-            
-            <division>
+                
+                <target><name>Texto 5</name><value/></target>
                 
             </division>
+
+            <division>
+                <name>Párrafos Nivel 3</name>
+                
+                <target><name>Texto 6</name><value/></target>
+                                
+            </division>
+
+        </block> <!-- Ordered list::end  - - - - - - - - - - - - - - - - - - -->
+
+
+        <block>
+            <name>Tabla</name>
+
+            <division> 
             
+            </division>
+
             <division>
                 <name>Fila 1</name>
+                
+                <target><name>Texto 7</name><value/></target>
                 
             </division>
 
             <division>
                 <name>Resto de filas</name>
                 
+                <target><name>Texto 8</name><value/></target>
+                
             </division>
-        </block>
-        
-        
-        <block>
-            <name>Nota al pie</name>
             
+        </block> <!-- Table::end  - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+        <block>
+            <name>Notas al pie y al final</name>
+
             <division>
                 <statement>
                     <value>
+                        
                         <statement>
                             <name>Insertar</name>
                             <value>Nota al pie en el texto...</value>
                             <default>Falso</default>
                         </statement>
+                        
                         <statement>
                             <name>Texto</name>
                             <value>XXX</value>
                             <default>Falso</default>
                         </statement>
+                        
                     </value>
                     <default>Falso</default>
-                </statement>  
+                </statement>
+
             </division>
-            
-        </block>
-        
+
+        </block> <!-- Foot notes::end - - - - - - - - - - - - - - - - - - - - -->
+
+
         <preview>Solución/DocWord.jpg</preview>
+        
+        
     </activity>
-    
+
+
+
+    <!-- PRUEBA DE EXCEL
+    = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
     <activity>
         <name>PRUEBA DE EXCEL</name>
+        
+        
         <block>
-            <division>
+            <name>Formato</name>
+            
+            <division> 
+            
+            </division>
+            
+        </block> <!-- Format::end - - - - - - - - - - - - - - - - - - - - - - -->
+        
+        
+        <block>
+            <name>Formato</name>
+            
+            <division> 
                 
             </division>
-        </block>
+            
+        </block> <!-- Cálculos::end - - - - - - - - - - - - - - - - - - - - - -->      
+        
+        
     </activity>
     
+    
+
 </notebook>

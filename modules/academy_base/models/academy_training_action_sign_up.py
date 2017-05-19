@@ -12,54 +12,55 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtTestAtQuestionRel(models.Model):
-    """ The summary line for a class docstring should fit on one line.
+class AcademyTrainingActionSignUp(models.Model):
+    """ Relation between students and training actions
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'at.test.at.question.rel'
-    _description = (u'Relationship between at_test and at_question, this model '
-                    'keeps sequence order')
+    _name = 'academy.training.action.sign_up'
+    _description = u'academy_training_action_sign_up'
 
-    _rec_name = 'at_test_id'
-    _order = 'sequence ASC'
+    _rec_name = 'date'
+    _order = 'date ASC'
 
-    at_test_id = fields.Many2one(
-        string='Test',
-        required=False,
+
+    academy_training_action_id = fields.Many2one(
+        string='Training action',
+        required=True,
         readonly=False,
         index=False,
         default=None,
-        help='Test to which this item belongs',
-        comodel_name='at.test',
+        help='Choose the training action in which studend will be enrolled',
+        comodel_name='academy.training.action',
         domain=[],
         context={},
         ondelete='cascade',
         auto_join=False
     )
 
-    at_question_id = fields.Many2one(
-        string='Question',
-        required=False,
+    student_id = fields.Many2one(
+        string='Student',
+        required=True,
         readonly=False,
-        index=False,
+        index=True,
         default=None,
-        help='Question will be related with test',
-        comodel_name='at.question',
-        domain=[],
+        help='Choose an student',
+        comodel_name='res.partner',
+        domain=[('is_student', '=', True)],
         context={},
         ondelete='cascade',
         auto_join=False
     )
 
-    sequence = fields.Integer(
-        string='Sequence',
-        required=False,
+    date = fields.Date(
+        string='Date',
+        required=True,
         readonly=False,
         index=False,
-        default=0,
-        help='Question sequence order'
+        default=fields.Date.today(),
+        help='Date in which studend sign up'
     )
+

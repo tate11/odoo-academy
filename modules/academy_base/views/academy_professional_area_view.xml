@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
         <!-- VIEWS: "Professional Area"
 
@@ -9,7 +9,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog_settings
+            - Parent menu ··: academy_base.menu_academy_settings_catalog
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not professional areas in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -25,7 +25,7 @@
             <field name="arch" type="xml">
                 <tree string="academy_professional_area_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="professional_family_id" />
                 </tree>
             </field>
         </record>
@@ -48,7 +48,10 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
-                        <!-- ··· -->
+                        <group col="2">
+                            <field name="professional_family_id" class="oe_field_professional_family_id"
+                                placeholder="Choose professional family to which this area belongs" />
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -73,7 +76,7 @@
         <!-- Main window action for model.name -->
         <record id="action_professional_area_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
-            <field name="name">Professional Area</field>
+            <field name="name">Professional area</field>
             <field name="res_model">academy.professional.area</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
@@ -95,7 +98,7 @@
             <field name="name">Professional Area</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_professional_area_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog_settings" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>
 
     </data>

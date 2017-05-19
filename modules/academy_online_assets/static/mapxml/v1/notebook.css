@@ -62,8 +62,9 @@ div.target {
 }
 
 img.preview {
-    max-width: 100%;
-    margin: 0px;
+    display: block;
+    max-width: 95%;
+    margin: 0px auto;
     padding: 0px;
     page-break-before: always;
     page-break-after: always;
@@ -83,13 +84,12 @@ img.preview {
     font-family: Symbol;
 }
 
-article > header,
-article > header > h3 {
-    page-break-after: avoid;
+article > header {
+    page-break-inside: avoid!important;
 }
 
-header + .division {
-    page-break-before: avoid;
+header + .article-content {
+    page-break-before: avoid!important;
 } 
 
 img.preview-inline {

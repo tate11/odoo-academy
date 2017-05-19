@@ -84,7 +84,7 @@ class App(object):
     def _is_question(self, line):
         """ Check if line is for question ^[0-9]+
         """
-        return bool(re.match(r'^[0-9]{1,2}[\)\.\- ]+.*$', line, re.IGNORECASE))
+        return bool(re.match(r'^[0-9]{1,3}[\)\.\- ]+.*$', line, re.IGNORECASE))
 
     def _new_question(self, line, preamble=u''):
         """ Creates new question INSERT script for line
@@ -180,7 +180,7 @@ class App(object):
     def _clear_question(self, line):
         """ Cliear questions
         """
-        return re.search(r'^[0-9]{1,2}[\)\.\- ]+(.*)$', line).group(1)
+        return re.search(r'^[0-9]{1,3}[\)\.\- ]+(.*)$', line).group(1)
 
     def _clear_answer(self, line):
         """ Cliear questions

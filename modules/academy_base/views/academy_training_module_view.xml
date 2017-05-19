@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+
+        <!-- VIEWS: "Training Module"
+
+            - Model·········: academy.training.module
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: academy_base.menu_academy_settings_catalog
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not training modules in catalog
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "academy.training.module" -->
+        <record id="view_academy_training_module_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.module.tree</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_training_module_tree" create="1" delete="1" edit="1">
+                    <field name="name" />
+                    <field name="hours" class="oe_field_hours" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "academy.training.module" -->
+        <record id="view_academy_training_module_form" model="ir.ui.view">
+            <field name="name">view.academy.training.module.form</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_training_module_form" create="1" delete="1" edit="1">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="Name" />
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Training units" class="oe_page_training_units" accesskey="T">
+                                <field name="academy_training_unit_ids" class="oe_field_academy_training_unit_ids"
+                                    placeholder="Choose or create module training units">
+                                    <tree string="Units" create="1" delete="1" edit="1" editable="top">
+                                        <field name="sequence" widget="handle" />
+                                        <field name="name" class="oe_field_name"
+                                            placeholder="Enter new value for Name" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "academy.training.module" -->
+        <record id="view_academy_training_module_search" model="ir.ui.view">
+            <field name="name">view.academy.training.module.search</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="academy_training_module_search">
+                    <field name="name" />
+                    <!-- ··· -->
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_training_module_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Training module</field>
+            <field name="res_model">academy.training.module</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_academy_training_module_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Training Module
+                </p><p>
+                    There are not training modules in catalog
+                </p>
+            </field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_training_module" model="ir.ui.menu" >
+            <field name="name">Training Module</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_training_module_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+        </record>
+
+    </data>
+</openerp>

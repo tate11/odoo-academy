@@ -4,7 +4,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from logging import getLogger
 
@@ -33,7 +33,7 @@ class AcademyProfessionalArea(models.Model):
         index=True,
         default=None,
         help='Enter new name',
-        size=50,
+        size=100,
         translate=True
     )
 
@@ -54,4 +54,18 @@ class AcademyProfessionalArea(models.Model):
         index=False,
         default='Enables/disables the record',
         help=False
+    )
+
+    professional_family_id = fields.Many2one(
+        string='Professional family',
+        required=True,
+        readonly=False,
+        index=False,
+        default=None,
+        help='Choose professional family to which this area belongs',
+        comodel_name='academy.professional.family',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
     )

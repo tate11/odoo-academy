@@ -12,16 +12,16 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AptGroup(models.Model):
-    """ Group for vacancy position
+class AcademyProfessionalCategory(models.Model):
+    """ ...
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'apt.group'
-    _description = u'Group for vacancy position'
+    _name = 'academy.professional.category'
+    _description = u'Academy professional category'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -32,8 +32,8 @@ class AptGroup(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Name for this group',
-        size=50,
+        help='Enter new name',
+        size=100,
         translate=True
     )
 
@@ -43,7 +43,7 @@ class AptGroup(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Something about this group',
+        help='Enter new description',
         translate=True
     )
 
@@ -52,7 +52,15 @@ class AptGroup(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=True,
-        help=('If the active field is set to false, it will allow you '
-              'to hide record without removing it.')
+        default='Enables/disables the record',
+        help=False
+    )
+
+    sequence = fields.Integer(
+        string='Sequence',
+        required=True,
+        readonly=False,
+        index=False,
+        default=0,
+        help='Choose professional category order'
     )

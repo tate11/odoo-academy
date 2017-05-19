@@ -5,7 +5,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 from logging import getLogger
 
 

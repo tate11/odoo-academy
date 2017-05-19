@@ -12,19 +12,20 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AptGroup(models.Model):
-    """ Group for vacancy position
+class AcademyQualificationLevel(models.Model):
+    """ Set of qualifications according to criteria of the complexity of
+    task.
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'apt.group'
-    _description = u'Group for vacancy position'
+    _name = 'academy.qualification.level'
+    _description = u'Academy qualification level'
 
     _rec_name = 'name'
-    _order = 'name ASC'
+    _order = 'sequence ASC, name ASC'
 
     name = fields.Char(
         string='Name',
@@ -32,8 +33,8 @@ class AptGroup(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Name for this group',
-        size=50,
+        help='Enter new name',
+        size=100,
         translate=True
     )
 
@@ -43,8 +44,17 @@ class AptGroup(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Something about this group',
+        help='Enter new description',
         translate=True
+    )
+
+    sequence = fields.Integer(
+        string='Sequence',
+        required=True,
+        readonly=False,
+        index=False,
+        default=0,
+        help='Choose level order'
     )
 
     active = fields.Boolean(
@@ -52,7 +62,6 @@ class AptGroup(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=True,
-        help=('If the active field is set to false, it will allow you '
-              'to hide record without removing it.')
+        default='Enables/disables the record',
+        help=False
     )

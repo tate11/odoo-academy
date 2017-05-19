@@ -4,7 +4,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from logging import getLogger
 
@@ -12,17 +12,16 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AcademyProfessionalFamily(models.Model):
-    """ Set of qualifications according to criteria of affinity of professional
-    competence..
+class AcademyTrainingMethodology(models.Model):
+    """ ...
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'academy.professional.family'
-    _description = u'Academy professional family'
+    _name = 'academy.training.methodology'
+    _description = u'Academy training methodology'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -34,7 +33,7 @@ class AcademyProfessionalFamily(models.Model):
         index=True,
         default=None,
         help='Enter new name',
-        size=50,
+        size=100,
         translate=True
     )
 

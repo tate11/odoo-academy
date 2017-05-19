@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this activity.                   #
+#    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from logging import getLogger
 
@@ -12,16 +12,16 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AcademyTrainingActivity(models.Model):
-    """ Each of the creditable qualifications in catalog.
+class AcademyKnowledgeArea(models.Model):
+    """ The summary line for a class docstring should fit on one line.
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'academy.training.activity'
-    _description = u'Academy training activity'
+    _name = 'academy.knowledge.area'
+    _description = u'Academy knowledge area'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -32,11 +32,29 @@ class AcademyTrainingActivity(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Enter new name',
+        help=False,
         size=50,
         translate=True
     )
 
+    description = fields.Text(
+        string='Description',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='Enter new description',
+        translate=True
+    )
+
+    active = fields.Boolean(
+        string='Active',
+        required=False,
+        readonly=False,
+        index=False,
+        default='Enables/disables the record',
+        help=False
+    )
     description = fields.Text(
         string='Description',
         required=False,

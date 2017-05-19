@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
+        <!-- VIEWS: "Professional Category"
 
-        <!-- VIEWS: "Training Unit"
-
-            - Model·········: academy.training.unit
+            - Model·········: academy.professional.category
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog_settings
+            - Parent menu ··: menu_academy_settings_helper
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not training units in catalog
+            - Action help···: There are not any deffined professional category
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <!-- Tree view for "academy.training.unit" -->
-        <record id="view_academy_training_unit_tree" model="ir.ui.view">
-            <field name="name">view.academy.training.unit.tree</field>
-            <field name="model">academy.training.unit</field>
+        <!-- Tree view for "academy.professional.category" -->
+        <record id="view_academy_professional_category_tree" model="ir.ui.view">
+            <field name="name">view.academy.professional.category.tree</field>
+            <field name="model">academy.professional.category</field>
             <field name="type">tree</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <tree string="academy_training_unit_tree" create="1" delete="1" edit="1">
+                <tree string="academy_professional_category_tree" create="1" delete="1" edit="1">
+                    <field name="sequence" widget="handle" />
                     <field name="name" />
-                    <!-- ··· -->
                 </tree>
             </field>
         </record>
 
-        <!-- Form view for "academy.training.unit" -->
-        <record id="view_academy_training_unit_form" model="ir.ui.view">
-            <field name="name">view.academy.training.unit.form</field>
-            <field name="model">academy.training.unit</field>
+        <!-- Form view for "academy.professional.category" -->
+        <record id="view_academy_professional_category_form" model="ir.ui.view">
+            <field name="name">view.academy.professional.category.form</field>
+            <field name="model">academy.professional.category</field>
             <field name="type">form</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <form string="academy_training_unit_form" create="1" delete="1" edit="1">
+                <form string="academy_professional_category_form" create="1" delete="1" edit="1">
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
@@ -55,16 +54,16 @@
             </field>
         </record>
 
-        <!-- Search view for "academy.training.unit" -->
-        <record id="view_academy_training_unit_search" model="ir.ui.view">
-            <field name="name">view.academy.training.unit.search</field>
-            <field name="model">academy.training.unit</field>
+        <!-- Search view for "academy.professional.category" -->
+        <record id="view_academy_professional_category_search" model="ir.ui.view">
+            <field name="name">view.academy.professional.category.search</field>
+            <field name="model">academy.professional.category</field>
             <field name="type">search</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <search string="academy_training_unit_search">
+                <search string="academy_professional_category_search">
                     <field name="name" />
                     <!-- ··· -->
                 </search>
@@ -72,31 +71,31 @@
         </record>
 
         <!-- Main window action for model.name -->
-        <record id="action_training_unit_act_window" model="ir.actions.act_window">
+        <record id="action_professional_category_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
-            <field name="name">Training Unit</field>
-            <field name="res_model">academy.training.unit</field>
+            <field name="name">Professional Category</field>
+            <field name="res_model">academy.professional.category</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="search_view_id" ref="view_academy_training_unit_search" />
+            <field name="search_view_id" ref="view_academy_professional_category_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training Unit
+                    Click to add new Professional Category
                 </p><p>
-                    There are not training units in catalog
+                    There are not any deffined professional category
                 </p>
             </field>
         </record>
 
         <!-- Main menu for model.name -->
-        <record id="menu_training_unit" model="ir.ui.menu" >
-            <field name="name">Training Unit</field>
+        <record id="menu_professional_category" model="ir.ui.menu" >
+            <field name="name">Professional Category</field>
             <field name="sequence" eval="10" />
-            <field name="action" ref="action_training_unit_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog_settings" />
+            <field name="action" ref="action_professional_category_act_window" />
+            <field name="parent_id" ref="menu_academy_settings_helper" />
         </record>
 
     </data>

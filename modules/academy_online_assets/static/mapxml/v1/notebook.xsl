@@ -21,7 +21,7 @@
                     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
                     integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
                     crossorigin="anonymous"/>
-                <link rel="stylesheet" href="http://localhost:8069/academy_online_assets/static/mapxml/v1/notebook.css"/>
+                <link rel="stylesheet" href="http://guanaco:8069/academy_online_assets/static/mapxml/v1/notebook.css"/>
 
             </head>
 
@@ -65,7 +65,7 @@
                                                 <xsl:choose>
                                                     <xsl:when test="name">
                                                         <div class="target">
-                                                            <strong><xsl:value-of select="name"/>:</strong><xsl:text> </xsl:text> 
+                                                            <strong><xsl:value-of select="name"/>:</strong><xsl:text> </xsl:text>
                                                             '<span> <xsl:value-of select="value" disable-output-escaping="yes" /></span>'.
                                                         </div>
                                                     </xsl:when>
@@ -77,9 +77,12 @@
                                                 </xsl:choose>
                                             </xsl:for-each>
                                             <xsl:for-each select="statement">
+                                                <!-- <xsl:sort select="name" /> -->
                                                 <xsl:if test="default = 'Falso'">
                                                   <div class="statement {@class}">
-                                                  <xsl:apply-templates select="."/>
+                                                  <xsl:apply-templates select=".">
+                                                      <!-- <xsl:sort select="name" /> -->
+                                                  </xsl:apply-templates>
                                                   </div>
                                                 </xsl:if>
                                             </xsl:for-each>
@@ -104,12 +107,37 @@
                                 <div>
                                     <strong>Mecanografía: </strong>
                                     <span><xsl:value-of
-                                            select="string-length(//statement[@type = 'typing']/value)"
+                                            select="string-length(//target[@class = 'typing']/value)"
                                         /></span> caracteres. </div>
                                 <div>
-                                    <strong>Maquetación: </strong>
-                                    <span><xsl:value-of select="count(//statement)"/></span>
-                                    instrucciones. </div>
+                                    <strong>Totales: </strong>
+                                    <span><xsl:value-of select="count(//statement[default='Falso' and not(value/statement)])"/></span>
+                                    instrucciones.
+                                </div>
+
+                                <div>
+                                    <strong>Word: </strong>
+                                    <span><xsl:value-of select="count(//statement[default='Falso' and not(value/statement)]) - count(//statement[default='Falso' and not(value/statement) and @class='list'])"/></span>
+                                    instrucciones.
+                                </div>
+
+                                <div>
+                                    <strong>Excel: </strong>
+                                    <span><xsl:value-of select="count(//statement[default='Falso' and @class='list'])"/></span>
+                                    instrucciones.
+                                </div>
+
+                                <div>
+                                    <strong>Instrucción 185 en </strong>
+                                    <strong>bloque </strong>«<xsl:value-of select="(//statement[default='Falso' and not(value/statement)])[185]/ancestor-or-self::block/name"/>»
+                                    <xsl:choose>
+                                        <xsl:when test="(//statement[default='Falso' and not(value/statement)])[185]/ancestor-or-self::division/name">
+                                            <strong>, división </strong>«<xsl:value-of select="(//statement[default='Falso' and not(value/statement)])[185]/ancestor-or-self::division/name"/>»
+                                        </xsl:when>
+                                    </xsl:choose>
+                                    <strong>, instrución </strong>«<xsl:value-of select="(//statement[default='Falso' and not(value/statement)])[185]/name"/>: <xsl:value-of select="(//statement[default='Falso' and not(value/statement)])[185]/value"/>».
+                                </div>
+
                             </div>
                         </article>
                     </section>
@@ -149,9 +177,11 @@
                         <xsl:when test="name">(</xsl:when>
                     </xsl:choose>
                     <xsl:for-each select="value/statement">
+                        <!-- <xsl:sort select="name" /> -->
                         <xsl:if test="default = 'Falso'">
                             <xsl:apply-templates select=".">
                                 <xsl:with-param name="islast" select="position() = last()"/>
+                                <!-- <xsl:sort select="name" /> -->
                             </xsl:apply-templates>
                         </xsl:if>
                     </xsl:for-each>
@@ -166,5 +196,6 @@
             </xsl:choose>
         </span>
     </xsl:template>
+
 
 </xsl:stylesheet>

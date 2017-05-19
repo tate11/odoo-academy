@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
         <!-- VIEWS: "Competency Unit"
 
@@ -9,7 +9,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog
+            - Parent menu ··: academy_base.menu_academy_settings_catalog
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not competency units in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -25,7 +25,6 @@
             <field name="arch" type="xml">
                 <tree string="academy_competency_unit_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <!-- ··· -->
                 </tree>
             </field>
         </record>
@@ -45,10 +44,13 @@
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
-                                    placeholder="Name" />
+                                    placeholder="Name" attrs="{'invisible': [('academy_training_module_id', '=', False)]}"/>
                             </h1>
                         </div>
-                        <!-- ··· -->
+                        <group col="2">
+                            <field name="academy_training_module_id" class="oe_field_academy_training_module_id"
+                                placeholder="Choose an existing training module" />
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -73,7 +75,7 @@
         <!-- Main window action for model.name -->
         <record id="action_competency_unit_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
-            <field name="name">Competency Unit</field>
+            <field name="name">Competency unit</field>
             <field name="res_model">academy.competency.unit</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
@@ -95,7 +97,7 @@
             <field name="name">Competency Unit</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_competency_unit_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>
 
     </data>

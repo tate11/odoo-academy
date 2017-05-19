@@ -7,7 +7,7 @@
 
 from __future__ import division
 
-from openerp import models, fields, api
+from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from openerp.exceptions import ValidationError
 from logging import getLogger
@@ -265,3 +265,19 @@ class AtQuestion(models.Model):
             raise ValidationError(message)
 
 
+
+
+    at_test_at_question_ids = fields.One2many(
+        string='Tests',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='at.test.at.question.rel',
+        inverse_name='at_question_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
+    )

@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
+        <!-- VIEWS: "Knowledge area"
 
-        <!-- VIEWS: "Training Module"
-
-            - Model·········: academy.training.module
+            - Model·········: academy.knowledge.area
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog_settings
+            - Parent menu ··: menu_academy_settings_helper
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not training modules in catalog
+            - Action help···: There are not any knowledge are deffined
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <!-- Tree view for "academy.training.module" -->
-        <record id="view_academy_training_module_tree" model="ir.ui.view">
-            <field name="name">view.academy.training.module.tree</field>
-            <field name="model">academy.training.module</field>
+        <!-- Tree view for "academy.knowledge.area" -->
+        <record id="view_academy_knowledge_area_tree" model="ir.ui.view">
+            <field name="name">view.academy.knowledge.area.tree</field>
+            <field name="model">academy.knowledge.area</field>
             <field name="type">tree</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <tree string="academy_training_module_tree" create="1" delete="1" edit="1">
+                <tree string="academy_knowledge_area_tree" create="1" delete="1" edit="1">
                     <field name="name" />
                     <!-- ··· -->
                 </tree>
             </field>
         </record>
 
-        <!-- Form view for "academy.training.module" -->
-        <record id="view_academy_training_module_form" model="ir.ui.view">
-            <field name="name">view.academy.training.module.form</field>
-            <field name="model">academy.training.module</field>
+        <!-- Form view for "academy.knowledge.area" -->
+        <record id="view_academy_knowledge_area_form" model="ir.ui.view">
+            <field name="name">view.academy.knowledge.area.form</field>
+            <field name="model">academy.knowledge.area</field>
             <field name="type">form</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <form string="academy_training_module_form" create="1" delete="1" edit="1">
+                <form string="academy_knowledge_area_form" create="1" delete="1" edit="1">
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
@@ -55,16 +54,16 @@
             </field>
         </record>
 
-        <!-- Search view for "academy.training.module" -->
-        <record id="view_academy_training_module_search" model="ir.ui.view">
-            <field name="name">view.academy.training.module.search</field>
-            <field name="model">academy.training.module</field>
+        <!-- Search view for "academy.knowledge.area" -->
+        <record id="view_academy_knowledge_area_search" model="ir.ui.view">
+            <field name="name">view.academy.knowledge.area.search</field>
+            <field name="model">academy.knowledge.area</field>
             <field name="type">search</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <search string="academy_training_module_search">
+                <search string="academy_knowledge_area_search">
                     <field name="name" />
                     <!-- ··· -->
                 </search>
@@ -72,31 +71,31 @@
         </record>
 
         <!-- Main window action for model.name -->
-        <record id="action_training_module_act_window" model="ir.actions.act_window">
+        <record id="action_knowledge_area_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
-            <field name="name">Training Module</field>
-            <field name="res_model">academy.training.module</field>
+            <field name="name">Knowledge area</field>
+            <field name="res_model">academy.knowledge.area</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="search_view_id" ref="view_academy_training_module_search" />
+            <field name="search_view_id" ref="view_academy_knowledge_area_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training Module
+                    Click to add new Knowledge area
                 </p><p>
-                    There are not training modules in catalog
+                    There are not any knowledge are deffined
                 </p>
             </field>
         </record>
 
         <!-- Main menu for model.name -->
-        <record id="menu_training_module" model="ir.ui.menu" >
-            <field name="name">Training Module</field>
+        <record id="menu_knowledge_area" model="ir.ui.menu" >
+            <field name="name">Knowledge area</field>
             <field name="sequence" eval="10" />
-            <field name="action" ref="action_training_module_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog_settings" />
+            <field name="action" ref="action_knowledge_area_act_window" />
+            <field name="parent_id" ref="menu_academy_settings_helper" />
         </record>
 
     </data>

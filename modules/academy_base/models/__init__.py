@@ -4,10 +4,22 @@
 #    __openerp__ file at the root folder of this module.                   #
 ###############################################################################
 
-from . import training_unit
-from . import training_module
-from . import competency_unit
-from . import training_activity
-from . import professional_area
-from . import professional_family
-from . import qualification_level
+
+from . import res_partner
+
+from . import academy_application_scope
+from . import academy_knowledge_area
+from . import academy_professional_area
+from . import academy_professional_category
+from . import academy_professional_qualification
+from . import academy_professional_family
+from . import academy_training_methodology
+from . import academy_training_modality
+
+from . import academy_training_unit
+from . import academy_training_module
+from . import academy_competency_unit
+from . import academy_qualification_level
+from . import academy_training_action
+
+from . import academy_training_action_sign_up

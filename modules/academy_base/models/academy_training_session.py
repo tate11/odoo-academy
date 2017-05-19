@@ -7,21 +7,22 @@
 from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from logging import getLogger
+from openerp.exceptions import ValidationError
 
 
 _logger = getLogger(__name__)
 
 
-class AptGroup(models.Model):
-    """ Group for vacancy position
+class AcademyTrainingSession(models.Model):
+    """ Information about training sessions
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'apt.group'
-    _description = u'Group for vacancy position'
+    _name = 'academy.training.session'
+    _description = u'Academy training session'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -32,27 +33,33 @@ class AptGroup(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Name for this group',
+        help=False,
         size=50,
         translate=True
     )
 
-    description = fields.Text(
-        string='Description',
+    start = fields.Datetime(
+        string='Start',
         required=False,
         readonly=False,
         index=False,
-        default=None,
-        help='Something about this group',
-        translate=True
+        default=fields.datetime.now(),
+        help='Date and time session starts'
     )
 
-    active = fields.Boolean(
-        string='Active',
+    end = fields.Datetime(
+        string='End',
         required=False,
         readonly=False,
         index=False,
-        default=True,
-        help=('If the active field is set to false, it will allow you '
-              'to hide record without removing it.')
+        default=fields.datetime.now(),
+        help='Date and time session ends'
     )
+
+
+    @api.constrains('end')
+    def _check_end(self):
+        """ Ensures end field value is greater then start value """
+        for record in self:
+            if record.end <= record.start:
+                raise ValidationError("End date must be greater then start date")

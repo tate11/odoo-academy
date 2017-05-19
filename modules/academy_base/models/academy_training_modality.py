@@ -4,7 +4,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from logging import getLogger
 
@@ -12,17 +12,16 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AcademyQualificationLevel(models.Model):
-    """ Set of qualifications according to criteria of the complexity of
-    task.
+class AcademyTrainingArea(models.Model):
+    """ ...
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'academy.qualification.level'
-    _description = u'Academy qualification level'
+    _name = 'academy.training.modality'
+    _description = u'Academy training modality'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -34,7 +33,7 @@ class AcademyQualificationLevel(models.Model):
         index=True,
         default=None,
         help='Enter new name',
-        size=50,
+        size=100,
         translate=True
     )
 

@@ -4,7 +4,7 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, api
 from openerp.tools.translate import _
 from logging import getLogger
 
@@ -12,17 +12,16 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AcademyTrainingUnit(models.Model):
-    """ Each of the formative units that make up a module, these are the
-    smallest part that can be evaluated.
+class AcademyApplicationScope(models.Model):
+    """ ...
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'academy.training.unit'
-    _description = u'Academy training unit'
+    _name = 'academy.application.scope'
+    _description = u'Academy application scope'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -34,7 +33,7 @@ class AcademyTrainingUnit(models.Model):
         index=True,
         default=None,
         help='Enter new name',
-        size=50,
+        size=100,
         translate=True
     )
 

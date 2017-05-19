@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
 
-        <!-- VIEWS: "Training Activity"
+        <!-- VIEWS: "Qualification Level"
 
-            - Model·········: academy.training.activity
+            - Model·········: academy.qualification.level
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog
+            - Parent menu ··: academy_base.menu_academy_settings_catalog
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not training activitys in catalog
+            - Action help···: There are not qualification levels in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <!-- Tree view for "academy.training.activity" -->
-        <record id="view_academy_training_activity_tree" model="ir.ui.view">
-            <field name="name">view.academy.training.activity.tree</field>
-            <field name="model">academy.training.activity</field>
+        <!-- Tree view for "academy.qualification.level" -->
+        <record id="view_academy_qualification_level_tree" model="ir.ui.view">
+            <field name="name">view.academy.qualification.level.tree</field>
+            <field name="model">academy.qualification.level</field>
             <field name="type">tree</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <tree string="academy_training_activity_tree" create="1" delete="1" edit="1">
+                <tree string="academy_qualification_level_tree" create="1" delete="1" edit="1">
+                    <field name="sequence" class="oe_field_sequence"
+                        widget="handle" />
                     <field name="name" />
                     <!-- ··· -->
                 </tree>
             </field>
         </record>
 
-        <!-- Form view for "academy.training.activity" -->
-        <record id="view_academy_training_activity_form" model="ir.ui.view">
-            <field name="name">view.academy.training.activity.form</field>
-            <field name="model">academy.training.activity</field>
+        <!-- Form view for "academy.qualification.level" -->
+        <record id="view_academy_qualification_level_form" model="ir.ui.view">
+            <field name="name">view.academy.qualification.level.form</field>
+            <field name="model">academy.qualification.level</field>
             <field name="type">form</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <form string="academy_training_activity_form" create="1" delete="1" edit="1">
+                <form string="academy_qualification_level_form" create="1" delete="1" edit="1">
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
@@ -55,16 +57,16 @@
             </field>
         </record>
 
-        <!-- Search view for "academy.training.activity" -->
-        <record id="view_academy_training_activity_search" model="ir.ui.view">
-            <field name="name">view.academy.training.activity.search</field>
-            <field name="model">academy.training.activity</field>
+        <!-- Search view for "academy.qualification.level" -->
+        <record id="view_academy_qualification_level_search" model="ir.ui.view">
+            <field name="name">view.academy.qualification.level.search</field>
+            <field name="model">academy.qualification.level</field>
             <field name="type">search</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <search string="academy_training_activity_search">
+                <search string="academy_qualification_level_search">
                     <field name="name" />
                     <!-- ··· -->
                 </search>
@@ -72,31 +74,31 @@
         </record>
 
         <!-- Main window action for model.name -->
-        <record id="action_training_activity_act_window" model="ir.actions.act_window">
+        <record id="action_qualification_level_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
-            <field name="name">Training Activity</field>
-            <field name="res_model">academy.training.activity</field>
+            <field name="name">Qualification level</field>
+            <field name="res_model">academy.qualification.level</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="search_view_id" ref="view_academy_training_activity_search" />
+            <field name="search_view_id" ref="view_academy_qualification_level_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training Activity
+                    Click to add new Qualification Level
                 </p><p>
-                    There are not training activitys in catalog
+                    There are not qualification levels in catalog
                 </p>
             </field>
         </record>
 
         <!-- Main menu for model.name -->
-        <record id="menu_training_activity" model="ir.ui.menu" >
-            <field name="name">Training Activity</field>
+        <record id="menu_qualification_level" model="ir.ui.menu" >
+            <field name="name">Qualification Level</field>
             <field name="sequence" eval="10" />
-            <field name="action" ref="action_training_activity_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="action" ref="action_qualification_level_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>
 
     </data>

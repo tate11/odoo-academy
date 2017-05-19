@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+
+        <!-- VIEWS: "Training Action"
+
+            - Model·········: academy.training.action
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: academy_base.menu_academy_catalog
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not training actions in catalog
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "academy.training.action" -->
+        <record id="view_academy_training_action_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.action.tree</field>
+            <field name="model">academy.training.action</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_training_action_tree" create="1" delete="1" edit="1">
+                    <field name="name" />
+                    <field name="start" class="oe_field_start" />
+                    <field name="end" class="oe_field_end" />
+                    <field name="competencyunitcounting" />
+                    <field name="studentcounting" />
+                    <field name="progress" widget="progressbar" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "academy.training.action" -->
+        <record id="view_academy_training_action_form" model="ir.ui.view">
+            <field name="name">view.academy.training.action.form</field>
+            <field name="model">academy.training.action</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_training_action_form" create="1" delete="1" edit="1">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="Name" />
+                            </h1>
+                        </div>
+
+                        <group col="2">
+                            <field name="professional_qualification_id" class="oe_field_professional_qualification_id"
+                                placeholder="Choose related professional qualification" />
+                            <field name="application_scope_id" class="od_field_application_scope"
+                                placeholder="application_scope" />
+                        </group>
+
+                        <group col="2">
+                            <group col="2">
+                                <field name="knowledge_area_ids" class="od_field_knowledge_area"
+                                    placeholder="knowledge_area" widget="many2many_tags" />
+                                <field name="professional_category_id" class="od_field_professional_category"
+                                    placeholder="professional_category" />
+                                <field name="training_modality_ids" class="od_field_training_modality"
+                                    placeholder="training_modality" widget="many2many_tags" />
+                                <field name="training_methodology_ids" class="od_field_training_methodology"
+                                    placeholder="training_methodology" widget="many2many_tags" />
+                            </group>
+                            <group col="2">
+                                <field name="internal_action_code" class="oe_field_internal_code" />
+                                <field name="start" class="oe_field_start" />
+                                <field name="end" class="oe_field_end" />
+                                <field name="progress" class="oe_field_progress" widget="progressbar" />
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new description" />
+                            </page>
+                            <page string="Qualification" class="oe_page_qualification" accesskey="Q">
+                                    <group col="4">
+                                        <field name="professional_family_id" class="oe_field_professional_family_id"
+                                            placeholder="Choose related professional family" readonly="1" />
+                                        <field name="professional_area_id" class="oe_field_professional_area_id"
+                                            placeholder="Choose related professional_area_id" readonly="1" />
+                                        <field name="internal_code" class="oe_field internal code"
+                                            placeholder="Enter new internal code" readonly="1" />
+                                        <field name="qualification_level_id" class="oe_field_qualification_level_id"
+                                            placeholder="Choose related qualification level id" readonly="1" />
+                                    </group>
+                                <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
+                                    placeholder="Choose related competency units" readonly="1" />
+                            </page>
+                            <page string="Students" class="oe_page_students" accesskey="S">
+                                <field name="training_action_sign_up_ids" class="oe_field_training_action_sign_up_ids" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "academy.training.action" -->
+        <record id="view_academy_training_action_search" model="ir.ui.view">
+            <field name="name">view.academy.training.action.search</field>
+            <field name="model">academy.training.action</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="academy_training_action_search">
+                    <field name="name" />
+                    <!-- ··· -->
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_training_action_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Training action</field>
+            <field name="res_model">academy.training.action</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_academy_training_action_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Training Action
+                </p><p>
+                    There are not training actions in catalog
+                </p>
+            </field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_training_action" model="ir.ui.menu" >
+            <field name="name">Training Action</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_training_action_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+        </record>
+
+    </data>
+</openerp>

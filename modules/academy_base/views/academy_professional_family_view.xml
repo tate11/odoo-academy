@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
         <!-- VIEWS: "Professional Family"
 
@@ -9,7 +9,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog_settings
+            - Parent menu ··: academy_base.menu_academy_settings_catalog
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not professional familys in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -48,7 +48,17 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
-                        <!-- ··· -->
+                        <notebook>
+                            <page string="Areas" class="oe_page_areas" accesskey="A">
+                                <field name="professional_area_ids" class="oe_field_professional_area_ids"
+                                            placeholder="Choose related professional areas">
+                                    <tree string="Areas" create="1" delete="1" edit="1" editable="top">
+                                        <field name="name" class="oe_field_name"
+                                            placeholder="Enter new value for name" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -73,7 +83,7 @@
         <!-- Main window action for model.name -->
         <record id="action_professional_family_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
-            <field name="name">Professional Family</field>
+            <field name="name">Professional family</field>
             <field name="res_model">academy.professional.family</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
@@ -95,7 +105,7 @@
             <field name="name">Professional Family</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_professional_family_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog_settings" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>
 
 

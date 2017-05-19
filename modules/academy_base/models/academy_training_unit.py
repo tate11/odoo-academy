@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#pylint: disable=I0011,W0212,E0611,C0103,R0903,C0111,F0401
 ###############################################################################
 #    License, author and contributors information in:                         #
 #    __openerp__.py file at the root folder of this module.                   #
@@ -13,21 +12,20 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtCategory(models.Model):
-    """ Category of the question
+class AcademyTrainingUnit(models.Model):
+    """ Each of the formative units that make up a module, these are the
+    smallest part that can be evaluated.
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'at.category'
-    _description = u'Category of the question'
+    _name = 'academy.training.unit'
+    _description = u'Academy training unit'
 
     _rec_name = 'name'
     _order = 'sequence ASC, name ASC'
-
-    # ---------------------------- ENTITY FIEDS -------------------------------
 
     name = fields.Char(
         string='Name',
@@ -35,8 +33,8 @@ class AtCategory(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Name for this category',
-        size=50,
+        help='Enter new name',
+        size=100,
         translate=True
     )
 
@@ -46,7 +44,7 @@ class AtCategory(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Something about this category',
+        help='Enter new description',
         translate=True
     )
 
@@ -55,9 +53,8 @@ class AtCategory(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=True,
-        help=('If the active field is set to false, it will allow you to '
-              'hide record without removing it.')
+        default='Enables/disables the record',
+        help=False
     )
 
     sequence = fields.Integer(
@@ -65,47 +62,41 @@ class AtCategory(models.Model):
         required=True,
         readonly=False,
         index=False,
-        default=10,
-        help=('Place of this category in the order of the categories from '
-              'the topic')
+        default=0,
+        help="Choose unit order"
     )
 
-    at_topic_id = fields.Many2one(
-        string='Topic',
+    academy_training_module_id = fields.Many2one(
+        string='Training module',
         required=True,
         readonly=False,
         index=False,
         default=None,
-        help='Topic to which this category belongs',
-        comodel_name='at.topic',
+        help='Training module to witch this unit belongs',
+        comodel_name='academy.training.module',
         domain=[],
         context={},
         ondelete='cascade',
         auto_join=False
     )
 
-    at_question_ids = fields.Many2many(
-        string='Questions',
+    hours = field_name = fields.Float(
+        string='Hours',
         required=False,
         readonly=False,
         index=False,
-        default=None,
-        help='Questions relating to this category',
-        comodel_name='at.question',
-        # relation='at_question_this_model_rel',
-        # column1='at_question_id}',
-        # column2='this_model_id',
-        domain=[],
-        context={},
-        limit=None
+        default=0.0,
+        digits=(16, 2),
+        help='Lenght in hours'
     )
 
-    # --------------------------- SQL_CONTRAINTS ------------------------------
 
-    _sql_constraints = [
-        (
-            'categoryr_by_topic_uniq',
-            'UNIQUE(at_topic_id, name)',
-            _(u'There is already another category with the same name in this topic')
-        )
-    ]
+    fields.Datetime(
+        string='Length',
+        required=False,
+        readonly=False,
+        index=False,
+        #default=lambda self: fields.datetime.context_today(self, self.env.context) + " 01:00:00",
+        help='Length of this unit'
+    )
+
