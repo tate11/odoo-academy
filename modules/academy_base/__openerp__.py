@@ -26,6 +26,7 @@
     # always loaded
     'data': [
         'data/res_groups.xml',
+        'data/ir_actions_server_data.xml',
 
         'views/academy_base.xml',
         'views/academy_training_methodology_view.xml',
@@ -44,7 +45,13 @@
         'views/academy_training_action_view.xml',
 
         'views/res_parter_view.xml',
+        'views/appointment_manager_view.xml',
+
+        'views/academy_training_session_view.xml',
+        'views/academy_training_resource_view.xml',
         'views/academy_training_action_sign_up_view.xml',
+        'views/academy_training_session_itemisation_view.xml',
+        'views/academy_training_session_attendance_view.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
@@ -52,7 +59,10 @@
     'js': [
     ],
     'css': [
+        'academy_base/static/src/css/academy_training_action_view.css'
     ],
-
+    "external_dependencies": {
+        "python" : []
+    },
     'license': 'AGPL-3'
 }

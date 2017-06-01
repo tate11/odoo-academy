@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="action_update_training_session_server" model="ir.actions.server">
+            <field name="type">ir.actions.server</field>
+            <field name="name">Update training session</field>
+            <field name="model_id" ref="academy_base.model_academy_training_session" />
+            <field name="condition" eval="True" />
+            <field name="sequence" eval="5" />
+            <field name="context" eval="{}" />
+            <field name="code">action = self.update_status(cr, uid, context=context)</field>
+        </record>
+
+    </data>
+</openerp>

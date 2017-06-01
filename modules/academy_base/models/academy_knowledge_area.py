@@ -55,6 +55,7 @@ class AcademyKnowledgeArea(models.Model):
         default='Enables/disables the record',
         help=False
     )
+
     description = fields.Text(
         string='Description',
         required=False,

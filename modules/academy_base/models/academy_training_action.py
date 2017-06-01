@@ -5,8 +5,9 @@
 #    __openerp__.py file at the root folder of this action.                   #
 ###############################################################################
 
-from openerp import models, fields, api, api
+from openerp import models, fields, api, api, tools
 from logging import getLogger
+from openerp.exceptions import ValidationError
 
 
 _logger = getLogger(__name__)
@@ -169,24 +170,25 @@ class AcademyTrainingAction(models.Model):
         index=False,
         default=0.0,
         digits=(16, 2),
-        help='Use widget to manage progress status'
+        help='Use widget to manage progress status',
+        compute=lambda self: self._compute_progress()
     )
 
-    start = fields.Date(
+    start = fields.Datetime(
         string='Start',
         required=False,
         readonly=False,
         index=False,
-        default=fields.Date.today(),
+        default=fields.datetime.now(),
         help='Choose the start date'
     )
 
-    end = fields.Date(
+    end = fields.Datetime(
         string='End',
         required=False,
         readonly=False,
         index=False,
-        default=fields.Date.today(),
+        default=fields.datetime.now(),
         help='Choose the start date'
     )
 
@@ -199,6 +201,21 @@ class AcademyTrainingAction(models.Model):
         help='Enter new internal code',
         size=50,
         translate=True
+    )
+
+    academy_training_session_ids = fields.One2many(
+        string='Training sessions',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.session',
+        inverse_name='academy_training_action_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
     )
 
     training_action_sign_up_ids = fields.One2many(
@@ -214,6 +231,123 @@ class AcademyTrainingAction(models.Model):
         context={},
         auto_join=False,
         limit=None
+    )
+
+    seating = fields.Integer(
+        string='Seating',
+        required=False,
+        readonly=False,
+        index=False,
+        default=20,
+        help='Maximun number of sign ups allowed'
+    )
+
+    auto_session = fields.Boolean(
+        string='Auto create sessions',
+        required=False,
+        readonly=False,
+        index=False,
+        default=False,
+        help='Check for create sessions automatically'
+    )
+
+    session_length = fields.Float(
+        string='Session length',
+        required=False,
+        readonly=False,
+        index=False,
+        default=1.0,
+        digits=(16, 2),
+        help='Enter session length in hours'
+    )
+
+
+    interval = fields.Integer(
+        string='Repeat Every',
+        required=False,
+        readonly=False,
+        index=False,
+        default=1,
+        help='Repeat every (Days/Week/Month/Year)'
+    )
+
+    rrule_type = fields.Selection(
+        string='Recurrency',
+        required=False,
+        readonly=False,
+        index=False,
+        default='weekly',
+        help='Let the event automatically repeat at that interval',
+        selection=[
+            ('daily', 'Day(s)'),
+            ('weekly', 'Week(s)'),
+            ('monthly', 'Month(s)'),
+            ('yearly', 'Year(s)'),
+        ],
+        #states={'done': [('readonly', True)]}
+    )
+
+    mo = fields.Boolean(
+        string='Monday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=True,
+        help="Check for monday"
+    )
+
+    tu = fields.Boolean(
+        string='Tuesday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=True,
+        help="Check for tuesday"
+    )
+
+    we = fields.Boolean(
+        string='Wednesday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=True,
+        help="Check for wednesday"
+    )
+
+    th = fields.Boolean(
+        string='Thursday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=True,
+        help="Check for Thursday"
+    )
+
+    fr = fields.Boolean(
+        string='Friday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=True,
+        help="Check for friday"
+    )
+
+    sa = fields.Boolean(
+        string='Saturday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=False,
+        help="Check for saturday"
+    )
+
+    su = fields.Boolean(
+        string='Sunday',
+        required=False,
+        readonly=False,
+        index=False,
+        default=False,
+        help="Check for sunday"
     )
 
     competencyunitcounting = fields.Integer(
@@ -246,6 +380,28 @@ class AcademyTrainingAction(models.Model):
         compute=lambda self: self._compute_studentcounting()
     )
 
+    sessioncounting = fields.Integer(
+        string='Sessions',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help="Show number of sessions on this action",
+        compute=lambda self: self._compute_sessioncounting()
+    )
+
+    @api.multi
+    @api.depends('progress')
+    def _compute_progress(self):
+        for record in self:
+            ses_hours = sum(record.academy_training_session_ids.mapped('hours'))
+            act_hours = sum(record.academy_competency_unit_ids.mapped('hours'))
+            if act_hours == 0:
+                record.progress = 100
+            else:
+                record.progress = (ses_hours / act_hours) * 100
+
+
     @api.multi
     @api.depends('professional_qualification_id')
     def _compute_competencyunitcounting(self):
@@ -262,24 +418,95 @@ class AcademyTrainingAction(models.Model):
                 record.professional_qualification_id.academy_competency_unit_ids.mapped(
                     'academy_training_unit_ids'))
 
-
     @api.multi
     @api.depends('training_action_sign_up_ids')
     def _compute_studentcounting(self):
         for record in self:
             record.studentcounting = len(record.training_action_sign_up_ids)
 
-    @api.one
-    @api.onchange('professional_qualification_id')
-    def _onchange_professional_qualification_id(self):
-        self._compute_competencyunitcounting()
-        self._compute_trainingunitcounting()
+    @api.multi
+    @api.depends('academy_training_session_ids')
+    def _compute_sessioncounting(self):
+        for record in self:
+            record.sessioncounting = len(record.academy_training_session_ids)
 
-    @api.one
-    @api.onchange('training_action_sign_up_ids')
-    def _onchange_student_ids(self):
-        self._compute_studentcounting()
+    # Not needed in Odoo 10
+    # @api.one
+    # @api.onchange('professional_qualification_id')
+    # def _onchange_professional_qualification_id(self):
+    #     self._compute_competencyunitcounting()
+    #     self._compute_trainingunitcounting()
+
+    # Not needed in Odoo 10
+    # @api.onchange('training_action_sign_up_ids')
+    # def _onchange_training_action_sign_up_ids(self):
+    #     self._compute_studentcounting()
+
+
+    image = fields.Binary(
+        string='Image',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help='This field holds the image used as image for our customers, limited to 1024x1024px.'
+    )
+
+    image_medium = fields.Binary(
+        string='Image (auto-resized to 128x128)',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help="Medium-sized image of the category. It is automatically " \
+             "resized as a 128x128px image, with aspect ratio preserved. " \
+             "Use this field in form views or some kanban views.",
+        compute="_get_image",
+    )
+
+    image_small = fields.Binary(
+        string='Image (auto-resized to 64x64)',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help="Small-sized image of the category. It is automatically " \
+             "resized as a 64x64px image, with aspect ratio preserved. " \
+             "Use this field anywhere a small image is required.",
+        compute="_get_image",
+    )
+
+
+    @api.multi
+    @api.depends('image')
+    def _get_image(self):
+        for record in self:
+            image = record.image
+            if image:
+                data = tools.image_get_resized_images(image)
+                record.image_medium = data["image_medium"]
+                record.image_small = data["image_small"]
 
 
 
+    # @api.one
+    # @api.onchange('image')
+    # def _onchange_image(self):
+    #     image = self.image
 
+    #     data = tools.image_get_resized_images(image)
+    #     self.image_medium = data["image_medium"]
+    #     self.image_small = data["image_small"]
+
+    @api.constrains('end')
+    def _check_end(self):
+        """ Ensures end field value is greater then start value """
+        for record in self:
+            if record.end <= record.start:
+                raise ValidationError("End date must be greater then start date")
+
+
+
+    @api.multi
+    def append_session(self):
+        pass

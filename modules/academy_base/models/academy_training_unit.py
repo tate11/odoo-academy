@@ -80,7 +80,7 @@ class AcademyTrainingUnit(models.Model):
         auto_join=False
     )
 
-    hours = field_name = fields.Float(
+    hours = fields.Float(
         string='Hours',
         required=False,
         readonly=False,
@@ -90,13 +90,30 @@ class AcademyTrainingUnit(models.Model):
         help='Lenght in hours'
     )
 
-
-    fields.Datetime(
-        string='Length',
+    code = fields.Char(
+        string='Code',
         required=False,
         readonly=False,
         index=False,
-        #default=lambda self: fields.datetime.context_today(self, self.env.context) + " 01:00:00",
-        help='Length of this unit'
+        default=None,
+        help='Code for training unit',
+        size=6,
+        translate=True
+    )
+
+    academy_training_resource_ids = fields.Many2many(
+        string='Training resource',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.resource',
+        # relation='academy_training_resource_this_model_rel',
+        # column1='academy_training_resource_id',
+        # column2='this_model_id',
+        domain=[],
+        context={},
+        limit=None
     )
 

@@ -1,0 +1,16 @@
+.oe_kanban_academy_training_action h4 {
+    margin-top: 0px!important;
+}
+
+.oe_kanban_academy_training_action li {
+    line-height: 1.5em;
+}
+
+.oe_kanban_academy_training_action .row {
+    clear: both;
+    margin-top: 1em;
+}
+
+.oe_interchangeable .o_form_invisible {
+    display: none;
+}

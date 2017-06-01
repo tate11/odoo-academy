@@ -56,6 +56,36 @@
             </field>
         </record>
 
+        <!-- Kanban view for "academy.competency.unit" -->
+        <record id="view_academy_competency_unit_kanban" model="ir.ui.view">
+            <field name="name">view.academy.competency.unit.form</field>
+            <field name="model">academy.competency.unit</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_resource_vignette">
+                                <div class="o_kanban_image">
+                                    <img src="https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg" class="oe_resource_picture"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="oe_partner_heading"><field name="name"/></strong>
+                                    <ul>
+                                       <li><strong>Units:&#160;</strong><field name="academy_training_unit_ids" widget="x2many_counter" /></li>
+                                       <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <!-- Search view for "academy.competency.unit" -->
         <record id="view_academy_competency_unit_search" model="ir.ui.view">
             <field name="name">view.academy.competency.unit.search</field>
@@ -67,7 +97,6 @@
             <field name="arch" type="xml">
                 <search string="academy_competency_unit_search">
                     <field name="name" />
-                    <!-- ··· -->
                 </search>
             </field>
         </record>
@@ -77,7 +106,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Competency unit</field>
             <field name="res_model">academy.competency.unit</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>

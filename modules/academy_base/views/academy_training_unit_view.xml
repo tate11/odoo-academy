@@ -51,12 +51,57 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
-                        <group col="2">
-                            <field name="academy_training_module_id" class="oe_field_training_module_id" />
-                            <field name="hours" class="oe_field_hours" />
+                        <group col="4">
+                            <field colspan="4"
+                                name="academy_training_module_id"
+                                class="oe_field_training_module_id" />
+                            <field name="code" class="oe_field_code"
+                                placeholder="Enter new code" />
+                            <field name="hours" class="oe_field_hours"
+                                placeholder="Enter the time length" />
                         </group>
+                        <notebook>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new description" />
+                            </page>
+                            <page string="Resources" class="oe_page_resources" accesskey="R">
+                                <field name="academy_training_resource_ids" class="oe_field_academy_training_resource_ids"
+                                    placeholder="Choose related resources" />
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <!-- Kanban view for "academy.training.unit" -->
+        <record id="view_academy_training_unit_kanban" model="ir.ui.view">
+            <field name="name">view.academy.training.unit.form</field>
+            <field name="model">academy.training.unit</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_resource_vignette">
+                                <div class="o_kanban_image">
+                                    <img src="https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg" class="oe_resource_picture"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="oe_partner_heading"><field name="name"/></strong>
+                                    <ul>
+                                       <li><strong>Resources:&#160;</strong><field name="academy_training_resource_ids" widget="x2many_counter" /></li>
+                                       <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
 
@@ -71,7 +116,7 @@
             <field name="arch" type="xml">
                 <search string="academy_training_unit_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="academy_training_module_id" />
                 </search>
             </field>
         </record>
@@ -81,7 +126,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Training unit</field>
             <field name="res_model">academy.training.unit</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>
