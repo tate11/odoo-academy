@@ -33,7 +33,7 @@ class AppointmentManager(models.Model):
     _order = 'start ASC'
 
 
-    _kill_switch = 1826 # Maximum number of iterations in loop (5 years)
+    _kill_switch = 9130 # Maximum number of iterations in loop (25 years)
 
 
     # ---------------------------- ENTITY FIELDS ------------------------------
@@ -401,6 +401,24 @@ class AppointmentManager(models.Model):
         return super(AppointmentManager, self).write(values)
 
 
+    # ------------------------ PRIVATE MAIN METHODS ---------------------------
+
+
+    @api.multi
+    def _range(self):
+        for record in self:
+            start = fields.Date.from_string(record.start)
+            final_date = fields.Date.from_string(record.final_date)
+            return record.range(
+                start,
+                record.rrule_type,
+                record.interval,
+                record.count if record.end_type == 'count' else final_date,
+                holidays=None,
+                workdays=None
+            )
+
+
     # -------------------------- AUXILIARY METHODS ----------------------------
 
 
@@ -426,8 +444,8 @@ class AppointmentManager(models.Model):
         return result
 
 
-    @api.model
-    def _get_duration(self, start, stop):
+    @staticmethod
+    def _get_duration(start, stop):
         """ Get the duration value between the 2 given dates. This method will
         be used to compute duration field value in all day appointments.
         """
@@ -440,8 +458,8 @@ class AppointmentManager(models.Model):
 
             return 0.0
 
-    @api.model
-    def _date_trunc(self, dt):
+    @staticmethod
+    def _date_trunc(dt):
         """ If dt is a date return dt else if dt is a datetime returns dt.date()
         """
 
@@ -451,8 +469,8 @@ class AppointmentManager(models.Model):
     # --------------------------- PUBLIC METHODS ------------------------------
 
 
-    @api.model
-    def _normalize_holidays(self, holidays):
+    @staticmethod
+    def _normalize_holidays(holidays):
         """ Transforms a given single value or None in a list and returns it
         """
 
@@ -466,8 +484,8 @@ class AppointmentManager(models.Model):
         # STEP 3: Ensure all values are date and not datetimes
         return [dt.date() if isinstance(dt, datetime) else dt for dt in holidays]
 
-
-    def _normalize_workdays(self, workdays):
+    @staticmethod
+    def _normalize_workdays(workdays):
         """ If a single value is given this method transforms it in a list,
         otherwise if the given value is None it sets workdays to the default
         list with the positions from monday to friday.
@@ -481,8 +499,8 @@ class AppointmentManager(models.Model):
         return workdays
 
 
-    @api.model
-    def _get_limits(self, end_value):
+    @staticmethod
+    def _get_limits(end_value):
         if isinstance(end_value, int):
             return date.max, end_value
         else:
@@ -491,16 +509,16 @@ class AppointmentManager(models.Model):
                 maxint
             )
 
-    @api.model
-    def _in_range_and_not_holiday(self, start, final_date, holidays):
+    @staticmethod
+    def _in_range_and_not_holiday(start, final_date, holidays):
         """ Checks if is not the given date equal to None, it's less or equal to
         final_date, it's not in holidays and (optionallly) if is it a workdays
         """
 
         return start <= final_date and start not in holidays
 
-    @api.model
-    def _workdays_of_the_week(self, start, workdays=None, relative=False):
+    @staticmethod
+    def _workdays_of_the_week(start, workdays=None, relative=False):
         workday_list = []
 
         # STEP 3: Workdays must be a list. If the list is not given, default
@@ -522,18 +540,18 @@ class AppointmentManager(models.Model):
         return workday_list
 
 
-    @api.model
-    def _next_daily_date(self, start, offset, interval, reserved=None):
+    @staticmethod
+    def _next_daily_date(start, offset, interval, reserved=None):
         #pylint: disable=I0011,W0613
 
         return start + timedelta(days=interval * offset)
 
 
-    @api.model
-    def _next_weekly_date(self, start, offset, interval, workdays):
+    @classmethod
+    def _next_weekly_date(cls, start, offset, interval, workdays):
         #pylint: disable=I0011,W0613
         next_day = start + timedelta(1)
-        w1 = self._workdays_of_the_week(next_day, workdays, relative=True)
+        w1 = cls._workdays_of_the_week(next_day, workdays, relative=True)
         len_w1 = len(w1)
 
         offset = (offset * interval)
@@ -548,15 +566,15 @@ class AppointmentManager(models.Model):
             day_index = int(offset%len(workdays))
 
             target_date = monday + timedelta(weeks=weeks)
-            target_week = self._workdays_of_the_week(target_date, workdays, relative=False)
+            target_week = cls._workdays_of_the_week(target_date, workdays, relative=False)
 
             result = target_week[day_index]
 
         return result
 
 
-    @api.model
-    def _next_monthly_date(self, start, offset, interval, reserved=None):
+    @staticmethod
+    def _next_monthly_date(start, offset, interval, reserved=None):
         #pylint: disable=I0011,W0613
 
         # STEP 1: Compute all months from start date
@@ -583,7 +601,8 @@ class AppointmentManager(models.Model):
         return new_date
 
 
-    def _next_yearly_date(self, start, offset, interval, reserved=None):
+    @staticmethod
+    def _next_yearly_date(start, offset, interval, reserved=None):
         #pylint: disable=I0011,W0613
 
         var_y = start.year + interval * offset
@@ -600,19 +619,19 @@ class AppointmentManager(models.Model):
         return new_date
 
 
-    @api.model
-    def _range_get_specific_next_method(self, rrule_type):
+    @classmethod
+    def _range_get_specific_next_method(cls, rrule_type):
         """ Gets the specific required method to compute next date and the
         optional method to adjust date, both for given `rrule_type`.
         """
 
-        next_date_method = getattr(self, u'_next_{}_date'.format(rrule_type))
+        next_date_method = getattr(cls, u'_next_{}_date'.format(rrule_type))
 
         return next_date_method
 
 
-    @api.model
-    def range(self, start, rrule_type, interval, end_value, holidays=None, workdays=None):
+    @classmethod
+    def range(cls, start, rrule_type, interval, end_value, holidays=None, workdays=None):
         """ Computes all dates from `start` (date) to end_value (int or date) using
         given rrule_type and interval.
 
@@ -634,11 +653,11 @@ class AppointmentManager(models.Model):
         result = []
 
         # STEP 1: Ensure bounds are dates and not datetimes
-        start = self._date_trunc(start)
+        start = cls._date_trunc(start)
 
         # STEP 2: Limit can be a future date or number (integer) of dates
         # This sets the unused, between both variables, to the maximum value
-        final_date, count = self._get_limits(end_value)
+        final_date, count = cls._get_limits(end_value)
         if count == 0 or start > final_date:
             return result # EARLY METHOD EXIT
 
@@ -648,11 +667,11 @@ class AppointmentManager(models.Model):
             u'Interval with Zero as value will return a single date or nothing'
 
         # STEP 4: Converts date, datetime and None values in a list
-        holidays = self._normalize_holidays(holidays)
+        holidays = cls._normalize_holidays(holidays)
 
         # STEP 5.b: Workdays must be a list. If the list is not given, default
         # will be used instead
-        workdays = self._normalize_workdays(workdays)
+        workdays = cls._normalize_workdays(workdays)
 
         # STEP 6: Prevent nevative intervals
         interval = max(0, interval)
@@ -661,12 +680,16 @@ class AppointmentManager(models.Model):
         # result = [start] if start <= final_date and  and count > 0 else []
         if start and \
            (rrule_type != 'weekly' or start.isoweekday() in workdays) and \
-           self._in_range_and_not_holiday(start, final_date, holidays):
+           cls._in_range_and_not_holiday(start, final_date, holidays):
             result.append(start)
+
+        # STEP 8: If interval is 0 the method has finished
+        if interval <= 0:
+            return result # EARLY METHOD EXIT
 
         # STEP 8: Prepair loop: offset, initial date and method to move forward
         offset = 1
-        specific_next_method = self._range_get_specific_next_method(rrule_type)
+        specific_next_method = cls._range_get_specific_next_method(rrule_type)
         # new_date = specific_next_method(start, offset, interval, workdays)
         new_date = start
 
@@ -678,35 +701,39 @@ class AppointmentManager(models.Model):
 
             # STEP 9.b: Check if current (ensured) date is not in holidays and
             # add it to the results list
-            if self._in_range_and_not_holiday(new_date, final_date, holidays):
+            if cls._in_range_and_not_holiday(new_date, final_date, holidays):
                 result.append(new_date)
 
             offset = offset + 1
 
             ### KILL SWITCH - Prevents an eventual code error in loop locks the server ###
-            if offset >= self._kill_switch:
-                _logger.error(u'A KILL SWITCH WAS ACTIVATED on %s->range', self._name)
+            if offset >= cls._kill_switch:
+                _logger.error(
+                    (u'A KILL SWITCH WAS ACTIVATED on %s->range at %d loop # '
+                     u'new_date: %s, final_date: %s, len(result): %d, count: %d'),
+                    cls._name, offset, new_date, final_date, len(result), count
+                )
                 break
 
         # STEP 10: Return the list of valid dates
         return result
 
 
-    @api.model
-    def EDate(self, dt, months):
+    @classmethod
+    def EDate(cls, dt, months):
         """ Returns the serial number of the date before or after a specified
         number of months
 
         @note: works like Excel function EDate
         """
 
-        dt = self._date_trunc(dt)
+        dt = cls._date_trunc(dt)
 
         return dt + timedelta(months=months)
 
 
-    @api.model
-    def WorkDay(self, dt, days, work_days=None, holidays=None):
+    @classmethod
+    def WorkDay(cls, dt, days, work_days=None, holidays=None):
         """ Returns the serial number of the date before or after a specified
         number of workdays with custom work week parameter
 
@@ -714,7 +741,7 @@ class AppointmentManager(models.Model):
         @note: work_days parameter uses iso format (monday = 1, ..., sunday = 7)
         """
 
-        dt = self._date_trunc(dt)
+        dt = cls._date_trunc(dt)
 
         if days != 0:
 
@@ -723,7 +750,7 @@ class AppointmentManager(models.Model):
                 work_days = [1, 2, 3, 4, 5]
 
             # STEP 2: Converts date, datetime and None values in a list
-            holidays = self._normalize_holidays(holidays)
+            holidays = cls._normalize_holidays(holidays)
 
             # STEP 3: Compute if count will increase or decrease
             inc = int(days / abs(days))
@@ -743,8 +770,8 @@ class AppointmentManager(models.Model):
 
         return dt
 
-
-    def WorkDays(self, dt1, dt2, work_days=None, holidays=None):
+    @classmethod
+    def WorkDays(cls, dt1, dt2, work_days=None, holidays=None):
         """ Computes workdays beetween two given dates
 
         @note: works like Excel function NetworkDays.Intl
@@ -752,8 +779,8 @@ class AppointmentManager(models.Model):
         """
 
         # STEP 1: Trunc datetimes to date
-        dt1 = self._date_trunc(dt1)
-        dt2 = self._date_trunc(dt2)
+        dt1 = cls._date_trunc(dt1)
+        dt2 = cls._date_trunc(dt2)
 
         # STEP 2: Compute difference, in CALENDAR days, beetween given dates
         # Difference will be a absolute value, the sign will be stored in inc varriable
@@ -765,7 +792,7 @@ class AppointmentManager(models.Model):
             work_days = [1, 2, 3, 4, 5]
 
         # STEP 4: Converts date, datetime and None values in a list
-        holidays = self._normalize_holidays(holidays)
+        holidays = cls._normalize_holidays(holidays)
 
         if result != 0:
 

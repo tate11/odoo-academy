@@ -27,7 +27,7 @@
                 <tree string="academy_training_action_tree" create="1" delete="1" edit="1">
                     <field name="name" />
                     <field name="start" class="oe_field_start" />
-                    <field name="end" class="oe_field_end" />
+                    <field name="stop" class="oe_field_stop" />
                     <field name="competencyunitcounting" />
                     <field name="studentcounting" />
                     <field name="progress" widget="progressbar" />
@@ -43,9 +43,9 @@
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_appointment_manager_form" />
             <field name="arch" type="xml">
-                <form string="academy_training_action_form" create="1" delete="1" edit="1">
-                    <sheet>
+                    <xpath expr="//notebook" position="before">
                         <div class="oe_button_box" name="button_box">
                             <button name="append_session" type="object" class="oe_stat_button" icon="fa-calendar-plus-o" string="Sessions">
                                 <field name="sessioncounting"/>
@@ -68,87 +68,61 @@
                             <field name="application_scope_id" class="od_field_application_scope"
                                 placeholder="application_scope" />
                         </group>
+                    </xpath>
 
-                        <notebook>
-                            <page string="Data" class="oe_page_data" accesskey="T">
+                    <xpath expr="//notebook/page" position="before">
+                        <page string="Data" class="oe_page_data" accesskey="T">
+                            <group col="2">
                                 <group col="2">
-                                    <group col="2">
-                                        <field name="knowledge_area_ids" class="od_field_knowledge_area"
-                                            placeholder="knowledge_area" widget="many2many_tags" />
-                                        <field name="professional_category_id" class="od_field_professional_category"
-                                            placeholder="professional_category" />
-                                        <field name="training_modality_ids" class="od_field_training_modality"
-                                            placeholder="training_modality" widget="many2many_tags" />
-                                        <field name="training_methodology_ids" class="od_field_training_methodology"
-                                            placeholder="training_methodology" widget="many2many_tags" />
-                                    </group>
-                                    <group col="2">
-                                        <field name="internal_action_code" class="oe_field_internal_code" />
-                                        <field name="start" class="oe_field_start" />
-                                        <field name="end" class="oe_field_end" />
-                                        <field name="progress" class="oe_field_progress" widget="progressbar" />
-                                    </group>
+                                    <field name="knowledge_area_ids" class="od_field_knowledge_area"
+                                        placeholder="knowledge_area" widget="many2many_tags" />
+                                    <field name="professional_category_id" class="od_field_professional_category"
+                                        placeholder="professional_category" />
+                                    <field name="training_modality_ids" class="od_field_training_modality"
+                                        placeholder="training_modality" widget="many2many_tags" />
+                                    <field name="training_methodology_ids" class="od_field_training_methodology"
+                                        placeholder="training_methodology" widget="many2many_tags" />
                                 </group>
-                            </page>
+                                <group col="2">
+                                    <field name="internal_action_code" class="oe_field_internal_code" />
+                                    <field name="start" class="oe_field_start" />
+                                    <field name="stop" class="oe_field_stop" />
+                                    <field name="progress" class="oe_field_progress" widget="progressbar" />
+                                </group>
+                            </group>
+                        </page>
 
-                            <page string="Description" class="oe_page_description" accesskey="D">
-                                <field name="description" class="oe_field_description"
-                                    placeholder="Enter new description" />
-                            </page>
-                            <page string="Qualification" class="oe_page_qualification" accesskey="Q">
-                                    <group col="4">
-                                        <field name="professional_family_id" class="oe_field_professional_family_id"
-                                            placeholder="Choose related professional family" readonly="1" />
-                                        <field name="professional_area_id" class="oe_field_professional_area_id"
-                                            placeholder="Choose related professional_area_id" readonly="1" />
-                                        <field name="internal_code" class="oe_field internal code"
-                                            placeholder="Enter new internal code" readonly="1" />
-                                        <field name="qualification_level_id" class="oe_field_qualification_level_id"
-                                            placeholder="Choose related qualification level id" readonly="1" />
-                                    </group>
-                                <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
-                                    placeholder="Choose related competency units" readonly="1" />
-                            </page>
-                            <page string="Students" class="oe_page_students" accesskey="S">
+                        <page string="Description" class="oe_page_description" accesskey="D">
+                            <field name="description" class="oe_field_description"
+                                placeholder="Enter new description" />
+                        </page>
+                        <page string="Qualification" class="oe_page_qualification" accesskey="Q">
                                 <group col="4">
-                                    <field name="studentcounting" class="oe_field_studentcounting" />
-                                    <field name="seating" class="oe_field_studentcounting" />
+                                    <field name="professional_family_id" class="oe_field_professional_family_id"
+                                        placeholder="Choose related professional family" readonly="1" />
+                                    <field name="professional_area_id" class="oe_field_professional_area_id"
+                                        placeholder="Choose related professional_area_id" readonly="1" />
+                                    <field name="internal_code" class="oe_field internal code"
+                                        placeholder="Enter new internal code" readonly="1" />
+                                    <field name="qualification_level_id" class="oe_field_qualification_level_id"
+                                        placeholder="Choose related qualification level id" readonly="1" />
                                 </group>
-                                <field name="training_action_sign_up_ids" class="oe_field_training_action_sign_up_ids" />
-                            </page>
-                            <page string="Sessions" class="oe_page_sessions" accesskey="S">
-                                <group col="4">
-                                    <field name="auto_session" class="oe_field_auto_session"
-                                        placeholder="Check for auto create sessions" />
-                                    <field name="session_length" class="oe_field_session_length"
-                                        placeholder="Enter session length in hours" />
+                            <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
+                                placeholder="Choose related competency units" readonly="1" />
+                        </page>
+                        <page string="Students" class="oe_page_students" accesskey="S">
+                            <group col="4">
+                                <field name="studentcounting" class="oe_field_studentcounting" />
+                                <field name="seating" class="oe_field_studentcounting" />
+                            </group>
+                            <field name="training_action_sign_up_ids" class="oe_field_training_action_sign_up_ids" />
+                        </page>
+                    </xpath>
 
-                                    <label for="interval" colspan="1"/>
-                                    <div class="o_row">
-                                        <field name="interval" class="oe_field_interval"
-                                            placeholder="Enter repeat every value" />
-                                        <field name="rrule_type" class="oe_field_rrule_type"
-                                            placeholder="Choose rule for repetition" />
-                                    </div>
-                                    <div class="o_row" colspan="2">
-                                        <span attrs="{'invisible': [('rrule_type', '!=', 'weekly')]}">
-                                            <strong>Mo</strong><field name="mo" />
-                                            <strong>Tu</strong><field name="tu" />
-                                            <strong>We</strong><field name="we" />
-                                            <strong>Th</strong><field name="th" />
-                                            <strong>Fr</strong><field name="fr" />
-                                            <strong>Sa</strong><field name="sa" />
-                                            <strong>Su</strong><field name="su" />
-                                        </span>
-                                    </div>
-                                </group>
-
-                                <field name="academy_training_session_ids" class="oe_field_academy_training_session_ids"
-                                    placeholder="Choose related training sessions" />
-                            </page>
-                        </notebook>
-                    </sheet>
-                </form>
+                    <xpath expr="//group[@class='appointment-manager']" position="after">
+                        <field name="academy_training_session_ids" class="oe_field_academy_training_session_ids"
+                            placeholder="Choose related training sessions" />
+                    </xpath>
             </field>
         </record>
 
@@ -165,7 +139,7 @@
                 <kanban>
                     <field name="image_small"/>
                     <field name="seating" />
-                    <field name="end" />
+                    <field name="stop" />
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_action">
@@ -185,7 +159,7 @@
                                 <div class="oe_kanban_details">
                                     <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
                                     <ul>
-                                        <li><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="end"  /></li>
+                                        <li><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="stop"  /></li>
                                         <li><strong>Competency units:&#160;</strong><field name="academy_competency_unit_ids" widget="x2many_counter" />&#160;</li>
                                      </ul>
                                 </div>

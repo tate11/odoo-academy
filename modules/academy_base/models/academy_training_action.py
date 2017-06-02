@@ -27,6 +27,8 @@ class AcademyTrainingAction(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
+    _inherit = ['appointment.manager']
+
     _inherits = {'academy.professional.qualification': 'professional_qualification_id'}
 
     name = fields.Char(
@@ -174,23 +176,23 @@ class AcademyTrainingAction(models.Model):
         compute=lambda self: self._compute_progress()
     )
 
-    start = fields.Datetime(
-        string='Start',
-        required=False,
-        readonly=False,
-        index=False,
-        default=fields.datetime.now(),
-        help='Choose the start date'
-    )
+    # start = fields.Datetime(
+    #     string='Start',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=fields.datetime.now(),
+    #     help='Choose the start date'
+    # )
 
-    end = fields.Datetime(
-        string='End',
-        required=False,
-        readonly=False,
-        index=False,
-        default=fields.datetime.now(),
-        help='Choose the start date'
-    )
+    # end = fields.Datetime(
+    #     string='End',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=fields.datetime.now(),
+    #     help='Choose the start date'
+    # )
 
     internal_action_code = fields.Char(
         string='Internal code',
@@ -251,104 +253,104 @@ class AcademyTrainingAction(models.Model):
         help='Check for create sessions automatically'
     )
 
-    session_length = fields.Float(
-        string='Session length',
-        required=False,
-        readonly=False,
-        index=False,
-        default=1.0,
-        digits=(16, 2),
-        help='Enter session length in hours'
-    )
+    # session_length = fields.Float(
+    #     string='Session length',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=1.0,
+    #     digits=(16, 2),
+    #     help='Enter session length in hours'
+    # )
 
 
-    interval = fields.Integer(
-        string='Repeat Every',
-        required=False,
-        readonly=False,
-        index=False,
-        default=1,
-        help='Repeat every (Days/Week/Month/Year)'
-    )
+    # interval = fields.Integer(
+    #     string='Repeat Every',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=1,
+    #     help='Repeat every (Days/Week/Month/Year)'
+    # )
 
-    rrule_type = fields.Selection(
-        string='Recurrency',
-        required=False,
-        readonly=False,
-        index=False,
-        default='weekly',
-        help='Let the event automatically repeat at that interval',
-        selection=[
-            ('daily', 'Day(s)'),
-            ('weekly', 'Week(s)'),
-            ('monthly', 'Month(s)'),
-            ('yearly', 'Year(s)'),
-        ],
-        #states={'done': [('readonly', True)]}
-    )
+    # rrule_type = fields.Selection(
+    #     string='Recurrency',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default='weekly',
+    #     help='Let the event automatically repeat at that interval',
+    #     selection=[
+    #         ('daily', 'Day(s)'),
+    #         ('weekly', 'Week(s)'),
+    #         ('monthly', 'Month(s)'),
+    #         ('yearly', 'Year(s)'),
+    #     ],
+    #     #states={'done': [('readonly', True)]}
+    # )
 
-    mo = fields.Boolean(
-        string='Monday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help="Check for monday"
-    )
+    # mo = fields.Boolean(
+    #     string='Monday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=True,
+    #     help="Check for monday"
+    # )
 
-    tu = fields.Boolean(
-        string='Tuesday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help="Check for tuesday"
-    )
+    # tu = fields.Boolean(
+    #     string='Tuesday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=True,
+    #     help="Check for tuesday"
+    # )
 
-    we = fields.Boolean(
-        string='Wednesday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help="Check for wednesday"
-    )
+    # we = fields.Boolean(
+    #     string='Wednesday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=True,
+    #     help="Check for wednesday"
+    # )
 
-    th = fields.Boolean(
-        string='Thursday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help="Check for Thursday"
-    )
+    # th = fields.Boolean(
+    #     string='Thursday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=True,
+    #     help="Check for Thursday"
+    # )
 
-    fr = fields.Boolean(
-        string='Friday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help="Check for friday"
-    )
+    # fr = fields.Boolean(
+    #     string='Friday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=True,
+    #     help="Check for friday"
+    # )
 
-    sa = fields.Boolean(
-        string='Saturday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=False,
-        help="Check for saturday"
-    )
+    # sa = fields.Boolean(
+    #     string='Saturday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=False,
+    #     help="Check for saturday"
+    # )
 
-    su = fields.Boolean(
-        string='Sunday',
-        required=False,
-        readonly=False,
-        index=False,
-        default=False,
-        help="Check for sunday"
-    )
+    # su = fields.Boolean(
+    #     string='Sunday',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=False,
+    #     help="Check for sunday"
+    # )
 
     competencyunitcounting = fields.Integer(
         string='Competency units',

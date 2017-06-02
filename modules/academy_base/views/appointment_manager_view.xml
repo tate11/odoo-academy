@@ -42,88 +42,75 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <form string="appointment_manager_form" create="1" delete="1" edit="1">
-                    <sheet>
-                        <div class="oe_title">
-                            <label for="display_name" class="oe_edit_only" />
-                            <h1>
-                                <field name="display_name" class="oe_field_display_name"
-                                    placeholder="Enter new value for Display name" />
-                            </h1>
-                        </div>
+                        <sheet>
+                        <notebook>
+                            <page string="Sessions" class="oe_page_sessions" accesskey="S">
+                                <group col="2" class="appointment-manager">
 
-                        <group col="2">
+                                    <group col="2" class="oe_interchangeable">
 
-                            <group col="2" class="oe_interchangeable">
+                                        <field name="allday" class="oe_field_allday"
+                                            placeholder="Enter new value for Allday" />
 
-                                <field name="allday" class="oe_field_allday"
-                                    placeholder="Enter new value for Allday" />
+                                        <field name="start_datetime" class="oe_field_start_datetime"
+                                            attrs="{'invisible': [('allday', '=', True)]}"
+                                            placeholder="Enter new value for Start datetime" />
 
-                                <field name="start_datetime" class="oe_field_start_datetime"
-                                    attrs="{'invisible': [('allday', '=', True)]}"
-                                    placeholder="Enter new value for Start datetime" />
+                                        <field name="duration" class="oe_field_duration"
+                                            attrs="{'invisible': [('allday', '=', True)]}" widget='float_time'
+                                            placeholder="Enter new value for Duration" />
 
-                                <field name="duration" class="oe_field_duration"
-                                    attrs="{'invisible': [('allday', '=', True)]}" widget='float_time'
-                                    placeholder="Enter new value for Duration" />
+                                        <field name="start_date" class="oe_field_start"
+                                            attrs="{'invisible': [('allday', '=', False)]}"
+                                            placeholder="Enter new value for Start" />
 
-                                <field name="start_date" class="oe_field_start"
-                                    attrs="{'invisible': [('allday', '=', False)]}"
-                                    placeholder="Enter new value for Start" />
+                                        <field name="stop_date" class="oe_field_end"
+                                            attrs="{'invisible': [('allday', '=', False)]}"
+                                            placeholder="Enter new value for End" />
+                                    </group>
 
-                                <field name="stop_date" class="oe_field_end"
-                                    attrs="{'invisible': [('allday', '=', False)]}"
-                                    placeholder="Enter new value for End" />
+                                    <group>
 
-                                <!-- <script>
-                                    <![CDATA[
-                                    jQuery(document).ready(function() {jQuery('.oe_interchangeable').find('tr').attr('class', ''); jQuery('.oe_interchangeable').find('tr').has('.o_form_invisible').attr('class', 'o_form_invisible')});
-                                    jQuery('.oe_field_allday input').change(function() {jQuery('.oe_interchangeable').find('tr').attr('class', ''); jQuery('.oe_interchangeable').find('tr').has('.o_form_invisible').attr('class', 'o_form_invisible')});
-                                    ]]>
-                                </script> -->
+                                        <field name="recurrency" class="oe_field_recurrency"
+                                            placeholder="Enter new value for Recurrency" />
 
-                            </group>
+                                        <label for="interval"/>
+                                        <div class="o_row">
+                                            <field name="interval" attrs="{'required': [('recurrency', '=', True)]}"/>
+                                            <field name="rrule_type" class="oe_field_rrule_type" attrs="{'required': [('recurrency', '=', True)]}"/>
+                                        </div>
 
-                            <group>
+                                        <label string="Until" for="end_type"/>
+                                        <div class="o_row">
+                                            <field name="end_type" attrs="{'required': [('recurrency', '=', True)]}"/>
+                                            <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency', '=', True)]}"/>
+                                            <field name="final_date" attrs="{'invisible': [('end_type', '!=', 'stop_date')], 'required': [('end_type', '=', 'stop_date')]}"/>
+                                        </div>
 
-                                <field name="recurrency" class="oe_field_recurrency"
-                                    placeholder="Enter new value for Recurrency" />
+                                        <div class="o_row row" colspan="2" attrs="{'invisible': [('rrule_type', '!=', 'weekly')]}" name="weekdays">
+                                            <div><strong>Mo&#160;</strong><field name="mo" /></div>
+                                            <div><strong>Tu&#160;</strong><field name="tu" /></div>
+                                            <div><strong>We&#160;</strong><field name="we" /></div>
+                                            <div><strong>Th&#160;</strong><field name="th" /></div>
+                                            <div><strong>Fr&#160;</strong><field name="fr" /></div>
+                                            <div><strong>Sa&#160;</strong><field name="sa" /></div>
+                                            <div><strong>Su&#160;</strong><field name="su" /></div>
+                                        </div>
 
-                                <label for="interval"/>
-                                <div class="o_row">
-                                    <field name="interval" attrs="{'required': [('recurrency', '=', True)]}"/>
-                                    <field name="rrule_type" attrs="{'required': [('recurrency', '=', True)]}"/>
-                                </div>
+                                        <label string="Day of Month" for="month_by"
+                                            attrs="{'invisible': [('rrule_type', '!=', 'monthly')]}" />
+                                        <div class="o_row" attrs="{'invisible': [('rrule_type', '!=', 'monthly')]}">
+                                            <field name="month_by"/>
+                                            <field name="day" attrs="{'required': [('month_by', '=', 'date'), ('rrule_type', '=', 'monthly')],                                                             'invisible': [('month_by', '!=', 'date')]}"/>
+                                            <field name="byday" string="The" attrs="{'required': [('month_by', '=', 'day'), ('rrule_type', '=', 'monthly')],                                                             'invisible': [('month_by', '!=', 'day')]}"/>
+                                            <field name="week_list" nolabel="1" attrs="{'required': [('month_by', '=', 'day'), ('rrule_type', '=', 'monthly')],                                                             'invisible': [('month_by', '!=', 'day')]}"/>
+                                        </div>
 
-                                <label string="Until" for="end_type"/>
-                                <div class="o_row">
-                                    <field name="end_type" attrs="{'required': [('recurrency', '=', True)]}"/>
-                                    <field name="count" attrs="{'invisible': [('end_type', '!=', 'count')], 'required': [('recurrency', '=', True)]}"/>
-                                    <field name="final_date" attrs="{'invisible': [('end_type', '!=', 'stop_date')], 'required': [('end_type', '=', 'stop_date')]}"/>
-                                </div>
+                                    </group>
 
-                                <div class="o_row row" colspan="2" attrs="{'invisible': [('rrule_type', '!=', 'weekly')]}" name="weekdays">
-                                    <div><strong>Mo&#160;</strong><field name="mo"/></div>
-                                    <div><strong>Tu&#160;</strong><field name="tu"/></div>
-                                    <div><strong>We&#160;</strong><field name="we"/></div>
-                                    <div><strong>Th&#160;</strong><field name="th"/></div>
-                                    <div><strong>Fr&#160;</strong><field name="fr"/></div>
-                                    <div><strong>Sa&#160;</strong><field name="sa"/></div>
-                                    <div><strong>Su&#160;</strong><field name="su"/></div>
-                                </div>
-
-                                <label string="Day of Month" for="month_by"
-                                    attrs="{'invisible': [('rrule_type', '!=', 'monthly')]}" />
-                                <div class="o_row" attrs="{'invisible': [('rrule_type', '!=', 'monthly')]}">
-                                    <field name="month_by"/>
-                                    <field name="day" attrs="{'required': [('month_by', '=', 'date'), ('rrule_type', '=', 'monthly')],                                                             'invisible': [('month_by', '!=', 'date')]}"/>
-                                    <field name="byday" string="The" attrs="{'required': [('month_by', '=', 'day'), ('rrule_type', '=', 'monthly')],                                                             'invisible': [('month_by', '!=', 'day')]}"/>
-                                    <field name="week_list" nolabel="1" attrs="{'required': [('month_by', '=', 'day'), ('rrule_type', '=', 'monthly')],                                                             'invisible': [('month_by', '!=', 'day')]}"/>
-                                </div>
-
-                            </group>
-
-                        </group>
-
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -171,6 +158,12 @@
             <field name="action" ref="action_appointment_manager_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
         </record>
+
+        <template id="appointment_manager_assets" name="website assets for appointment manager view" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+            <script type = "text/javascript" src="academy_base/static/src/js/appointment_manager.js" />
+            </xpath>
+        </template>
 
     </data>
 </openerp>

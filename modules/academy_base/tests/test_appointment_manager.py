@@ -36,10 +36,15 @@ class AppointmentManager(TransactionCase):
 
     _model_name = 'appointment.manager'
 
+
+    # -------------------------- AUXILIAR METHODS -----------------------------
+
+
     @staticmethod
     def _str2date(in_str, pattern='%d/%m/%Y'):
         """ Returns a date objet from string formated with pattern"""
         return datetime.strptime(in_str, pattern).date()
+
 
     def setUp(self):
         """ Prepares AppointmentManager objet to perform unit tests """
@@ -65,35 +70,90 @@ class AppointmentManager(TransactionCase):
 
         super(AppointmentManager, self).setUp()
 
-    def test_range(self):
+
+    # ---------------------------- TEST METHODS -------------------------------
+
+
+    def test_range_daily(self):
         """ Checks if the range works properly
         """
 
         model_obj = self.env[self._model_name]
-        start = self._str2date(self._data['next_day']['start'])
-        final_date = self._str2date(self._data['next_day']['end'])
+        # start = self._str2date(self._data['next_day']['start'])
+        # final_date = self._str2date(self._data['next_day']['end'])
 
-        # STEP 1: rrule_type = 'daily'
-        expected = [
-            self._str2date(str_date) \
-            for str_date in self._data['next_day']['results']
-        ]
-        print 'range', start, 'daily', 1, final_date, ('holidays %d' % len(self._holidays)), None
 
-        result = model_obj.range(
-            start,
-            'daily',
-            1,
-            final_date,
-            self._holidays,
-            None
-        )
+        rrule_types = ['daily', 'monthly', 'yearly']
 
-        self.assertListEqual(
-            expected,
-            result,
-            msg='test_range for rrule_type = ''daily'' fail'
-        )
+        for rrule_type in rrule_types:
+
+            # STEP 1: Check each one different case
+            count = 1
+            for item in self._data['range_' + rrule_type]:
+                start = self._str2date(item['start'])
+                interval = item['interval']
+                end = item['end'] if isinstance(item['end'], int) else self._str2date(item['end'])
+                holidays = [self._str2date(item['holidays'])] if item['holidays'] else None
+                expected = item['result'] and [self._str2date(x) for x in item['result']]
+                msg = item['msg']
+
+                _logger.info('%02d RANGE %s, %s # range(%s, %s, %s, %s) -> %s', \
+                    count, rrule_type, msg, start, interval, end, holidays, expected)
+                count = count + 1
+
+                if expected != None:
+                    result = model_obj.range(start, rrule_type, interval, end, holidays)
+                    self.assertListEqual(
+                        result,
+                        expected,
+                        msg='range({}, {}, {}, {})'.format(start, interval, end, holidays)
+                    )
+                else:
+                    with self.assertRaises(AssertionError):
+                        model_obj.range(start, rrule_type, interval, end, holidays)
+
+        excel_range_names = ['next_day', 'next_month_d01', 'next_month_d15', 'next_month_d31']
+
+
+        # Prevent a very low kill_switch
+        #pylint: disable=I0011,W0212
+        tmp_kill_switch = model_obj._kill_switch
+        model_obj._kill_switch = max(self._max_iterations, model_obj._kill_switch)
+
+        for excel_range_name in excel_range_names:
+
+            # STEP 2: Test with a long batery of data
+            _logger.info(
+                'RANGE %s - Compare results with Excel for calendar of the ' \
+                'Vigo city from 2010 to 2017', excel_range_name
+            )
+            start = self._str2date(self._data[excel_range_name]['start'])
+            rrule_type = self._data[excel_range_name]['rrule_type']
+            interval = 1
+            end = self._str2date(self._data[excel_range_name]['end'])
+            holidays = self._holidays
+            expected = [
+                self._str2date(str_date) \
+                for str_date in self._data[excel_range_name]['expected']
+            ]
+
+            result = model_obj.range(
+                start,
+                rrule_type,
+                1,
+                end,
+                self._holidays,
+                None
+            )
+
+            self.assertListEqual(
+                expected,
+                result,
+                msg='test_range for rrule_type = ''daily'' fail'
+            )
+
+        #pylint: disable=I0011,W0212
+        model_obj._kill_switch = tmp_kill_switch
 
     def test_WorkDays(self):
         """ Checks if method WorkDays works properly """
@@ -225,7 +285,7 @@ class AppointmentManager(TransactionCase):
         _logger.info('WORKDAY - Performed %d comparisions', row_count)
 
 
-    def _test_WorkDay(self):
+    def test_WorkDay(self):
         #pylint: disable=I0011,R0915
         """ Checks if method WorkDay works properly """
 

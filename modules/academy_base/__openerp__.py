@@ -57,9 +57,10 @@
     'demo': [
     ],
     'js': [
+        'static/src/js/appointment_manager.js'
     ],
     'css': [
-        'academy_base/static/src/css/academy_training_action_view.css'
+        'static/src/css/academy_training_action_view.css'
     ],
     "external_dependencies": {
         "python" : []

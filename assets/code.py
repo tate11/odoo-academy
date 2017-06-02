@@ -23,3 +23,27 @@ if end < now:
     print 'ended'
 elif start < tomorrow:
     print 'following'
+
+
+# ---------------------------------- OTHER ------------------------------------
+
+from datetime import datetime, date, timedelta
+clear()
+
+start=date(2017, 6, 1)
+rrule_type = 'daily'
+interval = 1
+end_value = date(2017, 7, 1)
+holidays =None
+workdays = None
+
+
+#print obj.range(start, rrule_type, interval, end_value, holidays, workdays)
+
+item = obj.browse(137)
+
+print item._range()
+
+
+
+jQuery('.o_form_field').parent('td').parent('tr').css('display', 'table-row')

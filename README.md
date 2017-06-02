@@ -1,6 +1,7 @@
 ## Synopsis
 
-Modules used manage the teaching activity.
+Modules used to manage the teaching activity.
+
 
 ## Motivation
 
@@ -10,6 +11,7 @@ Now I have need to take a more comprehensive control over training activities in
 
 In a future I want an integral app to manage, on cloud, all the educational projects and the related activities. This software must be easy to use and agile. I'm trying to develop something like it over the Odoo ERP.
 
+
 ## Installation
 
 Project can be cloned on your server using git command line, following line is an example:
@@ -17,7 +19,8 @@ Project can be cloned on your server using git command line, following line is a
 ```
 git clone https://github.com/sotogarcia/odoo-academy.git
 ```
-Once you have downloaded the project, you will can find the modules inside project folder, to install them in Odoo you must copy foldersinto the addons directory, alongside the official modules. 
+
+Once you have downloaded the project, you will can find the modules inside project folder, to install them in Odoo you must copy foldersinto the addons directory, alongside the official modules.
 
 Once done, you need to update the module list before these new modules are available to install.
 
@@ -25,23 +28,53 @@ For this you need the Technical menu enabled, since the Update Modules List menu
 
 After running the modules list update you can confirm the new modules are available to install. In the Local Modules list, remove the Apps filter and search for department. You should see the new modules available.
 
+
 ## Modules
 
 ```
 └──academy_base                   : base module required to install all others. It adds the Academy main menu.
+    ├───academy_exercise_toos     : some tools to generate content
+    ├───academy_online_assets     : shares a folder with some resources required for external tools
     ├───academy_public_tendering  : stores information about public tendering processes.
-    └───academy_tests             : stores questions and answeres and allows to build manual and random tests.
+    ├───academy_tests             : stores questions and answeres and allows to build manual and random tests.
+    └───academy_tests_web         : publish tests on Odoo website
 
+    └───ap3_settings              : Customization for Academia Postal 3
 ```
+
+### Academy Base
+
+- [ ] Finish to integrate appointment manager with training action
+- [ ] Modify session Kanban grouping items by week day
+    - Remove obsolete related server action
+- [ ] Finish session creation and autocreation
+    - Finally button should be create next session FROM RANGE ignoring all other things
+    - Finally automated task should be create all sessions IN RANGE ignoring all other things
+- [ ] Add session Kanban grouping to show items by: archived (folded), pending, working, ready
+- [ ] Resource model or view fails, see log
+- [ ] Add a basic securiti descriptors
+- [ ] Sort the module menus
+- [ ] _inherits: [student / action], ...
+
+- [ ] SESSIONS By student
+
+###
+
+
 ## Scripts
 
 - **oaclient.py**   : client to connect to Odoo server and manage academy resources using RPC.
+- **test2sql.py**   : script to transform test given as text format to an SQL script
+- **gettest.py**    : client to download tests questions and answers
+- **backup.py**     : client to performs a backup of the Odoo database
+
 
 ## Licences
 
 * code-is-beautiful is licensed under the GNU AFFERO GENERAL PUBLIC LICENSE (Version 3). To view a copy of this license, visit [http://www.gnu.org/licenses/agpl-3.0.html](http://www.gnu.org/licenses/agpl-3.0.html).
 
 * [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-nc/4.0/) code-is-beautiful Documentation is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+
 
 ## Feedback
 
