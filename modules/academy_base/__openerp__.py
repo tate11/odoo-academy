@@ -29,6 +29,9 @@
         'data/ir_actions_server_data.xml',
 
         'views/academy_base.xml',
+
+        'views/appointment_manager_view.xml',
+
         'views/academy_training_methodology_view.xml',
         'views/academy_training_modality_view.xml',
         'views/academy_application_scope_view.xml',
@@ -45,13 +48,40 @@
         'views/academy_training_action_view.xml',
 
         'views/res_parter_view.xml',
-        'views/appointment_manager_view.xml',
 
         'views/academy_training_session_view.xml',
         'views/academy_training_resource_view.xml',
         'views/academy_training_action_sign_up_view.xml',
         'views/academy_training_session_itemisation_view.xml',
-        'views/academy_training_session_attendance_view.xml'
+        'views/academy_training_session_attendance_view.xml',
+
+        'security/academy_application_scope.xml',
+        'security/academy_base.xml',
+        'security/academy_competency_unit.xml',
+        'security/academy_knowledge_area.xml',
+        'security/academy_professional_area.xml',
+        'security/academy_professional_category.xml',
+        'security/academy_professional_family.xml',
+        'security/academy_professional_qualification.xml',
+        'security/academy_qualification_level.xml',
+        'security/academy_training_action.xml',
+        'security/academy_training_action_sign_up.xml',
+        'security/academy_training_activity.xml',
+        'security/academy_training_methodology.xml',
+        'security/academy_training_modality.xml',
+        'security/academy_training_module.xml',
+        'security/academy_training_resource.xml',
+        'security/academy_training_session.xml',
+        'security/academy_training_session_attendance.xml',
+        'security/academy_training_session_itemisation.xml',
+        'security/academy_training_unit.xml',
+        'security/appointment_manager.xml',
+
+        'wizard/academy_training_session_wizard.xml',
+
+    ],
+    'qweb': [
+        'wizard/widget_templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
@@ -60,7 +90,8 @@
         'static/src/js/appointment_manager.js'
     ],
     'css': [
-        'static/src/css/academy_training_action_view.css'
+        'static/src/css/academy_training_action_view.css',
+        'static/src/css/academy_training_session_wizard.css'
     ],
     "external_dependencies": {
         "python" : []

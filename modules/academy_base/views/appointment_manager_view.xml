@@ -132,7 +132,7 @@
         </record>
 
         <!-- Main window action for model.name -->
-        <record id="action_appointment_manager_act_window" model="ir.actions.act_window">
+        <!-- <record id="action_appointment_manager_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Appointment manager</field>
             <field name="res_model">appointment.manager</field>
@@ -149,15 +149,15 @@
                     Here are not appointment managers
                 </p>
             </field>
-        </record>
+        </record> -->
 
         <!-- Main menu for model.name -->
-        <record id="menu_appointment_manager" model="ir.ui.menu" >
+        <!-- <record id="menu_appointment_manager" model="ir.ui.menu" >
             <field name="name">Appointment manager</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_appointment_manager_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
-        </record>
+        </record> -->
 
         <template id="appointment_manager_assets" name="website assets for appointment manager view" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">

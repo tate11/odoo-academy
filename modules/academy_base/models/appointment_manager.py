@@ -91,7 +91,7 @@ class AppointmentManager(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self._utc_o_clock(dateonly=True),
+        default=lambda self: self._utc_o_clock(),
         help=False
     )
 
@@ -273,8 +273,8 @@ class AppointmentManager(models.Model):
         index=False,
         default=lambda self: self._utc_o_clock(),
         help='Start datetime of the first appointment',
-        compute=lambda self: self._compute_dates(),
-        inverse=lambda self: self._inverse_dates(),
+        compute='_compute_dates',
+        inverse='_inverse_dates',
         store=True
     )
 
@@ -283,10 +283,10 @@ class AppointmentManager(models.Model):
         required=False,
         readonly=True,
         index=False,
-        default=lambda self: self._utc_o_clock(offset=1),
+        default=lambda self: self._utc_o_clock(),
         help='End datetime of the first appointment',
-        compute=lambda self: self._compute_dates(),
-        inverse=lambda self: self._inverse_dates(),
+        compute='_compute_dates',
+        inverse='_inverse_dates',
         store=True
     )
 
@@ -295,10 +295,10 @@ class AppointmentManager(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self._utc_o_clock(dateonly=True),
+        default=lambda self: self._utc_o_clock(),
         help='Start date',
-        compute=lambda self: self._compute_dates(),
-        inverse=lambda self: self._inverse_dates(),
+        compute='_compute_dates',
+        inverse='_inverse_dates',
         store=True
     )
 
@@ -307,10 +307,10 @@ class AppointmentManager(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self._utc_o_clock(dateonly=True),
+        default=lambda self: self._utc_o_clock(),
         help='End date',
-        compute=lambda self: self._compute_dates(),
-        inverse=lambda self: self._inverse_dates(),
+        compute='_compute_dates',
+        inverse='_inverse_dates',
         store=True
     )
 
@@ -401,24 +401,6 @@ class AppointmentManager(models.Model):
         return super(AppointmentManager, self).write(values)
 
 
-    # ------------------------ PRIVATE MAIN METHODS ---------------------------
-
-
-    @api.multi
-    def _range(self):
-        for record in self:
-            start = fields.Date.from_string(record.start)
-            final_date = fields.Date.from_string(record.final_date)
-            return record.range(
-                start,
-                record.rrule_type,
-                record.interval,
-                record.count if record.end_type == 'count' else final_date,
-                holidays=None,
-                workdays=None
-            )
-
-
     # -------------------------- AUXILIARY METHODS ----------------------------
 
 
@@ -466,23 +448,20 @@ class AppointmentManager(models.Model):
         return dt.date() if hasattr(dt, 'date') else dt
 
 
-    # --------------------------- PUBLIC METHODS ------------------------------
-
-
     @staticmethod
-    def _normalize_holidays(holidays):
+    def _normalize_dates(dates):
         """ Transforms a given single value or None in a list and returns it
         """
 
         # STEP 1: Check if value is None (default) and convert it to an empty list
-        holidays = holidays or []
+        dates = dates or []
 
         # STEP 2: Check if values is an unique value and convert it to a list
-        if isinstance(holidays, date) or isinstance(holidays, datetime):
-            holidays = [holidays]
+        if isinstance(dates, date) or isinstance(dates, datetime):
+            dates = [dates]
 
         # STEP 3: Ensure all values are date and not datetimes
-        return [dt.date() if isinstance(dt, datetime) else dt for dt in holidays]
+        return [dt.date() if isinstance(dt, datetime) else dt for dt in dates]
 
     @staticmethod
     def _normalize_workdays(workdays):
@@ -630,8 +609,11 @@ class AppointmentManager(models.Model):
         return next_date_method
 
 
+    # ------------------------ PUBLIC CLASS METHODS ---------------------------
+
+
     @classmethod
-    def range(cls, start, rrule_type, interval, end_value, holidays=None, workdays=None):
+    def GetRange(cls, start, rrule_type, interval, end_value, holidays=None, workdays=None):
         """ Computes all dates from `start` (date) to end_value (int or date) using
         given rrule_type and interval.
 
@@ -667,7 +649,7 @@ class AppointmentManager(models.Model):
             u'Interval with Zero as value will return a single date or nothing'
 
         # STEP 4: Converts date, datetime and None values in a list
-        holidays = cls._normalize_holidays(holidays)
+        holidays = cls._normalize_dates(holidays)
 
         # STEP 5.b: Workdays must be a list. If the list is not given, default
         # will be used instead
@@ -750,7 +732,7 @@ class AppointmentManager(models.Model):
                 work_days = [1, 2, 3, 4, 5]
 
             # STEP 2: Converts date, datetime and None values in a list
-            holidays = cls._normalize_holidays(holidays)
+            holidays = cls._normalize_dates(holidays)
 
             # STEP 3: Compute if count will increase or decrease
             inc = int(days / abs(days))
@@ -792,7 +774,7 @@ class AppointmentManager(models.Model):
             work_days = [1, 2, 3, 4, 5]
 
         # STEP 4: Converts date, datetime and None values in a list
-        holidays = cls._normalize_holidays(holidays)
+        holidays = cls._normalize_dates(holidays)
 
         if result != 0:
 
@@ -808,3 +790,57 @@ class AppointmentManager(models.Model):
             result = result + 1
 
         return int(result * inc)
+
+
+    # ------------------------ PUBLIC MAIN METHODS  ---------------------------
+
+
+    @api.multi
+    def range(self, holidays=None, workdays=None):
+        """ Computes the full range of dates from the beginning (self.start)
+        to end (self._final_date or self.count), rrule_type and interval
+
+        @holidays (list): optional list with all holiday dates
+        @workdays (list): optional list with isoweekday(s) will be considered
+        as workdays. By default this uses all from monday to friday.
+
+        @return (list): list with all dates in period which meet the criteria,
+        if recordset has more than one record, this list will have one dictionary
+        for each record {id, range_of_dates}
+        """
+
+        # STEP 1: Result will be always a list
+        result = []
+
+        # STEP 2: Loop for each one of the records
+        for record in self:
+
+            start = fields.Date.from_string(record.start)
+            final_date = fields.Date.from_string(record.final_date)
+
+            # STEP 2.a: Get full range of dates
+            record_dates = record.GetRange(
+                start,
+                record.rrule_type,
+                record.interval,
+                record.count if record.end_type == 'count' else final_date,
+                holidays,
+                workdays
+            )
+
+            # STEP 2.b: if recorset has more than one record, result will
+            # have a list of dictionaries with id and the range of dates
+            if len(self) > 1:
+                result.append({record.id: record_dates})
+            else:
+                result = record_dates
+
+        return result
+
+    @api.multi
+    def last(self, holidays=None, workdays=None):
+        pass
+
+    @api.multi
+    def next(self, holidays=None, workdays=None):
+        pass

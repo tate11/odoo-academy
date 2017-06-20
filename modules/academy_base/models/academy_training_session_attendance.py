@@ -63,13 +63,13 @@ class AcademyTrainingSessionAttendance(models.Model):
         help='Choose the start date'
     )
 
-    end = fields.Datetime(
-        string='End',
+    stop = fields.Datetime(
+        string='Stop',
         required=False,
         readonly=False,
         index=False,
         default=fields.datetime.now(),
-        help='Choose the start date'
+        help='Choose the stop date'
     )
 
     description = fields.Text(

@@ -1,3 +1,4 @@
+#pylint: disable=I0011,W0212,C0111,F0401,R0903
 # -*- coding: utf-8 -*-
 ###############################################################################
 #    License, author and contributors information in:                         #
@@ -5,11 +6,7 @@
 ###############################################################################
 
 from openerp import models, fields, api
-from openerp.tools.translate import _
-from logging import getLogger
 
-
-_logger = getLogger(__name__)
 
 
 class AcademyTriningResource(models.Model):
@@ -25,6 +22,10 @@ class AcademyTriningResource(models.Model):
 
     _rec_name = 'name'
     _order = 'name ASC'
+
+
+    # ---------------------------- ENTITY FIELDS ------------------------------
+
 
     name = fields.Char(
         string='Name',
@@ -52,28 +53,12 @@ class AcademyTriningResource(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
-    )
-
-    academy_training_activity_ids = fields.Many2many(
-        string='Training activities',
-        required=False,
-        readonly=False,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.activity',
-        # relation='academy_training_activity_this_model_rel',
-        # column1='academy_training_activity_id',
-        # column2='this_model_id',
-        domain=[],
-        context={},
-        limit=None
+        default=True,
+        help='Enables/disables the record'
     )
 
     academy_training_session_ids = fields.Many2many(
-        string='Training activities',
+        string='Training sessions',
         required=False,
         readonly=False,
         index=False,
@@ -82,6 +67,22 @@ class AcademyTriningResource(models.Model):
         comodel_name='academy.training.session',
         # relation='academy_training_activity_this_model_rel',
         # column1='academy_training_activity_id',
+        # column2='this_model_id',
+        domain=[],
+        context={},
+        limit=None
+    )
+
+    academy_training_unit_ids = fields.Many2many(
+        string='Training units',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.unit',
+        # relation='model_name_this_model_rel',
+        # column1='model_name_id',
         # column2='this_model_id',
         domain=[],
         context={},
@@ -130,9 +131,62 @@ class AcademyTriningResource(models.Model):
         limit=None
     )
 
+
+    # --------------------------- COMPUTED FIELDS -----------------------------
+
+
+    attachmentcounting = fields.Integer(
+        string='Attachments',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help='Number of attachments in resource',
+        compute='_compute_attachmentcounting',
+    )
+
+    directory_filecounting = fields.Integer(
+        string='Files',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Number of files in related directory',
+        compute='_compute_directory_filecounting',
+    )
+
+
+    # ---------------------- FIELD METHODS AND EVENTS -------------------------
+
+
+    @api.multi
+    @api.depends('ir_attachment_ids')
+    def _compute_attachmentcounting(self):
+        """ Computes the number of ir.attachment records related with resource
+        """
+
+        for record in self:
+            record.attachmentcounting = len(record.ir_attachment_ids)
+
+
+    @api.multi
+    @api.depends('directory_file_ids')
+    def _compute_directory_filecounting(self):
+        """ Computes the number of files in resource related directory
+        """
+
+        for record in self:
+            record.directory_filecounting = len(record.directory_file_ids)
+
+
+    # --------------------------- PUBLIC METHODS ------------------------------
+
+
     @api.multi
     def reload_directory(self):
-        """ Reload directory filenames"""
+        """ Reload directory filenames
+        """
+
         import os
         import re
 

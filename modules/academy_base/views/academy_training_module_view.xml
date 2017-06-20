@@ -25,7 +25,9 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_training_module_tree" create="1" delete="1" edit="1">
+                    <field name="code" />
                     <field name="name" />
+                    <field name="unitcounting" />
                     <field name="hours" class="oe_field_hours" />
                 </tree>
             </field>
@@ -42,6 +44,12 @@
             <field name="arch" type="xml">
                 <form string="academy_training_module_form" create="1" delete="1" edit="1">
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -49,14 +57,38 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
+                        <group col="2">
+                            <group col="2">
+                                <field name="unitcounting" class="oe_field_unitcounting"
+                                    placeholder="Enter new value for unitcounting" />
+                                <field name="hours" class="oe_field_hours"
+                                    attrs="{'invisible': [('academy_training_unit_ids', '=', [])]}"/>
+                                <field name="ownhours" class="oe_field_ownhours"
+                                    attrs="{'invisible': [('academy_training_unit_ids', '!=', [])]}"/>
+                            </group>
+                            <group col="2">
+                                <field name="code" class="oe_field_code"
+                                    placeholder="Enter new value for code" />
+                            </group>
+                        </group>
                         <notebook>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <group col="1">
+                                    <field name="description" nolabel="1" class="oe_field_description"
+                                        placeholder="Enter new value for Description" />
+                                </group>
+                            </page>
                             <page string="Training units" class="oe_page_training_units" accesskey="T">
                                 <field name="academy_training_unit_ids" class="oe_field_academy_training_unit_ids"
                                     placeholder="Choose or create module training units">
-                                    <tree string="Units" create="1" delete="1" edit="1" editable="top">
+                                    <tree string="Units" create="1" delete="1" edit="1" editable="bottom">
                                         <field name="sequence" widget="handle" />
+                                        <field name="code" class="oe_field_code"
+                                            placeholder="Enter new code" />
                                         <field name="name" class="oe_field_name"
-                                            placeholder="Enter new value for Name" />
+                                            placeholder="Enter new name" />
+                                        <field name="hours" class="oe_field_name"
+                                            placeholder="Enter number of hours" />
                                     </tree>
                                 </field>
                             </page>
@@ -77,7 +109,14 @@
             <field name="arch" type="xml">
                 <search string="academy_training_module_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="code" />
+
+                    <filter string="Non active"
+                        name="non_active_training_units"
+                        domain="[('active', '=', False)]"
+                        context="{}"
+                        help="Show only non active training units" />
+
                 </search>
             </field>
         </record>
@@ -92,11 +131,17 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <kanban>
+                    <field name="image_small"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_resource_vignette">
+                            <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <img src="https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg" class="oe_resource_picture"/>
+                                    <t t-if="record.image_small.raw_value">
+                                        <img t-att-src="kanban_image('academy.training.module', 'image_small', record.id.value)"/>
+                                    </t>
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-module.png&quot;" class="o_kanban_image"/>
+                                    </t>
                                 </div>
                                 <div class="oe_kanban_details">
                                     <strong class="oe_partner_heading"><field name="name"/></strong>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+            <record id="academy_base_model_appointment_manager" model="ir.model.access">
+            <field name="name">academy_base_model_appointment_manager</field>
+            <field name="model_id" ref="academy_base.model_appointment_manager"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True" />
+            <field name="perm_create" eval="True" />
+            <field name="perm_write" eval="True" />
+            <field name="perm_unlink" eval="True" />
+            <field name="active" eval="True" />
+        </record>
+
+    </data>
+</openerp>

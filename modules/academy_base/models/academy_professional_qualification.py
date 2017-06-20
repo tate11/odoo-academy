@@ -24,6 +24,8 @@ class AcademyProfessionalQualification(models.Model):
     _name = 'academy.professional.qualification'
     _description = u'Academy professional qualification'
 
+    _inherit = ['academy.image.model']
+
     _rec_name = 'name'
     _order = 'name ASC'
 
@@ -53,25 +55,9 @@ class AcademyProfessionalQualification(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
-
-    # academy_competency_unit_ids = fields.Many2many(
-    #     string='Competency units',
-    #     required=False,
-    #     readonly=False,
-    #     index=False,
-    #     default=None,
-    #     help='Competency units in this training action',
-    #     comodel_name='academy.competency.unit',
-    #     # relation='academy_competency_unit_this_model_rel',
-    #     # column1='academy_competency_unit_id',
-    #     # column2='this_model_id',
-    #     domain=[],
-    #     context={},
-    #     limit=None
-    # )
 
     academy_competency_unit_ids = fields.One2many(
         string='Academy competency units',
@@ -124,7 +110,7 @@ class AcademyProfessionalQualification(models.Model):
         index=False,
         default=None,
         help='Enter new internal code',
-        size=50,
+        size=12,
         translate=True
     )
 

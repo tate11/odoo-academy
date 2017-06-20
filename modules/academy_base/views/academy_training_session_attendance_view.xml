@@ -16,7 +16,7 @@
                 <tree string="academy_training_session_attendance_tree" create="1" delete="1" edit="1" editable="bottom">
                     <field name="student_id" />
                     <field name="start" />
-                    <field name="end" />
+                    <field name="stop" />
                     <field name="description" />
                 </tree>
             </field>

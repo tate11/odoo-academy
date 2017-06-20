@@ -1,4 +1,4 @@
-#pylint: disable=I0011,W0212,C0111
+#pylint: disable=I0011,W0212,C0111,F0401,R0903
 # -*- coding: utf-8 -*-
 ###############################################################################
 #    License, author and contributors information in:                         #
@@ -6,11 +6,7 @@
 ###############################################################################
 
 from openerp import models, fields, api, api
-from openerp.tools.translate import _
-from logging import getLogger
 
-
-_logger = getLogger(__name__)
 
 
 class AcademyTrainingModule(models.Model):
@@ -24,8 +20,14 @@ class AcademyTrainingModule(models.Model):
     _name = 'academy.training.module'
     _description = u'Academy training module'
 
+    _inherit = ['academy.image.model']
+
     _rec_name = 'name'
     _order = 'name ASC'
+
+
+    # ---------------------------- ENTITY FIELDS ------------------------------
+
 
     name = fields.Char(
         string='Name',
@@ -53,8 +55,8 @@ class AcademyTrainingModule(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
 
     academy_training_unit_ids = fields.One2many(
@@ -72,26 +74,55 @@ class AcademyTrainingModule(models.Model):
         limit=None
     )
 
-    hours = fields.Float(
-        string='Hours',
+    code = fields.Char(
+        string='Code',
         required=False,
         readonly=False,
         index=False,
-        default=0.0,
-        digits=(16, 2),
-        help='Length in hours',
-        compute=lambda self: self._compute_hours()
+        default=None,
+        help='Enter code for training module',
+        size=12,
+        translate=True
     )
 
     ownhours = fields.Float(
         string='Hours',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=0.0,
         digits=(16, 2),
         help='Length in hours'
     )
+
+
+    # --------------------------- COMPUTED FIELDS -----------------------------
+
+
+    hours = fields.Float(
+        string='Hours',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0.0,
+        digits=(16, 2),
+        help='Length in hours',
+        compute='_compute_hours',
+    )
+
+    unitcounting = fields.Integer(
+        string='Units',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Number of training units in module',
+        compute='_compute_unitcounting',
+    )
+
+
+    # ----------------- AUXILIARY FIELD METHODS AND EVENTS --------------------
+
 
     @api.multi
     @api.depends('academy_training_unit_ids', 'ownhours')
@@ -101,4 +132,11 @@ class AcademyTrainingModule(models.Model):
                 record.hours = sum(record.academy_training_unit_ids.mapped('hours'))
             else:
                 record.hours = record.ownhours
+
+    @api.multi
+    @api.depends('academy_training_unit_ids')
+    def _compute_unitcounting(self):
+        for record in self:
+            record.unitcounting = len(record.academy_training_unit_ids)
+
 

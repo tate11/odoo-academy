@@ -121,10 +121,29 @@
             <field name="mode">primary</field>
             <field name="priority" eval="26" />
             <field name="active" eval="True" />
+            <!-- <field name="inherit_id" ref="base.view_res_partner_filter" /> -->
             <field name="arch" type="xml">
-                <xpath expr="//search" position="inside">
+                <search string="academy_training_student_search">
 
-                </xpath>
+                    <field name="name" />
+                    <field name="city" />
+                    <field name="state_id" />
+                    <field name="zip" />
+                    <field name="country_id" />
+                    <field name="category_id" />
+                    <field name="phone" />
+                    <field name="mobile" />
+                    <field name="fax" />
+                    <field name="email" />
+                    <field name="title" />
+
+                    <filter string="Non active"
+                        name="non_active_training_resources"
+                        domain="[('active', '=', False)]"
+                        context="{}"
+                        help="Show only non active training resources" />
+
+                </search>
             </field>
         </record>
 
@@ -132,7 +151,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Students</field>
             <field name="res_model">res.partner</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[('is_student', '=', True)]</field>
@@ -143,6 +162,13 @@
                           (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_student_form')}),
                           (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_res_partner_student_kanban')})]"/>
             <field name="search_view_id" ref="academy_base.view_res_partner_student_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new students
+                </p><p>
+                    Here are not any student
+                </p>
+            </field>
         </record>
 
         <record id="menu_students" model="ir.ui.menu">

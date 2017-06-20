@@ -57,6 +57,8 @@ After running the modules list update you can confirm the new modules are availa
 - [ ] _inherits: [student / action], ...
 
 - [ ] SESSIONS By student
+- [ ] Training action progress bar should indicate units, not hours
+- [ ] Fields duration and hours fails with different days in datetime bounds
 
 ###
 

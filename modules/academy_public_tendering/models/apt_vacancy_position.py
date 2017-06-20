@@ -1,3 +1,4 @@
+#pylint: disable=I0011,W0212
 # -*- coding: utf-8 -*-
 ###############################################################################
 #    License, author and contributors information in:                         #
@@ -62,7 +63,7 @@ class AptVacancyPosition(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self.default_group_id(),
+        default=lambda self: self._default_group_id(),
         help='Choose group for vacancy position',
         comodel_name='apt.group',
         domain=[],
@@ -76,7 +77,7 @@ class AptVacancyPosition(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self.default_kind_id(),
+        default=lambda self: self._default_kind_id(),
         help='Choose kind for vacancy position',
         comodel_name='apt.kind',
         domain=[],
@@ -91,7 +92,7 @@ class AptVacancyPosition(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self.default_class_id(),
+        default=lambda self: self._default_class_id(),
         help='Classes of the public employees',
         comodel_name='apt.class',
         domain=[],
@@ -159,14 +160,14 @@ class AptVacancyPosition(models.Model):
         readonly=True,
         index=False,
         default=0,
-        compute=lambda self: self.compute_total_of_vacancies(),
+        compute='compute_total_of_vacancies',
         help='Set number of vacancies'
     )
 
     # ----------------------- AUXILIAR FIELD METHODS --------------------------
 
     @api.model
-    def default_group_id(self):
+    def _default_group_id(self):
         """ Returns the default value for group_id field.
         """
 
@@ -176,7 +177,7 @@ class AptVacancyPosition(models.Model):
         return record.id
 
     @api.model
-    def default_kind_id(self):
+    def _default_kind_id(self):
         """ Returns the default value for kind_id field.
         """
 
@@ -187,7 +188,7 @@ class AptVacancyPosition(models.Model):
 
 
     @api.model
-    def default_class_id(self):
+    def _default_class_id(self):
         """ Returns the default value for class_id field.
         """
 

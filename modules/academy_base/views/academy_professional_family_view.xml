@@ -41,6 +41,12 @@
             <field name="arch" type="xml">
                 <form string="academy_professional_family_form" create="1" delete="1" edit="1">
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -49,6 +55,10 @@
                             </h1>
                         </div>
                         <notebook>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new description" />
+                            </page>
                             <page string="Areas" class="oe_page_areas" accesskey="A">
                                 <field name="professional_area_ids" class="oe_field_professional_area_ids"
                                             placeholder="Choose related professional areas">
@@ -64,6 +74,43 @@
             </field>
         </record>
 
+
+        <!-- Kanban view for "academy.training.unit" -->
+        <record id="view_academy_professional_family_kanban" model="ir.ui.view">
+            <field name="name">view.academy.professional.family.kanban</field>
+            <field name="model">academy.professional.family</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="image_small" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click oe_kanban_academy_training_module">
+                                <div class="o_kanban_image">
+                                    <t t-if="record.image_small.raw_value">
+                                        <img t-att-src="kanban_image('academy.professional.family', 'image_small', record.id.value)"/>
+                                    </t>
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/professional-family.png&quot;" class="o_kanban_image"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="oe_partner_heading"><field name="name"/></strong>
+                                    <ul>
+                                       <li><strong>Areas:&#160;</strong><field name="professional_area_ids" widget="x2many_counter" /></li>
+                                       <li><strong>Qualifications:&#160;</strong><field name="professional_qualification_ids" widget="x2many_counter" /></li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <!-- Search view for "academy.professional.family" -->
         <record id="view_academy_professional_family_search" model="ir.ui.view">
             <field name="name">view.academy.professional.family.search</field>
@@ -74,8 +121,17 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <search string="academy_professional_family_search">
+
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="professional_area_ids" />
+                    <field name="professional_qualification_ids" />
+
+                    <filter string="Non active"
+                        name="non_active_training_units"
+                        domain="[('active', '=', False)]"
+                        context="{}"
+                        help="Show only non active training units" />
+
                 </search>
             </field>
         </record>
@@ -85,7 +141,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Professional family</field>
             <field name="res_model">academy.professional.family</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>

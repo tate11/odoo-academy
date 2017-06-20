@@ -25,7 +25,8 @@
             <field name="arch" type="xml">
                 <tree string="academy_training_resource_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="attachmentcounting" />
+                    <field name="directory_filecounting" />
                 </tree>
             </field>
         </record>
@@ -73,6 +74,14 @@
                                         icon="fa-refresh"
                                         help="Click it to reload directory file list" />
                             </page>
+                            <page string="In units" class="oe_page_in_units" accesskey="A">
+                                <field name="academy_training_unit_ids" class="oe_field_academy_training_unit_ids"
+                                    placeholder="Choose related academy training units" />
+                            </page>
+                            <page string="In sessions" class="oe_page_in_sessions" accesskey="I">
+                                <field name="academy_training_session_ids" class="oe_field_academy_training_session_ids"
+                                    placeholder="Choose related academy training sessions" />
+                            </page>
                         </notebook>
                     </sheet>
                 </form>
@@ -89,8 +98,44 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <search string="academy_training_resource_search">
+
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="directory" />
+                    <field name="ir_attachment_ids" />
+                    <field name="directory_file_ids" />
+                    <field name="academy_training_unit_ids" />
+                    <field name="academy_training_session_ids" />
+
+                    <filter string="Non active"
+                        name="non_active_training_resources"
+                        domain="[('active', '=', False)]"
+                        context="{}"
+                        help="Show only non active training resources" />
+
+                    <filter string="From directory"
+                        name="directory_resource"
+                        domain="[('directory', '!=', False)]"
+                        context="{}"
+                        help="Show only resources with a related directory" />
+
+                    <filter string="With attachments"
+                        name="attachment_resource"
+                        domain="[('ir_attachment_ids', '!=', False)]"
+                        context="{}"
+                        help="Show only resources with related attachements " />
+
+                    <filter string="Used"
+                        name="used_resource"
+                        domain="['|', ('academy_training_session_ids', '!=', False), ('academy_training_unit_ids', '!=', False)]"
+                        context="{}"
+                        help="Used resources" />
+
+                    <filter string="Unused"
+                        name="unused_resource"
+                        domain="['&amp;', ('academy_training_session_ids', '=', False), ('academy_training_unit_ids', '=', False)]"
+                        context="{}"
+                        help="Unused resources" />
+
                 </search>
             </field>
         </record>

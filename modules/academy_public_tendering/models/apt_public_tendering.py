@@ -94,7 +94,7 @@ class AptPublicTendering(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default=lambda self: self.default_submissions_deadline(),
+        default='default_submissions_deadline',
         help='Choose the last day for training'
     )
 
@@ -157,7 +157,7 @@ class AptPublicTendering(models.Model):
         readonly=True,
         index=False,
         default=0,
-        compute=lambda self: self.compute_total_of_vacancies(),
+        compute='compute_total_of_vacancies',
         help='Set number of vacancies'
     )
 

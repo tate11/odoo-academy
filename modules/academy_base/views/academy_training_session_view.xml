@@ -25,7 +25,12 @@
             <field name="arch" type="xml">
                 <tree string="model_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="start" />
+                    <field name="stop" />
+                    <field name="hours" />
+                    <field name="studentcounting" />
+                    <field name="unitcounting" />
+                    <field name="resourcecounting" />
                 </tree>
             </field>
         </record>
@@ -55,7 +60,7 @@
                                 placeholder="Enter new value for Academy training action id" />
                             <field name="start" class="oe_field_start"
                                 placeholder="Enter new value for Start" />
-                            <field name="end" class="oe_field_start"
+                            <field name="stop" class="oe_field_start"
                                 placeholder="Enter new value for Start" />
                         </group>
                         <notebook>
@@ -102,7 +107,7 @@
                                      </ul>
                                     <div class="row">
                                         <div class="col-xs-6"><field name="start" /></div>
-                                        <div class="col-xs-6"><field name="end" /></div>
+                                        <div class="col-xs-6"><field name="stop" /></div>
                                     </div>
                                 </div>
                             </div>

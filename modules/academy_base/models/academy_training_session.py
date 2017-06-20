@@ -45,18 +45,6 @@ class AcademyTrainingSession(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    @api.model
-    def _status_groups(self, present_ids, domain, **kwargs):
-        #pylint: disable=I0011,W0613
-        folded = {key: (key in self.FOLDED_STATUS) for key, _ in self.STATUS_LIST}
-        # Need to copy self.STATES list before returning it,
-        # because odoo modifies the list it gets,
-        # emptying it in the process. Bad odoo!
-        return self.STATUS_LIST[:], folded
-
-    _group_by_full = {
-        'status': _status_groups
-    }
 
     @api.multi
     def _read_group_fill_results(self, domain, groupby,
@@ -133,8 +121,8 @@ class AcademyTrainingSession(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
 
     start = fields.Datetime(
@@ -146,8 +134,8 @@ class AcademyTrainingSession(models.Model):
         help='Date and time session starts'
     )
 
-    end = fields.Datetime(
-        string='End',
+    stop = fields.Datetime(
+        string='Stop',
         required=False,
         readonly=False,
         index=False,
@@ -223,24 +211,74 @@ class AcademyTrainingSession(models.Model):
         default=0.0,
         digits=(16, 2),
         help='Time lenght in hours',
-        compute=lambda self: self._compute_hours()
+        compute='_compute_hours',
     )
 
+    unitcounting = fields.Integer(
+        string='Units',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Units covered in session',
+        compute='_compute_unitcounting',
+    )
+
+    studentcounting = fields.Integer(
+        string='Students',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Students who have attended this session',
+        compute='_compute_studentcounting',
+    )
+
+    resourcecounting = fields.Integer(
+        string='Resources',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Number of resources used in session',
+        compute='_compute_resourcecounting',
+    )
+
+
+
     @api.multi
-    @api.depends('hours')
+    @api.depends('itemisation_ids')
+    def _compute_unitcounting(self):
+        for record in self:
+            record.unitcounting = len(record.itemisation_ids)
+
+    @api.multi
+    @api.depends('attendance_ids')
+    def _compute_studentcounting(self):
+        for record in self:
+            record.studentcounting = len(record.attendance_ids)
+
+    @api.multi
+    @api.depends('academy_training_resource_ids')
+    def _compute_resourcecounting(self):
+        for record in self:
+            record.resourcecounting = len(record.academy_training_resource_ids)
+
+    @api.multi
+    @api.depends('start', 'stop')
     def _compute_hours(self):
-        """ Computes hours between start and end times """
+        """ Computes hours between start and stop times """
         for record in self:
             start = datetime.strptime(record.start, DEFAULT_SERVER_DATETIME_FORMAT)
-            end = datetime.strptime(record.end, DEFAULT_SERVER_DATETIME_FORMAT)
-            record.hours = (end - start).seconds / 3600
+            stop = datetime.strptime(record.stop, DEFAULT_SERVER_DATETIME_FORMAT)
+            record.hours = (stop - start).seconds / 3600
 
 
-    @api.constrains('end')
-    def _check_end(self):
-        """ Ensures end field value is greater then start value """
+    @api.constrains('stop')
+    def _check_stop(self):
+        """ Ensures stop field value is greater then start value """
         for record in self:
-            if record.end <= record.start:
+            if record.stop <= record.start:
                 raise ValidationError("End date must be greater then start date")
 
 
@@ -266,6 +304,19 @@ class AcademyTrainingSession(models.Model):
             self, fields.Datetime.from_string(time_str)
         )
 
+    @staticmethod
+    def _get_duration(start, stop):
+        """ Get the duration value between the 2 given dates. This method will
+        be used to compute duration field value in all day appointments.
+        """
+
+        if start and stop:
+            diff = fields.Datetime.from_string(stop) - fields.Datetime.from_string(start)
+            if diff:
+                duration = float(diff.days) * 24 + (float(diff.seconds) / 3600)
+                return round(duration, 2)
+
+            return 0.0
 
     @api.multi
     def update_status(self):
@@ -280,9 +331,9 @@ class AcademyTrainingSession(models.Model):
 
         for record in sess_set:
             start = record._ctx_timestamp('start').date()
-            end = record._ctx_timestamp('end').date()
+            stop = record._ctx_timestamp('stop').date()
 
-            if end < today:
+            if stop < today:
                 record.status = 'finished'
             elif start < tomorrow:
                 record.status = 'current'

@@ -110,13 +110,13 @@ class AtTest(models.Model):
         help=False,
         size=50,
         translate=False,
-        compute=lambda self: self._compute_lang()
+        compute='_compute_lang',
     )
 
     # ----------------------- AUXILIARY FIELD METHODS -------------------------
 
     @api.multi
-    @api.depends('model_id')
+    @api.depends('name')
     def _compute_lang(self):
         """ Gets the language used by the current user and sets it as `lang`
             field value
@@ -126,3 +126,8 @@ class AtTest(models.Model):
 
         for record in self:
             record.lang = user_id.lang
+
+
+    # -------- TECH QUESTION ----------
+    #compute=lambda self: self._compute_field()
+    # -------------------------------------------------------------------------

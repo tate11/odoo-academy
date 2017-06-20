@@ -23,6 +23,8 @@ class AcademyProfessionalArea(models.Model):
     _name = 'academy.professional.area'
     _description = u'Academy professional area'
 
+    _inherit = ['academy.image.model']
+
     _rec_name = 'name'
     _order = 'name ASC'
 
@@ -52,8 +54,8 @@ class AcademyProfessionalArea(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
 
     professional_family_id = fields.Many2one(
@@ -68,4 +70,19 @@ class AcademyProfessionalArea(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False
+    )
+
+    professional_qualification_ids = fields.One2many(
+        string='Professional qualifications',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.professional.qualification',
+        inverse_name='professional_area_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
     )

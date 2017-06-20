@@ -55,8 +55,8 @@ class AcademyCompetencyUnit(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
 
     sequence = fields.Integer(
@@ -70,7 +70,7 @@ class AcademyCompetencyUnit(models.Model):
 
     academy_training_module_id = fields.Many2one(
         string='Training module',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=None,

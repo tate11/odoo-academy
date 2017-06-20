@@ -11,19 +11,19 @@ jQuery(document).ready(function() {
                 this._super.apply(this, arguments);
 
                 function hide_parent_row (event) {
-                    jQuery('.o_form_field').parent('td').parent('tr').css('display', 'table-row');
-                    jQuery('.o_row').parent('td').parent('tr').css('display', 'table-row');
-                    jQuery('.o_form_invisible').parent('td').parent('tr').css('display', 'none');
+                    jQuery('.oe_interchangeable').find('.o_form_field').parent('td').parent('tr').css('display', 'table-row');
+                    jQuery('.oe_interchangeable').find('.o_row').parent('td').parent('tr').css('display', 'table-row');
+                    jQuery('.oe_interchangeable').find('.o_form_invisible').parent('td').parent('tr').css('display', 'none');
                 }
 
-                jQuery('.o_form_invisible').parent('td').parent('tr').css('display', 'none');
+                jQuery('.oe_interchangeable').find('.o_form_invisible').parent('td').parent('tr').css('display', 'none');
 
-                jQuery('.oe_field_allday').each(function () {
+                jQuery('.oe_interchangeable').find('.oe_field_allday').each(function () {
                     var oe_item = this;
                     jQuery(oe_item).change(hide_parent_row);
                 }); /* each oe_field_allday */
 
-                jQuery('.oe_field_rrule_type').each(function () {
+                jQuery('.oe_interchangeable').find('.oe_field_rrule_type').each(function () {
                     var oe_item = this;
                     jQuery(oe_item).change(hide_parent_row);
                 }); /* each oe_field_allday */

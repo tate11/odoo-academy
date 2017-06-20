@@ -153,7 +153,7 @@
                                         <img t-att-src="kanban_image('academy.training.action', 'image_small', record.id.value)"/>
                                     </t>
                                     <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-action.png&quot;" class="o_kanban_image oe_kanban_avatar_smallbox"/>
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-action.png&quot;" class="o_kanban_image"/>
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">

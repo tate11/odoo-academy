@@ -8,6 +8,7 @@
 from . import res_partner
 
 from . import appointment_manager
+from . import academy_image_model
 
 from . import academy_application_scope
 from . import academy_knowledge_area

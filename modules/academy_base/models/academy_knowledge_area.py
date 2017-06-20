@@ -52,8 +52,8 @@ class AcademyKnowledgeArea(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
 
     description = fields.Text(
@@ -71,6 +71,6 @@ class AcademyKnowledgeArea(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )

@@ -24,6 +24,8 @@ class AcademyTrainingUnit(models.Model):
     _name = 'academy.training.unit'
     _description = u'Academy training unit'
 
+    _inherit = ['academy.image.model']
+
     _rec_name = 'name'
     _order = 'sequence ASC, name ASC'
 
@@ -53,8 +55,8 @@ class AcademyTrainingUnit(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='Enables/disables the record',
-        help=False
+        default=True,
+        help='Enables/disables the record'
     )
 
     sequence = fields.Integer(
@@ -92,12 +94,12 @@ class AcademyTrainingUnit(models.Model):
 
     code = fields.Char(
         string='Code',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=None,
-        help='Code for training unit',
-        size=6,
+        help='Enter code for training unit',
+        size=12,
         translate=True
     )
 

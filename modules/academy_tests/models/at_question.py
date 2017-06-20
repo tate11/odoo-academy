@@ -185,7 +185,7 @@ class AtQuestion(models.Model):
         domain=[('index_content', '=', 'image')],
         context={},
         limit=None,
-        compute=lambda self: self._compute_ir_attachment_image_ids()
+        compute='_compute_ir_attachment_image_ids',
     )
 
     # ----------------------- AUXILIARY FIELD METHODS -------------------------

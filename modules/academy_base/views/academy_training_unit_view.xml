@@ -44,6 +44,12 @@
             <field name="arch" type="xml">
                 <form string="academy_training_unit_form" create="1" delete="1" edit="1">
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -85,11 +91,17 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <kanban>
+                    <field name="image_small" />
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_resource_vignette">
+                            <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <img src="https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg" class="oe_resource_picture"/>
+                                    <t t-if="record.image_small.raw_value">
+                                        <img t-att-src="kanban_image('academy.training.unit', 'image_small', record.id.value)"/>
+                                    </t>
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-unit.png&quot;" class="o_kanban_image"/>
+                                    </t>
                                 </div>
                                 <div class="oe_kanban_details">
                                     <strong class="oe_partner_heading"><field name="name"/></strong>
@@ -116,7 +128,22 @@
             <field name="arch" type="xml">
                 <search string="academy_training_unit_search">
                     <field name="name" />
+                    <field name="code" />
                     <field name="academy_training_module_id" />
+                    <field name="academy_training_resource_ids" />
+
+                    <filter string="Non active"
+                        name="non_active_training_units"
+                        domain="[('active', '=', False)]"
+                        context="{}"
+                        help="Show only non active training units" />
+
+                    <filter string="By module"
+                        name="by_module_training_units"
+                        domain="[]"
+                        context="{'group_by': ['academy_training_module_id']}"
+                        help="Group training units by parent training module" />
+
                 </search>
             </field>
         </record>
