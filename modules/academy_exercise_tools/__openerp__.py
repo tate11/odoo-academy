@@ -42,13 +42,14 @@ Academy Exercise Tools Module.
     'category': 'Academy',
 
     'depends': [
-        'base'
+        'academy_base'
     ],
     'external_dependencies': {
         'python': [
         ],
     },
     'data': [
+        'views/academy_rebasing_tools.xml',
         'views/academy_rebasing_exercise_view.xml',
         'views/academy_rebasing_exercise_item_view.xml',
         'views/academy_rebasing_exercise_report.xml'

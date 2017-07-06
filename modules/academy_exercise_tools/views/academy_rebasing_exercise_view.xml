@@ -94,7 +94,7 @@
             <field name="name">Rebasing exercise</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_rebasing_exercise_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy" />
+            <field name="parent_id" ref="menu_exercise_tools" />
         </record>
 
     </data>

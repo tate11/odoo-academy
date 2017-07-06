@@ -27,9 +27,9 @@
 
     # always loaded
     'data': [
-        # 'security/at_test.xml',
-        # 'security/at_question.xml',
-        # 'security/at_answer.xml',
+        'security/at_test.xml',
+        'security/at_question.xml',
+        'security/at_answer.xml',
 
         'views/at_post_tests_template.xml',
         'views/at_post_test_template.xml',

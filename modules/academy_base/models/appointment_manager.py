@@ -624,12 +624,14 @@ class AppointmentManager(models.Model):
         @holidays (list or date): List of dates that will never be added to the list
         @workdays (list): list of ISO week days  will be considered as workdays
 
+        @return a list with all valid dates
+
         @note: given datetime (type) will be truncated to date (type) values
         @note: end_value must be greater than zero or later than start date,
         otherwise method returns an empty list
         @note: workdays will be used only with 'weekly' rrule_type
         @note: default holidays are empty
-        @note: defaul workdays are from Monday to Friday (both included)
+        @note: default workdays are from Monday to Friday (both included)
         """
 
         result = []
@@ -683,7 +685,8 @@ class AppointmentManager(models.Model):
 
             # STEP 9.b: Check if current (ensured) date is not in holidays and
             # add it to the results list
-            if cls._in_range_and_not_holiday(new_date, final_date, holidays):
+            if new_date not in result and \
+               cls._in_range_and_not_holiday(new_date, final_date, holidays):
                 result.append(new_date)
 
             offset = offset + 1
@@ -809,6 +812,8 @@ class AppointmentManager(models.Model):
         for each record {id, range_of_dates}
         """
 
+        dns = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su']
+
         # STEP 1: Result will be always a list
         result = []
 
@@ -817,6 +822,7 @@ class AppointmentManager(models.Model):
 
             start = fields.Date.from_string(record.start)
             final_date = fields.Date.from_string(record.final_date)
+            workdays = [idx + 1 for idx, dn in enumerate(dns) if getattr(record, dn, False)]
 
             # STEP 2.a: Get full range of dates
             record_dates = record.GetRange(

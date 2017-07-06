@@ -6,7 +6,7 @@
         <record id="menu_test_top" model="ir.ui.menu" >
             <field name="name">Test</field>
             <field name="sequence" eval="15" />
-            <field name="parent_id" ref="academy_base.menu_academy" />
+            <field name="parent_id" ref="academy_base.menu_academy_resources" />
         </record>
 
         <record id="menu_test_settings_top" model="ir.ui.menu" >

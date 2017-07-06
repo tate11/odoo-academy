@@ -23,6 +23,8 @@ class AptPublicTendering(models.Model):
     _name = 'apt.public.tendering'
     _description = u'Public tendering'
 
+    _inherit = ['apt.image.model']
+
     _rec_name = 'name'
     _order = 'approval DESC'
 

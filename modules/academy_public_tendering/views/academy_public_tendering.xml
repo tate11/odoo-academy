@@ -3,11 +3,11 @@
 <openerp>
     <data noupdate="0">
 
-        <record id="menu_tendering_top" model="ir.ui.menu" >
+<!--         <record id="menu_tendering_top" model="ir.ui.menu" >
             <field name="name">Tendering</field>
             <field name="sequence" eval="10" />
-            <field name="parent_id" ref="academy_base.menu_academy" />
-        </record>
+            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+        </record> -->
 
         <record id="menu_tendering_settings_top" model="ir.ui.menu" >
             <field name="name">Tendering</field>

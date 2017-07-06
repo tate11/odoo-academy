@@ -26,24 +26,18 @@
                             </h1>
 
                         </div>
-<!--                                 <group col="2">
-                                    <field name="action_unit_control_ids" class="oe_field_action_unit_control_ids"
-                                        placeholder="Enter new value for Action unit control ids" />
-                                </group>
- -->
 
                         <notebook>
                             <page string="Units" class="oe_page_units" accesskey="U">
                                 <group col="1">
-                                        <widget type="unitcontrolselector"  />
+                                    <field name="action_unit_control_ids"
+                                        class="oe_field_action_unit_control_ids" />
+
+                                        <tree string="Units" create="1" delete="1" edit="1">
+                                            <field name="name" class="oe_field_name" />
+                                            <field name="id" class="oe_field_id" />
+                                        </tree>
                                 </group>
-                                <separator />
-
-
-<!--                                 <label for="training_unit_ids" />
-                                <field name="training_unit_ids"
-                                    class="oe_field_training_unit_ids"
-                                    no_create="True" /> -->
                             </page>
                         </notebook>
                     <footer>

@@ -4,6 +4,8 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
+
+from . import apt_image_model
 from . import apt_group
 from . import apt_kind
 from . import apt_class

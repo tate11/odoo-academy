@@ -358,3 +358,24 @@ class AcademyTrainingAction(models.Model):
             'domain': '[]',
             'context': context,
         }
+
+    @api.multi
+    def generate_sessions(self, since=None, to=None):
+
+        self.ensure_one()
+        start = fields.Datetime.from_string(self.start)
+        stop = fields.Datetime.from_string(self.stop)
+
+        since = self._date_trunc(since) if since else self._date_trunc(start)
+        to = self._date_trunc(to) if to else self._date_trunc(stop)
+
+        dates = filter(lambda d: d >= since and d <= to, self.range())
+
+        return dates
+
+
+
+
+
+
+

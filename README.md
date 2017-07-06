@@ -45,6 +45,7 @@ After running the modules list update you can confirm the new modules are availa
 ### Academy Base
 
 - [ ] Finish to integrate appointment manager with training action
+    - Add a form widget
 - [ ] Modify session Kanban grouping items by week day
     - Remove obsolete related server action
 - [ ] Finish session creation and autocreation
@@ -52,16 +53,25 @@ After running the modules list update you can confirm the new modules are availa
     - Finally automated task should be create all sessions IN RANGE ignoring all other things
 - [ ] Add session Kanban grouping to show items by: archived (folded), pending, working, ready
 - [ ] Resource model or view fails, see log
-- [ ] Add a basic securiti descriptors
+- [x] Add a basic security descriptors
 - [ ] Sort the module menus
-- [ ] _inherits: [student / action], ...
 
 - [ ] SESSIONS By student
 - [ ] Training action progress bar should indicate units, not hours
 - [ ] Fields duration and hours fails with different days in datetime bounds
 
-###
+- [ ] Progress bar in attendance
+- [ ] Other color (or style) for finished sessions in training action view
+- [ ] The model academy.training.action.unit.control has no access rules
 
+
+### Other modules
+
+- [ ] The model academy.rebasing.exercise.item
+- [ ] The model res.partner has no access rules
+- [ ] The model academy.rebasing.exercise has no access rules
+- [ ] odoo.modules.graph: module auto_backup: not installable, skipped
+- [ ] odoo.models: ir.actions.report.xml.write() with unknown fields: paperformat_id
 
 ## Scripts
 

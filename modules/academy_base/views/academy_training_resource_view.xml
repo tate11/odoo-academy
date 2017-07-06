@@ -165,7 +165,7 @@
             <field name="name">Resources</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_resources_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
+            <field name="parent_id" ref="academy_base.menu_academy_resources" />
         </record>
 
     </data>

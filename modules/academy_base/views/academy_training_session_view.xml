@@ -128,7 +128,16 @@
             <field name="arch" type="xml">
                 <search string="model_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="academy_training_action_id" />
+                    <field name="academy_training_resource_ids" />
+                    <field name="hours" />
+
+                    <filter string="Non active"
+                        name="non_active_training_resources"
+                        domain="[('active', '=', False)]"
+                        context="{}"
+                        help="Show only non active training resources" />
+
                 </search>
             </field>
         </record>

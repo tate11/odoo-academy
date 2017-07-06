@@ -57,7 +57,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         domain=[],
         context={},
         limit=None,
-        # compute='_compute_control_ids'
+        compute='_compute_control_ids'
     )
 
     training_unit_ids = fields.Many2many(
@@ -74,7 +74,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         domain=[],
         context={},
         limit=5,
-        #compute='_compute_itemisation_ids'
+        compute='_compute_itemisation_ids'
     )
 
 

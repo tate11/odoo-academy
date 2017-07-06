@@ -195,7 +195,7 @@
             <field name="name">Professional Qualification</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_professional_qualification_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
         </record>
 
 
