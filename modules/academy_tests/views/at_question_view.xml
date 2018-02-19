@@ -62,6 +62,8 @@
                             attrs="{'readonly': [('at_topic_id', '=', False)]}" />
                         <field name="at_tag_ids" class="oe_field_at_tag_ids"
                             widget="many2many_tags"  colspan="4" />
+                        <field name="active" class="oe_field_active"
+                            placeholder="Check or uncheck to show or hide question in test" />
                     </group>
 
                     <notebook>

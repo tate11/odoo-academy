@@ -27,8 +27,8 @@ div.division {
 article header {
     background-color: #CCCCCC!important;
     padding: 3px 6px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 article header h3 {
@@ -37,12 +37,13 @@ article header h3 {
 }
 
 h4 {
-   margin-top: 1em;
+   margin-top: 16px;
+   margin-bottom: 8px;
 }
 
 div.article-content div.statement,
 div.article-content div.target + div.article-content div.statement {
-    margin: 6px 0px;
+    margin: 3px 0;
 }
 
 body {
@@ -55,6 +56,20 @@ div.list:before {
     display: inline-block;
     width: 30px;
     text-align: left;
+}
+
+div.list span.ul {
+    display: block;
+}
+
+div.list span.ul span.li {
+    display: list-item;
+    list-style-type: none;
+    margin-left: 30px;
+}
+
+div.list span.ul span.li:before {
+    content: "— ";
 }
 
 div.target {

@@ -13,6 +13,9 @@ import locale
 
 from datetime import datetime
 from sys import exit
+import os
+import urllib
+import urlparse
 
 # -------------------------- MAIN SCRIPT BEHAVIOR -----------------------------
 
@@ -86,7 +89,35 @@ class App(object):
         """
         return bool(re.match(r'^[0-9]{1,3}[\)\.\- ]+.*$', line, re.IGNORECASE))
 
-    def _new_question(self, line, preamble=u''):
+    def _is_description(self, line):
+        """ Check if line is a description ^> .*
+        """
+        return bool(re.match(r'^> .*$', line, re.IGNORECASE))
+
+    def _get_description(self, line):
+        """ Splits a markdown (like) image link into title and path
+        """
+        parts = re.match(r'^(> )(.*)$', line, re.IGNORECASE).groups()
+
+        assert len(parts) == 2, u'Invalid description'
+
+        return parts[1].strip()
+
+    def _is_attachment(self, line):
+        """ Check if line is markdown (like) image link
+        """
+        return bool(re.match(r'^!\[[^]]+]\([^)]+\)$', line, re.IGNORECASE))
+
+    def _split_attachment(self, line):
+        """ Splits a markdown (like) image link into title and path
+        """
+        parts = re.match(r'^!\[([^]]+)]\(([^)]+)\)$', line, re.IGNORECASE).groups()
+
+        assert len(parts) == 2, u'Invalid markdown image link'
+
+        return parts[0], parts[1]
+
+    def _new_question(self, line, description=u'', preamble=u''):
         """ Creates new question INSERT script for line
         """
 
@@ -110,7 +141,7 @@ class App(object):
                     "at_level_id"
                 ) VALUES (
                     '{}',
-                    NULL,
+                    '{}',
                     '{}',
                     '1',
                     now()::TIMESTAMP (0),
@@ -124,7 +155,7 @@ class App(object):
                 (at_category_id, at_question_id)
             VALUES
                 ( (SELECT id FROM "public"."at_category" WHERE NAME = 'TEST2SQL'), (SELECT id FROM tmp));
-        """.format(line, preamble)
+        """.format(line, description, preamble)
 
     def _is_answer(self, line):
         """ Check if line is for question ^[ABCDabcd]+
@@ -280,7 +311,8 @@ class App(object):
                 "create_uid",
                 "create_date",
                 "write_uid",
-                "write_date"
+                "write_date",
+                "active"
             ) SELECT
                 (SELECT ID FROM newtest) AS at_test_id,
                 ID AS at_question_id,
@@ -288,7 +320,8 @@ class App(object):
                 1 AS create_uid,
                 now()::TIMESTAMP (0) AS create_date,
                 1 AS write_uid,
-                now()::TIMESTAMP (0) AS write_date
+                now()::TIMESTAMP (0) AS write_date,
+                TRUE
             FROM
                 at_question
             ORDER BY
@@ -297,6 +330,35 @@ class App(object):
 
 
         """.format(self._name, self._description, self._question_sequence)
+
+    @staticmethod
+    def path_to_url(path):
+        """ Transforms a path in a url: file:/// """
+
+        if isinstance(path, unicode):
+            path = path.encode('utf8')
+        purl = urllib.pathname2url(path)
+        return urlparse.urljoin(u'file:', purl)
+
+    def _register_attachment(self, path):
+        """ SQL link attachment """
+
+        fullpath = os.path.abspath(path)
+        url = self.path_to_url(fullpath)
+
+        self._sql += u"""
+
+        INSERT INTO at_question_ir_attachment_rel (
+            at_question_id,
+            ir_attachment_id
+            )
+        VALUES (
+            (SELECT "id" FROM at_question ORDER BY ID DESC LIMIT 1),
+            (SELECT "id" FROM ir_attachment WHERE url = '{}')
+        );
+
+        """.format(url)
+
 
     def _txt2sql(self):
         """ Main method docstring
@@ -309,17 +371,28 @@ class App(object):
             preamble = u''
             previous = None
             question = None
+            attachments = []
+            description = u''
 
             with open(self._file, 'r') as finput: #open the file
                 lines = finput.readlines()
                 for line_raw in lines:
                     line = line_raw.decode('utf-8', errors='replace')
-                    if self._is_question(line):
+                    if self._is_attachment(line):
+                        #pylint: disable=I0011,W0612
+                        title, path = self._split_attachment(line)
+                        attachments.append(path)
+                    elif self._is_description(line):
+                        description += self._get_description(line)
+                    elif self._is_question(line):
                         line = self._clear_question(line)
-                        question = self._new_question(line, preamble)
+                        question = self._new_question(line, description, preamble)
                         preamble = u''
+                        description = u''
                         if question:
                             self._register_question(question)
+                        while attachments:
+                            self._register_attachment(attachments.pop())
                     elif self._is_answer(line):
                         line, is_correct = self._clear_answer(line)
                         if line == previous or len(line) < 1:
@@ -329,7 +402,7 @@ class App(object):
                         if answer:
                             self._register_answer(answer)
                     elif self._preamble and len(line) > 3:
-                        preamble += line
+                        preamble += line.strip()
                     else:
                         print u'Skip line %s' % line
 

@@ -61,6 +61,7 @@ class Entity(object):
         cls._conn = value
 
 
+
 class Answer(Entity):
     #pylint: disable=I0011,R0903,C0111
 
@@ -227,8 +228,8 @@ class Test(Entity):
     def __str__(self):
         return '{{ id : {}, name : "{}", description : "{}", questions : <{}> }}'.format(
             self._id,
-            self._name,
-            self._description,
+            (self._name),
+            (self._description),
             len(self._questions)
         )
 
@@ -369,8 +370,11 @@ class App(object):
             question_count = 1
             for question in test.questions:
                 # This works but I don't know why
+                if question.description:
+                    text_file.write(u'\n> {}'.format(self._autodecode(question.description)))
+
                 if question.preamble:
-                    text_file.write(u'\n{}'.format(self._autodecode(question.preamble)))
+                    text_file.write(u'{}'.format(self._autodecode(question.preamble)))
 
                 text_file.write(u'\n{}.- '.format(question_count))
                 text_file.write(self._autodecode(question.name))

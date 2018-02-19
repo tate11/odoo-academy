@@ -63,3 +63,16 @@ class AtTestAtQuestionRel(models.Model):
         default=0,
         help='Question sequence order'
     )
+
+    active = fields.Boolean(
+        string='Active',
+        required=False,
+        readonly=False,
+        index=False,
+        default=True,
+        help=('If the active field is set to false, it will allow you to '
+              'hide record without removing it.'),
+        related='at_question_id.active',
+        store=True
+    )
+

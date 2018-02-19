@@ -104,6 +104,7 @@ class AtAnswersTable(models.Model):
                     at_answer.at_question_id,
                     at_answer.is_correct
                 FROM at_answer
+                WHERE active = TRUE
                 ORDER BY at_answer.at_question_id ASC, at_answer."sequence", at_answer."id"
 
             ), ordered_quesions AS (
@@ -114,6 +115,7 @@ class AtAnswersTable(models.Model):
                     rel.at_question_id,
                     ROW_NUMBER() OVER(PARTITION BY rel.at_test_id ORDER BY  rel.at_test_id DESC, rel."sequence" ASC, rel.at_question_id ASC) as atq_index
                     FROM at_test_at_question_rel AS rel
+                    WHERE active = TRUE
                 ORDER BY rel.at_test_id DESC, rel."sequence" ASC, rel.at_question_id ASC
 
             )

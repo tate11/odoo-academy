@@ -23,6 +23,7 @@
         <xs:element ref="author"/>
         <xs:element maxOccurs="unbounded" ref="activity"/>
       </xs:sequence>
+      <xs:attribute name="stabilisers" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
 
@@ -66,6 +67,7 @@
           <xs:element ref="name"/>
           <xs:element ref="value"/>
         </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="description"/>
         <xs:element ref="default"/>
       </xs:sequence>
       <xs:attribute name="class" type="xs:NCName"/>

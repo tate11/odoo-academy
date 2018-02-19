@@ -64,6 +64,50 @@ After running the modules list update you can confirm the new modules are availa
 - [ ] Other color (or style) for finished sessions in training action view
 - [ ] The model academy.training.action.unit.control has no access rules
 
+####  appointment.manager
+
+```
+├───start_datetime··········: Datetime
+├───allday··················: Boolean
+│   └───duration············: Float
+├───recurrency··············: Boolean
+├───interval················: Integer
+├───rrule_type··············: Selection
+│   ├───daily
+│   ├───weekly
+│   │   ├───mo··············: Boolean
+│   │   ├───tu··············: Boolean
+│   │   ├───we··············: Boolean
+│   │   ├───th··············: Boolean
+│   │   ├───fr··············: Boolean
+│   │   ├───sa··············: Boolean
+│   │   └───su··············: Boolean
+│   ├───monthly·············: Selection
+│   │   ├───date
+│   │   │   └───day·········: Integer
+│   │   └───day
+│   │       ├───byday·······: Selection
+│   │       │   ├───First
+│   │       │   ├───Second
+│   │       │   ├───Third
+│   │       │   ├───Fourth
+│   │       │   ├───Fifth
+│   │       │   └───Last
+│   │       └───weeklist····: Selection
+│   │           ├───MO
+│   │           ├───TU
+│   │           ├───WE
+│   │           ├───TH
+│   │           ├───FR
+│   │           ├───SA
+│   │           └───SU
+│   └───yearly
+└───end_type················: Selection
+    ├───count
+    │   └───count···········: Integer
+    └───stop_date
+        └───final_date······: Date
+```
 
 ### Other modules
 

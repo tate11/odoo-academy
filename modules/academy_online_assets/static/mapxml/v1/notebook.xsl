@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
+    <xsl:variable name="stabilisers" select="//notebook/@stabilisers"/>
+    
     <xsl:template match="/">
         <html lang="en">
             <head>
@@ -79,10 +80,33 @@
                                             <xsl:for-each select="statement">
                                                 <!-- <xsl:sort select="name" /> -->
                                                 <xsl:if test="default = 'Falso'">
-                                                  <div class="statement {@class}">
-                                                  <xsl:apply-templates select=".">
-                                                      <!-- <xsl:sort select="name" /> -->
-                                                  </xsl:apply-templates>
+                                                  <div class="row">
+                                                     <xsl:choose>
+                                                         <xsl:when test="$stabilisers='true' and description and not(string-length(description) > 12)">
+                                                             <div class="col-xs-10 statement {@class}">
+                                                                 <xsl:apply-templates select=".">
+                                                                     <!-- <xsl:sort select="name" /> -->
+                                                                 </xsl:apply-templates>
+                                                             </div>
+                                                             <div class="col-xs-2 statement text-right">
+                                                                 <small class="label label-info"><xsl:value-of select="description"/></small>
+                                                             </div>
+                                                         </xsl:when>
+                                                         <xsl:otherwise>
+                                                             <div class="col-xs-12 statement {@class}">
+                                                                 <xsl:apply-templates select=".">
+                                                                     <!-- <xsl:sort select="name" /> -->
+                                                                 </xsl:apply-templates>
+                                                             </div>
+                                                             <xsl:if test="$stabilisers and description">
+                                                                 <div class="col-xs-12">
+                                                                     <div class="" style="word-break: break-all;">
+                                                                         <small class="label label-info"><xsl:value-of select="description"/></small>
+                                                                     </div>
+                                                                 </div>
+                                                             </xsl:if>
+                                                         </xsl:otherwise>
+                                                     </xsl:choose>
                                                   </div>
                                                 </xsl:if>
                                             </xsl:for-each>
@@ -158,11 +182,14 @@
                 <xsl:when test="name">
                     <xsl:choose>
                         <xsl:when test="@class">
-                            <xsl:if test="@class != 'list'">
+                            <xsl:if test="not(@class='list')">
                                 <strong><xsl:value-of select="name"/>: </strong>
                             </xsl:if>
-                            <xsl:if test="@class = 'list'">
+                            <xsl:if test="@class = 'list' and not(value/statement)">
                                 <strong><xsl:value-of select="name"/> </strong>
+                            </xsl:if>
+                            <xsl:if test="@class = 'list' and value/statement">
+                                <strong><xsl:value-of select="name"/>&#160;</strong>
                             </xsl:if>
                         </xsl:when>
                         <xsl:otherwise>
@@ -172,7 +199,7 @@
                 </xsl:when>
             </xsl:choose>
             <xsl:choose>
-                <xsl:when test="value/statement">
+                <xsl:when test="not(@class='list') and value/statement">
                     <xsl:choose>
                         <xsl:when test="name">(</xsl:when>
                     </xsl:choose>
@@ -188,6 +215,14 @@
                     <xsl:choose>
                         <xsl:when test="name">) </xsl:when>
                     </xsl:choose>
+                </xsl:when>
+                <xsl:when test="@class = 'list' and value/statement">
+                    <span><xsl:value-of select="value/text()"/>:</span>
+                    <span class="ul">
+                        <xsl:for-each select="value/statement">
+                            <span class="li"><strong><xsl:value-of select="name"/></strong>&#160;<span><xsl:value-of select="value"/></span>.</span>
+                        </xsl:for-each>
+                    </span>
                 </xsl:when>
                 <xsl:otherwise>
                     <span>
