@@ -10,6 +10,7 @@ import psycopg2
 import locale
 import chardet
 import io
+import os
 
 # ------------------------------- DECORATORS ----------------------------------
 
@@ -60,6 +61,62 @@ class Entity(object):
     def conn(cls, value):
         cls._conn = value
 
+
+class Attachment(Entity):
+    #pylint: disable=I0011,R0903,C0111
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def url(self):
+        return self._is_correct
+
+    def __init__(self, _id, name, url):
+        super(Attachment, self).__init__()
+
+        self._id = _id
+        self._name = name
+        self._url = url
+
+    @classmethod
+    def from_question(cls, question_id):
+        attachments = []
+
+        conn_pattern = u'''
+            SELECT
+                    ata.id,
+                    ata.name,
+                    ata.url
+            FROM
+                    ir_attachment AS ata
+            inner join at_question_ir_attachment_rel as rel on rel.ir_attachment_id = ata."id"
+            INNER JOIN at_question AS atq ON rel.at_question_id = atq."id"
+            WHERE atq."id" = {}
+            ORDER BY
+                    atq."id" ASC;
+        '''
+        conn_string = conn_pattern.format(question_id)
+        cur = cls.conn.cursor()
+        cur.execute(conn_string)
+        rows = cur.fetchall()
+
+        # assert rows, u'There is not any attachment in question %s' % question_id
+
+        for row in rows:
+            attachment = Attachment(row[0], row[1], row[2])
+            attachments.append(attachment)
+
+        return attachments
+
+    def to_markdown(self):
+        name = self._name or ''
+        url = self._url or ''
+        return '![' + name  + '](' + url + ')'
+
+    def __str__(self):
+        return self._name
 
 
 class Answer(Entity):
@@ -133,8 +190,12 @@ class Question(Entity):
     def answers(self):
         return self._answers
 
+    @property
+    def attachments(self):
+        return self._attachments
 
-    def __init__(self, _id, name, preamble=None, description=None, answers=None):
+    #pylint: disable=I0011,R0913
+    def __init__(self, _id, name, preamble=None, description=None, answers=None, attachments=None):
         super(Question, self).__init__()
 
         self._id = _id
@@ -142,6 +203,7 @@ class Question(Entity):
         self._preamble = preamble
         self._description = description
         self._answers = answers or []
+        self._attachments = attachments or []
 
     @classmethod
     def from_test(cls, test_id):
@@ -171,7 +233,8 @@ class Question(Entity):
 
         for row in rows:
             answers = Answer.from_question(row[0])
-            question = Question(row[0], row[1], row[2], row[3], answers)
+            attachments = Attachment.from_question(row[0])
+            question = Question(row[0], row[1], row[2], row[3], answers, attachments)
             questions.append(question)
 
         return questions
@@ -302,7 +365,14 @@ class App(object):
         self._database = args.database
         self._user = args.user
         self._password = args.password
-        self._test_id = args.test_id
+
+        if args.test_id == 0:
+            files = [item for item in os.listdir(u'.') if item.endswith(u'.ID')]
+            if files:
+                self._test_id = int(files[0][:-3])
+        else:
+            self._test_id = args.test_id
+
         self._output = args.output
 
 
@@ -370,6 +440,12 @@ class App(object):
             question_count = 1
             for question in test.questions:
                 # This works but I don't know why
+
+                text_file.write(u'\n')
+                for attachment in question.attachments:
+                    markdown = attachment.to_markdown()
+                    text_file.write(self._autodecode(markdown))
+
                 if question.description:
                     text_file.write(u'\n> {}'.format(self._autodecode(question.description)))
 

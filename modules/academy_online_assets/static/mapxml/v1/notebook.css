@@ -34,6 +34,7 @@ article header {
 article header h3 {
     padding: 0px;
     margin: 0px;
+    page-break-after: avoid;
 }
 
 h4 {
@@ -116,4 +117,52 @@ img.preview-inline {
     height: 100%;
     width: auto;
     display: block
+}
+
+div.ornament {
+    margin: 1cm 0 0 0;
+    text-align: center;
+}
+
+div.meca {
+    text-align: justify;
+    font-size: 16pt!important;
+}
+
+div.meca i{
+    opacity: 0.75;
+}
+
+
+span.tab {
+    display: block;
+    padding-left: 1cm;
+}
+
+
+span.border-style-preview, span.art-style-preview {
+    display: inline-block;
+    overflow: hidden!important;
+    margin: 0px 2px 0px 2px;
+    padding: 0px !important;
+}
+
+span.border-style-preview {
+    height: 18px;
+    width: 53px;
+} 
+
+span.art-style-preview {
+    height: 26px;
+    width: 110px;
+}
+
+span.underline-style-preview {
+    display: inline-block;
+    width: 52px;
+    height: 9px;
+    overflow: hidden!important;
+    margin: 0px 2px 0px 2px;
+    padding: 0px !important;
+    background-color: yellow;
 }

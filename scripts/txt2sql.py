@@ -160,7 +160,7 @@ class App(object):
     def _is_answer(self, line):
         """ Check if line is for question ^[ABCDabcd]+
         """
-        return bool(re.match(r'^[abcdx][\)\.\- ]+.*$', line, re.IGNORECASE))
+        return bool(re.match(r'^[abcdefghijx][\)\.\-]+.*$', line, re.IGNORECASE))
 
 
     def _new_answer(self, line, is_correct=False):
@@ -217,7 +217,7 @@ class App(object):
         """ Cliear questions
         """
         is_correct = line and line[0].lower() == 'x'
-        return re.search(r'^[abcdxABCDX]{1,2}[\)\.\- ]+(.*)$', line).group(1), is_correct
+        return re.search(r'^[abcdxABCDX]{1,2}[\)\.\- ]+ (.*)$', line).group(1), is_correct
 
     def _register_topic(self):
         """ SQL to ensure topic

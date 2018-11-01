@@ -188,6 +188,22 @@ class AtQuestion(models.Model):
         compute='_compute_ir_attachment_image_ids',
     )
 
+    at_test_at_question_ids = fields.One2many(
+        string='Used in',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Test in witch this question has been used',
+        comodel_name='at.test.at.question.rel',
+        inverse_name='at_question_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
+    )
+
+
     # ----------------------- AUXILIARY FIELD METHODS -------------------------
 
     def _compute_at_category_ids_domain(self):

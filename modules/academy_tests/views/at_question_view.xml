@@ -82,6 +82,10 @@
                             <field name="description" class="oe_field_description"
                                 placeholder="Enter new text for description" />
                         </page>
+                        <page string="Used in" class="oe_page_usedin" accesskey="U">
+                            <field name="at_test_at_question_ids" class="oe_field_at_test_at_question_ids"
+                                context="{'tree_view_ref' : 'academy_tests.view_at_test_at_question_inv_tree'}" />
+                        </page>
                     </notebook>
 
                 </sheet>

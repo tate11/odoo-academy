@@ -5,6 +5,7 @@
   <xs:element name="description" type="xs:string"/>
   <xs:element name="author" type="xs:string"/>
   <xs:element name="preview" type="xs:string"/>
+  <xs:element name="ornament" type="xs:string"/>
   
   <xs:element name="default">
     <xs:simpleType>
@@ -33,6 +34,7 @@
         <xs:element ref="name"/>
         <xs:element maxOccurs="unbounded" ref="block"/>
         <xs:element minOccurs="0" ref="preview"></xs:element>
+        <xs:element minOccurs="0" ref="ornament"></xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -89,6 +91,7 @@
   <xs:element name="value">
     <xs:complexType mixed="true">
       <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="target"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="statement"/>
       </xs:sequence>
       <xs:attribute name="class" type="xs:NCName"/>

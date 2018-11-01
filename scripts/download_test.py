@@ -94,7 +94,7 @@ class App(object):
                             help=u'test identifier')
 
         parser.add_argument('-t', '--tittle', type=str, dest='title',
-                            default=u'',
+                            default=None,
                             help=u'test title')
 
         parser.add_argument('-r', '--report', type=str, dest='report',
@@ -119,10 +119,24 @@ class App(object):
 
         if args.id > 0:
             self._id = args.id
+        elif not self._title:
+            files = [item for item in os.listdir(u'.') if item.endswith(u'.ID')]
+            if files:
+                self._id = int(files[0][:-3])
+                self._read_id_file(files[0])
+                print u'Using file ' + files[0] + ' and ' + self._report
 
         if args.title:
             self._title = args.title.decode(self._cp, errors=u'replace')
 
+    def _read_id_file(self, fname):
+        """ Read specifications from ID file """
+        with open(fname, 'r') as finput: #open the file
+            lines = finput.readlines()
+            for line_raw in lines:
+                line = line_raw.decode('utf-8', errors='replace')
+                if re.match(r'^report\= *[^ ]+ *$', line, re.IGNORECASE):
+                    self._report = line.replace(u'report=', u'').strip()
 
     def _connect(self):
         """ Connects to a Odoo server """
@@ -181,6 +195,7 @@ class App(object):
 
 
     def _download_report(self, report_id):
+        print self._report
         return self._odoo.report.download(
             self._report,
             [report_id]
@@ -222,7 +237,7 @@ class App(object):
         self._argparse()
 
 
-        if self._connect():
+        if (self._id or self._title) and self._connect():
 
             if self._login():
 
@@ -233,6 +248,9 @@ class App(object):
                     self._save_report(report)
 
                 self._logout()
+
+        else:
+            print u'Please type an ID or a title, see --help'
 
         sys.exit(result)
 

@@ -30,6 +30,21 @@
             </field>
         </record>
 
+        <!-- Tree view for "at_test_at_question_rel" -->
+        <record id="view_at_test_at_question_inv_tree" model="ir.ui.view">
+            <field name="name">view.at_test_at_question_rel.inverse.tree</field>
+            <field name="model">at.test.at.question.rel</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="at_test_at_question_rel_tree" create="0" delete="0" edit="0" editable="bottom">
+                    <field name="at_test_id" />
+                </tree>
+            </field>
+        </record>
+
         <!-- Form view for "at_test_at_question_rel" -->
         <record id="view_at_test_at_question_rel_form" model="ir.ui.view">
             <field name="name">view.at_test_at_question_rel.form</field>
