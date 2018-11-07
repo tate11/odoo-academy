@@ -160,7 +160,7 @@ class Answer(Entity):
         cur.execute(conn_string)
         rows = cur.fetchall()
 
-        assert rows, u'There is not any answer in question %s' % question_id
+        # assert rows, u'There is not any answer in question %s' % question_id
 
         for row in rows:
             answer = Answer(row[0], row[1], row[2])

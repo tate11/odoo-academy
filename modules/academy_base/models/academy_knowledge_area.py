@@ -56,6 +56,17 @@ class AcademyKnowledgeArea(models.Model):
         help='Enables/disables the record'
     )
 
+    code = fields.Char(
+        string='Code',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Enter new code',
+        size=10,
+        translate=False
+    )
+
     description = fields.Text(
         string='Description',
         required=False,
@@ -64,13 +75,4 @@ class AcademyKnowledgeArea(models.Model):
         default=None,
         help='Enter new description',
         translate=True
-    )
-
-    active = fields.Boolean(
-        string='Active',
-        required=False,
-        readonly=False,
-        index=False,
-        default=True,
-        help='Enables/disables the record'
     )

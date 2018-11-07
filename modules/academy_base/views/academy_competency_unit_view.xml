@@ -77,9 +77,10 @@
                         <t t-name="kanban-box">
                              <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <t t-if="record.image_small.raw_value">
+                                    <!-- <t t-if="record.image_small.raw_value">
                                         <img t-att-src="kanban_image('academy.competency.unit', 'image_small', record.id.value)"/>
-                                    </t>
+                                    </t> -->
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
                                     <t t-if="!record.image_small.raw_value">
                                         <img t-att-src="_s + &quot;/academy_base/static/src/img/training-module.png&quot;" class="o_kanban_image"/>
                                     </t>
@@ -141,7 +142,7 @@
             <field name="search_view_id" ref="view_academy_competency_unit_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Competency Unit
+                    Click to add new competency unit
                 </p><p>
                     There are not competency units in catalog
                 </p>
@@ -150,7 +151,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_competency_unit" model="ir.ui.menu" >
-            <field name="name">Competency Unit</field>
+            <field name="name">Competency unit</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_competency_unit_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />

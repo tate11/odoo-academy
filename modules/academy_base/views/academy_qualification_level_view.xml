@@ -28,7 +28,7 @@
                     <field name="sequence" class="oe_field_sequence"
                         widget="handle" />
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="description" />
                 </tree>
             </field>
         </record>
@@ -51,7 +51,10 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
-                        <!-- ··· -->
+                        <group col="2">
+                            <field name="description" class="oe_field_description"
+                                placeholder="Enter new value for description" />
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -86,7 +89,7 @@
             <field name="search_view_id" ref="view_academy_qualification_level_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Qualification Level
+                    Click to add new qualification level
                 </p><p>
                     There are not qualification levels in catalog
                 </p>
@@ -95,7 +98,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_qualification_level" model="ir.ui.menu" >
-            <field name="name">Qualification Level</field>
+            <field name="name">Qualification level</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_qualification_level_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />

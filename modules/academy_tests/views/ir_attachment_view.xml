@@ -11,9 +11,11 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <field name="name" class="oe_field_name" />
-                <field name="type" class="oe_field_type" />
-                <field name="mimetype" class="oe_field_mimetype" />
+                <tree string="Attachment tree" create="1" delete="1" edit="1" editable="top">
+                    <field name="name" class="oe_field_name" />
+                    <field name="type" class="oe_field_type" />
+                    <field name="mimetype" class="oe_field_mimetype" />
+                </tree>
             </field>
         </record>
 

@@ -26,7 +26,6 @@
             <field name="arch" type="xml">
                 <tree string="academy_training_action_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <field name="progress" widget="progressbar" />
                 </tree>
             </field>
         </record>
@@ -84,12 +83,12 @@
                                     <group col="4">
                                         <field name="professional_family_id" class="oe_field_professional_family_id"
                                             placeholder="Choose related professional family" readonly="1" />
-                                        <field name="professional_area_id" class="oe_field_professional_area_id"
-                                            placeholder="Choose related professional_area_id" readonly="1" />
+                                        <field name="professional_area_id" class="oe_field_professional_area_id" 
+                                            placeholder="Choose related professional area" readonly="1" />
                                         <field name="internal_code" class="oe_field internal code"
                                             placeholder="Enter new internal code" readonly="1" />
                                         <field name="qualification_level_id" class="oe_field_qualification_level_id"
-                                            placeholder="Choose related qualification level id" readonly="1" />
+                                            placeholder="Choose related qualification level" readonly="1" />
                                     </group>
                                 <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
                                     placeholder="Choose related competency units" readonly="1" />
@@ -129,7 +128,7 @@
             <field name="search_view_id" ref="view_academy_training_action_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training Action
+                    Click to add new training action
                 </p><p>
                     There are not training actions in catalog
                 </p>

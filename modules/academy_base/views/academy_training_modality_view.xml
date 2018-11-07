@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: menu_academy_settings_helper
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not any training modality
+            - Action help···: There are not any training modalities
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.training.modality" -->
@@ -25,7 +25,7 @@
             <field name="arch" type="xml">
                 <tree string="academy_training_modality_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="description" />
                 </tree>
             </field>
         </record>
@@ -48,7 +48,10 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
-                        <!-- ··· -->
+                        <group col="2">
+                            <field name="description" class="oe_field_description"
+                                placeholder="Enter new value for description" />
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -83,9 +86,9 @@
             <field name="search_view_id" ref="view_academy_training_modality_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training modality
+                    Click to add new training modality
                 </p><p>
-                    There are not any training modality
+                    There are not any training modalities
                 </p>
             </field>
         </record>

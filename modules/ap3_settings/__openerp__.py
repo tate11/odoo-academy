@@ -20,7 +20,6 @@
 
     # any module necessary for this one to work correctly
     'depends': [
-        'report',
         'academy_base',
         'academy_tests'
     ],
@@ -29,11 +28,11 @@
     'data': [
         'data/report_paperformat.xml',
 
-        'views/external_layout.xml',
-        'views/at_test_report.xml',
-        'views/at_test_report_ayto.xml',
-        'views/at_post_tests_template.xml',
-        'views/at_post_test_template.xml'
+        # 'views/external_layout.xml',
+        'views/academy_test_report.xml',
+        'views/academy_test_report_ayto.xml',
+        'views/academy_post_tests_template.xml',
+        'views/academy_post_test_template.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

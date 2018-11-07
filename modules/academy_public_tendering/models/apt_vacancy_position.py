@@ -84,7 +84,6 @@ class AptVacancyPosition(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='kind'
     )
 
     class_id = fields.Many2one(
@@ -99,7 +98,6 @@ class AptVacancyPosition(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='class'
     )
 
     general_public_access = fields.Integer(
@@ -215,7 +213,7 @@ class AptVacancyPosition(models.Model):
 
     # --------------------------- ONCHANGE EVENTS -----------------------------
 
-    @api.one
+    # @api.one
     @api.onchange('general_public_access')
     def _onchange_general_public(self):
         """ Onchange event for general_public_access field
@@ -224,7 +222,7 @@ class AptVacancyPosition(models.Model):
         self.compute_total_of_vacancies()
 
 
-    @api.one
+    # @api.one
     @api.onchange('general_internal_promotion')
     def _onchange_general_internal(self):
         """ Onchange event for general_internal_promotion field
@@ -233,7 +231,7 @@ class AptVacancyPosition(models.Model):
         self.compute_total_of_vacancies()
 
 
-    @api.one
+    # @api.one
     @api.onchange('disabilities_public_access')
     def _onchange_disabilities_public(self):
         """ Onchange event for disabilities_public_access field
@@ -242,7 +240,7 @@ class AptVacancyPosition(models.Model):
         self.compute_total_of_vacancies()
 
 
-    @api.one
+    # @api.one
     @api.onchange('disabilities_internal_promotion')
     def _onchange_disabilities_internal(self):
         """ Onchange event for disabilities_internal_promotion field

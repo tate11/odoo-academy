@@ -50,6 +50,13 @@
                             </h1>
                         </div>
 
+                        <group col="4">
+                            <field name="manager_id" class="oe_field_manager_id"
+                                placeholder="Choose resource manager" />
+                            <field name="last_update" class="oe_field_last_update"
+                                placeholder="Choose last revision date" />
+                        </group>
+
                         <group col="2">
                             <field name="directory" class="oe_field_directory"
                                 placeholder="Enter directory full path"/>
@@ -62,26 +69,46 @@
                             </page>
                             <page string="Attachments" class="oe_page_attachments" accesskey="A">
                                 <field name="ir_attachment_ids" class="oe_field_ir_attachment_ids"
-                                    placeholder="Choose related attachments" />
+                                    placeholder="Choose related attachments">
+                                    <tree>
+                                        <field name="name" class="oe_field_name"
+                                            placeholder="Enter new value for name" />
+                                        <field name="type" class="oe_field_type"
+                                            placeholder="Enter new value for type" />
+                                        <field name="mimetype" class="oe_field_mimetype"
+                                            placeholder="Enter new value for MIME type" />
+                                        <field name="file_size" class="oe_field_file_size"
+                                            placeholder="Enter new value for file size" />
+                                    </tree>
+                                </field>
                             </page>
                             <page string="Directory" class="oe_page_files" accesskey="F" attrs="{'invisible': [('directory', '=', False)]}">
-                                <field name="directory_file_ids" class="oe_field_directory_file_ids"
-                                    placeholder="Press button to reload directory" />
-                                <button name="reload_directory"
-                                        string="Reload"
+                                <group cols="2">
+                                    <button name="reload_directory"
+                                            string="Reload"
+                                            type="object"
+                                            default_focus="0"
+                                            icon="fa-refresh"
+                                            help="Click it to reload directory file list" />
+                                    <button name="download_directory"
+                                        string="Download"
                                         type="object"
                                         default_focus="0"
-                                        icon="fa-refresh"
-                                        help="Click it to reload directory file list" />
+                                        icon="fa-download"
+                                        help="Pulse para descargar todo el contenido del directorio" 
+                                        attrs="{'invisible': [('directory', '=', False)]}"/>
+                                </group>
+                                <field name="directory_file_ids" class="oe_field_directory_file_ids"
+                                    placeholder="Press button to reload directory" />
                             </page>
                             <page string="In units" class="oe_page_in_units" accesskey="A">
                                 <field name="academy_training_unit_ids" class="oe_field_academy_training_unit_ids"
                                     placeholder="Choose related academy training units" />
                             </page>
-                            <page string="In sessions" class="oe_page_in_sessions" accesskey="I">
-                                <field name="academy_training_session_ids" class="oe_field_academy_training_session_ids"
-                                    placeholder="Choose related academy training sessions" />
-                            </page>
+                            <!-- <page string="Training actions" class="oe_page_training_actions" accesskey="T">
+                                <field name="academy_training_action_ids" class="oe_field_academy_training_action_ids"
+                                    placeholder="Enter new value for academy training action" />
+                            </page> -->
                         </notebook>
                     </sheet>
                 </form>
@@ -104,7 +131,7 @@
                     <field name="ir_attachment_ids" />
                     <field name="directory_file_ids" />
                     <field name="academy_training_unit_ids" />
-                    <field name="academy_training_session_ids" />
+                    <field name="academy_training_action_ids" />
 
                     <filter string="Non active"
                         name="non_active_training_resources"
@@ -122,20 +149,15 @@
                         name="attachment_resource"
                         domain="[('ir_attachment_ids', '!=', False)]"
                         context="{}"
-                        help="Show only resources with related attachements " />
+                        help="Show only resources with related attachments " />
 
-                    <filter string="Used"
-                        name="used_resource"
-                        domain="['|', ('academy_training_session_ids', '!=', False), ('academy_training_unit_ids', '!=', False)]"
-                        context="{}"
-                        help="Used resources" />
-
-                    <filter string="Unused"
-                        name="unused_resource"
-                        domain="['&amp;', ('academy_training_session_ids', '=', False), ('academy_training_unit_ids', '=', False)]"
-                        context="{}"
-                        help="Unused resources" />
-
+                    <group expand="1" string="Group By">
+                        <filter string="By training action"
+                            name="by_training_action"
+                            domain="[]"
+                            context="{'group_by':'academy_training_action_ids'}"
+                            help="" />
+                    </group>
                 </search>
             </field>
         </record>
@@ -153,7 +175,7 @@
             <field name="search_view_id" ref="view_academy_training_resource_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Resources
+                    Click to add new resources
                 </p><p>
                     Here are not training resource
                 </p>

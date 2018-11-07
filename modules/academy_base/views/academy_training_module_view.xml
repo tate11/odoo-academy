@@ -60,7 +60,7 @@
                         <group col="2">
                             <group col="2">
                                 <field name="unitcounting" class="oe_field_unitcounting"
-                                    placeholder="Enter new value for unitcounting" />
+                                    placeholder="Enter new value for unit counting" />
                                 <field name="hours" class="oe_field_hours"
                                     attrs="{'invisible': [('academy_training_unit_ids', '=', [])]}"/>
                                 <field name="ownhours" class="oe_field_ownhours"
@@ -75,7 +75,7 @@
                             <page string="Description" class="oe_page_description" accesskey="D">
                                 <group col="1">
                                     <field name="description" nolabel="1" class="oe_field_description"
-                                        placeholder="Enter new value for Description" />
+                                        placeholder="Enter new value for description" />
                                 </group>
                             </page>
                             <page string="Training units" class="oe_page_training_units" accesskey="T">
@@ -136,9 +136,10 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <t t-if="record.image_small.raw_value">
+                                    <!-- <t t-if="record.image_small.raw_value">
                                         <img t-att-src="kanban_image('academy.training.module', 'image_small', record.id.value)"/>
-                                    </t>
+                                    </t> -->
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
                                     <t t-if="!record.image_small.raw_value">
                                         <img t-att-src="_s + &quot;/academy_base/static/src/img/training-module.png&quot;" class="o_kanban_image"/>
                                     </t>
@@ -170,7 +171,7 @@
             <field name="search_view_id" ref="view_academy_training_module_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training Module
+                    Click to add new training module
                 </p><p>
                     There are not training modules in catalog
                 </p>
@@ -179,7 +180,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_training_module" model="ir.ui.menu" >
-            <field name="name">Training Module</field>
+            <field name="name">Training module</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_training_module_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />

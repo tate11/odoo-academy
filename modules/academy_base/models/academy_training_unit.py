@@ -89,7 +89,7 @@ class AcademyTrainingUnit(models.Model):
         index=False,
         default=0.0,
         digits=(16, 2),
-        help='Lenght in hours'
+        help='Length in hours'
     )
 
     code = fields.Char(

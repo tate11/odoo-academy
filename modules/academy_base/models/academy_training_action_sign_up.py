@@ -33,7 +33,7 @@ class AcademyTrainingActionSignUp(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Choose the training action in which studend will be enrolled',
+        help='Choose the training action in which student will be enrolled',
         comodel_name='academy.training.action',
         domain=[],
         context={},
@@ -47,7 +47,7 @@ class AcademyTrainingActionSignUp(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Choose an student',
+        help='Choose a student',
         comodel_name='res.partner',
         domain=[('is_student', '=', True)],
         context={},
@@ -61,6 +61,6 @@ class AcademyTrainingActionSignUp(models.Model):
         readonly=False,
         index=False,
         default=fields.Date.today(),
-        help='Date in which studend sign up'
+        help='Date in which student sign up'
     )
 

@@ -30,7 +30,6 @@
                     <field name="stop" class="oe_field_stop" />
                     <field name="competencyunitcounting" />
                     <field name="studentcounting" />
-                    <field name="progress" widget="progressbar" />
                 </tree>
             </field>
         </record>
@@ -43,15 +42,9 @@
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
-            <field name="inherit_id" ref="academy_base.view_appointment_manager_form" />
             <field name="arch" type="xml">
-                    <xpath expr="//notebook" position="before">
-                        <div class="oe_button_box" name="button_box">
-                            <button name="append_session" type="object" class="oe_stat_button" icon="fa-calendar-plus-o" string="Sessions">
-                                <field name="sessioncounting"/>
-                            </button>
-                        </div>
-
+                <form string="academy_training_action_form" create="1" delete="1" edit="1">
+                    <sheet>
                         <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
 
                         <div class="oe_title">
@@ -68,68 +61,66 @@
                             <field name="application_scope_id" class="od_field_application_scope"
                                 placeholder="application_scope" />
                         </group>
-                    </xpath>
 
-                    <xpath expr="//notebook/page" position="before">
-                        <page string="Data" class="oe_page_data" accesskey="T">
-                            <group col="2">
+                        <notebook>
+                            <page string="Data" class="oe_page_data" accesskey="T">
                                 <group col="2">
-                                    <field name="knowledge_area_ids" class="od_field_knowledge_area"
-                                        placeholder="knowledge_area" widget="many2many_tags" />
-                                    <field name="professional_category_id" class="od_field_professional_category"
-                                        placeholder="professional_category" />
-                                    <field name="training_modality_ids" class="od_field_training_modality"
-                                        placeholder="training_modality" widget="many2many_tags" />
-                                    <field name="training_methodology_ids" class="od_field_training_methodology"
-                                        placeholder="training_methodology" widget="many2many_tags" />
+                                    <group col="2">
+                                        <field name="knowledge_area_ids" class="od_field_knowledge_area"
+                                            placeholder="knowledge_area" widget="many2many_tags" />
+                                        <field name="professional_category_id" class="od_field_professional_category"
+                                            placeholder="professional_category" />
+                                        <field name="training_modality_ids" class="od_field_training_modality"
+                                            placeholder="training_modality" widget="many2many_tags" />
+                                        <field name="training_methodology_ids" class="od_field_training_methodology"
+                                            placeholder="training_methodology" widget="many2many_tags" />
+                                    </group>
+                                    <group col="2">
+                                        <field name="internal_action_code" class="oe_field_internal_code" />
+                                        <field name="start" class="oe_field_start" />
+                                        <field name="stop" class="oe_field_stop" />
+                                    </group>
                                 </group>
-                                <group col="2">
-                                    <field name="internal_action_code" class="oe_field_internal_code" />
-                                    <field name="start" class="oe_field_start" />
-                                    <field name="stop" class="oe_field_stop" />
-                                    <field name="progress" class="oe_field_progress" widget="progressbar" />
-                                </group>
-                            </group>
-                        </page>
+                            </page>
 
-                        <page string="Description" class="oe_page_description" accesskey="D">
-                            <field name="description" class="oe_field_description"
-                                placeholder="Enter new description" />
-                        </page>
-                        <page string="Qualification" class="oe_page_qualification" accesskey="Q">
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new description" />
+                            </page>
+                            <page string="Qualification" class="oe_page_qualification" accesskey="Q">
+                                    <group col="4">
+                                        <field name="professional_family_id" class="oe_field_professional_family_id"
+                                            placeholder="Choose related professional family" readonly="1" />
+                                        <field name="professional_area_id" class="oe_field_professional_area_id" 
+                                            placeholder="Choose related professional area" readonly="1" />
+                                        <field name="internal_code" class="oe_field internal code"
+                                            placeholder="Enter new internal code" readonly="1" />
+                                        <field name="qualification_level_id" class="oe_field_qualification_level_id"
+                                            placeholder="Choose related qualification level" readonly="1" />
+                                    </group>
+                                <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
+                                    placeholder="Choose related competency units" readonly="1" />
+                            </page>
+                            <page string="Students" class="oe_page_students" accesskey="S">
                                 <group col="4">
-                                    <field name="professional_family_id" class="oe_field_professional_family_id"
-                                        placeholder="Choose related professional family" readonly="1" />
-                                    <field name="professional_area_id" class="oe_field_professional_area_id"
-                                        placeholder="Choose related professional_area_id" readonly="1" />
-                                    <field name="internal_code" class="oe_field internal code"
-                                        placeholder="Enter new internal code" readonly="1" />
-                                    <field name="qualification_level_id" class="oe_field_qualification_level_id"
-                                        placeholder="Choose related qualification level id" readonly="1" />
+                                    <field name="studentcounting" class="oe_field_studentcounting" />
+                                    <field name="seating" class="oe_field_studentcounting" />
                                 </group>
-                            <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
-                                placeholder="Choose related competency units" readonly="1" />
-                        </page>
-                        <page string="Students" class="oe_page_students" accesskey="S">
-                            <group col="4">
-                                <field name="studentcounting" class="oe_field_studentcounting" />
-                                <field name="seating" class="oe_field_studentcounting" />
-                            </group>
-                            <field name="training_action_sign_up_ids" class="oe_field_training_action_sign_up_ids" />
-                        </page>
-                    </xpath>
-
-                    <xpath expr="//group[@class='appointment-manager']" position="after">
-                        <field name="academy_training_session_ids" class="oe_field_academy_training_session_ids"
-                            placeholder="Choose related training sessions" />
-                    </xpath>
+                                <field name="training_action_sign_up_ids" class="oe_field_training_action_sign_up_ids" />
+                            </page>
+                            <page string="Resources" class="oe_page_resources" accesskey="R">
+                                <field name="academy_training_resource_ids" class="oe_field_academy_training_resource_ids"
+                                    placeholder="Enter new value for academy training resource" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
             </field>
         </record>
 
-
         <!-- Kanban view for "academy.training.action" -->
         <record id="view_academy_training_action_kanban" model="ir.ui.view">
-            <field name="name">view.academy.training.action.form</field>
+            <field name="name">view.academy.training.action.kanban</field>
             <field name="model">academy.training.action</field>
             <field name="type">kanban</field>
             <field name="mode">primary</field>
@@ -144,14 +135,8 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_action">
                                 <div class="o_kanban_image">
-                                    <!-- <t t-if="record.image_small">
-                                        <img t-att-src="kanban_image('academy.training.action', 'image_small', record.id.value)"/>
-                                    </t>
-                                    <t t-if="!record.image_small">
-                                    </t> -->
-                                    <t t-if="record.image_small.raw_value">
-                                        <img t-att-src="kanban_image('academy.training.action', 'image_small', record.id.value)"/>
-                                    </t>
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+
                                     <t t-if="!record.image_small.raw_value">
                                         <img t-att-src="_s + &quot;/academy_base/static/src/img/training-action.png&quot;" class="o_kanban_image"/>
                                     </t>
@@ -164,9 +149,6 @@
                                      </ul>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-6">
-                                        <field name="progress" widget="gauge"  style="width:100%;cursor:pointer;" />
-                                    </div>
                                     <div class="col-xs-6 text-right">
                                         <field name="studentcounting" widget="gauge"  style="width:100%;cursor:pointer;" options="{'max_field': 'seating'}" />
                                     </div>
@@ -207,7 +189,7 @@
             <field name="search_view_id" ref="view_academy_training_action_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training Action
+                    Click to add new training action
                 </p><p>
                     There are not training actions in catalog
                 </p>
@@ -216,7 +198,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_training_action" model="ir.ui.menu" >
-            <field name="name">Training Action</field>
+            <field name="name">Training action</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_training_action_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_catalog" />

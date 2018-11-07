@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_training_methodology_auto" model="academy.training.methodology">
+            <field name="name">Autodesarrollo</field>
+            <field name="description">Aprendizaje individual apoyado en herramientas, materiales y servicios de apoyo al participante</field>
+        </record>
+
+        <record id="academy_training_methodology_coaching" model="academy.training.methodology">
+            <field name="name">Coaching</field>
+            <field name="description">Parte del conocimiento de la persona y permite dirigir, instruir y entrenar en base a unas metas y expectativas definidas</field>
+        </record>
+
+        <record id="academy_training_methodology_direct" model="academy.training.methodology">
+            <field name="name">Impartición directa</field>
+            <field name="description">Impartición a través de uno o varios expertos en cada disciplina, permitiendo la interacción continua y directa entre los participantes y el formador</field>
+        </record>
+
+   </data>
+</openerp>

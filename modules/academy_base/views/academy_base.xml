@@ -39,7 +39,7 @@
         </record>
 
         <record id="menu_academy_settings_helper" model="ir.ui.menu" >
-            <field name="name">Helper</field>
+            <field name="name">Training</field>
             <field name="sequence" eval="16" />
             <field name="parent_id" ref="menu_academy_settings" />
         </record>

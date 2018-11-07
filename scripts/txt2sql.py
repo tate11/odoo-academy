@@ -160,7 +160,7 @@ class App(object):
     def _is_answer(self, line):
         """ Check if line is for question ^[ABCDabcd]+
         """
-        return bool(re.match(r'^[abcdefghijx][\)\.\-]+.*$', line, re.IGNORECASE))
+        return bool(re.match(r'^[abcdefghijx][\)\.\-] +.*$', line, re.IGNORECASE))
 
 
     def _new_answer(self, line, is_correct=False):
@@ -404,7 +404,8 @@ class App(object):
                     elif self._preamble and len(line) > 3:
                         preamble += line.strip()
                     else:
-                        print u'Skip line %s' % line
+                        err_msg = u'Skip line %s' % line.encode(self._cp, errors='replace')
+                        print(err_msg)
 
         except Exception as ex:
             print ex

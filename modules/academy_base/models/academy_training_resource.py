@@ -5,11 +5,27 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, registry
+from openerp.tools import config
+import os
+import re
+import zipfile
+import psycopg2
+from . import custom_model_fields
+
+try:
+    from BytesIO import BytesIO
+except ImportError:
+    from io import BytesIO
+
+import base64
+
+from logging import getLogger
+_logger = getLogger(__name__)
 
 
 
-class AcademyTriningResource(models.Model):
+class AcademyTrainingResource(models.Model):
     """ Resource will be used in a training unit or session
 
     Fields:
@@ -18,11 +34,12 @@ class AcademyTriningResource(models.Model):
     """
 
     _name = 'academy.training.resource'
-    _description = u'Academy trining resource'
+    _description = u'Academy training resource'
 
     _rec_name = 'name'
     _order = 'name ASC'
 
+    _inherit = ['mail.thread']
 
     # ---------------------------- ENTITY FIELDS ------------------------------
 
@@ -57,20 +74,27 @@ class AcademyTriningResource(models.Model):
         help='Enables/disables the record'
     )
 
-    academy_training_session_ids = fields.Many2many(
-        string='Training sessions',
+    manager_id = fields.Many2one(
+        string='Manager',
         required=False,
         readonly=False,
         index=False,
         default=None,
-        help=False,
-        comodel_name='academy.training.session',
-        # relation='academy_training_activity_this_model_rel',
-        # column1='academy_training_activity_id',
-        # column2='this_model_id',
+        help=u'False',
+        comodel_name='res.users',
         domain=[],
         context={},
-        limit=None
+        ondelete='cascade',
+        auto_join=False
+    )
+
+    last_update = fields.Date(
+        string='Last update',
+        required=False,
+        readonly=False,
+        index=False,
+        default=fields.datetime.now(),
+        help=u'Last update'
     )
 
     academy_training_unit_ids = fields.Many2many(
@@ -95,10 +119,10 @@ class AcademyTriningResource(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Resources stored in Odoo database',
+        help=u'Resources stored in database',
         comodel_name='ir.attachment',
-        # relation='model_name_this_model_rel',
-        # column1='model_name_id',
+        # relation='ir_attachment_this_model_rel',
+        # column1='ir_attachment_id',
         # column2='this_model_id',
         domain=[],
         context={},
@@ -131,6 +155,21 @@ class AcademyTriningResource(models.Model):
         limit=None
     )
 
+    academy_training_action_ids = custom_model_fields.Many2ManyThroughView(
+        string='Training actions',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Choose related training actions',
+        comodel_name='academy.training.action',
+        relation='academy_training_action_academy_training_resource_rel',
+        column1='academy_training_resource_id', # this is the name in the SQL VIEW
+        column2='academy_training_action_id',   # this is the name in the SQL VIEW
+        domain=[],
+        context={},
+        limit=None
+    )
 
     # --------------------------- COMPUTED FIELDS -----------------------------
 
@@ -181,17 +220,11 @@ class AcademyTriningResource(models.Model):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-
-    @api.multi
-    def reload_directory(self):
+    def _reload_single_directory(self):
         """ Reload directory filenames
         """
-
-        import os
-        import re
-
-        for record in self:
-            if record.directory:
+        record = self
+        if record.directory:
                 base_path = os.path.abspath(record.directory)
 
                 # Remove all current file names
@@ -217,11 +250,57 @@ class AcademyTriningResource(models.Model):
 
                 record.directory_file_ids = filenames
 
+    # @api.one
+    @api.onchange('directory')
+    def _onchange_directory(self):
+        """ Onchange event for general_public_access field
+        """
+
+        self._reload_single_directory()
 
 
 
-# import subprocess
-# p = subprocess.Popen([r'C:\Program Files\Ghostgum\gsview\gsprint.exe', '-printer', r'PDFCreator', '-copies', '10', '
-# stdout, stderr = p.communicate()
-# print stdout
-# print stderr
+    @api.multi
+    def reload_directory(self):
+        """ Reload directory filenames
+        """
+
+        for record in self:
+            record._reload_single_directory()
+
+    @staticmethod
+    def _zipdir(path, ziph):
+        # ziph is zipfile handle
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                relpath = os.path.relpath(root, path)
+                relfile = os.path.join(relpath, file)
+                _logger.debug(u'### Zipping {}'.format(relfile))
+                ziph.write(os.path.join(root, file), relfile)
+
+    @api.multi
+    def download_directory(self):
+        data_dir = config['data_dir']
+        data_dir = os.path.abspath(data_dir)
+
+        for record in self:
+            zipname = u'{}.zip'.format(record.name)
+            #zippath = os.path.join(data_dir, zipname)
+            #_logger.debug(zippath)
+            #_logger.debug(self.directory)
+            in_memory = BytesIO()
+            zipf = zipfile.ZipFile(in_memory, 'w', zipfile.ZIP_DEFLATED)
+            self._zipdir(self.directory, zipf)
+            _logger.debug(in_memory.getbuffer().nbytes)
+            zipf.close()
+
+            datas = base64.b64encode(in_memory.getvalue())
+            _logger.debug(u'zip size: {}'.format(len(datas)))
+            attach_obj = self.env['ir.attachment']
+            attach_obj.create({'name': zipname,
+                               'datas': datas,
+                               'datas_fname': zipname,
+                               'res_model': self._name,
+                               'res_id': self.id})
+
+

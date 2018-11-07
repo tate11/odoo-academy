@@ -20,7 +20,8 @@
 
     # any module necessary for this one to work correctly
     'depends': [
-        'base'
+        'base',
+        'mail'
     ],
 
     # always loaded
@@ -29,8 +30,6 @@
         'data/ir_actions_server_data.xml',
 
         'views/academy_base.xml',
-
-        'views/appointment_manager_view.xml',
 
         'views/academy_training_methodology_view.xml',
         'views/academy_training_modality_view.xml',
@@ -49,11 +48,8 @@
 
         'views/res_parter_view.xml',
 
-        'views/academy_training_session_view.xml',
         'views/academy_training_resource_view.xml',
         'views/academy_training_action_sign_up_view.xml',
-        'views/academy_training_session_itemisation_view.xml',
-        'views/academy_training_session_attendance_view.xml',
 
         'security/academy_application_scope.xml',
         'security/academy_base.xml',
@@ -71,13 +67,17 @@
         'security/academy_training_modality.xml',
         'security/academy_training_module.xml',
         'security/academy_training_resource.xml',
-        'security/academy_training_session.xml',
-        'security/academy_training_session_attendance.xml',
-        'security/academy_training_session_itemisation.xml',
-        'security/academy_training_unit.xml',
-        'security/appointment_manager.xml',
 
-        'wizard/academy_training_session_wizard.xml',
+        'security/academy_training_unit.xml',
+
+        'data/academy_application_scope.xml',
+        'data/academy_knowledge_area.xml',
+        'data/academy_professional_area.xml',
+        'data/academy_professional_category.xml',
+        'data/academy_professional_family.xml',
+        'data/academy_qualification_level.xml',
+        'data/academy_training_methodology.xml',
+        'data/academy_training_modality.xml'
 
     ],
     'qweb': [
@@ -87,11 +87,11 @@
     'demo': [
     ],
     'js': [
-        'static/src/js/appointment_manager.js'
+        # 'static/src/js/appointment_manager.js'
     ],
     'css': [
         'static/src/css/academy_training_action_view.css',
-        'static/src/css/academy_training_session_wizard.css'
+        # 'static/src/css/academy_training_session_wizard.css'
     ],
     "external_dependencies": {
         "python" : []

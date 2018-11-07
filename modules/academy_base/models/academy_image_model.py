@@ -46,8 +46,8 @@ class AcademyImageModel(models.AbstractModel):
         default=0,
         help="Medium-sized image of the category. It is automatically " \
              "resized as a 128x128px image, with aspect ratio preserved. " \
-             "Use this field in form views or some kanban views.",
-        compute="_get_image",
+             "Use this field in form views or some Kanban views.",
+        compute=lambda self: self._get_image()
     )
 
     image_small = fields.Binary(
@@ -59,7 +59,7 @@ class AcademyImageModel(models.AbstractModel):
         help="Small-sized image of the category. It is automatically " \
              "resized as a 64x64px image, with aspect ratio preserved. " \
              "Use this field anywhere a small image is required.",
-        compute="_get_image",
+        compute=lambda self: self._get_image()
     )
 
 

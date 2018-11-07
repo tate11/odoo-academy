@@ -12,4 +12,4 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-from . import at_question
+from . import academy_test_question

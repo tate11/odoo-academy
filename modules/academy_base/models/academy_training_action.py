@@ -9,8 +9,11 @@ from openerp import models, fields, api, api, tools
 from logging import getLogger
 from openerp.exceptions import ValidationError
 from openerp.tools.translate import _
-
-from datetime import date, datetime
+from pytz import timezone, utc
+from sys import maxsize as maxint
+from calendar import monthrange
+from datetime import date, datetime, timedelta
+from . import custom_model_fields
 
 _logger = getLogger(__name__)
 
@@ -29,7 +32,8 @@ class AcademyTrainingAction(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['appointment.manager', 'academy.image.model']
+    # 'appointment.manager', 
+    _inherit = ['academy.image.model', 'mail.thread']
 
     _inherits = {'academy.professional.qualification': 'professional_qualification_id'}
 
@@ -61,6 +65,24 @@ class AcademyTrainingAction(models.Model):
         index=False,
         default=True,
         help='Enables/disables the record'
+    )
+
+    start = fields.Datetime(
+        string='Start',
+        required=True,
+        readonly=True,
+        index=False,
+        default=lambda self: self._utc_o_clock(),
+        help='Start date of an event, without time for full days events'
+    )
+
+    stop = fields.Datetime(
+        string='End',
+        required=True,
+        readonly=True,
+        index=False,
+        default=lambda self: self._utc_o_clock(),
+        help='Stop date of an event, without time for full days events'
     )
 
     application_scope_id = fields.Many2one(
@@ -167,17 +189,6 @@ class AcademyTrainingAction(models.Model):
         auto_join=False
     )
 
-    progress = fields.Float(
-        string='Progress',
-        required=True,
-        readonly=True,
-        index=False,
-        default=0.0,
-        digits=(16, 2),
-        help='Use widget to manage progress status',
-        compute='_compute_progress',
-    )
-
     internal_action_code = fields.Char(
         string='Internal code',
         required=True,
@@ -187,21 +198,6 @@ class AcademyTrainingAction(models.Model):
         help='Enter new internal code',
         size=12,
         translate=True
-    )
-
-    academy_training_session_ids = fields.One2many(
-        string='Training sessions',
-        required=False,
-        readonly=False,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.session',
-        inverse_name='academy_training_action_id',
-        domain=[],
-        context={},
-        auto_join=False,
-        limit=None
     )
 
     training_action_sign_up_ids = fields.One2many(
@@ -225,18 +221,24 @@ class AcademyTrainingAction(models.Model):
         readonly=False,
         index=False,
         default=20,
-        help='Maximun number of sign ups allowed'
+        help='Maximum number of sign ups allowed'
     )
 
-    # auto_session = fields.Boolean(
-    #     string='Auto create sessions',
-    #     required=False,
-    #     readonly=False,
-    #     index=False,
-    #     default=False,
-    #     help='Check for create sessions automatically'
-    # )
-
+    academy_training_resource_ids = custom_model_fields.Many2ManyThroughView(
+        string='Training resources',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Choose related resources',
+        comodel_name='academy.training.resource',
+        relation='academy_training_action_academy_training_resource_rel',
+        column1='academy_training_action_id',   # this is the name in the SQL VIEW
+        column2='academy_training_resource_id', # this is the name in the SQL VIEW
+        domain=[],
+        context={},
+        limit=None
+    )
 
     competencyunitcounting = fields.Integer(
         string='Competency units',
@@ -268,28 +270,6 @@ class AcademyTrainingAction(models.Model):
         compute='_compute_studentcounting',
     )
 
-    sessioncounting = fields.Integer(
-        string='Sessions',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help="Show number of sessions on this action",
-        compute='_compute_sessioncounting',
-    )
-
-    @api.multi
-    @api.depends('academy_training_session_ids', 'academy_competency_unit_ids')
-    def _compute_progress(self):
-        for record in self:
-            ses_hours = sum(record.academy_training_session_ids.mapped('hours'))
-            act_hours = sum(record.academy_competency_unit_ids.mapped('hours'))
-            if act_hours == 0:
-                record.progress = 100
-            else:
-                record.progress = (ses_hours / act_hours) * 100
-
-
     @api.multi
     @api.depends('professional_qualification_id')
     def _compute_competencyunitcounting(self):
@@ -312,12 +292,6 @@ class AcademyTrainingAction(models.Model):
         for record in self:
             record.studentcounting = len(record.training_action_sign_up_ids)
 
-    @api.multi
-    @api.depends('academy_training_session_ids')
-    def _compute_sessioncounting(self):
-        for record in self:
-            record.sessioncounting = len(record.academy_training_session_ids)
-
     @api.constrains('end')
     def _check_end(self):
         """ Ensures end field value is greater then start value """
@@ -326,43 +300,25 @@ class AcademyTrainingAction(models.Model):
                 raise ValidationError("End date must be greater then start date")
 
 
+    @api.model
+    def _utc_o_clock(self, offset=0, dateonly=False):
+        """ Returns Odoo valid current date or datetime with offset.
+        This method will be used to set default values for date/time fields
 
-    # ---------------------------- APPEND SESSION -----------------------------
+        @param offset: offset in hours
+        @param dateonly: return only date without time
+        """
+        ctx = self.env.context
+        tz = timezone(ctx.get('tz')) if ctx.get('tz', False) else utc
+        ctx_now = datetime.now(tz)
+        utc_now = ctx_now.astimezone(utc)
+        utc_offset = utc_now + timedelta(hours=offset)
 
+        utc_ock = utc_offset.replace(minute=0, second=0, microsecond=0)
 
-    @api.multi
-    def append_session(self):
-        self.ensure_one()
+        if dateonly == True:
+            result = fields.Date.to_string(utc_ock.date())
+        else:
+            result = fields.Datetime.to_string(utc_ock)
 
-        context = self.env.context.copy()
-
-        self_ids = self.mapped('id')
-        if context.get('active_model') != self._name:
-            context.update(active_ids=self_ids, active_model=self._name)
-
-        context['default_academy_training_action_id'] = self.mapped('id')[0]
-        context['action_read_only'] = True
-
-        return {
-            'name':_("Append session"),
-            'view_mode': 'form',
-            'view_id': False,
-            'view_type': 'form',
-            'res_model': 'academy.training.session.wizard',
-            'src_model': self._name,
-            'key2': "client_action_multi",
-            # 'res_id': partial_id,
-            'type': 'ir.actions.act_window',
-            'nodestroy': True,
-            'target': 'new',
-            'domain': '[]',
-            'context': context,
-        }
-
-
-
-
-
-
-
-
+        return result

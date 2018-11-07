@@ -107,7 +107,7 @@ class AcademyTrainingActionUnitControl(models.Model):
         readonly=False,
         index=False,
         default=False,
-        help="Allows to choose an unit to be used in session"
+        help="Allows choosing an unit to be used in session"
     )
 
     academy_training_unit_id = fields.Many2one(
@@ -205,9 +205,9 @@ class AcademyTrainingActionUnitControl(models.Model):
             INNER JOIN academy_training_action AS ata
                 ON ata.professional_qualification_id = apq."id"
 
-            LEFT JOIN academy_training_session_itemisation AS ati
+/*            LEFT JOIN academy_training_session_itemization AS ati
                 ON ati.academy_training_unit_id = atu."id"
-
+*/
             ORDER BY ata."id" ASC,
                 acu."id" ASC,
                 acu."sequence" ASC,
@@ -227,4 +227,4 @@ class AcademyTrainingActionUnitControl(models.Model):
 
     @api.multi
     def append_unit(self, arg):
-        print self, arg, self.env.context
+        print (self, arg, self.env.context)

@@ -27,26 +27,26 @@
 
     # always loaded
     'data': [
-        'security/at_test.xml',
-        'security/at_question.xml',
-        'security/at_answer.xml',
+        'security/academy_test.xml',
+        'security/academy_test_question.xml',
+        'security/academy_test_answer.xml',
 
-        'views/at_post_tests_template.xml',
-        'views/at_post_test_template.xml',
-        'views/at_post_answers_table_template.xml',
+        'views/academy_post_tests_template.xml',
+        'views/academy_post_test_template.xml',
+        'views/academy_post_answers_table_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
     ],
     'js': [
-        'static/src/js/at_post_test_template.js',
-        'static/src/js/at_post_tests_template.js',
-        'static/src/js/at_post_answers_table_template.js'
+        'static/src/js/academy_post_test_template.js',
+        'static/src/js/academy_post_tests_template.js',
+        'static/src/js/academy_post_answers_table_template.js'
     ],
     'css': [
-        'static/src/css/at_post_test_template.css',
-        'static/src/css/at_post_tests_template.css',
-        'static/src/css/at_post_answers_table_template.css'
+        'static/src/css/academy_post_test_template.css',
+        'static/src/css/academy_post_tests_template.css',
+        'static/src/css/academy_post_answers_table_template.css'
     ],
 
     'license': 'AGPL-3'

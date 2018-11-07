@@ -96,7 +96,7 @@ class AptPublicTendering(models.Model):
         required=False,
         readonly=False,
         index=False,
-        default='default_submissions_deadline',
+        # default=lambda self: self.default_submissions_deadline()
         help='Choose the last day for training'
     )
 

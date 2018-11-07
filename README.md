@@ -131,6 +131,16 @@ After running the modules list update you can confirm the new modules are availa
 
 * [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-nc/4.0/) code-is-beautiful Documentation is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
+## Todo
+
+- [ ] Answer view (from menu) could not allow to create new
+- [ ] Category view (from menu) could not allow to create new
+- [x] Test form must allow to add questions
+- [ ] Test reports should be accessible from action menu
+- [ ] Impugnment must be a new module named academy_test_claim
+      - Claim menú should be child from menu_academy_monitoring
+- [ ] Test is a resource
+
 
 ## Feedback
 

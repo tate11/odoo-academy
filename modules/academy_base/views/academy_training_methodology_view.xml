@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: menu_academy_settings_helper
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not any deffined training methodology
+            - Action help···: There are not any defined training methodologies
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.training.methodology" -->
@@ -25,7 +25,7 @@
             <field name="arch" type="xml">
                 <tree string="academy.training.methodology_tree" create="1" delete="1" edit="1">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="description" />
                 </tree>
             </field>
         </record>
@@ -45,10 +45,13 @@
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
-                                    placeholder="Name" />
+                                    placeholder="Enter new value for name" />
                             </h1>
                         </div>
-                        <!-- ··· -->
+                        <group col="2">
+                            <field name="description" class="oe_field_description"
+                                placeholder="Enter new value for description" />
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -83,9 +86,9 @@
             <field name="search_view_id" ref="view_academy_training_methodology_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Training methodology
+                    Click to add new training methodology
                 </p><p>
-                    There are not any deffined training methodology
+                    There are not any defined training methodologies
                 </p>
             </field>
         </record>

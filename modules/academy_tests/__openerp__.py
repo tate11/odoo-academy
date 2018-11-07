@@ -21,38 +21,39 @@
     # any module necessary for this one to work correctly
     'depends': [
         'mail',
-        'report',
+        # 'report',
+        # 'website',
         'academy_base',
     ],
 
     # always loaded
     'data': [
-        'data/at_level_data.xml',
+        'data/academy_test_level_data.xml',
 
-        'security/at_answer.xml',
-        'security/at_answers_table.xml',
-        'security/at_category.xml',
-        'security/at_level.xml',
-        'security/at_question.xml',
-        'security/at_question_impugnment.xml',
-        'security/at_tag.xml',
-        'security/at_test.xml',
-        'security/at_test_at_question_rel.xml',
-        'security/at_topic.xml',
+        'security/academy_test_answer.xml',
+        'security/academy_test_answers_table.xml',
+        'security/academy_test_category.xml',
+        'security/academy_test_level.xml',
+        'security/academy_test_question.xml',
+        'security/academy_test_question_impugnment.xml',
+        'security/academy_test_tag.xml',
+        'security/academy_test.xml',
+        'security/academy_test_academy_test_question_rel.xml',
+        'security/academy_test_topic.xml',
 
         'views/academy_tests.xml',
-        'views/at_answer_view.xml',
-        'views/at_category_view.xml',
-        'views/at_level_view.xml',
-        'views/at_question_impugnment_view.xml',
-        'views/at_question_view.xml',
-        'views/at_tag_view.xml',
-        'views/at_test_at_question_rel.xml',
-        'views/at_test_view.xml',
-        'views/at_topic_view.xml',
+        'views/academy_test_answer_view.xml',
+        'views/academy_test_category_view.xml',
+        'views/academy_test_level_view.xml',
+        'views/academy_test_question_impugnment_view.xml',
+        'views/academy_test_question_view.xml',
+        'views/academy_test_tag_view.xml',
+        'views/academy_test_academy_test_question_rel.xml',
+        'views/academy_test_view.xml',
+        'views/academy_test_topic_view.xml',
         'views/ir_attachment_view.xml',
 
-        'views/at_test_report.xml',
+        'views/academy_test_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
@@ -62,7 +63,7 @@
     ],
     'css': [
         'static/src/css/styles-backend.css',
-        'static/src/css/at_test_report.css'
+        'static/src/css/academy_test_report.css'
     ],
 
     'license': 'AGPL-3'

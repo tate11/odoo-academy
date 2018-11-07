@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+		<record id="academy_application_scope_public" model="academy.application.scope">
+			<field name="name">Administración pública</field>
+			<field name="description">Formación orientada a la formación de funcionarios y personal laboral de las administraciones públicas</field>
+		</record>
+
+		<record id="academy_application_scope_unemployed" model="academy.application.scope">
+			<field name="name">Desempleados</field>
+			<field name="description">Formación cuya finalidad es la inserción o reinserción laboral de los trabajadores en situación de desempleo </field>
+		</record>
+
+		<record id="academy_application_scope_corporate" model="academy.application.scope">
+			<field name="name">Empresa</field>
+			<field name="description">Formación dirigida a trabajadores de una empresa específica</field>
+		</record>
+
+		<record id="academy_application_scope_intersectoral" model="academy.application.scope">
+			<field name="name">Intersectorial</field>
+			<field name="description">Formación destinada al aprendizaje de competencias transversales pertenecientes a varios sectores de la actividad económica</field>
+		</record>
+
+		<record id="academy_application_scope_sectoral" model="academy.application.scope">
+			<field name="name">Sectorial</field>
+			<field name="description">Formación dirigida a trabajadores de un sector productivo concreto</field>
+		</record>
+
+		<record id="academy_application_scope_emmployed" model="academy.application.scope">
+			<field name="name">Trabajadores en activo</field>
+			<field name="description">Formación dirigida prioritariamente a trabajadores en activo</field>
+		</record>
+
+    </data>
+</openerp>

@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: academy_base.menu_academy_settings_catalog
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not professional familys in catalog
+            - Action help···: There are not professional families in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.professional.family" -->
@@ -90,9 +90,10 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <t t-if="record.image_small.raw_value">
+<!--                                     <t t-if="record.image_small.raw_value">
                                         <img t-att-src="kanban_image('academy.professional.family', 'image_small', record.id.value)"/>
-                                    </t>
+                                    </t> -->
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
                                     <t t-if="!record.image_small.raw_value">
                                         <img t-att-src="_s + &quot;/academy_base/static/src/img/professional-family.png&quot;" class="o_kanban_image"/>
                                     </t>
@@ -149,9 +150,9 @@
             <field name="search_view_id" ref="view_academy_professional_family_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Professional Family
+                    Click to add new professional family
                 </p><p>
-                    There are not professional familys in catalog
+                    There are not professional families in catalog
                 </p>
             </field>
         </record>

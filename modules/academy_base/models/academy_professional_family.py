@@ -60,7 +60,7 @@ class AcademyProfessionalFamily(models.Model):
     )
 
     professional_area_ids = fields.One2many(
-        string='Profesional area',
+        string='Professional area',
         required=False,
         readonly=False,
         index=False,

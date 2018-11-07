@@ -5,13 +5,13 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import at_topic
-from . import at_category
-from . import at_tag
-from . import at_level
-from . import at_answer
-from . import at_question
-from . import at_test_at_question_rel
-from . import at_test
-from . import at_answers_table
-from . import at_question_impugnment
+from . import academy_test_topic
+from . import academy_test_category
+from . import academy_test_tag
+from . import academy_test_level
+from . import academy_test_answer
+from . import academy_test_question
+from . import academy_test_academy_test_question_rel
+from . import academy_test
+from . import academy_test_answers_table
+from . import academy_test_question_impugnment

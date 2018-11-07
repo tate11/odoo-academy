@@ -58,11 +58,11 @@
                             <field name="professional_family_id" class="oe_field_professional_family_id"
                                 placeholder="Choose related professional family" />
                             <field name="professional_area_id" class="oe_field_professional_area_id"
-                                placeholder="Choose related professional_area_id" />
+                                placeholder="Choose related professional area" />
                             <field name="internal_code" class="oe_field internal code"
                                 placeholder="Enter new internal code" />
                             <field name="qualification_level_id" class="oe_field_qualification_level_id"
-                                placeholder="Choose related qualification level id" />
+                                placeholder="Choose related qualification level" />
                         </group>
                         <notebook>
                             <page string="Description" class="oe_page_description" accesskey="D">
@@ -75,7 +75,7 @@
                                     <tree string="Units">
                                         <field name="sequence" widget="handle" />
                                         <field name="name" class="oe_field_name"
-                                            placeholder="Enter new value for Name" />
+                                            placeholder="Enter new value for name" />
                                     </tree>
                                 </field>
                             </page>
@@ -102,9 +102,10 @@
                         <t t-name="kanban-box">
                              <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <t t-if="record.image_small.raw_value">
+                                    <!-- <t t-if="record.image_small.raw_value">
                                         <img t-att-src="kanban_image('academy.professional.qualification', 'image_small', record.id.value)"/>
-                                    </t>
+                                    </t> -->
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
                                     <t t-if="!record.image_small.raw_value">
                                         <img t-att-src="_s + &quot;/academy_base/static/src/img/professional-qualification.png&quot;" class="o_kanban_image"/>
                                     </t>
@@ -183,7 +184,7 @@
             <field name="search_view_id" ref="view_academy_professional_qualification_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Click to add new Professional Qualification
+                    Click to add new professional qualification
                 </p><p>
                     There are not professional qualifications in catalog
                 </p>
@@ -192,12 +193,11 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_professional_qualification" model="ir.ui.menu" >
-            <field name="name">Professional Qualification</field>
+            <field name="name">Professional qualification</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_professional_qualification_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>
-
 
     </data>
 </openerp>
