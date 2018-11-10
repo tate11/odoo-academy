@@ -42,28 +42,6 @@ After running the modules list update you can confirm the new modules are availa
     └───ap3_settings              : Customization for Academia Postal 3
 ```
 
-### Academy Base
-
-- [ ] Finish to integrate appointment manager with training action
-    - Add a form widget
-- [ ] Modify session Kanban grouping items by week day
-    - Remove obsolete related server action
-- [ ] Finish session creation and autocreation
-    - Finally button should be create next session FROM RANGE ignoring all other things
-    - Finally automated task should be create all sessions IN RANGE ignoring all other things
-- [ ] Add session Kanban grouping to show items by: archived (folded), pending, working, ready
-- [ ] Resource model or view fails, see log
-- [x] Add a basic security descriptors
-- [ ] Sort the module menus
-
-- [ ] SESSIONS By student
-- [ ] Training action progress bar should indicate units, not hours
-- [ ] Fields duration and hours fails with different days in datetime bounds
-
-- [ ] Progress bar in attendance
-- [ ] Other color (or style) for finished sessions in training action view
-- [ ] The model academy.training.action.unit.control has no access rules
-
 ####  appointment.manager
 
 ```
@@ -109,13 +87,54 @@ After running the modules list update you can confirm the new modules are availa
         └───final_date······: Date
 ```
 
-### Other modules
+### Todo
 
-- [ ] The model academy.rebasing.exercise.item
+- [ ] Update languages
+
+### Academy Base
+
+- [ ] Change and translate Helper (menú)
+- [ ] Arrange unit_count computed field in serveral models
+- [ ] Training action progress bar should indicate units, not hours
+- [ ] Fields duration and hours fails with different days in datetime bounds
+
+- [ ] Adds training activity
+- [ ] Arrange training action
+      - Add tutor
+
+- [ ] Finish demo data
+
+- [ ] Finish security descriptors
+- [ ] Add Tutor gropup and security descriptors
 - [ ] The model res.partner has no access rules
-- [ ] The model academy.rebasing.exercise has no access rules
-- [ ] odoo.modules.graph: module auto_backup: not installable, skipped
-- [ ] odoo.models: ir.actions.report.xml.write() with unknown fields: paperformat_id
+- [ ] Add rules
+      - Consultants (view only asigned)
+      - Teachers (view only asigned units, manage own resources)
+      - Tutors (view only asigned actions, their modules and units, asign teachers)
+
+- [ ] Fininsh resource
+- [ ] Modify session Kanban grouping items by week day
+
+> *Idea*:  weekly or monthy reports
+> *Idea*:  unit, module, action and activity reports
+
+
+#### Academy test
+
+- [x] Test form must allow to add questions
+- [ ] Lint all files
+- [ ] Answer view (from menu) could not allow to create new
+- [ ] Category view (from menu) could not allow to create new
+- [x] Test reports should be accessible from action menu
+- [ ] Link tests and resources
+
+#### Create ap3_academy_tests
+
+- [ ] Report format
+
+#### Create academy_test_claim
+- [ ] Impugnment must be a new module named academy_test_claim
+- [ ] Claim menú should be child from menu_academy_monitoring
 
 ## Scripts
 
@@ -130,16 +149,6 @@ After running the modules list update you can confirm the new modules are availa
 * code-is-beautiful is licensed under the GNU AFFERO GENERAL PUBLIC LICENSE (Version 3). To view a copy of this license, visit [http://www.gnu.org/licenses/agpl-3.0.html](http://www.gnu.org/licenses/agpl-3.0.html).
 
 * [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-nc/4.0/) code-is-beautiful Documentation is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-## Todo
-
-- [ ] Answer view (from menu) could not allow to create new
-- [ ] Category view (from menu) could not allow to create new
-- [x] Test form must allow to add questions
-- [ ] Test reports should be accessible from action menu
-- [ ] Impugnment must be a new module named academy_test_claim
-      - Claim menú should be child from menu_academy_monitoring
-- [ ] Test is a resource
 
 
 ## Feedback

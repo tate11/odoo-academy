@@ -39,7 +39,7 @@ class AcademyTrainingResource(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['mail.thread']
+    _inherit = ['academy.image.model', 'mail.thread']
 
     # ---------------------------- ENTITY FIELDS ------------------------------
 
@@ -97,7 +97,7 @@ class AcademyTrainingResource(models.Model):
         help=u'Last update'
     )
 
-    academy_training_unit_ids = fields.Many2many(
+    training_unit_ids = fields.Many2many(
         string='Training units',
         required=False,
         readonly=False,

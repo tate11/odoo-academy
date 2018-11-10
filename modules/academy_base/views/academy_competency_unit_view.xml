@@ -25,6 +25,8 @@
             <field name="arch" type="xml">
                 <tree string="academy_competency_unit_tree" create="1" delete="1" edit="1">
                     <field name="name" />
+                    <field name="training_module_id" />
+                    <field name="training_unit_count" />
                 </tree>
             </field>
         </record>
@@ -45,7 +47,9 @@
                                 <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
                             </button>
                         </div>
-                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+
+                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -54,10 +58,29 @@
                             </h1>
                         </div>
                         <group col="2">
-                            <field name="academy_training_module_id" class="oe_field_academy_training_module_id"
+                            <field name="training_module_id" class="oe_field_training_module_id"
                                 placeholder="Choose an existing training module" />
                         </group>
+
+                        <notebook>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new value for description" />
+                            </page>
+                            <page string="Training units" class="oe_page_units" accesskey="U">
+                                <field name="training_unit_ids" class="oe_field_training_unit_ids"
+                                    placeholder="Choose or create module training units"
+                                    context="{'tree_view_ref' : 'academy_base.view_academy_training_unit_embed_tree'}"
+                                    readonly="1" />
+
+                            </page>
+                        </notebook>
                     </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -73,22 +96,23 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="image_small" />
+                    <field name="name" />
+                    <field name="training_unit_count" />
+                    <field name="hours" />
+
                     <templates>
                         <t t-name="kanban-box">
                              <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <!-- <t t-if="record.image_small.raw_value">
-                                        <img t-att-src="kanban_image('academy.competency.unit', 'image_small', record.id.value)"/>
-                                    </t> -->
                                     <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
                                     <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-module.png&quot;" class="o_kanban_image"/>
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/compentency-unit.png&quot;" class="o_kanban_image"/>
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
                                     <strong class="oe_partner_heading"><field name="name"/></strong>
                                     <ul>
-                                       <li><strong>Units:&#160;</strong><field name="academy_training_unit_ids" widget="x2many_counter" /></li>
+                                       <li><strong>Units:&#160;</strong><field name="training_unit_count" /></li>
                                        <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
                                      </ul>
                                 </div>
@@ -110,7 +134,7 @@
             <field name="arch" type="xml">
                 <search string="academy_competency_unit_search">
                     <field name="name" />
-                    <field name="academy_training_module_id" />
+                    <field name="training_module_id" />
                     <field name="professional_qualification_id" />
 
                     <filter string="By professional qualification"
@@ -151,7 +175,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_competency_unit" model="ir.ui.menu" >
-            <field name="name">Competency unit</field>
+            <field name="name">Competency units</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_competency_unit_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />

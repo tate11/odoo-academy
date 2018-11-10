@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_competency_unit_office" model="academy.competency.unit">
+            <field name="name">Manage Microsoft office software and files in computer support</field>
+            <field name="description">The latest versions of the Microsoft office appliances for PC</field>
+            <field name="active">True</field>
+            <field name="sequence">1</field>
+            <field name="training_module_id" ref="academy_base.academy_training_module_ms2010" />
+            <field name="professional_qualification_id" ref="academy_base.academy_professional_qualification_administrative" />
+        </record>
+
+        <record id="academy_competency_unit_libre" model="academy.competency.unit">
+            <field name="name">Manage Libre Office software and files in computer support</field>
+            <field name="description">The latest versions of the Libre Office appliances for PC</field>
+            <field name="active">True</field>
+            <field name="sequence">1</field>
+            <field name="training_module_id" ref="academy_base.academy_training_module_lb5" />
+            <field name="professional_qualification_id" ref="academy_base.academy_professional_qualification_administrative" />
+        </record>
+
+    </data>
+</openerp>

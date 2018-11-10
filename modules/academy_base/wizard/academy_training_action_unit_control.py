@@ -194,10 +194,10 @@ class AcademyTrainingActionUnitControl(models.Model):
                 academy_training_unit AS atu
 
             INNER JOIN academy_training_module AS atm
-                ON atu.academy_training_module_id = atm."id"
+                ON atu.training_module_id = atm."id"
 
             INNER JOIN academy_competency_unit AS acu
-                ON acu.academy_training_module_id = atm."id"
+                ON acu.training_module_id = atm."id"
 
             INNER JOIN academy_professional_qualification AS apq
                 ON apq."id" = acu.professional_qualification_id

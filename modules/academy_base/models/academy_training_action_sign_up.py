@@ -13,7 +13,7 @@ _logger = getLogger(__name__)
 
 
 class AcademyTrainingActionSignUp(models.Model):
-    """ Relation between students and training actions
+    """ Relation between students and training actions (matriculas)
 
     Fields:
       name (Char): Human readable name which will identify each record.
@@ -26,6 +26,7 @@ class AcademyTrainingActionSignUp(models.Model):
     _rec_name = 'date'
     _order = 'date ASC'
 
+    _inherit = ['mail.thread']
 
     academy_training_action_id = fields.Many2one(
         string='Training action',

@@ -3,109 +3,109 @@
 <openerp>
     <data noupdate="0">
 
-		<record id="academy_professional_family_01" model="academy.professional.family">
-			<field name="name">Actividades físicas y deportivas</field>
-		</record>
+        <record id="academy_professional_family_01" model="academy.professional.family">
+            <field name="name">Actividades físicas y deportivas</field>
+        </record>
 
-		<record id="academy_professional_family_02" model="academy.professional.family">
-			<field name="name">Administración y gestión</field>
-		</record>
+        <record id="academy_professional_family_02" model="academy.professional.family">
+            <field name="name">Administración y gestión</field>
+        </record>
 
-		<record id="academy_professional_family_03" model="academy.professional.family">
-			<field name="name">Agraria</field>
-		</record>
+        <record id="academy_professional_family_03" model="academy.professional.family">
+            <field name="name">Agraria</field>
+        </record>
 
-		<record id="academy_professional_family_04" model="academy.professional.family">
-			<field name="name">Artes gráficas</field>
-		</record>
+        <record id="academy_professional_family_04" model="academy.professional.family">
+            <field name="name">Artes gráficas</field>
+        </record>
 
-		<record id="academy_professional_family_05" model="academy.professional.family">
-			<field name="name">Artes y artesanías</field>
-		</record>
+        <record id="academy_professional_family_05" model="academy.professional.family">
+            <field name="name">Artes y artesanías</field>
+        </record>
 
-		<record id="academy_professional_family_06" model="academy.professional.family">
-			<field name="name">Comercio y marketing</field>
-		</record>
+        <record id="academy_professional_family_06" model="academy.professional.family">
+            <field name="name">Comercio y marketing</field>
+        </record>
 
-		<record id="academy_professional_family_07" model="academy.professional.family">
-			<field name="name">Edificación y obra civil</field>
-		</record>
+        <record id="academy_professional_family_07" model="academy.professional.family">
+            <field name="name">Edificación y obra civil</field>
+        </record>
 
-		<record id="academy_professional_family_08" model="academy.professional.family">
-			<field name="name">Electricidad y electrónica</field>
-		</record>
+        <record id="academy_professional_family_08" model="academy.professional.family">
+            <field name="name">Electricidad y electrónica</field>
+        </record>
 
-		<record id="academy_professional_family_09" model="academy.professional.family">
-			<field name="name">Energía y agua</field>
-		</record>
+        <record id="academy_professional_family_09" model="academy.professional.family">
+            <field name="name">Energía y agua</field>
+        </record>
 
-		<record id="academy_professional_family_10" model="academy.professional.family">
-			<field name="name">Fabricación mecánica</field>
-		</record>
+        <record id="academy_professional_family_10" model="academy.professional.family">
+            <field name="name">Fabricación mecánica</field>
+        </record>
 
-		<record id="academy_professional_family_11" model="academy.professional.family">
-			<field name="name">Hostelería y turismo</field>
-		</record>
+        <record id="academy_professional_family_11" model="academy.professional.family">
+            <field name="name">Hostelería y turismo</field>
+        </record>
 
-		<record id="academy_professional_family_12" model="academy.professional.family">
-			<field name="name">Imagen personal</field>
-		</record>
+        <record id="academy_professional_family_12" model="academy.professional.family">
+            <field name="name">Imagen personal</field>
+        </record>
 
-		<record id="academy_professional_family_13" model="academy.professional.family">
-			<field name="name">Imagen y sonido</field>
-		</record>
+        <record id="academy_professional_family_13" model="academy.professional.family">
+            <field name="name">Imagen y sonido</field>
+        </record>
 
-		<record id="academy_professional_family_14" model="academy.professional.family">
-			<field name="name">Industrias alimentarias</field>
-		</record>
+        <record id="academy_professional_family_14" model="academy.professional.family">
+            <field name="name">Industrias alimentarias</field>
+        </record>
 
-		<record id="academy_professional_family_15" model="academy.professional.family">
-			<field name="name">Industrias extractivas</field>
-		</record>
+        <record id="academy_professional_family_15" model="academy.professional.family">
+            <field name="name">Industrias extractivas</field>
+        </record>
 
-		<record id="academy_professional_family_16" model="academy.professional.family">
-			<field name="name">Informática y comunicaciones</field>
-		</record>
+        <record id="academy_professional_family_16" model="academy.professional.family">
+            <field name="name">Informática y comunicaciones</field>
+        </record>
 
-		<record id="academy_professional_family_17" model="academy.professional.family">
-			<field name="name">Instalación y mantenimiento</field>
-		</record>
+        <record id="academy_professional_family_17" model="academy.professional.family">
+            <field name="name">Instalación y mantenimiento</field>
+        </record>
 
-		<record id="academy_professional_family_18" model="academy.professional.family">
-			<field name="name">Madera, mueble y corcho</field>
-		</record>
+        <record id="academy_professional_family_18" model="academy.professional.family">
+            <field name="name">Madera, mueble y corcho</field>
+        </record>
 
-		<record id="academy_professional_family_19" model="academy.professional.family">
-			<field name="name">Marítimo pesquera</field>
-		</record>
+        <record id="academy_professional_family_19" model="academy.professional.family">
+            <field name="name">Marítimo pesquera</field>
+        </record>
 
-		<record id="academy_professional_family_20" model="academy.professional.family">
-			<field name="name">Química</field>
-		</record>
+        <record id="academy_professional_family_20" model="academy.professional.family">
+            <field name="name">Química</field>
+        </record>
 
-		<record id="academy_professional_family_21" model="academy.professional.family">
-			<field name="name">Sanidad</field>
-		</record>
+        <record id="academy_professional_family_21" model="academy.professional.family">
+            <field name="name">Sanidad</field>
+        </record>
 
-		<record id="academy_professional_family_22" model="academy.professional.family">
-			<field name="name">Seguridad y medio ambiente</field>
-		</record>
+        <record id="academy_professional_family_22" model="academy.professional.family">
+            <field name="name">Seguridad y medio ambiente</field>
+        </record>
 
-		<record id="academy_professional_family_23" model="academy.professional.family">
-			<field name="name">Servicios socioculturales y a la comunidad</field>
-		</record>
+        <record id="academy_professional_family_23" model="academy.professional.family">
+            <field name="name">Servicios socioculturales y a la comunidad</field>
+        </record>
 
-		<record id="academy_professional_family_24" model="academy.professional.family">
-			<field name="name">Textil, confección y piel</field>
-		</record>
+        <record id="academy_professional_family_24" model="academy.professional.family">
+            <field name="name">Textil, confección y piel</field>
+        </record>
 
-		<record id="academy_professional_family_25" model="academy.professional.family">
-			<field name="name">Transporte y mantenimiento de vehículos</field>
-		</record>
+        <record id="academy_professional_family_25" model="academy.professional.family">
+            <field name="name">Transporte y mantenimiento de vehículos</field>
+        </record>
 
-		<record id="academy_professional_family_26" model="academy.professional.family">
-			<field name="name">Vidrio y cerámica</field>
-		</record>
+        <record id="academy_professional_family_26" model="academy.professional.family">
+            <field name="name">Vidrio y cerámica</field>
+        </record>
 
     </data>
 </openerp>

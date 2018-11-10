@@ -32,10 +32,10 @@ class AcademyTrainingAction(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    # 'appointment.manager', 
+    # 'appointment.manager',
     _inherit = ['academy.image.model', 'mail.thread']
 
-    _inherits = {'academy.professional.qualification': 'professional_qualification_id'}
+    _inherits = {'academy.training.activity': 'training_activity_id'}
 
     name = fields.Char(
         string='Name',
@@ -175,21 +175,21 @@ class AcademyTrainingAction(models.Model):
         limit=None
     )
 
-    professional_qualification_id = fields.Many2one(
-        string='Professional qualification',
-        required=True,
+    training_activity_id = fields.Many2one(
+        string='Training activity',
+        required=False,
         readonly=False,
         index=False,
         default=None,
-        help=False,
-        comodel_name='academy.professional.qualification',
+        help='Training activity will be imparted in this action',
+        comodel_name='academy.training.activity',
         domain=[],
         context={},
         ondelete='cascade',
         auto_join=False
     )
 
-    internal_action_code = fields.Char(
+    action_code = fields.Char(
         string='Internal code',
         required=True,
         readonly=False,
@@ -224,7 +224,7 @@ class AcademyTrainingAction(models.Model):
         help='Maximum number of sign ups allowed'
     )
 
-    academy_training_resource_ids = custom_model_fields.Many2ManyThroughView(
+    training_resource_ids = custom_model_fields.Many2ManyThroughView(
         string='Training resources',
         required=False,
         readonly=True,
@@ -240,24 +240,14 @@ class AcademyTrainingAction(models.Model):
         limit=None
     )
 
-    competencyunitcounting = fields.Integer(
-        string='Competency units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help="Show number of competency units",
-        compute='_compute_competencyunitcounting',
-    )
-
-    trainingunitcounting = fields.Integer(
+    trainingtraining_unit_count = fields.Integer(
         string='Training units',
         required=False,
         readonly=True,
         index=False,
         default=0,
         help="Show number of training units",
-        compute='_compute_trainingunitcounting',
+        # compute='_compute_trainingtraining_unit_count',
     )
 
     studentcounting = fields.Integer(
@@ -270,21 +260,21 @@ class AcademyTrainingAction(models.Model):
         compute='_compute_studentcounting',
     )
 
-    @api.multi
-    @api.depends('professional_qualification_id')
-    def _compute_competencyunitcounting(self):
-        for record in self:
-            record.competencyunitcounting = len(
-                record.professional_qualification_id.academy_competency_unit_ids)
+    # @api.multi
+    # @api.depends('professional_qualification_id')
+    # def _compute_competencytraining_unit_count(self):
+    #     for record in self:
+    #         record.competencytraining_unit_count = len(
+    #             record.professional_qualification_id.academy_competency_unit_ids)
 
-    @api.multi
-    @api.depends('professional_qualification_id')
-    def _compute_trainingunitcounting(self):
+    # @api.multi
+    # @api.depends('professional_qualification_id')
+    # def _compute_trainingtraining_unit_count(self):
 
-        for record in self:
-            record.trainingunitcounting = len(
-                record.professional_qualification_id.academy_competency_unit_ids.mapped(
-                    'academy_training_unit_ids'))
+    #     for record in self:
+    #         record.trainingtraining_unit_count = len(
+    #             record.professional_qualification_id.academy_competency_unit_ids.mapped(
+    #                 'training_unit_ids'))
 
     @api.multi
     @api.depends('training_action_sign_up_ids')

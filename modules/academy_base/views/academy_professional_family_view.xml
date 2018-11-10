@@ -46,7 +46,9 @@
                                 <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
                             </button>
                         </div>
-                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+
+                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -86,6 +88,9 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="image_small" />
+                    <field name="name" />
+                    <field name="professional_area_ids" />
+                    <field name="professional_qualification_ids" />
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_module">
@@ -159,7 +164,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_professional_family" model="ir.ui.menu" >
-            <field name="name">Professional Family</field>
+            <field name="name">Professional Families</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_professional_family_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />

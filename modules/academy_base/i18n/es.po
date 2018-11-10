@@ -533,7 +533,7 @@ msgid "Competency unit"
 msgstr "Unidad de competencia"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_competencyunitcounting
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_competencytraining_unit_count
 #: model:ir.ui.view,arch_db:academy_base.view_academy_professional_qualification_form
 msgid "Competency units"
 msgstr "Unidades de competencia"
@@ -907,7 +907,7 @@ msgstr "Horas"
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_action_unit_control_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_methodology_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_modality_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_id
+#: model:ir.model.fields,field_description:academy_base.field_training_module_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_file_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_id
@@ -1164,8 +1164,8 @@ msgid "Number of files in related directory"
 msgstr "Número de archivos en el directorio relacionado"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_unitcounting
-#: model:ir.model.fields,help:academy_base.field_academy_training_module_unitcounting
+#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_training_unit_count
+#: model:ir.model.fields,help:academy_base.field_academy_training_module_training_unit_count
 msgid "Number of training units in module"
 msgstr "Número de unidades formativas en módulo"
 
@@ -1309,7 +1309,7 @@ msgid "Settings"
 msgstr "Ajustes"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_competencyunitcounting
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_competencytraining_unit_count
 msgid "Show number of competency units"
 msgstr "Mostrar el número de unidades de competencia"
 
@@ -1319,7 +1319,7 @@ msgid "Show number of students on this action"
 msgstr "Mostrar el número de estudiantes en esta acción"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_trainingunitcounting
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_trainingtraining_unit_count
 msgid "Show number of training units"
 msgstr "Mostrar el número de unidades formativas"
 
@@ -1564,24 +1564,24 @@ msgstr "Modalidad de formación"
 
 #. module: academy_base
 #: model:ir.actions.act_window,name:academy_base.action_training_module_act_window
-#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_academy_training_module_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_academy_training_module_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_training_module_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_training_module_id
 msgid "Training module"
 msgstr "Módulo formativo"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_academy_training_module_id
+#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_training_module_id
 msgid "Training module associated with this competency unit"
 msgstr "Módulo de formación asociado a esta unidad de competencia"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_unit_academy_training_module_id
+#: model:ir.model.fields,help:academy_base.field_academy_training_unit_training_module_id
 msgid "Training module to witch this unit belongs"
 msgstr "Módulo de formación al que pertenece esta unidad"
 
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_file_academy_training_resource_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_academy_training_resource_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_training_resource_ids
 msgid "Training resource"
 msgstr "Recurso formativo"
 
@@ -1596,23 +1596,23 @@ msgid "Training unit id"
 msgstr "ID de la unidad formativa"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_academy_training_unit_ids
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_trainingunitcounting
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_academy_training_unit_ids
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_academy_training_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_training_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_trainingtraining_unit_count
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_training_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_training_unit_ids
 #: model:ir.ui.view,arch_db:academy_base.view_academy_training_module_form
 msgid "Training units"
 msgstr "Unidades formativas"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_academy_training_unit_ids
-#: model:ir.model.fields,help:academy_base.field_academy_training_module_academy_training_unit_ids
+#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_training_unit_ids
+#: model:ir.model.fields,help:academy_base.field_academy_training_module_training_unit_ids
 msgid "Training units in this module"
 msgstr "Unidades de formación en este módulo"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_unitcounting
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_unitcounting
+#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_training_unit_count
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_training_unit_count
 #: model:ir.ui.view,arch_db:academy_base.view_academy_professional_qualification_form
 #: model:ir.ui.view,arch_db:academy_base.view_academy_training_module_form
 msgid "Units"

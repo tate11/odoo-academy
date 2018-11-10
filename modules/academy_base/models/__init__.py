@@ -23,6 +23,7 @@ from . import academy_training_unit
 from . import academy_training_module
 from . import academy_competency_unit
 from . import academy_qualification_level
+from . import academy_training_activity
 from . import academy_training_action
 
 from . import academy_training_action_sign_up

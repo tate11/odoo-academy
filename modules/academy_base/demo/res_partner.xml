@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_demo_consultant" model="res.partner">
+            <field name="name">Consultant</field>
+            <field name="email">consultant</field>
+            <field name="supplier" eval="False"/>
+            <field name="customer" eval="True"/>
+            <field name="city">Naraío</field>
+            <field name="zip">15576</field>
+            <field name="country_id" ref="base.es"/>
+            <field name="company_name">YourCompany</field>
+            <field name="street">Rue Cesar de Paepe, 43</field>
+        </record>
+
+        <record id="academy_demo_teacher" model="res.partner">
+            <field name="name">Teacher</field>
+            <field name="email">teacher</field>
+            <field name="supplier" eval="False"/>
+            <field name="customer" eval="True"/>
+            <field name="city">Naraío</field>
+            <field name="zip">15576</field>
+            <field name="country_id" ref="base.es"/>
+            <field name="company_name">YourCompany</field>
+            <field name="street">Rue Cesar de Paepe, 43</field>
+        </record>
+
+        <record id="academy_demo_technical" model="res.partner">
+            <field name="name">Technical</field>
+            <field name="email">technical</field>
+            <field name="supplier" eval="False"/>
+            <field name="customer" eval="True"/>
+            <field name="city">Naraío</field>
+            <field name="zip">15576</field>
+            <field name="country_id" ref="base.es"/>
+            <field name="company_name">YourCompany</field>
+            <field name="street">Rue Cesar de Paepe, 43</field>
+        </record>
+
+        <record id="academy_demo_manager" model="res.partner">
+            <field name="name">Manager</field>
+            <field name="email">manager</field>
+            <field name="supplier" eval="False"/>
+            <field name="customer" eval="True"/>
+            <field name="city">Naraío</field>
+            <field name="zip">15576</field>
+            <field name="country_id" ref="base.es"/>
+            <field name="company_name">YourCompany</field>
+            <field name="street">Rue Cesar de Paepe, 43</field>
+        </record>
+
+    </data>
+</openerp>
