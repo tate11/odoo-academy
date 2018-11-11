@@ -47,9 +47,9 @@
         'views/academy_training_action_view.xml',
 
         'views/res_parter_view.xml',
+        'views/academy_training_action_enrolment.xml',
 
         'views/academy_training_resource_view.xml',
-        'views/academy_training_action_sign_up_view.xml',
 
         'security/academy_application_scope.xml',
         'security/academy_base.xml',
@@ -61,7 +61,6 @@
         'security/academy_professional_qualification.xml',
         'security/academy_qualification_level.xml',
         'security/academy_training_action.xml',
-        'security/academy_training_action_sign_up.xml',
         'security/academy_training_activity.xml',
         'security/academy_training_methodology.xml',
         'security/academy_training_modality.xml',
@@ -76,7 +75,9 @@
         'data/academy_professional_family.xml',
         'data/academy_qualification_level.xml',
         'data/academy_training_methodology.xml',
-        'data/academy_training_modality.xml'
+        'data/academy_training_modality.xml',
+
+        'security/academy_training_action_enrolment.xml',
 
     ],
     'qweb': [

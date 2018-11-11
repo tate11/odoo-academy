@@ -90,30 +90,65 @@ After running the modules list update you can confirm the new modules are availa
 ### Todo
 
 - [ ] Update languages
+- [ ] Change color to read only tabs
 
 ### Academy Base
 
-- [ ] Change and translate Helper (menú)
-- [ ] Arrange unit_count computed field in serveral models
-- [ ] Training action progress bar should indicate units, not hours
-- [ ] Fields duration and hours fails with different days in datetime bounds
+- [ ] Finish enrolment
+      - Date
+      - Sequence
+      - Kanban view
+      - Filters
 
-- [ ] Adds training activity
-- [ ] Arrange training action
-      - Add tutor
+- [ ] Finish modules
+      - Module must have own hours if it has not training units
+      - List of available resources
+      - List of students who have coursed this module
+      - Modules have their own hours value if they have not units, otherwise
+      the hours will be the sum of unit hours
+      - **Idea**: undefined time length allowed
 
-- [ ] Finish demo data
+- [ ] Finish resource
+      - Add button to set directory
+      - Download as zip: directory + attachments
+      - Resource shoud be linked to modules as avaliable resources (mandatory)
+        - Resource shoud be linked to units (inside module)(optional)
 
-- [ ] Finish security descriptors
-- [ ] Add Tutor gropup and security descriptors
-- [ ] The model res.partner has no access rules
+- [ ] Finish menú
+      - Change and translate Helper (menú)
+      - Global menú should be sorted
+
+- [ ] Add tutor group
+      - Training actions have tutors
+      - Add security desctiptor to tutors
+
+- [ ] Add sessions
+      - Sessions should be linked to actions and **modules**
+        - *Optionally, sessiones can be lenked to units*
+      - One session can be more than one modules/units
+      - **Can be sessions without modules?**
+      - **Idea**: Store first date for modules
+
+- [ ] Ensure all models can be duplicated
+
 - [ ] Add rules
       - Consultants (view only asigned)
       - Teachers (view only asigned units, manage own resources)
       - Tutors (view only asigned actions, their modules and units, asign teachers)
 
-- [ ] Fininsh resource
-- [ ] Modify session Kanban grouping items by week day
+
+- [x] Adds training activity
+- [x] Arrange training action
+- [x] Revisar todas las vistas de lista
+- [x] Arrange unit_count computed field in serveral models
+- [x] WARNING method academy.training.action._check_end: @constrains parameter 'end' is not a field name
+- [x] WARNING Field definition for _inherits reference "training_activity_id" in "academy.training.action" must be marked as "required" with ondelete="cascade" or "restrict", forcing it to required + cascade.
+- [x] WARNING odoo_50110_dev_academy odoo.modules.loading: The model academy.training.action.enrolment has no access rules, consider adding one. E.g. access_academy_training_action_enrolment,access_academy_training_action_enrolment,model_academy_training_action_enrolment,base.group_user,1,0,0,0
+- [x] Finish demo data
+- [x] The model res.partner has no access rules
+- [x] Finish security descriptors
+- [x] Students should be sign up in modules but not in actions
+
 
 > *Idea*:  weekly or monthy reports
 > *Idea*:  unit, module, action and activity reports

@@ -4,107 +4,107 @@
     <data noupdate="0">
 
         <record id="academy_professional_family_01" model="academy.professional.family">
-            <field name="name">Actividades físicas y deportivas</field>
+            <field name="name">Physical and sports activities</field>
         </record>
 
         <record id="academy_professional_family_02" model="academy.professional.family">
-            <field name="name">Administración y gestión</field>
+            <field name="name">Administration and management</field>
         </record>
 
         <record id="academy_professional_family_03" model="academy.professional.family">
-            <field name="name">Agraria</field>
+            <field name="name">Agrarian</field>
         </record>
 
         <record id="academy_professional_family_04" model="academy.professional.family">
-            <field name="name">Artes gráficas</field>
+            <field name="name">Graphic arts</field>
         </record>
 
         <record id="academy_professional_family_05" model="academy.professional.family">
-            <field name="name">Artes y artesanías</field>
+            <field name="name">Arts and crafts</field>
         </record>
 
         <record id="academy_professional_family_06" model="academy.professional.family">
-            <field name="name">Comercio y marketing</field>
+            <field name="name">Marketing and Commerce</field>
         </record>
 
         <record id="academy_professional_family_07" model="academy.professional.family">
-            <field name="name">Edificación y obra civil</field>
+            <field name="name">Building and civil works</field>
         </record>
 
         <record id="academy_professional_family_08" model="academy.professional.family">
-            <field name="name">Electricidad y electrónica</field>
+            <field name="name">Electricity and electronic</field>
         </record>
 
         <record id="academy_professional_family_09" model="academy.professional.family">
-            <field name="name">Energía y agua</field>
+            <field name="name">Energy and hydraulics</field>
         </record>
 
         <record id="academy_professional_family_10" model="academy.professional.family">
-            <field name="name">Fabricación mecánica</field>
+            <field name="name">Mechanical manufacturing</field>
         </record>
 
         <record id="academy_professional_family_11" model="academy.professional.family">
-            <field name="name">Hostelería y turismo</field>
+            <field name="name">Hostelry and Tourism</field>
         </record>
 
         <record id="academy_professional_family_12" model="academy.professional.family">
-            <field name="name">Imagen personal</field>
+            <field name="name">Personal image</field>
         </record>
 
         <record id="academy_professional_family_13" model="academy.professional.family">
-            <field name="name">Imagen y sonido</field>
+            <field name="name">Image and sound</field>
         </record>
 
         <record id="academy_professional_family_14" model="academy.professional.family">
-            <field name="name">Industrias alimentarias</field>
+            <field name="name">Food industries</field>
         </record>
 
         <record id="academy_professional_family_15" model="academy.professional.family">
-            <field name="name">Industrias extractivas</field>
+            <field name="name">Extractive industries</field>
         </record>
 
         <record id="academy_professional_family_16" model="academy.professional.family">
-            <field name="name">Informática y comunicaciones</field>
+            <field name="name">IT and communications</field>
         </record>
 
         <record id="academy_professional_family_17" model="academy.professional.family">
-            <field name="name">Instalación y mantenimiento</field>
+            <field name="name">Instalation and maintenance</field>
         </record>
 
         <record id="academy_professional_family_18" model="academy.professional.family">
-            <field name="name">Madera, mueble y corcho</field>
+            <field name="name">Wood, furniture and cork</field>
         </record>
 
         <record id="academy_professional_family_19" model="academy.professional.family">
-            <field name="name">Marítimo pesquera</field>
+            <field name="name">Maritime and fishing</field>
         </record>
 
         <record id="academy_professional_family_20" model="academy.professional.family">
-            <field name="name">Química</field>
+            <field name="name">Chemistry</field>
         </record>
 
         <record id="academy_professional_family_21" model="academy.professional.family">
-            <field name="name">Sanidad</field>
+            <field name="name">Health</field>
         </record>
 
         <record id="academy_professional_family_22" model="academy.professional.family">
-            <field name="name">Seguridad y medio ambiente</field>
+            <field name="name">Security and environment</field>
         </record>
 
         <record id="academy_professional_family_23" model="academy.professional.family">
-            <field name="name">Servicios socioculturales y a la comunidad</field>
+            <field name="name">Socio-cultural services and the community</field>
         </record>
 
         <record id="academy_professional_family_24" model="academy.professional.family">
-            <field name="name">Textil, confección y piel</field>
+            <field name="name">Textile, clothing and leather</field>
         </record>
 
         <record id="academy_professional_family_25" model="academy.professional.family">
-            <field name="name">Transporte y mantenimiento de vehículos</field>
+            <field name="name">Transport and maintenance of vehicles</field>
         </record>
 
         <record id="academy_professional_family_26" model="academy.professional.family">
-            <field name="name">Vidrio y cerámica</field>
+            <field name="name">Glass and ceramics</field>
         </record>
 
     </data>

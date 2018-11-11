@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this module.                   #
-###############################################################################
+""" AcademyTrainingActivity
 
-from openerp import models, fields, api, api
-from openerp.tools.translate import _
+This module contains the academy.competency.unit Odoo model which stores
+all competency.unit attributes and behavior.
+
+"""
+
+
 from logging import getLogger
 
+# pylint: disable=locally-disabled, E0401
+from openerp import models, fields, api
 
+
+# pylint: disable=locally-disabled, c0103
 _logger = getLogger(__name__)
 
 
+# pylint: disable=locally-disabled, R0903
 class AcademyCompetencyUnit(models.Model):
     """ Minimum set of professional skills, capable of recognition and partial
     accreditation.
@@ -79,8 +85,7 @@ class AcademyCompetencyUnit(models.Model):
         domain=[],
         context={},
         ondelete='cascade',
-        auto_join=False,
-        oldname='academy_training_module_id'
+        auto_join=False
     )
 
     professional_qualification_id = fields.Many2one(
@@ -97,9 +102,12 @@ class AcademyCompetencyUnit(models.Model):
         auto_join=False
     )
 
+
+    # --------------------------- MANAGEMENT FIELDS ---------------------------
+
     # pylint: disable=W0212
     training_unit_count = fields.Integer(
-        string='Units',
+        string='Training units',
         required=False,
         readonly=True,
         index=False,

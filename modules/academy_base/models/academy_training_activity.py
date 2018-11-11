@@ -1,24 +1,27 @@
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this module.                   #
-###############################################################################
+""" AcademyTrainingActivity
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
+This module contains the academy.training.activity Odoo model which stores
+all training activity attributes and behavior.
+
+"""
+
+
 from logging import getLogger
+
+# pylint: disable=locally-disabled, E0401
+from openerp import models, fields, api
 from . import custom_model_fields
 
+
+# pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
 
 
+# pylint: disable=locally-disabled, R0903
 class AcademyTrainingActivity(models.Model):
     """ This describes the activity offered, its modules, training units
      and available resources.
-
-    Fields:
-      name (Char): Human readable name which will identify each record.
-
     """
 
     _name = 'academy.training.activity'
@@ -27,7 +30,8 @@ class AcademyTrainingActivity(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['academy.image.model', 'mail.thread']
+    _inherit = ['academy.abstract.image', 'mail.thread']
+
 
     name = fields.Char(
         string='Name',
@@ -150,13 +154,12 @@ class AcademyTrainingActivity(models.Model):
         default=None,
         help='Competency units that make up this activity',
         comodel_name='academy.competency.unit',
-        relation='academy_training_activity_academy_competency_unit_rel',
+        relation='academy_training_activity_competency_unit_rel',
         column1='training_activity_id',
         column2='competency_unit_id',
         domain=[],
         context={},
         limit=None,
-        oldname='competency_units_ids'
     )
 
     training_action_ids = fields.One2many(
@@ -164,15 +167,14 @@ class AcademyTrainingActivity(models.Model):
         required=False,
         readonly=True,
         index=False,
-        default='Training actions in which this activity is imparted',
-        help=False,
+        default=None,
+        help='Training actions in which this activity is imparted',
         comodel_name='academy.training.action',
         inverse_name='training_activity_id',
         domain=[],
         context={},
         auto_join=False,
         limit=None,
-        oldname='training_actions_ids'
     )
 
     training_unit_ids = custom_model_fields.Many2ManyThroughView(
@@ -183,7 +185,7 @@ class AcademyTrainingActivity(models.Model):
         default=None,
         help=False,
         comodel_name='academy.training.unit',
-        relation='academy_training_activity_academy_training_unit_rel',
+        relation='academy_training_activity_training_unit_rel',
         column1='training_activity_id',
         column2='training_unit_id',
         domain=[],
@@ -198,8 +200,8 @@ class AcademyTrainingActivity(models.Model):
         index=False,
         default=None,
         help=False,
-        comodel_name='academy.training.unit',
-        relation='academy_training_activity_academy_training_resource_rel',
+        comodel_name='academy.training.resource',
+        relation='academy_training_activity_resource_rel',
         column1='training_activity_id',
         column2='training_resource_id',
         domain=[],
@@ -207,9 +209,12 @@ class AcademyTrainingActivity(models.Model):
         limit=None
     )
 
+
+    # -------------------------- MANAGEMENT FIELDS ----------------------------
+
     # pylint: disable=W0212
     competency_unit_count = fields.Integer(
-        string='Competency unit',
+        string='Competency units',
         required=False,
         readonly=True,
         index=False,
@@ -218,20 +223,35 @@ class AcademyTrainingActivity(models.Model):
         compute=lambda self: self._compute_competency_unit_count()
     )
 
+    @api.multi
+    @api.depends('competency_unit_ids')
+    def _compute_competency_unit_count(self):
+        for record in self:
+            record.competency_unit_count = len(record.competency_unit_ids)
+
+
     # pylint: disable=W0212
     training_action_count = fields.Integer(
-        string='Training action',
+        string='Training actions',
         required=False,
         readonly=True,
         index=False,
         default=0,
         help=False,
+        store=True,
         compute=lambda self: self._compute_training_action_count()
     )
 
+    @api.multi
+    @api.depends('training_action_ids')
+    def _compute_training_action_count(self):
+        for record in self:
+            record.training_action_count = len(record.training_action_ids)
+
+
     # pylint: disable=W0212
     training_unit_count = fields.Integer(
-        string='Training unit',
+        string='Training units',
         required=False,
         readonly=True,
         index=False,
@@ -240,9 +260,16 @@ class AcademyTrainingActivity(models.Model):
         compute=lambda self: self._compute_training_unit_count()
     )
 
+    @api.multi
+    @api.depends('training_unit_ids')
+    def _compute_training_unit_count(self):
+        for record in self:
+            record.training_unit_count = len(record.training_unit_ids)
+
+
     # pylint: disable=W0212
     training_resource_count = fields.Integer(
-        string='Training resource',
+        string='Resources',
         required=False,
         readonly=True,
         index=False,
@@ -252,27 +279,17 @@ class AcademyTrainingActivity(models.Model):
     )
 
     @api.multi
-    @api.depends('competency_unit_ids')
-    def _compute_competency_unit_count(self):
-        for record in self:
-            record.competency_unit_count = len(record.competency_unit_ids)
-
-    @api.multi
-    @api.depends('training_action_ids')
-    def _compute_training_action_count(self):
-        for record in self:
-            record.training_action_count = len(record.training_action_ids)
-
-    @api.multi
-    @api.depends('training_unit_ids')
-    def _compute_training_unit_count(self):
-        for record in self:
-            record.training_unit_count = len(record.training_unit_ids)
-
-    @api.multi
     @api.depends('training_resource_ids')
     def _compute_training_resource_count(self):
         for record in self:
             record.training_resource_count = len(record.training_resource_ids)
 
 
+    # ---------------------------- PUBLIC FIELDS ------------------------------
+
+    # pylint: disable=locally-disabled, W0613
+    @api.multi
+    def update_from_external(self, crud, fieldname, recordset):
+        """ Observer notify method, will be called by academy.professional.action
+        """
+        self._compute_training_action_count()

@@ -27,6 +27,7 @@
                     <field name="name" />
                     <field name="training_module_id" />
                     <field name="training_unit_count" />
+                    <field name="hours" />
                 </tree>
             </field>
         </record>
@@ -143,11 +144,7 @@
                         context="{'group_by': ['professional_qualification_id']}"
                         help="" />
 
-                    <filter string="Non active"
-                        name="non_active_training_units"
-                        domain="[('active', '=', False)]"
-                        context="{}"
-                        help="Show only non active training units" />
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
 
                 </search>
             </field>

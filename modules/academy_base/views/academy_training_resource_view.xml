@@ -112,7 +112,7 @@
                                     placeholder="Choose related academy training units" />
                             </page>
                             <!-- <page string="Training actions" class="oe_page_training_actions" accesskey="T">
-                                <field name="academy_training_action_ids" class="oe_field_academy_training_action_ids"
+                                <field name="training_action_ids" class="oe_field_training_action_ids"
                                     placeholder="Enter new value for academy training action" />
                             </page> -->
                         </notebook>
@@ -142,13 +142,7 @@
                     <field name="ir_attachment_ids" />
                     <field name="directory_file_ids" />
                     <field name="training_unit_ids" />
-                    <field name="academy_training_action_ids" />
-
-                    <filter string="Non active"
-                        name="non_active_training_resources"
-                        domain="[('active', '=', False)]"
-                        context="{}"
-                        help="Show only non active training resources" />
+                    <field name="training_action_ids" />
 
                     <filter string="From directory"
                         name="directory_resource"
@@ -162,11 +156,15 @@
                         context="{}"
                         help="Show only resources with related attachments " />
 
+                    <separator/>
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
                     <group expand="1" string="Group By">
                         <filter string="By training action"
                             name="by_training_action"
                             domain="[]"
-                            context="{'group_by':'academy_training_action_ids'}"
+                            context="{'group_by':'training_action_ids'}"
                             help="" />
                     </group>
                 </search>

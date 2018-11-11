@@ -21,5 +21,14 @@
             <field name="professional_qualification_id" ref="academy_base.academy_professional_qualification_administrative" />
         </record>
 
+        <record id="academy_competency_unit_mswin" model="academy.competency.unit">
+            <field name="name">Manage the last Microsoft operating system</field>
+            <field name="description">The latest version of the Microsoft operating system for PC</field>
+            <field name="active">True</field>
+            <field name="sequence">1</field>
+            <field name="training_module_id" ref="academy_base.academy_training_module_win10" />
+            <field name="professional_qualification_id" ref="academy_base.academy_professional_qualification_administrative" />
+        </record>
+
     </data>
 </openerp>

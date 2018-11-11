@@ -20,7 +20,7 @@ class AcademyTrainingModule(models.Model):
     _name = 'academy.training.module'
     _description = u'Academy training module'
 
-    _inherit = ['academy.image.model', 'mail.thread']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'name ASC'

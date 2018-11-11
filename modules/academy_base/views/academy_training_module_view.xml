@@ -109,11 +109,7 @@
                     <field name="name" />
                     <field name="module_code" />
 
-                    <filter string="Non active"
-                        name="non_active_training_units"
-                        domain="[('active', '=', False)]"
-                        context="{}"
-                        help="Show only non active training units" />
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
 
                 </search>
             </field>

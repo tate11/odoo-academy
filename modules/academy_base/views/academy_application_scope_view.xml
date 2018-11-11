@@ -68,7 +68,9 @@
           <field name="arch" type="xml">
               <search string="academy_application_scope_search">
                   <field name="name" />
-                  <!-- ··· -->
+
+                  <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
               </search>
           </field>
       </record>

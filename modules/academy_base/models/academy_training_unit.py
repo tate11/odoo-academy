@@ -24,7 +24,7 @@ class AcademyTrainingUnit(models.Model):
     _name = 'academy.training.unit'
     _description = u'Academy training unit'
 
-    _inherit = ['academy.image.model', 'mail.thread']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'sequence ASC, name ASC'
@@ -79,8 +79,7 @@ class AcademyTrainingUnit(models.Model):
         domain=[],
         context={},
         ondelete='cascade',
-        auto_join=False,
-        oldname='academy_training_module_id'
+        auto_join=False
     )
 
     hours = fields.Float(
@@ -119,12 +118,12 @@ class AcademyTrainingUnit(models.Model):
         domain=[],
         context={},
         limit=None,
-        oldname='academy_training_resource_ids'
+        oldname='training_resource_ids'
     )
 
     # pylint: disable=W0212
     training_resource_count = fields.Integer(
-        string='Resource',
+        string='Resources',
         required=False,
         readonly=True,
         index=False,

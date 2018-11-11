@@ -1,23 +1,37 @@
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this module.                   #
-###############################################################################
+""" Many2ManyThroughView (overload for fields.Many2many)
 
-from openerp.fields import Many2many, Default
-from openerp.tools import sql as sqltools
+This module has an Odoo overloaded fields.Many2many with change the middle
+TABLE by an SQL VIEW
+
+Todo:
+    * Move the SQL outside Many2ManyThroughView class to paren models.Model
+
+"""
+
+
 from logging import getLogger
 
 
+# pylint: disable=locally-disabled, E0401
+from openerp.fields import Many2many, Default
+from openerp.tools import sql as sqltools
+
+
+# pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
 
 
+
+# pylint: disable=locally-disabled, R0903
 class Many2ManyThroughView(Many2many):
-    """ Custom Many2many field, it uses a SQL view as middle """
+    """ Custom Many2many field, it uses a SQL view as middle
+    """
 
 
+    # pylint: disable=locally-disabled, R0913
     def __init__(self, comodel_name=Default, relation=Default, column1=Default,
-                 column2=Default, string=Default, statement=Default, **kwargs):
+                 column2=Default, string=Default, **kwargs):
         """ Constructor overload, it ensures parent constructor will be called
         """
 
@@ -30,6 +44,8 @@ class Many2ManyThroughView(Many2many):
             **kwargs
         )
 
+
+    # pylint: disable=locally-disabled, W0613
     def update_db(self, model, columns):
         """ Overload method to create middle relation. This will make
         a new SQL VIEW instead a SQL TABLE.
@@ -55,8 +71,8 @@ class Many2ManyThroughView(Many2many):
         proccess starts announcing what is going to be done.
         """
 
-        msg = 'Creating SQL VIEW {} as middle table for {} field'
-        _logger.debug(msg.format(self.relation, self.name))
+        msg = 'Creating SQL VIEW %s as middle table for %s field'
+        _logger.debug(msg, self.relation, self.name)
 
 
     def _both_tables_already_exist(self, model):
@@ -76,6 +92,7 @@ class Many2ManyThroughView(Many2many):
                 TABLE_NAME IN ('{}', '{}');
         '''
 
+        # pylint: disable=locally-disabled, W0212
         table1 = model._table
         table2 = model.env[self.comodel_name]._table
 
@@ -95,20 +112,18 @@ class Many2ManyThroughView(Many2many):
             return False
 
         # If some of the arguments has default value
-        elif self.relation == Default or self.column1 == Default or \
-           self.column2 == Default:
+        if Default in (self.relation, self.column1, self.column2):
             return False
 
         # Relation has a related SQL statement
-        elif not getattr(self, self.relation.upper()):
+        if not getattr(self, self.relation.upper()):
             return False
 
         # Left table and right table must exist before VIEW creation
-        elif not self._both_tables_already_exist(model):
+        if not self._both_tables_already_exist(model):
             return False
 
-        else:
-            return True
+        return True
 
 
     def _column_names_match(self, cursor):
@@ -137,7 +152,7 @@ class Many2ManyThroughView(Many2many):
         """ Check if relation is a table instead a SQL view
         """
 
-        sql='''
+        sql = '''
             SELECT
                 (pgc.relkind = 'r')::BOOLEAN as IsATable
             FROM
@@ -152,7 +167,7 @@ class Many2ManyThroughView(Many2many):
         cursor.execute(sql)
         result = cursor.fetchone()
 
-        return result and result[0] == True
+        return result and result[0] is True
 
 
     def _view_needs_update(self, cursor):
@@ -209,28 +224,29 @@ class Many2ManyThroughView(Many2many):
     # ----------- SQL STATEMENTS WILL BE USED IN VIEW DEFINITIONS -------------S
 
 
-    ACADEMY_TRAINING_ACTION_ACADEMY_TRAINING_RESOURCE_REL = '''
+    ACADEMY_TRAINING_ACTION_TRAINING_RESOURCE_REL = '''
         SELECT
-            ata."id" AS academy_training_action_id,
-            atr."id" AS academy_training_resource_id
+            ata."id" AS training_action_id,
+            atr."id" AS training_resource_id
         FROM
             academy_training_resource AS atr
-        INNER JOIN academy_training_resource_training_unit_rel AS rel ON rel.academy_training_resource_id = atr."id"
-        INNER JOIN academy_training_unit AS atu ON rel.academy_training_unit_id = atu."id"
+        INNER JOIN academy_training_resource_training_unit_rel AS rel ON rel.training_resource_id = atr."id"
+        INNER JOIN academy_training_unit AS atu ON rel.training_unit_id = atu."id"
         INNER JOIN academy_training_module AS atm ON atm."id" = atu.training_module_id
         INNER JOIN academy_competency_unit AS acu ON acu.training_module_id = atm."id"
-        INNER JOIN academy_training_activity_academy_competency_unit_rel AS rel2 on acu."id" = rel2.competency_unit_id
+        INNER JOIN academy_training_activity_competency_unit_rel AS rel2 on acu."id" = rel2.competency_unit_id
         INNER JOIN academy_training_activity AS atv ON rel2.training_activity_id = atv."id"
         INNER JOIN academy_training_action AS ata ON ata.training_activity_id = atv."id"
     '''
 
-    ACADEMY_TRAINING_ACTIVITY_ACADEMY_TRAINING_UNIT_REL = '''
+
+    ACADEMY_TRAINING_ACTIVITY_TRAINING_UNIT_REL = '''
         SELECT
             ata."id" as training_activity_id,
             atu."id" as training_unit_id
         FROM
             academy_training_activity AS ata
-        INNER JOIN academy_training_activity_academy_competency_unit_rel AS rel1
+        INNER JOIN academy_training_activity_competency_unit_rel AS rel1
             ON ata."id" = rel1.training_activity_id
         INNER JOIN academy_competency_unit AS acu
             ON acu."id" = rel1.competency_unit_id
@@ -240,13 +256,14 @@ class Many2ManyThroughView(Many2many):
             ON atu.training_module_id = atm."id"
     '''
 
-    ACADEMY_TRAINING_ACTIVITY_ACADEMY_TRAINING_RESOURCE_REL = '''
+
+    ACADEMY_TRAINING_ACTIVITY_RESOURCE_REL = '''
         SELECT
             ata."id" as training_activity_id,
             atr."id" as training_resource_id
         FROM
             academy_training_activity AS ata
-        INNER JOIN academy_training_activity_academy_competency_unit_rel AS rel1
+        INNER JOIN academy_training_activity_competency_unit_rel AS rel1
             ON rel1.training_activity_id = ata."id"
         INNER JOIN academy_competency_unit AS acu
             ON rel1.competency_unit_id = acu."id"

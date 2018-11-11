@@ -78,7 +78,9 @@
                 <search string="academy_knowledge_area_search">
                     <field name="knowle_code" />
                     <field name="name" />
-                    <!-- ··· -->
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
                 </search>
             </field>
         </record>

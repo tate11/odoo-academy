@@ -75,7 +75,9 @@
             <field name="arch" type="xml">
                 <search string="academy.training.methodology_search">
                     <field name="name" />
-                    <!-- ··· -->
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
                 </search>
             </field>
         </record>

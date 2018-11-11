@@ -4,23 +4,23 @@
     <data noupdate="0">
 
         <record id="academy_training_modality_distance" model="academy.training.modality">
-            <field name="name">A distancia</field>
-            <field name="description">La formación mediante diversas tecnologías, con la finalidad de promover el aprendizaje sin limitaciones de ubicación, ocupación o edad</field>
+            <field name="name">Distance learning</field>
+            <field name="description">Training through various technologies, in order to promote learning without limitations of location, occupation or age</field>
         </record>
 
         <record id="academy_training_modality_blended" model="academy.training.modality">
-            <field name="name">Mixta</field>
-            <field name="description">Combina distintas modalidades de impartición para adaptarse a las necesidades de los participantes</field>
+            <field name="name">Mixed</field>
+            <field name="description">Combine the different modes of delivery for the needs of the participants</field>
         </record>
 
         <record id="academy_training_modality_online" model="academy.training.modality">
             <field name="name">Online</field>
-            <field name="description">Formación a través de plataforma online que permite la máxima flexibilidad, accesibilidad al alcance de los participantes</field>
+            <field name="description">Training through the online platform that allows maximum flexibility, accessibility to the reach of the participants</field>
         </record>
 
         <record id="academy_training_modality_classroom" model="academy.training.modality">
-            <field name="name">Presencial</field>
-            <field name="description">Formación impartida en sala, con comunicación directa y personal entre los participantes y el formador</field>
+            <field name="name">Classroom teaching</field>
+            <field name="description">Training given in the room, direct and personal communication between the participants and the trainer</field>
         </record>
 
     </data>

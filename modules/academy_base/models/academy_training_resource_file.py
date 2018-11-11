@@ -37,7 +37,7 @@ class AcademyTrainingResourceFile(models.Model):
         translate=True
     )
 
-    academy_training_resource_id = fields.Many2one(
+    training_resource_id = fields.Many2one(
         string='Training resource',
         required=False,
         readonly=False,

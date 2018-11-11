@@ -59,7 +59,7 @@ class AcademyKnowledgeArea(models.Model):
     knowle_code = fields.Char(
         string='Code',
         required=False,
-        readonly=True,
+        readonly=False,
         index=False,
         default=None,
         help='Enter new code',

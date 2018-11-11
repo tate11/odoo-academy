@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this module.                   #
-###############################################################################
+""" AcademyTrainingAction
 
-from openerp import models, fields, api, api
-from openerp.tools.translate import _
+This module contains the academy.professional.area Odoo model which stores
+all professional area attributes and behavior.
+"""
+
+
 from logging import getLogger
 
+# pylint: disable=locally-disabled, E0401
+from openerp import models, fields
 
+
+# pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
 
 
+# pylint: disable=locally-disabled, R0903
 class AcademyProfessionalArea(models.Model):
     """ ...
 
@@ -23,7 +28,7 @@ class AcademyProfessionalArea(models.Model):
     _name = 'academy.professional.area'
     _description = u'Academy professional area'
 
-    _inherit = ['academy.image.model']
+    _inherit = ['academy.abstract.image']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -86,3 +91,5 @@ class AcademyProfessionalArea(models.Model):
         auto_join=False,
         limit=None
     )
+
+

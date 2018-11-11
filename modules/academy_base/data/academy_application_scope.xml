@@ -4,33 +4,33 @@
     <data noupdate="0">
 
         <record id="academy_application_scope_public" model="academy.application.scope">
-            <field name="name">Administración pública</field>
-            <field name="description">Formación orientada a la formación de funcionarios y personal laboral de las administraciones públicas</field>
+            <field name="name">Public administration</field>
+            <field name="description">Training actions to prepare civil servants and staff of public administrations</field>
         </record>
 
         <record id="academy_application_scope_unemployed" model="academy.application.scope">
-            <field name="name">Desempleados</field>
-            <field name="description">Formación cuya finalidad es la inserción o reinserción laboral de los trabajadores en situación de desempleo </field>
+            <field name="name">Unemployed</field>
+            <field name="description">Training whose purpose is promote insertion or reintegration of unemployed into labor market</field>
         </record>
 
         <record id="academy_application_scope_corporate" model="academy.application.scope">
-            <field name="name">Empresa</field>
-            <field name="description">Formación dirigida a trabajadores de una empresa específica</field>
+            <field name="name">Company</field>
+            <field name="description">Training aimed at workers of a specific company</field>
         </record>
 
         <record id="academy_application_scope_intersectoral" model="academy.application.scope">
             <field name="name">Intersectorial</field>
-            <field name="description">Formación destinada al aprendizaje de competencias transversales pertenecientes a varios sectores de la actividad económica</field>
+            <field name="description">Training for the learning of transversal competences belonging to various sectors of economic activity</field>
         </record>
 
         <record id="academy_application_scope_sectoral" model="academy.application.scope">
             <field name="name">Sectorial</field>
-            <field name="description">Formación dirigida a trabajadores de un sector productivo concreto</field>
+            <field name="description">Training aimed at workers in a specific productive sector</field>
         </record>
 
-        <record id="academy_application_scope_emmployed" model="academy.application.scope">
-            <field name="name">Trabajadores en activo</field>
-            <field name="description">Formación dirigida prioritariamente a trabajadores en activo</field>
+        <record id="academy_application_scope_employed" model="academy.application.scope">
+            <field name="name">Employed</field>
+            <field name="description">Training aimed mainly to active workers</field>
         </record>
 
     </data>

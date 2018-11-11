@@ -17,5 +17,12 @@
             <field name="module_code">MS2010</field>
         </record>
 
+        <record id="academy_training_module_win10" model="academy.training.module">
+            <field name="name">Microsoft Windows 10</field>
+            <field name="description">Students will gain basic practical experience using the current most used operating system</field>
+            <field name="active">True</field>
+            <field name="module_code">WIN10</field>
+        </record>
+
     </data>
 </openerp>

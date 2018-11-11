@@ -24,8 +24,11 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_training_activity_tree" create="1" delete="1" edit="1">
+                    <field name="activity_code" />
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="professional_family_id" />
+                    <field name="qualification_level_id" />
+                    <field name="training_action_count" />
                 </tree>
             </field>
         </record>
@@ -115,6 +118,13 @@
                 <kanban>
                     <field name="image_small"/>
                     <field name="name" />
+
+                    <field name="activity_code" />
+                    <field name="professional_family_id" />
+                    <field name="qualification_level_id" />
+
+                    <field name="training_action_count" />
+
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_activity">
@@ -128,8 +138,10 @@
                                 <div class="oe_kanban_details">
                                     <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
                                     <ul>
-                                        <!-- <li><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="stop"  /></li> -->
-                                        <!-- <li><strong>Competency units:&#160;</strong><field name="academy_competency_unit_ids" widget="x2many_counter" />&#160;</li> -->
+                                        <li class="o_ellipsis"><strong>Activity code:&#160;</strong><field name="activity_code" /></li>
+                                        <li class="o_ellipsis"><strong>Professional family:&#160;</strong><field name="professional_family_id" /></li>
+                                        <li class="o_ellipsis"><strong>Qualification level:&#160;</strong><field name="qualification_level_id" /></li>
+                                        <li class="o_ellipsis"><strong>Training actions:&#160;</strong><field name="training_action_count" /></li>
                                      </ul>
                                 </div>
                                 <div class="row">
@@ -155,7 +167,26 @@
             <field name="arch" type="xml">
                 <search string="academy_training_activity_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="professional_family_id" />
+                    <field name="professional_area_id" />
+                    <field name="qualification_level_id" />
+                    <field name="activity_code" />
+
+                    <field name="competency_unit_ids" />
+                    <field name="training_unit_ids" />
+
+                    <filter name="filter_by_training_action_count" help="Has actions"
+                           domain="[('training_action_count','>', 0)]"/>
+
+                    <separator/>
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
+                    <group expand="0" name="group_by" string="Group By">
+                       <filter name="group_by_professional_family_id" string="Professional family" domain="[]" context="{'group_by' : 'professional_family_id'}" />
+                       <filter name="group_by_professional_area_id" string="Professional area" context="{'group_by': 'professional_area_id'}"/>
+                       <filter name="group_by_qualification_level_id" string="Qualification level" context="{'group_by': 'qualification_level_id'}"/>
+                   </group>
                 </search>
             </field>
         </record>

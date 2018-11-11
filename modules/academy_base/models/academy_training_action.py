@@ -1,23 +1,30 @@
-#pylint: disable=I0011,W0212,C0111,F0401,C0103,R0903
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this action.                   #
-###############################################################################
+""" AcademyTrainingAction
 
-from openerp import models, fields, api, api, tools
+This module contains the academy.training.action Odoo model which stores
+all training action attributes and behavior.
+
+"""
+
+
 from logging import getLogger
-from openerp.exceptions import ValidationError
-from openerp.tools.translate import _
+
+from datetime import datetime, timedelta
 from pytz import timezone, utc
-from sys import maxsize as maxint
-from calendar import monthrange
-from datetime import date, datetime, timedelta
+
+# pylint: disable=locally-disabled, E0401
+from openerp import models, fields, api
+from openerp.exceptions import ValidationError
+
 from . import custom_model_fields
 
+
+# pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
 
 
+
+# pylint: disable=locally-disabled, R0903
 class AcademyTrainingAction(models.Model):
     """ Each of the creditable qualifications in catalog.
 
@@ -26,6 +33,7 @@ class AcademyTrainingAction(models.Model):
 
     """
 
+
     _name = 'academy.training.action'
     _description = u'Academy training action'
 
@@ -33,7 +41,7 @@ class AcademyTrainingAction(models.Model):
     _order = 'name ASC'
 
     # 'appointment.manager',
-    _inherit = ['academy.image.model', 'mail.thread']
+    _inherit = ['academy.abstract.image', 'mail.thread', 'academy.abstract.observable']
 
     _inherits = {'academy.training.activity': 'training_activity_id'}
 
@@ -67,22 +75,24 @@ class AcademyTrainingAction(models.Model):
         help='Enables/disables the record'
     )
 
+    # pylint: disable=locally-disabled, w0212
     start = fields.Datetime(
         string='Start',
         required=True,
-        readonly=True,
+        readonly=False,
         index=False,
         default=lambda self: self._utc_o_clock(),
         help='Start date of an event, without time for full days events'
     )
 
-    stop = fields.Datetime(
+    # pylint: disable=locally-disabled, w0212
+    end = fields.Datetime(
         string='End',
         required=True,
-        readonly=True,
+        readonly=False,
         index=False,
         default=lambda self: self._utc_o_clock(),
-        help='Stop date of an event, without time for full days events'
+        help='Stop date of an event, without time for full days events',
     )
 
     application_scope_id = fields.Many2one(
@@ -135,9 +145,9 @@ class AcademyTrainingAction(models.Model):
         default=None,
         help='Choose related knowledge areas',
         comodel_name='academy.knowledge.area',
-        #relation='academy_knowle_area_this_model_rel',
-        #column1='academy_knowle_area_id',
-        #column2='this_model_id',
+        relation='academy_training_action_knowledge_area_rel',
+        column1='training_action_id',
+        column2='knowledge_area_id',
         domain=[],
         context={},
         limit=None
@@ -151,9 +161,9 @@ class AcademyTrainingAction(models.Model):
         default=None,
         help='Choose training modalities',
         comodel_name='academy.training.modality',
-        #relation='model_name_this_model_rel',
-        #column1='model_name_id',
-        #column2='this_model_id',
+        relation='academy_training_action_training_modality_rel',
+        column1='training_action_id',
+        column2='training_modality_id',
         domain=[],
         context={},
         limit=None
@@ -167,9 +177,9 @@ class AcademyTrainingAction(models.Model):
         default=None,
         help='Choose training methodologies',
         comodel_name='academy.training.methodology',
-        #relation='model_name_this_model_rel',
-        #column1='model_name_id',
-        #column2='this_model_id',
+        relation='academy_training_action_training_methodology_rel',
+        column1='training_action_id',
+        column2='training_methodology_id',
         domain=[],
         context={},
         limit=None
@@ -197,22 +207,7 @@ class AcademyTrainingAction(models.Model):
         default=None,
         help='Enter new internal code',
         size=12,
-        translate=True
-    )
-
-    training_action_sign_up_ids = fields.One2many(
-        string='Students',
-        required=False,
-        readonly=False,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.action.sign_up',
-        inverse_name='academy_training_action_id',
-        domain=[],
-        context={},
-        auto_join=False,
-        limit=None
+        translate=False
     )
 
     seating = fields.Integer(
@@ -224,6 +219,22 @@ class AcademyTrainingAction(models.Model):
         help='Maximum number of sign ups allowed'
     )
 
+    training_action_enrolment_ids = fields.One2many(
+        string='Enrolments',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.action.enrolment',
+        inverse_name='training_action_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
+    )
+
+
     training_resource_ids = custom_model_fields.Many2ManyThroughView(
         string='Training resources',
         required=False,
@@ -232,55 +243,17 @@ class AcademyTrainingAction(models.Model):
         default=None,
         help='Choose related resources',
         comodel_name='academy.training.resource',
-        relation='academy_training_action_academy_training_resource_rel',
-        column1='academy_training_action_id',   # this is the name in the SQL VIEW
-        column2='academy_training_resource_id', # this is the name in the SQL VIEW
+        relation='academy_training_action_training_resource_rel',
+        column1='training_action_id',   # this is the name in the SQL VIEW
+        column2='training_resource_id', # this is the name in the SQL VIEW
         domain=[],
         context={},
-        limit=None
+        limit=None,
     )
 
-    trainingtraining_unit_count = fields.Integer(
-        string='Training units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help="Show number of training units",
-        # compute='_compute_trainingtraining_unit_count',
-    )
 
-    studentcounting = fields.Integer(
-        string='Students',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help="Show number of students on this action",
-        compute='_compute_studentcounting',
-    )
+    # ------------------------------ CONSTRAINS -------------------------------
 
-    # @api.multi
-    # @api.depends('professional_qualification_id')
-    # def _compute_competencytraining_unit_count(self):
-    #     for record in self:
-    #         record.competencytraining_unit_count = len(
-    #             record.professional_qualification_id.academy_competency_unit_ids)
-
-    # @api.multi
-    # @api.depends('professional_qualification_id')
-    # def _compute_trainingtraining_unit_count(self):
-
-    #     for record in self:
-    #         record.trainingtraining_unit_count = len(
-    #             record.professional_qualification_id.academy_competency_unit_ids.mapped(
-    #                 'training_unit_ids'))
-
-    @api.multi
-    @api.depends('training_action_sign_up_ids')
-    def _compute_studentcounting(self):
-        for record in self:
-            record.studentcounting = len(record.training_action_sign_up_ids)
 
     @api.constrains('end')
     def _check_end(self):
@@ -289,6 +262,8 @@ class AcademyTrainingAction(models.Model):
             if record.end <= record.start:
                 raise ValidationError("End date must be greater then start date")
 
+
+    # -------------------------- AUXILIARY METHODS ----------------------------
 
     @api.model
     def _utc_o_clock(self, offset=0, dateonly=False):
@@ -306,7 +281,7 @@ class AcademyTrainingAction(models.Model):
 
         utc_ock = utc_offset.replace(minute=0, second=0, microsecond=0)
 
-        if dateonly == True:
+        if dateonly is True:
             result = fields.Date.to_string(utc_ock.date())
         else:
             result = fields.Datetime.to_string(utc_ock)

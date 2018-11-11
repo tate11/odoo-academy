@@ -33,15 +33,5 @@
             <field name="training_module_id" ref="academy_base.academy_training_module_lb5" />
         </record>
 
-        <record id="academy_training_unit_lbx5" model="academy.training.unit">
-            <field name="name">LibreOffice Calc 5</field>
-            <field name="description">This course is designed for students who want to gain the necessary skills to create, edit, format, and print basic LibreOffice Calc 5 worksheets</field>
-            <field name="sequence">1</field>
-            <field name="hours">60</field>
-            <field name="unit_code">LBC2010</field>
-            <field name="active">True</field>
-            <field name="training_module_id" ref="academy_base.academy_training_module_lb5" />
-        </record>
-
     </data>
 </openerp>

@@ -27,9 +27,7 @@
                 <tree string="academy_training_action_tree" create="1" delete="1" edit="1">
                     <field name="name" />
                     <field name="start" class="oe_field_start" />
-                    <field name="stop" class="oe_field_stop" />
-                    <!-- <field name="competencytraining_unit_count" /> -->
-                    <field name="studentcounting" />
+                    <field name="end" class="oe_field_end" />
                 </tree>
             </field>
         </record>
@@ -68,24 +66,24 @@
                                 placeholder="application_scope" />
                         </group>
 
+                        <group col="4">
+                            <field name="action_code" class="oe_field_code" />
+                            <field name="start" class="oe_field_start" />
+                            <field name="seating" class="oe_field_seating" />
+                            <field name="end" class="oe_field_end" />
+                        </group>
+
                         <notebook>
                             <page string="Data" class="oe_page_data" accesskey="T">
                                 <group col="2">
-                                    <group col="2">
-                                        <field name="knowledge_area_ids" class="od_field_knowledge_area"
-                                            placeholder="knowledge_area" widget="many2many_tags" />
-                                        <field name="professional_category_id" class="od_field_professional_category"
-                                            placeholder="professional_category" />
-                                        <field name="training_modality_ids" class="od_field_training_modality"
-                                            placeholder="training_modality" widget="many2many_tags" />
-                                        <field name="training_methodology_ids" class="od_field_training_methodology"
-                                            placeholder="training_methodology" widget="many2many_tags" />
-                                    </group>
-                                    <group col="2">
-                                        <field name="action_code" class="oe_field_code" />
-                                        <field name="start" class="oe_field_start" />
-                                        <field name="stop" class="oe_field_stop" />
-                                    </group>
+                                    <field name="knowledge_area_ids" class="od_field_knowledge_area"
+                                        placeholder="knowledge_area" widget="many2many_tags" />
+                                    <field name="professional_category_id" class="od_field_professional_category"
+                                        placeholder="professional_category" />
+                                    <field name="training_modality_ids" class="od_field_training_modality"
+                                        placeholder="training_modality" widget="many2many_tags" />
+                                    <field name="training_methodology_ids" class="od_field_training_methodology"
+                                        placeholder="training_methodology" widget="many2many_tags" />
                                 </group>
                             </page>
 
@@ -99,20 +97,17 @@
                                             placeholder="Choose related professional family" readonly="1" />
                                         <field name="professional_area_id" class="oe_field_professional_area_id"
                                             placeholder="Choose related professional area" readonly="1" />
-                                        <field name="action_code" class="oe_field_action_code"
+                                        <field name="activity_code" class="oe_field_action_code"
                                             placeholder="Enter new internal code" readonly="1" />
                                         <field name="qualification_level_id" class="oe_field_qualification_level_id"
                                             placeholder="Choose related qualification level" readonly="1" />
                                     </group>
-<!--                                 <field name="academy_competency_unit_ids" class="oe_field_academy_competency_unit_ids"
+<!--                                 <field name="competency_unit_ids" class="oe_field_competency_unit_ids"
                                 placeholder="Choose related competency units" readonly="1" />
  -->                        </page>
                             <page string="Students" class="oe_page_students" accesskey="S">
-                                <group col="4">
-                                    <field name="studentcounting" class="oe_field_studentcounting" />
-                                    <field name="seating" class="oe_field_studentcounting" />
-                                </group>
-                                <field name="training_action_sign_up_ids" class="oe_field_training_action_sign_up_ids" />
+                                <field name="training_action_enrolment_ids" class="oe_field_training_action_enrolment_ids"
+                                    context="{'training_action_id': id}" />
                             </page>
                             <page string="Resources" class="oe_page_resources" accesskey="R">
                                 <field name="training_resource_ids" class="oe_field_training_resource_ids"
@@ -142,7 +137,8 @@
                     <field name="image_small"/>
                     <field name="name" />
                     <field name="seating" />
-                    <field name="stop" />
+                    <field name="end" />
+
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_action">
@@ -156,14 +152,10 @@
                                 <div class="oe_kanban_details">
                                     <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
                                     <ul>
-                                        <li><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="stop"  /></li>
-                                        <!-- <li><strong>Competency units:&#160;</strong><field name="academy_competency_unit_ids" widget="x2many_counter" />&#160;</li> -->
+                                        <li class="o_ellipsis"><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="end"  /></li>
+                                        <li class="o_ellipsis"><strong>Training activity:&#160;</strong><field name="training_activity_id" /></li>
+                                        <li class="o_ellipsis"><strong>Application scope:&#160;</strong><field name="application_scope_id" /></li>
                                      </ul>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6 text-right">
-                                        <field name="studentcounting" widget="gauge"  style="width:100%;cursor:pointer;" options="{'max_field': 'seating'}" />
-                                    </div>
                                 </div>
                             </div>
                         </t>
@@ -183,7 +175,35 @@
             <field name="arch" type="xml">
                 <search string="academy_training_action_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="action_code" />
+
+                    <field name="application_scope_id" />
+                    <field name="professional_category_id" />
+                    <field name="training_action_category_id" />
+
+                    <separator />
+
+                    <field name="knowledge_area_ids" />
+                    <field name="training_modality_ids" />
+                    <field name="training_methodology_ids" />
+
+                    <separator />
+
+                    <field name="professional_family_id" />
+                    <field name="professional_area_id" />
+                    <field name="qualification_level_id" />
+
+                    <separator/>
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_training_activity_id"  string="Training activity" domain="[]" context="{'group_by' : 'training_activity_id'}" />
+                        <filter name="group_by_professional_family_id" string="Professional family" domain="[]" context="{'group_by' : 'professional_family_id'}" />
+                        <filter name="group_by_professional_area_id" string="Professional area" context="{'group_by': 'professional_area_id'}"/>
+                        <filter name="group_by_qualification_level_id" string="Qualification level" context="{'group_by': 'qualification_level_id'}"/>
+                        <filter name="group_by_professional_category_id" string="Professional category" domain="[]" context="{'group_by' : 'professional_category_id'}" />
+                   </group>
                 </search>
             </field>
         </record>

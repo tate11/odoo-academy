@@ -45,7 +45,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_training_unit_tree" create="1" delete="1" edit="1">
-                    <field name="sequence" widget="handle" />
+                    <field name="unit_code" class="oe_field_unit_code" />
                     <field name="name" />
                     <field name="training_module_id" class="oe_field_training_module_id" />
                     <field name="hours" class="oe_field_hours" />
@@ -165,17 +165,15 @@
                     <field name="training_module_id" />
                     <field name="training_resource_ids" />
 
-                    <filter string="Non active"
-                        name="non_active_training_units"
-                        domain="[('active', '=', False)]"
-                        context="{}"
-                        help="Show only non active training units" />
-
                     <filter string="By module"
                         name="by_module_training_units"
                         domain="[]"
                         context="{'group_by': ['training_module_id']}"
                         help="Group training units by parent training module" />
+
+                    <separator/>
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
 
                 </search>
             </field>
