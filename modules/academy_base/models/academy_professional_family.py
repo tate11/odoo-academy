@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
-""" AcademyTrainingAction
+###############################################################################
+#    License, author and contributors information in:                         #
+#    __openerp__.py file at the root folder of this module.                   #
+###############################################################################
 
-This module contains the academy.professional.family Odoo model which stores
-all professional family attributes and behavior.
-"""
-
-
+from openerp import models, fields, api, api
+from openerp.tools.translate import _
 from logging import getLogger
 
 
-# pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-
-
-# pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
 
 
-# pylint: disable=locally-disabled, R0903
 class AcademyProfessionalFamily(models.Model):
     """ Set of qualifications according to criteria of affinity of professional
     competence..
@@ -30,7 +24,7 @@ class AcademyProfessionalFamily(models.Model):
     _name = 'academy.professional.family'
     _description = u'Academy professional family'
 
-    _inherit = ['academy.abstract.image']
+    _inherit = ['academy.image.model']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -94,25 +88,3 @@ class AcademyProfessionalFamily(models.Model):
         auto_join=False,
         limit=None
     )
-
-
-    # -------------------------- MANAGEMENT FIELDS ----------------------------
-
-    # pylint: disable=locally-disabled, W0212
-    professional_area_count = fields.Integer(
-        string='Professional areas',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help='Shows the number of professional areas that belong to this family',
-        compute=lambda self: self._compute_professional_area_count()
-    )
-
-    @api.multi
-    @api.depends('professional_area_ids')
-    def _compute_professional_area_count(self):
-        for record in self:
-            record.professional_area_count = len(record.professional_area_ids)
-
-

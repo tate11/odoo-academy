@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+
+        <!-- Tree view for "academy_training_session_attendance" -->
+        <record id="view_academy_training_session_attendance_tree" model="ir.ui.view">
+            <field name="name">view.academy_training_session_attendance.tree</field>
+            <field name="model">academy.training.session.attendance</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_training_session_attendance_tree" create="1" delete="1" edit="1" editable="bottom">
+                    <field name="student_id" />
+                    <field name="start" />
+                    <field name="stop" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

@@ -4,18 +4,18 @@
     <data noupdate="0">
 
         <record id="academy_training_methodology_auto" model="academy.training.methodology">
-            <field name="name">Self-development</field>
-            <field name="description">Individual learning supported by tools, materials and participant support services</field>
+            <field name="name">Autodesarrollo</field>
+            <field name="description">Aprendizaje individual apoyado en herramientas, materiales y servicios de apoyo al participante</field>
         </record>
 
         <record id="academy_training_methodology_coaching" model="academy.training.methodology">
             <field name="name">Coaching</field>
-            <field name="description">It allows directing, instructing and training in accordance with the objectives and expectations defined, starting from the current student knowledge</field>
+            <field name="description">Parte del conocimiento de la persona y permite dirigir, instruir y entrenar en base a unas metas y expectativas definidas</field>
         </record>
 
         <record id="academy_training_methodology_direct" model="academy.training.methodology">
-            <field name="name">Direct teaching</field>
-            <field name="description">Impartition through one or more experts in each discipline, allowing continuous and direct interaction between the participants and teacher</field>
+            <field name="name">Impartición directa</field>
+            <field name="description">Impartición a través de uno o varios expertos en cada disciplina, permitiendo la interacción continua y directa entre los participantes y el formador</field>
         </record>
 
    </data>

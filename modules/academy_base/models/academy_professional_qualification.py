@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
-""" AcademyTrainingActivity
+###############################################################################
+#    License, author and contributors information in:                         #
+#    __openerp__.py file at the root folder of this module.                   #
+###############################################################################
 
-This module contains the professional.qualification.unit Odoo model which stores
-all professional.qualification attributes and behavior.
-
-"""
-
-
+from openerp import models, fields, api, api
+from openerp.tools.translate import _
 from logging import getLogger
 
-# pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
 
-
-# pylint: disable=locally-disabled, c0103
 _logger = getLogger(__name__)
 
 
-# pylint: disable=locally-disabled, R0903
 class AcademyProfessionalQualification(models.Model):
     """ Set of qualifications according to criteria of affinity of professional
     competence..
@@ -30,7 +24,7 @@ class AcademyProfessionalQualification(models.Model):
     _name = 'academy.professional.qualification'
     _description = u'Academy professional qualification'
 
-    _inherit = ['academy.abstract.image']
+    _inherit = ['academy.image.model']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -65,7 +59,7 @@ class AcademyProfessionalQualification(models.Model):
         help='Enables/disables the record'
     )
 
-    competency_unit_ids = fields.One2many(
+    academy_competency_unit_ids = fields.One2many(
         string='Academy competency units',
         required=False,
         readonly=False,
@@ -77,8 +71,7 @@ class AcademyProfessionalQualification(models.Model):
         domain=[],
         context={},
         auto_join=False,
-        limit=None,
-        oldname='competency_unit_ids'
+        limit=None
     )
 
 
@@ -110,7 +103,7 @@ class AcademyProfessionalQualification(models.Model):
         auto_join=False
     )
 
-    qualification_code = fields.Char(
+    internal_code = fields.Char(
         string='Internal code',
         required=True,
         readonly=False,
@@ -118,8 +111,7 @@ class AcademyProfessionalQualification(models.Model):
         default=None,
         help='Enter new internal code',
         size=12,
-        translate=True,
-        oldname='internal_code'
+        translate=True
     )
 
     qualification_level_id = fields.Many2one(
@@ -135,24 +127,3 @@ class AcademyProfessionalQualification(models.Model):
         ondelete='cascade',
         auto_join=False
     )
-
-
-    # --------------------------- MANAGEMENT FIELDS ---------------------------
-
-    # pylint: disable=locally-disabled, W0212
-    competency_unit_count = fields.Integer(
-        string='Competency units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help='Nomber of competency units related with this professional qualification',
-        compute=lambda self: self._compute_competency_unit_count()
-    )
-
-
-    @api.multi
-    @api.depends('competency_unit_ids')
-    def _compute_competency_unit_count(self):
-        for record in self:
-            record.competency_unit_count = len(record.competency_unit_ids)

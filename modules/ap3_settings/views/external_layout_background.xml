@@ -11,12 +11,12 @@
             <field name="active" eval="True" />
             <field name="inherit_id" ref="web.external_layout_background" />
             <field name="arch" type="xml">
-                <xpath expr="//div[@class='header o_background_header']" position="inside">
-
-                </xpath>
-                <xpath expr="//div[@class='footer o_background_footer']" position="inside">
-
-                </xpath>
+            	<xpath expr="//div[@class='header o_background_header']" position="inside">
+            	    
+            	</xpath>
+            	<xpath expr="//div[@class='footer o_background_footer']" position="inside">
+            	    
+            	</xpath>
             </field>
         </record>
 

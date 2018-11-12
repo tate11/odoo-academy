@@ -41,12 +41,6 @@
             <field name="arch" type="xml">
                 <form string="academy.training.methodology_form" create="1" delete="1" edit="1">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                            </button>
-                        </div>
-
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -54,7 +48,6 @@
                                     placeholder="Enter new value for name" />
                             </h1>
                         </div>
-
                         <group col="2">
                             <field name="description" class="oe_field_description"
                                 placeholder="Enter new value for description" />
@@ -75,9 +68,7 @@
             <field name="arch" type="xml">
                 <search string="academy.training.methodology_search">
                     <field name="name" />
-
-                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
-
+                    <!-- ··· -->
                 </search>
             </field>
         </record>
@@ -104,7 +95,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_training_methodology" model="ir.ui.menu" >
-            <field name="name">Training methodologies</field>
+            <field name="name">Training methodology</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_training_methodology_act_window" />
             <field name="parent_id" ref="menu_academy_settings_helper" />

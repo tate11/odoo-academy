@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
-""" AcademyTrainingActivity
+###############################################################################
+#    License, author and contributors information in:                         #
+#    __openerp__.py file at the root folder of this module.                   #
+###############################################################################
 
-This module contains the academy.competency.unit Odoo model which stores
-all competency.unit attributes and behavior.
-
-"""
-
-
+from openerp import models, fields, api, api
+from openerp.tools.translate import _
 from logging import getLogger
 
-# pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
 
-
-# pylint: disable=locally-disabled, c0103
 _logger = getLogger(__name__)
 
 
-# pylint: disable=locally-disabled, R0903
 class AcademyCompetencyUnit(models.Model):
     """ Minimum set of professional skills, capable of recognition and partial
     accreditation.
@@ -33,7 +27,7 @@ class AcademyCompetencyUnit(models.Model):
     _rec_name = 'name'
     _order = 'professional_qualification_id ASC, sequence ASC, name ASC'
 
-    _inherits = {'academy.training.module': 'training_module_id'}
+    _inherits = {'academy.training.module': 'academy_training_module_id'}
 
     name = fields.Char(
         string='Name',
@@ -74,7 +68,7 @@ class AcademyCompetencyUnit(models.Model):
         help='Choose this competency unit order position'
     )
 
-    training_module_id = fields.Many2one(
+    academy_training_module_id = fields.Many2one(
         string='Training module',
         required=True,
         readonly=False,
@@ -101,26 +95,4 @@ class AcademyCompetencyUnit(models.Model):
         ondelete='cascade',
         auto_join=False
     )
-
-
-    # --------------------------- MANAGEMENT FIELDS ---------------------------
-
-    # pylint: disable=W0212
-    training_unit_count = fields.Integer(
-        string='Training units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help='Number of training units in module',
-        compute=lambda self: self._compute_training_unit_count()
-    )
-
-
-    @api.multi
-    @api.depends('training_module_id')
-    def _compute_training_unit_count(self):
-        for record in self:
-            record.training_unit_count = \
-                len(record.training_module_id.training_unit_ids)
 

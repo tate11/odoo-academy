@@ -68,9 +68,7 @@
           <field name="arch" type="xml">
               <search string="academy_application_scope_search">
                   <field name="name" />
-
-                  <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
-
+                  <!-- ··· -->
               </search>
           </field>
       </record>
@@ -97,7 +95,7 @@
 
       <!-- Main menu for model.name -->
       <record id="menu_application_scope" model="ir.ui.menu" >
-          <field name="name">Application scopes</field>
+          <field name="name">Application scope</field>
           <field name="sequence" eval="10" />
           <field name="action" ref="action_application_scope_act_window" />
           <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />

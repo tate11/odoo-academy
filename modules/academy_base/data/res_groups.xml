@@ -3,8 +3,6 @@
 <openerp>
     <data noupdate="0">
 
-        <!-- Category: all the other module groups are child of this
-        ============================================================ -->
         <record id="module_category_academy" model="ir.module.category">
             <field name="name">Academy</field>
             <field name="sequence" eval="10" />
@@ -12,35 +10,25 @@
             <field name="description">Academy category</field>
         </record>
 
-
-
-        <!-- User who only can read data -->
-        <record id="academy_group_consultant" model="res.groups">
+        <record id="group_restricted_user" model="res.groups">
             <field name="name">Consultant</field>
-            <field name="comment">Users who can only read base catalog and assigned training actions</field>
+            <field name="comment">Users who can only read information</field>
             <field name="category_id" ref="module_category_academy"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
-        <record id="academy_group_teacher" model="res.groups">
-            <field name="name">Teacher</field>
-            <field name="comment">Users who can read base catalog, manage assigned training actions and create/edit their own resources</field>
+        <record id="group_editor" model="res.groups">
+            <field name="name">Editor</field>
+            <field name="comment">Users who can write and update information in main models</field>
             <field name="category_id" ref="module_category_academy"/>
-            <field name="implied_ids" eval="[(4, ref('academy_group_consultant'))]"/>
+            <field name="implied_ids" eval="[(4, ref('group_restricted_user'))]"/>
         </record>
 
-        <record id="academy_group_technical" model="res.groups">
-            <field name="name">Technical</field>
-            <field name="comment">Users who can read and manage full catalog, create/edit training actions and assign to them teachers or consultants</field>
-            <field name="category_id" ref="module_category_academy"/>
-            <field name="implied_ids" eval="[(4, ref('academy_group_consultant'))]"/>
-        </record>
-
-        <record id="academy_group_manager" model="res.groups">
+        <record id="group_manager" model="res.groups">
             <field name="name">Manager</field>
-            <field name="comment">Users who can create/edit information int the all models</field>
+            <field name="comment">Users who can write and update information in all models</field>
             <field name="category_id" ref="module_category_academy"/>
-            <field name="implied_ids" eval="[(4, ref('academy_group_teacher'))]"/>
+            <field name="implied_ids" eval="[(4, ref('group_editor'))]"/>
             <field name="users" eval="[(5, ref('base.user_root'))]" />
         </record>
 

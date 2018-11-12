@@ -110,7 +110,7 @@ class AcademyTrainingActionUnitControl(models.Model):
         help="Allows choosing an unit to be used in session"
     )
 
-    training_unit_id = fields.Many2one(
+    academy_training_unit_id = fields.Many2one(
         string='Training unit id',
         required=False,
         readonly=True,
@@ -124,7 +124,7 @@ class AcademyTrainingActionUnitControl(models.Model):
         auto_join=False
     )
 
-    training_action_id = fields.Many2one(
+    academy_training_action_id = fields.Many2one(
         string='Training action id',
         required=False,
         readonly=True,
@@ -172,8 +172,8 @@ class AcademyTrainingActionUnitControl(models.Model):
                 (atu.active and atm.active and acu.active and apq.active and ata.active) :: BOOLEAN as active,
 
                 -- Related action and unit
-                ata."id" AS training_action_id,
-                atu."id" AS training_unit_id,
+                ata."id" AS academy_training_action_id,
+                atu."id" AS academy_training_unit_id,
 
                 -- Sequence of the units (all) by action
                 "row_number"() OVER(PARTITION BY ata."id") as "sequence",
@@ -194,10 +194,10 @@ class AcademyTrainingActionUnitControl(models.Model):
                 academy_training_unit AS atu
 
             INNER JOIN academy_training_module AS atm
-                ON atu.training_module_id = atm."id"
+                ON atu.academy_training_module_id = atm."id"
 
             INNER JOIN academy_competency_unit AS acu
-                ON acu.training_module_id = atm."id"
+                ON acu.academy_training_module_id = atm."id"
 
             INNER JOIN academy_professional_qualification AS apq
                 ON apq."id" = acu.professional_qualification_id
@@ -205,6 +205,9 @@ class AcademyTrainingActionUnitControl(models.Model):
             INNER JOIN academy_training_action AS ata
                 ON ata.professional_qualification_id = apq."id"
 
+/*            LEFT JOIN academy_training_session_itemization AS ati
+                ON ati.academy_training_unit_id = atu."id"
+*/
             ORDER BY ata."id" ASC,
                 acu."id" ASC,
                 acu."sequence" ASC,
