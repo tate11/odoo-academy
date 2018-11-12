@@ -56,10 +56,10 @@ class AcademyKnowledgeArea(models.Model):
         help='Enables/disables the record'
     )
 
-    code = fields.Char(
+    knowle_code = fields.Char(
         string='Code',
         required=False,
-        readonly=True,
+        readonly=False,
         index=False,
         default=None,
         help='Enter new code',

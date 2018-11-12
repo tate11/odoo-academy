@@ -90,8 +90,8 @@ msgid "Academy competency unit"
 msgstr "Unidad de competencia"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_professional_qualification_academy_competency_unit_ids
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_academy_competency_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_professional_qualification_competency_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_competency_unit_ids
 msgid "Academy competency units"
 msgstr "Unidades de competencia"
 
@@ -323,8 +323,8 @@ msgid "Choose related attachments"
 msgstr "Elija los adjuntos relacionados"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_professional_qualification_academy_competency_unit_ids
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_academy_competency_unit_ids
+#: model:ir.model.fields,help:academy_base.field_academy_professional_qualification_competency_unit_ids
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_competency_unit_ids
 #: model:ir.ui.view,arch_db:academy_base.view_academy_training_action_form
 msgid "Choose related competency units"
 msgstr "Elija las unidades de competencia relacionadas"
@@ -401,7 +401,7 @@ msgid "Choose the related qualification level"
 msgstr "Elija el nivel de cualificación relacionado"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_sign_up_academy_training_action_id
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_sign_up_training_action_id
 msgid "Choose the training action in which student will be enrolled"
 msgstr "Elige la acción formativa en la que se matriculará el alumno"
 
@@ -533,7 +533,7 @@ msgid "Competency unit"
 msgstr "Unidad de competencia"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_competencyunitcounting
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_competencytraining_unit_count
 #: model:ir.ui.view,arch_db:academy_base.view_academy_professional_qualification_form
 msgid "Competency units"
 msgstr "Unidades de competencia"
@@ -652,7 +652,7 @@ msgstr "Directorio que contiene los archivos de recursos"
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_application_scope_display_name
 #: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_display_name
-#: model:ir.model.fields,field_description:academy_base.field_academy_image_model_display_name
+#: model:ir.model.fields,field_description:academy_base.field_academy_abstract_image_display_name
 #: model:ir.model.fields,field_description:academy_base.field_academy_knowledge_area_display_name
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_area_display_name
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_category_display_name
@@ -895,28 +895,28 @@ msgstr "Horas"
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_application_scope_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_image_model_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_abstract_image_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_knowledge_area_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_area_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_category_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_family_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_qualification_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_qualification_level_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_id
+#: model:ir.model.fields,field_description:academy_base.field_training_action_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_action_sign_up_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_action_unit_control_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_methodology_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_modality_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_id
+#: model:ir.model.fields,field_description:academy_base.field_training_module_id
 #: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_file_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_id
+#: model:ir.model.fields,field_description:academy_base.field_training_resource_id
+#: model:ir.model.fields,field_description:academy_base.field_training_unit_id
 msgid "ID"
 msgstr "ID (identificación)"
 
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_image
-#: model:ir.model.fields,field_description:academy_base.field_academy_image_model_image
+#: model:ir.model.fields,field_description:academy_base.field_academy_abstract_image_image
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_area_image
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_family_image
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_qualification_image
@@ -928,7 +928,7 @@ msgstr "Imagen"
 
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_image_medium
-#: model:ir.model.fields,field_description:academy_base.field_academy_image_model_image_medium
+#: model:ir.model.fields,field_description:academy_base.field_academy_abstract_image_image_medium
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_area_image_medium
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_family_image_medium
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_qualification_image_medium
@@ -940,7 +940,7 @@ msgstr "Imagen (128x128)"
 
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_image_small
-#: model:ir.model.fields,field_description:academy_base.field_academy_image_model_image_small
+#: model:ir.model.fields,field_description:academy_base.field_academy_abstract_image_image_small
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_area_image_small
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_family_image_small
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_qualification_image_small
@@ -998,7 +998,7 @@ msgstr "Áreas de conocimiento"
 #. module: academy_base
 #: model:ir.model.fields,field_description:academy_base.field_academy_application_scope___last_update
 #: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit___last_update
-#: model:ir.model.fields,field_description:academy_base.field_academy_image_model___last_update
+#: model:ir.model.fields,field_description:academy_base.field_academy_abstract_image___last_update
 #: model:ir.model.fields,field_description:academy_base.field_academy_knowledge_area___last_update
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_area___last_update
 #: model:ir.model.fields,field_description:academy_base.field_academy_professional_category___last_update
@@ -1090,7 +1090,7 @@ msgstr "Número máximo de registros permitidos"
 
 #. module: academy_base
 #: model:ir.model.fields,help:academy_base.field_academy_competency_unit_image_medium
-#: model:ir.model.fields,help:academy_base.field_academy_image_model_image_medium
+#: model:ir.model.fields,help:academy_base.field_academy_abstract_image_image_medium
 #: model:ir.model.fields,help:academy_base.field_academy_professional_area_image_medium
 #: model:ir.model.fields,help:academy_base.field_academy_professional_family_image_medium
 #: model:ir.model.fields,help:academy_base.field_academy_professional_qualification_image_medium
@@ -1164,8 +1164,8 @@ msgid "Number of files in related directory"
 msgstr "Número de archivos en el directorio relacionado"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_unitcounting
-#: model:ir.model.fields,help:academy_base.field_academy_training_module_unitcounting
+#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_training_unit_count
+#: model:ir.model.fields,help:academy_base.field_academy_training_module_training_unit_count
 msgid "Number of training units in module"
 msgstr "Número de unidades formativas en módulo"
 
@@ -1309,7 +1309,7 @@ msgid "Settings"
 msgstr "Ajustes"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_competencyunitcounting
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_competencytraining_unit_count
 msgid "Show number of competency units"
 msgstr "Mostrar el número de unidades de competencia"
 
@@ -1319,7 +1319,7 @@ msgid "Show number of students on this action"
 msgstr "Mostrar el número de estudiantes en esta acción"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_trainingunitcounting
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_trainingtraining_unit_count
 msgid "Show number of training units"
 msgstr "Mostrar el número de unidades formativas"
 
@@ -1350,12 +1350,12 @@ msgid "Show only resources with related attachments"
 msgstr "Mostrar solo recursos con archivos adjuntos relacionados"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_unit_control_academy_training_action_id
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_unit_control_training_action_id
 msgid "Show related training action"
 msgstr "Mostrar acciones formativas relacionadas"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_action_unit_control_academy_training_unit_id
+#: model:ir.model.fields,help:academy_base.field_academy_training_action_unit_control_training_unit_id
 msgid "Show related training unit"
 msgstr "Mostrar unidades formativas relacionadas"
 
@@ -1369,7 +1369,7 @@ msgstr "Mostrar valor para"
 
 #. module: academy_base
 #: model:ir.model.fields,help:academy_base.field_academy_competency_unit_image_small
-#: model:ir.model.fields,help:academy_base.field_academy_image_model_image_small
+#: model:ir.model.fields,help:academy_base.field_academy_abstract_image_image_small
 #: model:ir.model.fields,help:academy_base.field_academy_professional_area_image_small
 #: model:ir.model.fields,help:academy_base.field_academy_professional_family_image_small
 #: model:ir.model.fields,help:academy_base.field_academy_professional_qualification_image_small
@@ -1497,7 +1497,7 @@ msgstr "No hay unidades formativas en el catálogo"
 
 #. module: academy_base
 #: model:ir.model.fields,help:academy_base.field_academy_competency_unit_image
-#: model:ir.model.fields,help:academy_base.field_academy_image_model_image
+#: model:ir.model.fields,help:academy_base.field_academy_abstract_image_image
 #: model:ir.model.fields,help:academy_base.field_academy_professional_area_image
 #: model:ir.model.fields,help:academy_base.field_academy_professional_family_image
 #: model:ir.model.fields,help:academy_base.field_academy_professional_qualification_image
@@ -1524,7 +1524,7 @@ msgstr "Unidad formativa"
 
 #. module: academy_base
 #: model:ir.actions.act_window,name:academy_base.action_training_action_act_window
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_sign_up_academy_training_action_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_sign_up_training_action_id
 msgid "Training action"
 msgstr "Acción formativa"
 
@@ -1534,7 +1534,7 @@ msgid "Training action category"
 msgstr "Categoría de la acción formativa"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_unit_control_academy_training_action_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_unit_control_training_action_id
 msgid "Training action id"
 msgstr "ID de la acción formativa"
 
@@ -1564,24 +1564,24 @@ msgstr "Modalidad de formación"
 
 #. module: academy_base
 #: model:ir.actions.act_window,name:academy_base.action_training_module_act_window
-#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_academy_training_module_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_academy_training_module_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_training_module_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_training_module_id
 msgid "Training module"
 msgstr "Módulo formativo"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_academy_training_module_id
+#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_training_module_id
 msgid "Training module associated with this competency unit"
 msgstr "Módulo de formación asociado a esta unidad de competencia"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_training_unit_academy_training_module_id
+#: model:ir.model.fields,help:academy_base.field_academy_training_unit_training_module_id
 msgid "Training module to witch this unit belongs"
 msgstr "Módulo de formación al que pertenece esta unidad"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_file_academy_training_resource_id
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_academy_training_resource_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_file_training_resource_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_unit_training_resource_ids
 msgid "Training resource"
 msgstr "Recurso formativo"
 
@@ -1591,28 +1591,28 @@ msgid "Training unit"
 msgstr "Unidad formativa"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_unit_control_academy_training_unit_id
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_unit_control_training_unit_id
 msgid "Training unit id"
 msgstr "ID de la unidad formativa"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_academy_training_unit_ids
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_trainingunitcounting
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_academy_training_unit_ids
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_academy_training_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_training_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_action_trainingtraining_unit_count
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_training_unit_ids
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_resource_training_unit_ids
 #: model:ir.ui.view,arch_db:academy_base.view_academy_training_module_form
 msgid "Training units"
 msgstr "Unidades formativas"
 
 #. module: academy_base
-#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_academy_training_unit_ids
-#: model:ir.model.fields,help:academy_base.field_academy_training_module_academy_training_unit_ids
+#: model:ir.model.fields,help:academy_base.field_academy_competency_unit_training_unit_ids
+#: model:ir.model.fields,help:academy_base.field_academy_training_module_training_unit_ids
 msgid "Training units in this module"
 msgstr "Unidades de formación en este módulo"
 
 #. module: academy_base
-#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_unitcounting
-#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_unitcounting
+#: model:ir.model.fields,field_description:academy_base.field_academy_competency_unit_training_unit_count
+#: model:ir.model.fields,field_description:academy_base.field_academy_training_module_training_unit_count
 #: model:ir.ui.view,arch_db:academy_base.view_academy_professional_qualification_form
 #: model:ir.ui.view,arch_db:academy_base.view_academy_training_module_form
 msgid "Units"
@@ -1654,9 +1654,9 @@ msgid "ZIP"
 msgstr "C.P."
 
 #. module: academy_base
-#: model:ir.model,name:academy_base.model_academy_image_model
-msgid "academy.image.model"
-msgstr "academy.image.model"
+#: model:ir.model,name:academy_base.model_academy_abstract_image
+msgid "academy.abstract.image"
+msgstr "academy.abstract.image"
 
 #. module: academy_base
 #: model:ir.ui.view,arch_db:academy_base.view_academy_training_methodology_form

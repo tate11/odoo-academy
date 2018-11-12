@@ -25,23 +25,25 @@ class AcademyTrainingActionEnrolment(models.Model):
     _name = 'academy.training.action.enrolment'
     _description = u'Academy action enrolment'
 
-    _rec_name = 'name'
-    _order = 'name ASC'
+    _rec_name = 'code'
+    _order = 'code ASC'
 
     _inherits = {
         'res.partner': 'res_partner_id',
         'academy.training.action': 'training_action_id'
     }
 
-    name = fields.Char(
-        string='Name',
+    # pylint: disable=locally-disabled, W0212
+    code = fields.Char(
+        string='Code',
         required=True,
-        readonly=False,
+        readonly=True,
         index=True,
-        default=None,
-        help='Enter new name',
-        size=100,
-        translate=True
+        default=lambda self: self._default_code(),
+        help='Enter new code',
+        size=12,
+        translate=True,
+        oldname='name'
     )
 
     description = fields.Text(
@@ -108,6 +110,61 @@ class AcademyTrainingActionEnrolment(models.Model):
         limit=None
     )
 
+    register = fields.Date(
+        string='Sign up',
+        required=True,
+        readonly=False,
+        index=False,
+        default=lambda self: fields.Date.context_today(self),
+        help='Date in which student has been enroled'
+    )
+
+    deregister = fields.Date(
+        string='Deregister',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='Data in which student has been unsubscribed'
+    )
+
+    student_name = fields.Char(
+        string='Student name',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Show the name of the related student',
+        size=50,
+        translate=True,
+        compute=lambda self: self._compute_student_name()
+    )
+
+    action_name = fields.Char(
+        string='Action name',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Show the name of the related training action',
+        size=50,
+        translate=True,
+        compute=lambda self: self._compute_action_name()
+    )
+
+    @api.multi
+    @api.depends('res_partner_id')
+    def _compute_student_name(self):
+        for record in self:
+            record.student_name = record.res_partner_id.name
+
+    @api.multi
+    @api.depends('training_action_id')
+    def _compute_action_name(self):
+        for record in self:
+            record.action_name = record.training_action_id.name
+
+
 
     @api.multi
     @api.onchange('training_action_id')
@@ -126,3 +183,22 @@ class AcademyTrainingActionEnrolment(models.Model):
             return {'domain': domain}
 
         return {'domain': {'training_module_ids':  [('id', '=', -1)]}}
+
+
+    @api.model
+    def _default_code(self):
+        """ Get next value for sequence
+        """
+
+        seqxid = 'academy_base.ir_sequence_academy_action_enrolment'
+        seqobj = self.env.ref(seqxid)
+
+        result = seqobj.next_by_id()
+
+        return result
+
+    # @api.one
+    # @api.constrains('training_action_id', 'res_partner_id')
+    # def _check_enrolment(self):
+    #     if self.name == self.description:
+    #         raise ValidationError("Fields name and description must be different")

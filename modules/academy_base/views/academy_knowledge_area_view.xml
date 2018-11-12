@@ -24,6 +24,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_knowledge_area_tree" create="1" delete="1" edit="1">
+                    <field name="knowle_code" />
                     <field name="name" />
                     <field name="description" />
                 </tree>
@@ -41,6 +42,12 @@
             <field name="arch" type="xml">
                 <form string="academy_knowledge_area_form" create="1" delete="1" edit="1">
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
@@ -49,6 +56,8 @@
                             </h1>
                         </div>
                         <group col="2">
+                            <field name="knowle_code" class="oe_field_knowle_code"
+                                placeholder="Enter new value for knowle code" />
                             <field name="description" class="oe_field_description"
                                 placeholder="Enter new value for description" />
                         </group>
@@ -67,8 +76,11 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <search string="academy_knowledge_area_search">
+                    <field name="knowle_code" />
                     <field name="name" />
-                    <!-- ··· -->
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
                 </search>
             </field>
         </record>
@@ -95,7 +107,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_knowledge_area" model="ir.ui.menu" >
-            <field name="name">Knowledge area</field>
+            <field name="name">Knowledge areas</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_knowledge_area_act_window" />
             <field name="parent_id" ref="menu_academy_settings_helper" />

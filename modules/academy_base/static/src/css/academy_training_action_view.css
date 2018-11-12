@@ -10,3 +10,11 @@
     clear: both;
     margin-top: 1em;
 }
+
+.o_ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+

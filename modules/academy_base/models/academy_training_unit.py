@@ -24,7 +24,7 @@ class AcademyTrainingUnit(models.Model):
     _name = 'academy.training.unit'
     _description = u'Academy training unit'
 
-    _inherit = ['academy.image.model']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'sequence ASC, name ASC'
@@ -68,7 +68,7 @@ class AcademyTrainingUnit(models.Model):
         help="Choose unit order"
     )
 
-    academy_training_module_id = fields.Many2one(
+    training_module_id = fields.Many2one(
         string='Training module',
         required=True,
         readonly=False,
@@ -92,7 +92,7 @@ class AcademyTrainingUnit(models.Model):
         help='Length in hours'
     )
 
-    code = fields.Char(
+    unit_code = fields.Char(
         string='Code',
         required=True,
         readonly=False,
@@ -100,22 +100,42 @@ class AcademyTrainingUnit(models.Model):
         default=None,
         help='Enter code for training unit',
         size=12,
-        translate=True
+        translate=True,
+        oldname='code'
     )
 
-    academy_training_resource_ids = fields.Many2many(
-        string='Training resource',
+    training_resource_ids = fields.Many2many(
+        string='Resource',
         required=False,
         readonly=False,
         index=False,
         default=None,
         help=False,
         comodel_name='academy.training.resource',
-        # relation='academy_training_resource_this_model_rel',
-        # column1='academy_training_resource_id',
-        # column2='this_model_id',
+        relation='academy_training_resource_training_unit_rel',
+        column1='training_resource_id',
+        column2='training_unit_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        oldname='training_resource_ids'
     )
+
+    # pylint: disable=W0212
+    training_resource_count = fields.Integer(
+        string='Resources',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Numer or related resources',
+        compute=lambda self: self._compute_training_resource_count()
+    )
+
+    @api.multi
+    @api.depends('training_resource_ids')
+    def _compute_training_resource_count(self):
+        for record in self:
+            record.training_resource_count = len(record.training_resource_ids)
+
 

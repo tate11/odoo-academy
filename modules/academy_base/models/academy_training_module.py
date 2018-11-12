@@ -20,7 +20,7 @@ class AcademyTrainingModule(models.Model):
     _name = 'academy.training.module'
     _description = u'Academy training module'
 
-    _inherit = ['academy.image.model']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -59,7 +59,7 @@ class AcademyTrainingModule(models.Model):
         help='Enables/disables the record'
     )
 
-    academy_training_unit_ids = fields.One2many(
+    training_unit_ids = fields.One2many(
         string='Training units',
         required=False,
         readonly=False,
@@ -67,14 +67,15 @@ class AcademyTrainingModule(models.Model):
         default=None,
         help='Training units in this module',
         comodel_name='academy.training.unit',
-        inverse_name='academy_training_module_id',
+        inverse_name='training_module_id',
         domain=[],
         context={},
         auto_join=False,
-        limit=None
+        limit=None,
+        oldname='training_unit_ids'
     )
 
-    code = fields.Char(
+    module_code = fields.Char(
         string='Code',
         required=False,
         readonly=False,
@@ -82,7 +83,8 @@ class AcademyTrainingModule(models.Model):
         default=None,
         help='Enter code for training module',
         size=12,
-        translate=True
+        translate=True,
+        old_name='code'
     )
 
     ownhours = fields.Float(
@@ -110,14 +112,14 @@ class AcademyTrainingModule(models.Model):
         compute='_compute_hours',
     )
 
-    unitcounting = fields.Integer(
+    training_unit_count = fields.Integer(
         string='Units',
         required=False,
         readonly=True,
         index=False,
         default=0,
         help='Number of training units in module',
-        compute='_compute_unitcounting',
+        compute='_compute_training_unit_count',
     )
 
 
@@ -125,18 +127,18 @@ class AcademyTrainingModule(models.Model):
 
 
     @api.multi
-    @api.depends('academy_training_unit_ids', 'ownhours')
+    @api.depends('training_unit_ids', 'ownhours')
     def _compute_hours(self):
         for record in self:
-            if record.academy_training_unit_ids:
-                record.hours = sum(record.academy_training_unit_ids.mapped('hours'))
+            if record.training_unit_ids:
+                record.hours = sum(record.training_unit_ids.mapped('hours'))
             else:
                 record.hours = record.ownhours
 
     @api.multi
-    @api.depends('academy_training_unit_ids')
-    def _compute_unitcounting(self):
+    @api.depends('training_unit_ids')
+    def _compute_training_unit_count(self):
         for record in self:
-            record.unitcounting = len(record.academy_training_unit_ids)
+            record.training_unit_count = len(record.training_unit_ids)
 
 

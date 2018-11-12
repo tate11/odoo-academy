@@ -1,957 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openerp>
+
     <data noupdate="0">
 
-		<record id="academy_knowledge_area_01" model="academy.knowledge.area">
-		    <field name="name">Álgebra</field>
-		    <field name="code">5</field>
-		</record>
-
-		<record id="academy_knowledge_area_02" model="academy.knowledge.area">
-		    <field name="name">Análisis Geográfico Regional</field>
-		    <field name="code">10</field>
-		</record>
-
-		<record id="academy_knowledge_area_03" model="academy.knowledge.area">
-		    <field name="name">Análisis Matemático</field>
-		    <field name="code">15</field>
-		</record>
-
-		<record id="academy_knowledge_area_04" model="academy.knowledge.area">
-		    <field name="name">Anatomía Patológica</field>
-		    <field name="code">20</field>
-		</record>
-
-		<record id="academy_knowledge_area_05" model="academy.knowledge.area">
-		    <field name="name">Anatomía y Anatomía Patológica Comparadas</field>
-		    <field name="code">25</field>
-		</record>
-
-		<record id="academy_knowledge_area_06" model="academy.knowledge.area">
-		    <field name="name">Anatomía y Embriología Humana</field>
-		    <field name="code">27</field>
-		</record>
-
-		<record id="academy_knowledge_area_07" model="academy.knowledge.area">
-		    <field name="name">Antropología Física</field>
-		    <field name="code">28</field>
-		</record>
-
-		<record id="academy_knowledge_area_08" model="academy.knowledge.area">
-		    <field name="name">Antropología Social</field>
-		    <field name="code">30</field>
-		</record>
-
-		<record id="academy_knowledge_area_09" model="academy.knowledge.area">
-		    <field name="name">Arqueología</field>
-		    <field name="code">33</field>
-		</record>
-
-		<record id="academy_knowledge_area_10" model="academy.knowledge.area">
-		    <field name="name">Arquitectura y Tecnología de Computadores</field>
-		    <field name="code">35</field>
-		</record>
-
-		<record id="academy_knowledge_area_11" model="academy.knowledge.area">
-		    <field name="name">Astronomía y Astrofísica</field>
-		    <field name="code">38</field>
-		</record>
-
-		<record id="academy_knowledge_area_12" model="academy.knowledge.area">
-		    <field name="name">Biblioteconomía y Documentación</field>
-		    <field name="code">40</field>
-		</record>
-
-		<record id="academy_knowledge_area_13" model="academy.knowledge.area">
-		    <field name="name">Biología Celular</field>
-		    <field name="code">50</field>
-		</record>
-
-		<record id="academy_knowledge_area_14" model="academy.knowledge.area">
-		    <field name="name">Bioquímica y Biología Molecular</field>
-		    <field name="code">60</field>
-		</record>
-
-		<record id="academy_knowledge_area_15" model="academy.knowledge.area">
-		    <field name="name">Botánica</field>
-		    <field name="code">63</field>
-		</record>
-
-		<record id="academy_knowledge_area_16" model="academy.knowledge.area">
-		    <field name="name">Ciencia de los Materiales e Ingeniería Metalúrgica</field>
-		    <field name="code">65</field>
-		</record>
-
-		<record id="academy_knowledge_area_17" model="academy.knowledge.area">
-		    <field name="name">Ciencia Política y de la Administración</field>
-		    <field name="code">70</field>
-		</record>
-
-		<record id="academy_knowledge_area_18" model="academy.knowledge.area">
-		    <field name="name">Ciencia de la Computación e Inteligencia Artificial</field>
-		    <field name="code">75</field>
-		</record>
-
-		<record id="academy_knowledge_area_19" model="academy.knowledge.area">
-		    <field name="name">Ciencias y Técnicas de la Navegación</field>
-		    <field name="code">83</field>
-		</record>
-
-		<record id="academy_knowledge_area_20" model="academy.knowledge.area">
-		    <field name="name">Ciencias y Técnicas Historiográficas</field>
-		    <field name="code">85</field>
-		</record>
-
-		<record id="academy_knowledge_area_21" model="academy.knowledge.area">
-		    <field name="name">Cirugía</field>
-		    <field name="code">90</field>
-		</record>
-
-		<record id="academy_knowledge_area_22" model="academy.knowledge.area">
-		    <field name="name">Comercialización e Investigación de Mercados</field>
-		    <field name="code">95</field>
-		</record>
-
-		<record id="academy_knowledge_area_23" model="academy.knowledge.area">
-		    <field name="name">Composición Arquitectónica</field>
-		    <field name="code">100</field>
-		</record>
-
-		<record id="academy_knowledge_area_24" model="academy.knowledge.area">
-		    <field name="name">Comunicación Audiovisual y Publicidad</field>
-		    <field name="code">105</field>
-		</record>
-
-		<record id="academy_knowledge_area_25" model="academy.knowledge.area">
-		    <field name="name">Construcciones Arquitectónicas</field>
-		    <field name="code">110</field>
-		</record>
-
-		<record id="academy_knowledge_area_26" model="academy.knowledge.area">
-		    <field name="name">Construcciones Navales</field>
-		    <field name="code">115</field>
-		</record>
-
-		<record id="academy_knowledge_area_27" model="academy.knowledge.area">
-		    <field name="name">Cristalografía y Mineralogía</field>
-		    <field name="code">120</field>
-		</record>
-
-		<record id="academy_knowledge_area_28" model="academy.knowledge.area">
-		    <field name="name">Derecho Administrativo</field>
-		    <field name="code">125</field>
-		</record>
-
-		<record id="academy_knowledge_area_29" model="academy.knowledge.area">
-		    <field name="name">Derecho Civil</field>
-		    <field name="code">130</field>
-		</record>
-
-		<record id="academy_knowledge_area_30" model="academy.knowledge.area">
-		    <field name="name">Derecho Constitucional</field>
-		    <field name="code">135</field>
-		</record>
-
-		<record id="academy_knowledge_area_31" model="academy.knowledge.area">
-		    <field name="name">Derecho del Trabajo y de la Seguridad Social</field>
-		    <field name="code">140</field>
-		</record>
-
-		<record id="academy_knowledge_area_32" model="academy.knowledge.area">
-		    <field name="name">Derecho Eclesiástico del Estado</field>
-		    <field name="code">145</field>
-		</record>
-
-		<record id="academy_knowledge_area_33" model="academy.knowledge.area">
-		    <field name="name">Derecho Financiero y Tributario</field>
-		    <field name="code">150</field>
-		</record>
-
-		<record id="academy_knowledge_area_34" model="academy.knowledge.area">
-		    <field name="name">Derecho Internacional Privado</field>
-		    <field name="code">155</field>
-		</record>
-
-		<record id="academy_knowledge_area_35" model="academy.knowledge.area">
-		    <field name="name">Derecho Internacional Público y Relaciones Internacionales</field>
-		    <field name="code">160</field>
-		</record>
-
-		<record id="academy_knowledge_area_36" model="academy.knowledge.area">
-		    <field name="name">Derecho Mercantil</field>
-		    <field name="code">165</field>
-		</record>
-
-		<record id="academy_knowledge_area_37" model="academy.knowledge.area">
-		    <field name="name">Derecho Penal</field>
-		    <field name="code">170</field>
-		</record>
-
-		<record id="academy_knowledge_area_38" model="academy.knowledge.area">
-		    <field name="name">Derecho Procesal</field>
-		    <field name="code">175</field>
-		</record>
-
-		<record id="academy_knowledge_area_39" model="academy.knowledge.area">
-		    <field name="name">Derecho Romano</field>
-		    <field name="code">180</field>
-		</record>
-
-		<record id="academy_knowledge_area_40" model="academy.knowledge.area">
-		    <field name="name">Dermatología</field>
-		    <field name="code">183</field>
-		</record>
-
-		<record id="academy_knowledge_area_41" model="academy.knowledge.area">
-		    <field name="name">Dibujo</field>
-		    <field name="code">185</field>
-		</record>
-
-		<record id="academy_knowledge_area_42" model="academy.knowledge.area">
-		    <field name="name">Didáctica de la Expresión Corporal</field>
-		    <field name="code">187</field>
-		</record>
-
-		<record id="academy_knowledge_area_43" model="academy.knowledge.area">
-		    <field name="name">Didáctica de la Expresión Musical</field>
-		    <field name="code">189</field>
-		</record>
-
-		<record id="academy_knowledge_area_44" model="academy.knowledge.area">
-		    <field name="name">Didáctica de la Expresión Plástica</field>
-		    <field name="code">193</field>
-		</record>
-
-		<record id="academy_knowledge_area_45" model="academy.knowledge.area">
-		    <field name="name">Didáctica de la Lengua y la Literatura</field>
-		    <field name="code">195</field>
-		</record>
-
-		<record id="academy_knowledge_area_46" model="academy.knowledge.area">
-		    <field name="name">Didáctica de la Matemática</field>
-		    <field name="code">200</field>
-		</record>
-
-		<record id="academy_knowledge_area_47" model="academy.knowledge.area">
-		    <field name="name">Didáctica de las Ciencias Experimentales</field>
-		    <field name="code">205</field>
-		</record>
-
-		<record id="academy_knowledge_area_48" model="academy.knowledge.area">
-		    <field name="name">Didáctica de las Ciencias Sociales</field>
-		    <field name="code">210</field>
-		</record>
-
-		<record id="academy_knowledge_area_49" model="academy.knowledge.area">
-		    <field name="name">Didáctica y Organización Escolar</field>
-		    <field name="code">215</field>
-		</record>
-
-		<record id="academy_knowledge_area_50" model="academy.knowledge.area">
-		    <field name="name">Ecología</field>
-		    <field name="code">220</field>
-		</record>
-
-		<record id="academy_knowledge_area_51" model="academy.knowledge.area">
-		    <field name="name">Economía Aplicada</field>
-		    <field name="code">225</field>
-		</record>
-
-		<record id="academy_knowledge_area_52" model="academy.knowledge.area">
-		    <field name="name">Economía Financiera y Contabilidad</field>
-		    <field name="code">230</field>
-		</record>
-
-		<record id="academy_knowledge_area_53" model="academy.knowledge.area">
-		    <field name="name">Economía, Sociología y Política Agraria</field>
-		    <field name="code">235</field>
-		</record>
-
-		<record id="academy_knowledge_area_54" model="academy.knowledge.area">
-		    <field name="name">Edafología y Química Agrícola</field>
-		    <field name="code">240</field>
-		</record>
-
-		<record id="academy_knowledge_area_55" model="academy.knowledge.area">
-		    <field name="name">Educación Física y Deportiva</field>
-		    <field name="code">245</field>
-		</record>
-
-		<record id="academy_knowledge_area_56" model="academy.knowledge.area">
-		    <field name="name">Electromagnetismo</field>
-		    <field name="code">247</field>
-		</record>
-
-		<record id="academy_knowledge_area_57" model="academy.knowledge.area">
-		    <field name="name">Electrónica</field>
-		    <field name="code">250</field>
-		</record>
-
-		<record id="academy_knowledge_area_58" model="academy.knowledge.area">
-		    <field name="name">Enfermería</field>
-		    <field name="code">255</field>
-		</record>
-
-		<record id="academy_knowledge_area_59" model="academy.knowledge.area">
-		    <field name="name">Escultura</field>
-		    <field name="code">260</field>
-		</record>
-
-		<record id="academy_knowledge_area_60" model="academy.knowledge.area">
-		    <field name="name">Estadística e Investigación Operativa</field>
-		    <field name="code">265</field>
-		</record>
-
-		<record id="academy_knowledge_area_61" model="academy.knowledge.area">
-		    <field name="name">Estética y Teoría de las Artes</field>
-		    <field name="code">270</field>
-		</record>
-
-		<record id="academy_knowledge_area_62" model="academy.knowledge.area">
-		    <field name="name">Estomatología</field>
-		    <field name="code">275</field>
-		</record>
-
-		<record id="academy_knowledge_area_63" model="academy.knowledge.area">
-		    <field name="name">Estratigrafía</field>
-		    <field name="code">280</field>
-		</record>
-
-		<record id="academy_knowledge_area_64" model="academy.knowledge.area">
-		    <field name="name">Estudios Arabes e Islámicos</field>
-		    <field name="code">285</field>
-		</record>
-
-		<record id="academy_knowledge_area_65" model="academy.knowledge.area">
-		    <field name="name">Estudios de Asía Oriental (BOE 27/02/2003)</field>
-		    <field name="code">568</field>
-		</record>
-
-		<record id="academy_knowledge_area_66" model="academy.knowledge.area">
-		    <field name="name">Estudios Hebreos y Arameos</field>
-		    <field name="code">290</field>
-		</record>
-
-		<record id="academy_knowledge_area_67" model="academy.knowledge.area">
-		    <field name="name">Explotación de Minas</field>
-		    <field name="code">295</field>
-		</record>
-
-		<record id="academy_knowledge_area_68" model="academy.knowledge.area">
-		    <field name="name">Expresión Gráfica Arquitectónica</field>
-		    <field name="code">300</field>
-		</record>
-
-		<record id="academy_knowledge_area_69" model="academy.knowledge.area">
-		    <field name="name">Expresión Gráfica en la Ingeniería</field>
-		    <field name="code">305</field>
-		</record>
-
-		<record id="academy_knowledge_area_70" model="academy.knowledge.area">
-		    <field name="name">Farmacia y Tecnología Farmaceútica</field>
-		    <field name="code">310</field>
-		</record>
-
-		<record id="academy_knowledge_area_71" model="academy.knowledge.area">
-		    <field name="name">Farmacología</field>
-		    <field name="code">315</field>
-		</record>
-
-		<record id="academy_knowledge_area_72" model="academy.knowledge.area">
-		    <field name="name">Filología Alemana</field>
-		    <field name="code">320</field>
-		</record>
-
-		<record id="academy_knowledge_area_73" model="academy.knowledge.area">
-		    <field name="name">Filología Catalana</field>
-		    <field name="code">325</field>
-		</record>
-
-		<record id="academy_knowledge_area_74" model="academy.knowledge.area">
-		    <field name="name">Filología Eslava</field>
-		    <field name="code">327</field>
-		</record>
-
-		<record id="academy_knowledge_area_75" model="academy.knowledge.area">
-		    <field name="name">Filología Francesa</field>
-		    <field name="code">335</field>
-		</record>
-
-		<record id="academy_knowledge_area_76" model="academy.knowledge.area">
-		    <field name="name">Filología Griega</field>
-		    <field name="code">340</field>
-		</record>
-
-		<record id="academy_knowledge_area_77" model="academy.knowledge.area">
-		    <field name="name">Filología Inglesa</field>
-		    <field name="code">345</field>
-		</record>
-
-		<record id="academy_knowledge_area_78" model="academy.knowledge.area">
-		    <field name="name">Filología Italiana</field>
-		    <field name="code">350</field>
-		</record>
-
-		<record id="academy_knowledge_area_79" model="academy.knowledge.area">
-		    <field name="name">Filología Latina</field>
-		    <field name="code">355</field>
-		</record>
-
-		<record id="academy_knowledge_area_80" model="academy.knowledge.area">
-		    <field name="name">Filología Románica</field>
-		    <field name="code">360</field>
-		</record>
-
-		<record id="academy_knowledge_area_81" model="academy.knowledge.area">
-		    <field name="name">Filología Vasca</field>
-		    <field name="code">365</field>
-		</record>
-
-		<record id="academy_knowledge_area_82" model="academy.knowledge.area">
-		    <field name="name">Filología Gallega y Portuguesa</field>
-		    <field name="code">370</field>
-		</record>
-
-		<record id="academy_knowledge_area_83" model="academy.knowledge.area">
-		    <field name="name">Filosofía</field>
-		    <field name="code">375</field>
-		</record>
-
-		<record id="academy_knowledge_area_84" model="academy.knowledge.area">
-		    <field name="name">Filosofía del Derecho</field>
-		    <field name="code">381</field>
-		</record>
-
-		<record id="academy_knowledge_area_85" model="academy.knowledge.area">
-		    <field name="name">Filosofía Moral</field>
-		    <field name="code">383</field>
-		</record>
-
-		<record id="academy_knowledge_area_86" model="academy.knowledge.area">
-		    <field name="name">Física Aplicada</field>
-		    <field name="code">385</field>
-		</record>
-
-		<record id="academy_knowledge_area_87" model="academy.knowledge.area">
-		    <field name="name">Física Atómica, Molecular y Nuclear</field>
-		    <field name="code">390</field>
-		</record>
-
-		<record id="academy_knowledge_area_88" model="academy.knowledge.area">
-		    <field name="name">Física de la Materia Condensada</field>
-		    <field name="code">395</field>
-		</record>
-
-		<record id="academy_knowledge_area_89" model="academy.knowledge.area">
-		    <field name="name">Física de la Tierra</field>
-		    <field name="code">398</field>
-		</record>
-
-		<record id="academy_knowledge_area_90" model="academy.knowledge.area">
-		    <field name="name">Física Teórica</field>
-		    <field name="code">405</field>
-		</record>
-
-		<record id="academy_knowledge_area_91" model="academy.knowledge.area">
-		    <field name="name">Fisiología</field>
-		    <field name="code">410</field>
-		</record>
-
-		<record id="academy_knowledge_area_92" model="academy.knowledge.area">
-		    <field name="name">Fisiología Vegetal</field>
-		    <field name="code">412</field>
-		</record>
-
-		<record id="academy_knowledge_area_93" model="academy.knowledge.area">
-		    <field name="name">Fisioterapia</field>
-		    <field name="code">413</field>
-		</record>
-
-		<record id="academy_knowledge_area_94" model="academy.knowledge.area">
-		    <field name="name">Fundamentos del Análisis Económico</field>
-		    <field name="code">415</field>
-		</record>
-
-		<record id="academy_knowledge_area_95" model="academy.knowledge.area">
-		    <field name="name">Genética</field>
-		    <field name="code">420</field>
-		</record>
-
-		<record id="academy_knowledge_area_96" model="academy.knowledge.area">
-		    <field name="name">Geodinámica Externa</field>
-		    <field name="code">427</field>
-		</record>
-
-		<record id="academy_knowledge_area_97" model="academy.knowledge.area">
-		    <field name="name">Geodinámica Interna</field>
-		    <field name="code">428</field>
-		</record>
-
-		<record id="academy_knowledge_area_98" model="academy.knowledge.area">
-		    <field name="name">Geografía Física</field>
-		    <field name="code">430</field>
-		</record>
-
-		<record id="academy_knowledge_area_99" model="academy.knowledge.area">
-		    <field name="name">Geografía Humana</field>
-		    <field name="code">435</field>
-		</record>
-
-		<record id="academy_knowledge_area_10" model="academy.knowledge.area">
-		    <field name="name">Geometría y Topología</field>
-		    <field name="code">440</field>
-		</record>
-
-		<record id="academy_knowledge_area_11" model="academy.knowledge.area">
-		    <field name="name">Histología</field>
-		    <field name="code">443</field>
-		</record>
-
-		<record id="academy_knowledge_area_12" model="academy.knowledge.area">
-		    <field name="name">Historia Antigua</field>
-		    <field name="code">445</field>
-		</record>
-
-		<record id="academy_knowledge_area_13" model="academy.knowledge.area">
-		    <field name="name">Historia Contemporánea</field>
-		    <field name="code">450</field>
-		</record>
-
-		<record id="academy_knowledge_area_14" model="academy.knowledge.area">
-		    <field name="name">Historia de América</field>
-		    <field name="code">455</field>
-		</record>
-
-		<record id="academy_knowledge_area_15" model="academy.knowledge.area">
-		    <field name="name">Historia de la Ciencia</field>
-		    <field name="code">460</field>
-		</record>
-
-		<record id="academy_knowledge_area_16" model="academy.knowledge.area">
-		    <field name="name">Historia del Arte</field>
-		    <field name="code">465</field>
-		</record>
-
-		<record id="academy_knowledge_area_17" model="academy.knowledge.area">
-		    <field name="name">Historia del Derecho y de las Instituciones</field>
-		    <field name="code">470</field>
-		</record>
-
-		<record id="academy_knowledge_area_18" model="academy.knowledge.area">
-		    <field name="name">Historia del Pensamiento y de los Movimientos Sociales</field>
-		    <field name="code">475</field>
-		</record>
-
-		<record id="academy_knowledge_area_19" model="academy.knowledge.area">
-		    <field name="name">Historia e Instituciones Económicas</field>
-		    <field name="code">480</field>
-		</record>
-
-		<record id="academy_knowledge_area_20" model="academy.knowledge.area">
-		    <field name="name">Historia Medieval</field>
-		    <field name="code">485</field>
-		</record>
-
-		<record id="academy_knowledge_area_21" model="academy.knowledge.area">
-		    <field name="name">Historia Moderna</field>
-		    <field name="code">490</field>
-		</record>
-
-		<record id="academy_knowledge_area_22" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Aeroespacial</field>
-		    <field name="code">495</field>
-		</record>
-
-		<record id="academy_knowledge_area_23" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Agroforestal</field>
-		    <field name="code">500</field>
-		</record>
-
-		<record id="academy_knowledge_area_24" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Cartográfica, Geodésica y Fotogrametría</field>
-		    <field name="code">505</field>
-		</record>
-
-		<record id="academy_knowledge_area_25" model="academy.knowledge.area">
-		    <field name="name">Ingeniería de la Construcción</field>
-		    <field name="code">510</field>
-		</record>
-
-		<record id="academy_knowledge_area_26" model="academy.knowledge.area">
-		    <field name="name">Ingeniería de los Procesos de Fabricación</field>
-		    <field name="code">515</field>
-		</record>
-
-		<record id="academy_knowledge_area_27" model="academy.knowledge.area">
-		    <field name="name">Ingeniería de Sistemas y Automática</field>
-		    <field name="code">520</field>
-		</record>
-
-		<record id="academy_knowledge_area_28" model="academy.knowledge.area">
-		    <field name="name">Ingeniería del Terreno</field>
-		    <field name="code">525</field>
-		</record>
-
-		<record id="academy_knowledge_area_29" model="academy.knowledge.area">
-		    <field name="name">Ingeniería e Infraestructura de los Transportes</field>
-		    <field name="code">530</field>
-		</record>
-
-		<record id="academy_knowledge_area_30" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Eléctrica</field>
-		    <field name="code">535</field>
-		</record>
-
-		<record id="academy_knowledge_area_31" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Hidráulica</field>
-		    <field name="code">540</field>
-		</record>
-
-		<record id="academy_knowledge_area_32" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Mecánica</field>
-		    <field name="code">545</field>
-		</record>
-
-		<record id="academy_knowledge_area_33" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Nuclear</field>
-		    <field name="code">550</field>
-		</record>
-
-		<record id="academy_knowledge_area_34" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Química</field>
-		    <field name="code">555</field>
-		</record>
-
-		<record id="academy_knowledge_area_35" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Telemática</field>
-		    <field name="code">560</field>
-		</record>
-
-		<record id="academy_knowledge_area_36" model="academy.knowledge.area">
-		    <field name="name">Ingeniería Textil y Papelera</field>
-		    <field name="code">565</field>
-		</record>
-
-		<record id="academy_knowledge_area_37" model="academy.knowledge.area">
-		    <field name="name">Inmunología</field>
-		    <field name="code">566</field>
-		</record>
-
-		<record id="academy_knowledge_area_38" model="academy.knowledge.area">
-		    <field name="name">Lengua Española</field>
-		    <field name="code">567</field>
-		</record>
-
-		<record id="academy_knowledge_area_39" model="academy.knowledge.area">
-		    <field name="name">Lenguajes y Sistemas Informáticos</field>
-		    <field name="code">570</field>
-		</record>
-
-		<record id="academy_knowledge_area_40" model="academy.knowledge.area">
-		    <field name="name">Lingüística General</field>
-		    <field name="code">575</field>
-		</record>
-
-		<record id="academy_knowledge_area_41" model="academy.knowledge.area">
-		    <field name="name">Lingüística Indoeuropea</field>
-		    <field name="code">580</field>
-		</record>
-
-		<record id="academy_knowledge_area_42" model="academy.knowledge.area">
-		    <field name="name">Literatura Española</field>
-		    <field name="code">583</field>
-		</record>
-
-		<record id="academy_knowledge_area_43" model="academy.knowledge.area">
-		    <field name="name">Lógica y Filosofía de la Ciencia</field>
-		    <field name="code">585</field>
-		</record>
-
-		<record id="academy_knowledge_area_44" model="academy.knowledge.area">
-		    <field name="name">Máquinas y Motores Térmicos</field>
-		    <field name="code">590</field>
-		</record>
-
-		<record id="academy_knowledge_area_45" model="academy.knowledge.area">
-		    <field name="name">Matemática Aplicada</field>
-		    <field name="code">595</field>
-		</record>
-
-		<record id="academy_knowledge_area_46" model="academy.knowledge.area">
-		    <field name="name">Mecánica de Fluídos</field>
-		    <field name="code">600</field>
-		</record>
-
-		<record id="academy_knowledge_area_47" model="academy.knowledge.area">
-		    <field name="name">Mecánica de Medios Contínuos y Teoría de Estructuras</field>
-		    <field name="code">605</field>
-		</record>
-
-		<record id="academy_knowledge_area_48" model="academy.knowledge.area">
-		    <field name="name">Medicina</field>
-		    <field name="code">610</field>
-		</record>
-
-		<record id="academy_knowledge_area_49" model="academy.knowledge.area">
-		    <field name="name">Medicina Legal y Forense</field>
-		    <field name="code">613</field>
-		</record>
-
-		<record id="academy_knowledge_area_50" model="academy.knowledge.area">
-		    <field name="name">Medicina Preventiva y Salud Pública</field>
-		    <field name="code">615</field>
-		</record>
-
-		<record id="academy_knowledge_area_51" model="academy.knowledge.area">
-		    <field name="name">Medicina y Cirugía Animal</field>
-		    <field name="code">617</field>
-		</record>
-
-		<record id="academy_knowledge_area_52" model="academy.knowledge.area">
-		    <field name="name">Metodología de las Ciencias del Comportamiento</field>
-		    <field name="code">620</field>
-		</record>
-
-		<record id="academy_knowledge_area_53" model="academy.knowledge.area">
-		    <field name="name">Métodos Cuantitativos para la Economía y la Empresa</field>
-		    <field name="code">623</field>
-		</record>
-
-		<record id="academy_knowledge_area_54" model="academy.knowledge.area">
-		    <field name="name">Métodos de Investigación y Diagnóstico en Educación</field>
-		    <field name="code">625</field>
-		</record>
-
-		<record id="academy_knowledge_area_55" model="academy.knowledge.area">
-		    <field name="name">Microbiología</field>
-		    <field name="code">630</field>
-		</record>
-
-		<record id="academy_knowledge_area_56" model="academy.knowledge.area">
-		    <field name="name">Música</field>
-		    <field name="code">635</field>
-		</record>
-
-		<record id="academy_knowledge_area_57" model="academy.knowledge.area">
-		    <field name="name">Nutrición y Bromatología</field>
-		    <field name="code">640</field>
-		</record>
-
-		<record id="academy_knowledge_area_58" model="academy.knowledge.area">
-		    <field name="name">Obstetricia y Ginecología</field>
-		    <field name="code">645</field>
-		</record>
-
-		<record id="academy_knowledge_area_59" model="academy.knowledge.area">
-		    <field name="name">Oftalmología</field>
-		    <field name="code">646</field>
-		</record>
-
-		<record id="academy_knowledge_area_60" model="academy.knowledge.area">
-		    <field name="name">Optica</field>
-		    <field name="code">647</field>
-		</record>
-
-		<record id="academy_knowledge_area_61" model="academy.knowledge.area">
-		    <field name="name">Organización de Empresas</field>
-		    <field name="code">650</field>
-		</record>
-
-		<record id="academy_knowledge_area_62" model="academy.knowledge.area">
-		    <field name="name">Otorrinolaringología</field>
-		    <field name="code">653</field>
-		</record>
-
-		<record id="academy_knowledge_area_63" model="academy.knowledge.area">
-		    <field name="name">Paleontología</field>
-		    <field name="code">655</field>
-		</record>
-
-		<record id="academy_knowledge_area_64" model="academy.knowledge.area">
-		    <field name="name">Parasitología</field>
-		    <field name="code">660</field>
-		</record>
-
-		<record id="academy_knowledge_area_65" model="academy.knowledge.area">
-		    <field name="name">Pediatría</field>
-		    <field name="code">670</field>
-		</record>
-
-		<record id="academy_knowledge_area_66" model="academy.knowledge.area">
-		    <field name="name">Periodismo</field>
-		    <field name="code">675</field>
-		</record>
-
-		<record id="academy_knowledge_area_67" model="academy.knowledge.area">
-		    <field name="name">Personalidad, Evaluación y Tratamiento Psicológico</field>
-		    <field name="code">680</field>
-		</record>
-
-		<record id="academy_knowledge_area_68" model="academy.knowledge.area">
-		    <field name="name">Petrología y Geoquímica</field>
-		    <field name="code">685</field>
-		</record>
-
-		<record id="academy_knowledge_area_69" model="academy.knowledge.area">
-		    <field name="name">Pintura</field>
-		    <field name="code">690</field>
-		</record>
-
-		<record id="academy_knowledge_area_70" model="academy.knowledge.area">
-		    <field name="name">Prehistoria</field>
-		    <field name="code">695</field>
-		</record>
-
-		<record id="academy_knowledge_area_71" model="academy.knowledge.area">
-		    <field name="name">Producción Animal</field>
-		    <field name="code">700</field>
-		</record>
-
-		<record id="academy_knowledge_area_72" model="academy.knowledge.area">
-		    <field name="name">Producción Vegetal</field>
-		    <field name="code">705</field>
-		</record>
-
-		<record id="academy_knowledge_area_73" model="academy.knowledge.area">
-		    <field name="name">Prospección e Investigación Minera</field>
-		    <field name="code">710</field>
-		</record>
-
-		<record id="academy_knowledge_area_74" model="academy.knowledge.area">
-		    <field name="name">Proyectos Arquitectónicos</field>
-		    <field name="code">715</field>
-		</record>
-
-		<record id="academy_knowledge_area_75" model="academy.knowledge.area">
-		    <field name="name">Proyectos de Ingeniería</field>
-		    <field name="code">720</field>
-		</record>
-
-		<record id="academy_knowledge_area_76" model="academy.knowledge.area">
-		    <field name="name">Psicobiología</field>
-		    <field name="code">725</field>
-		</record>
-
-		<record id="academy_knowledge_area_77" model="academy.knowledge.area">
-		    <field name="name">Psicología Básica</field>
-		    <field name="code">730</field>
-		</record>
-
-		<record id="academy_knowledge_area_78" model="academy.knowledge.area">
-		    <field name="name">Psicología Evolutiva y de la Educación</field>
-		    <field name="code">735</field>
-		</record>
-
-		<record id="academy_knowledge_area_79" model="academy.knowledge.area">
-		    <field name="name">Psicología Social</field>
-		    <field name="code">740</field>
-		</record>
-
-		<record id="academy_knowledge_area_80" model="academy.knowledge.area">
-		    <field name="name">Psiquiatría</field>
-		    <field name="code">745</field>
-		</record>
-
-		<record id="academy_knowledge_area_81" model="academy.knowledge.area">
-		    <field name="name">Química Analítica</field>
-		    <field name="code">750</field>
-		</record>
-
-		<record id="academy_knowledge_area_82" model="academy.knowledge.area">
-		    <field name="name">Química Física</field>
-		    <field name="code">755</field>
-		</record>
-
-		<record id="academy_knowledge_area_83" model="academy.knowledge.area">
-		    <field name="name">Química Inorgánica</field>
-		    <field name="code">760</field>
-		</record>
-
-		<record id="academy_knowledge_area_84" model="academy.knowledge.area">
-		    <field name="name">Química Orgánica</field>
-		    <field name="code">765</field>
-		</record>
-
-		<record id="academy_knowledge_area_85" model="academy.knowledge.area">
-		    <field name="name">Radiología y Medicina Física</field>
-		    <field name="code">770</field>
-		</record>
-
-		<record id="academy_knowledge_area_86" model="academy.knowledge.area">
-		    <field name="name">Sanidad Animal</field>
-		    <field name="code">773</field>
-		</record>
-
-		<record id="academy_knowledge_area_87" model="academy.knowledge.area">
-		    <field name="name">Sociología</field>
-		    <field name="code">775</field>
-		</record>
-
-		<record id="academy_knowledge_area_88" model="academy.knowledge.area">
-		    <field name="name">Tecnología de Alimentos</field>
-		    <field name="code">780</field>
-		</record>
-
-		<record id="academy_knowledge_area_89" model="academy.knowledge.area">
-		    <field name="name">Tecnología Electrónica</field>
-		    <field name="code">785</field>
-		</record>
-
-		<record id="academy_knowledge_area_90" model="academy.knowledge.area">
-		    <field name="name">Tecnologías del Medio Ambiente</field>
-		    <field name="code">790</field>
-		</record>
-
-		<record id="academy_knowledge_area_91" model="academy.knowledge.area">
-		    <field name="name">Teoría de la Literatura y Literatura Comparada</field>
-		    <field name="code">796</field>
-		</record>
-
-		<record id="academy_knowledge_area_92" model="academy.knowledge.area">
-		    <field name="name">Teoría de la Señal y Comunicaciones</field>
-		    <field name="code">800</field>
-		</record>
-
-		<record id="academy_knowledge_area_93" model="academy.knowledge.area">
-		    <field name="name">Teoría e Historia de la Educación</field>
-		    <field name="code">805</field>
-		</record>
-
-		<record id="academy_knowledge_area_94" model="academy.knowledge.area">
-		    <field name="name">Toxicología</field>
-		    <field name="code">807</field>
-		</record>
-
-		<record id="academy_knowledge_area_95" model="academy.knowledge.area">
-		    <field name="name">Trabajo Social y Servicios Sociales</field>
-		    <field name="code">813</field>
-		</record>
-
-		<record id="academy_knowledge_area_96" model="academy.knowledge.area">
-		    <field name="name">Traducción e Interpretación</field>
-		    <field name="code">814</field>
-		</record>
-
-		<record id="academy_knowledge_area_97" model="academy.knowledge.area">
-		    <field name="name">Traumatología y Ortopedia</field>
-		    <field name="code">830</field>
-		</record>
-
-		<record id="academy_knowledge_area_98" model="academy.knowledge.area">
-		    <field name="name">Urbanística y Ordenación del Territorio</field>
-		    <field name="code">815</field>
-		</record>
-
-		<record id="academy_knowledge_area_99" model="academy.knowledge.area">
-		    <field name="name">Urología</field>
-		    <field name="code">817</field>
-		</record>
-
-		<record id="academy_knowledge_area_100" model="academy.knowledge.area">
-		    <field name="name">Zoología</field>
-		    <field name="code">819</field>
-		</record>
-
-    </data>
+        <record id="academy_knowledge_area_01" model="academy.knowledge.area">
+            <field name="name">Algebra</field>
+            <field name="knowle_code">5</field>
+        </record>
+
+        <record id="academy_knowledge_area_02" model="academy.knowledge.area">
+            <field name="name">Regional Geographic Analysis</field>
+            <field name="knowle_code">10</field>
+        </record>
+
+        <record id="academy_knowledge_area_03" model="academy.knowledge.area">
+            <field name="name">Mathematical Analysis</field>
+            <field name="knowle_code">15</field>
+        </record>
+
+        <record id="academy_knowledge_area_04" model="academy.knowledge.area">
+            <field name="name">Pathological Anatomy</field>
+            <field name="knowle_code">20</field>
+        </record>
+
+        <record id="academy_knowledge_area_05" model="academy.knowledge.area">
+            <field name="name">Anatomy and Pathological Anatomy Compared</field>
+            <field name="knowle_code">25</field>
+        </record>
+
+        <record id="academy_knowledge_area_06" model="academy.knowledge.area">
+            <field name="name">Anatomy and Human Embryology</field>
+            <field name="knowle_code">27</field>
+        </record>
+
+        <record id="academy_knowledge_area_07" model="academy.knowledge.area">
+            <field name="name">Physical Anthropology</field>
+            <field name="knowle_code">28</field>
+        </record>
+
+        <record id="academy_knowledge_area_08" model="academy.knowledge.area">
+            <field name="name">Social Anthropology</field>
+            <field name="knowle_code">30</field>
+        </record>
+
+        <record id="academy_knowledge_area_09" model="academy.knowledge.area">
+            <field name="name">Archeology</field>
+            <field name="knowle_code">33</field>
+        </record>
+
+        <record id="academy_knowledge_area_10" model="academy.knowledge.area">
+            <field name="name">Histology</field>
+            <field name="knowle_code">443</field>
+        </record>
+
+        <record id="academy_knowledge_area_11" model="academy.knowledge.area">
+            <field name="name">Old History</field>
+            <field name="knowle_code">445</field>
+        </record>
+
+        <record id="academy_knowledge_area_12" model="academy.knowledge.area">
+            <field name="name">Contemporary History</field>
+            <field name="knowle_code">450</field>
+        </record>
+
+        <record id="academy_knowledge_area_13" model="academy.knowledge.area">
+            <field name="name">History of America</field>
+            <field name="knowle_code">455</field>
+        </record>
+
+        <record id="academy_knowledge_area_14" model="academy.knowledge.area">
+            <field name="name">History of Science</field>
+            <field name="knowle_code">460</field>
+        </record>
+
+        <record id="academy_knowledge_area_15" model="academy.knowledge.area">
+            <field name="name">History of Art</field>
+            <field name="knowle_code">465</field>
+        </record>
+
+        <record id="academy_knowledge_area_16" model="academy.knowledge.area">
+            <field name="name">History of Law and Institutions</field>
+            <field name="knowle_code">470</field>
+        </record>
+
+        <record id="academy_knowledge_area_17" model="academy.knowledge.area">
+            <field name="name">History of Thought and Social Movements</field>
+            <field name="knowle_code">475</field>
+        </record>
+
+        <record id="academy_knowledge_area_18" model="academy.knowledge.area">
+            <field name="name">History and Economic Institutions</field>
+            <field name="knowle_code">480</field>
+        </record>
+
+        <record id="academy_knowledge_area_19" model="academy.knowledge.area">
+            <field name="name">Medieval History</field>
+            <field name="knowle_code">485</field>
+        </record>
+
+        <record id="academy_knowledge_area_20" model="academy.knowledge.area">
+            <field name="name">Modern History</field>
+            <field name="knowle_code">490</field>
+        </record>
+
+        <record id="academy_knowledge_area_21" model="academy.knowledge.area">
+            <field name="name">Aerospace Engineering</field>
+            <field name="knowle_code">495</field>
+        </record>
+
+        <record id="academy_knowledge_area_22" model="academy.knowledge.area">
+            <field name="name">Agroforestry Engineering</field>
+            <field name="knowle_code">500</field>
+        </record>
+
+        <record id="academy_knowledge_area_23" model="academy.knowledge.area">
+            <field name="name">Cartographic, Geodetic and Photogrammetric Engineering</field>
+            <field name="knowle_code">505</field>
+        </record>
+
+        <record id="academy_knowledge_area_24" model="academy.knowledge.area">
+            <field name="name">Construction Engineering</field>
+            <field name="knowle_code">510</field>
+        </record>
+
+        <record id="academy_knowledge_area_25" model="academy.knowledge.area">
+            <field name="name">Engineering of Manufacturing Processes</field>
+            <field name="knowle_code">515</field>
+        </record>
+
+        <record id="academy_knowledge_area_26" model="academy.knowledge.area">
+            <field name="name">Systems Engineering and Automation</field>
+            <field name="knowle_code">520</field>
+        </record>
+
+        <record id="academy_knowledge_area_27" model="academy.knowledge.area">
+            <field name="name">Ground Engineering</field>
+            <field name="knowle_code">525</field>
+        </record>
+
+        <record id="academy_knowledge_area_28" model="academy.knowledge.area">
+            <field name="name">Engineering and Transportation Infrastructure</field>
+            <field name="knowle_code">530</field>
+        </record>
+
+        <record id="academy_knowledge_area_29" model="academy.knowledge.area">
+            <field name="name">Electric Engineering</field>
+            <field name="knowle_code">535</field>
+        </record>
+
+        <record id="academy_knowledge_area_30" model="academy.knowledge.area">
+            <field name="name">Hydraulic Engineer</field>
+            <field name="knowle_code">540</field>
+        </record>
+
+        <record id="academy_knowledge_area_31" model="academy.knowledge.area">
+            <field name="name">Mechanical Engineering</field>
+            <field name="knowle_code">545</field>
+        </record>
+
+        <record id="academy_knowledge_area_32" model="academy.knowledge.area">
+            <field name="name">Nuclear Engineering</field>
+            <field name="knowle_code">550</field>
+        </record>
+
+        <record id="academy_knowledge_area_33" model="academy.knowledge.area">
+            <field name="name">Chemical Engineering</field>
+            <field name="knowle_code">555</field>
+        </record>
+
+        <record id="academy_knowledge_area_34" model="academy.knowledge.area">
+            <field name="name">Telematics Engineering</field>
+            <field name="knowle_code">560</field>
+        </record>
+
+        <record id="academy_knowledge_area_35" model="academy.knowledge.area">
+            <field name="name">Textile and Paper Engineering</field>
+            <field name="knowle_code">565</field>
+        </record>
+
+        <record id="academy_knowledge_area_36" model="academy.knowledge.area">
+            <field name="name">Immunology</field>
+            <field name="knowle_code">566</field>
+        </record>
+
+        <record id="academy_knowledge_area_37" model="academy.knowledge.area">
+            <field name="name">Spanish Language</field>
+            <field name="knowle_code">567</field>
+        </record>
+
+        <record id="academy_knowledge_area_38" model="academy.knowledge.area">
+            <field name="name">Languages ​​And Computer Systems</field>
+            <field name="knowle_code">570</field>
+        </record>
+
+        <record id="academy_knowledge_area_39" model="academy.knowledge.area">
+            <field name="name">General Linguistics</field>
+            <field name="knowle_code">575</field>
+        </record>
+
+        <record id="academy_knowledge_area_40" model="academy.knowledge.area">
+            <field name="name">Indo-European Linguistics</field>
+            <field name="knowle_code">580</field>
+        </record>
+
+</data>
 </openerp>

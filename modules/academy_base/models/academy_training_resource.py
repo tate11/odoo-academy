@@ -39,7 +39,7 @@ class AcademyTrainingResource(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['mail.thread']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     # ---------------------------- ENTITY FIELDS ------------------------------
 
@@ -97,7 +97,7 @@ class AcademyTrainingResource(models.Model):
         help=u'Last update'
     )
 
-    academy_training_unit_ids = fields.Many2many(
+    training_unit_ids = fields.Many2many(
         string='Training units',
         required=False,
         readonly=False,
@@ -148,14 +148,14 @@ class AcademyTrainingResource(models.Model):
         default=None,
         help=False,
         comodel_name='academy.training.resource.file',
-        inverse_name='academy_training_resource_id',
+        inverse_name='training_resource_id',
         domain=[],
         context={},
         auto_join=False,
         limit=None
     )
 
-    academy_training_action_ids = custom_model_fields.Many2ManyThroughView(
+    training_action_ids = custom_model_fields.Many2ManyThroughView(
         string='Training actions',
         required=False,
         readonly=True,
@@ -163,9 +163,9 @@ class AcademyTrainingResource(models.Model):
         default=None,
         help='Choose related training actions',
         comodel_name='academy.training.action',
-        relation='academy_training_action_academy_training_resource_rel',
-        column1='academy_training_resource_id', # this is the name in the SQL VIEW
-        column2='academy_training_action_id',   # this is the name in the SQL VIEW
+        relation='academy_training_action_training_resource_rel',
+        column1='training_resource_id', # this is the name in the SQL VIEW
+        column2='training_action_id',   # this is the name in the SQL VIEW
         domain=[],
         context={},
         limit=None
@@ -243,7 +243,7 @@ class AcademyTrainingResource(models.Model):
                             filenames.append(
                                 (0, 0, {
                                     'name': rel_path,
-                                    'academy_training_resource_id': record.id
+                                    'training_resource_id': record.id
                                     }
                                 )
                             )

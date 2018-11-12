@@ -124,7 +124,7 @@
                             <th class="answers-table-description">Description</th>
                         </thead>
                         <tbody>
-                        <t t-foreach="academy_test_id.academy_answers_table_ids" t-as="answer">
+                        <t t-foreach="o.academy_answers_table_ids" t-as="answer">
                             <tr>
                                 <th><t t-esc="answer.sequence" /></th>
                                 <td><t t-esc="answer.name" /></td>
@@ -148,17 +148,19 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <t t-name="academy_tests.view_academy_test_document_qweb">
-                    <t t-call="web.external_layout_standard">
+                    <t t-call="web.external_layout">
 
                         <div class="page">
+                            <div class="oe_structure"/>
+
                             <div class="row">
                                 <section class="academy-post-test-test posted-test-body col-xs-12">
-                                    <t t-if="academy_test_id.preamble">
-                                        <p class="academy-test-preamble"><t t-esc="academy_test_id.preamble" /></p>
+                                    <t t-if="o.preamble">
+                                        <p class="academy-test-preamble"><t t-esc="o.preamble" /></p>
                                     </t>
 
                                     <ol class="academy-question-ids">
-                                        <t t-foreach="academy_test_id.academy_test_academy_test_question_ids" t-as="academy_test_academy_test_question_ids">
+                                        <t t-foreach="o.academy_test_academy_test_question_ids" t-as="academy_test_academy_test_question_ids">
 
                                         <t t-set="academy_test_question_id" t-value="academy_test_academy_test_question_ids.academy_test_question_id" />
                                         <li class="academy-question academy-question-swap-content" t-attf-id="academy-question-{{ academy_test_question_id.id }}" t-attf-data-question-id="{{ academy_test_question_id.id }}">
@@ -173,6 +175,8 @@
                                     <t t-call="academy_tests.view_academy_answers_table_qweb" />
                                 </section>
                             </div> <!-- row -->
+
+                            <div class="oe_structure"/>
                         </div> <!-- page -->
 
                     </t> <!-- t-call -->
@@ -192,7 +196,7 @@
             <field name="arch" type="xml">
                 <t t-name="academy_tests.view_academy_test_qweb">
                     <t t-call="web.html_container">
-                        <t t-foreach="docs" t-as="academy_test_id">
+                        <t t-foreach="docs" t-as="o">
                             <t t-call="academy_tests.view_academy_test_document_qweb" />
                         </t>
                     </t>

@@ -27,7 +27,7 @@
     # always loaded
     'data': [
         'data/res_groups.xml',
-        'data/ir_actions_server_data.xml',
+        'data/ir_sequence.xml',
 
         'views/academy_base.xml',
 
@@ -44,12 +44,13 @@
         'views/academy_training_unit_view.xml',
         'views/academy_training_module_view.xml',
         'views/academy_competency_unit_view.xml',
+        'views/academy_training_activity_view.xml',
         'views/academy_training_action_view.xml',
 
         'views/res_parter_view.xml',
+        'views/academy_training_action_enrolment.xml',
 
         'views/academy_training_resource_view.xml',
-        'views/academy_training_action_sign_up_view.xml',
 
         'security/academy_application_scope.xml',
         'security/academy_base.xml',
@@ -61,23 +62,23 @@
         'security/academy_professional_qualification.xml',
         'security/academy_qualification_level.xml',
         'security/academy_training_action.xml',
-        'security/academy_training_action_sign_up.xml',
         'security/academy_training_activity.xml',
         'security/academy_training_methodology.xml',
         'security/academy_training_modality.xml',
         'security/academy_training_module.xml',
         'security/academy_training_resource.xml',
+        'security/academy_training_resource_file.xml',
 
         'security/academy_training_unit.xml',
 
         'data/academy_application_scope.xml',
         'data/academy_knowledge_area.xml',
-        'data/academy_professional_area.xml',
-        'data/academy_professional_category.xml',
         'data/academy_professional_family.xml',
         'data/academy_qualification_level.xml',
         'data/academy_training_methodology.xml',
-        'data/academy_training_modality.xml'
+        'data/academy_training_modality.xml',
+
+        'security/academy_training_action_enrolment.xml',
 
     ],
     'qweb': [
@@ -85,6 +86,22 @@
     ],
     # only loaded in demonstration mode
     'demo': [
+        'demo/res_partner.xml',
+        'demo/res_users.xml',
+
+        'demo/academy_professional_area.xml',
+        'demo/academy_professional_category.xml',
+        'demo/academy_professional_qualification.xml',
+
+        'demo/academy_training_module.xml',
+        'demo/academy_training_unit.xml',
+        'demo/academy_competency_unit.xml',
+
+        'demo/academy_training_activity.xml',
+        'demo/academy_training_action.xml',
+        # 'demo/academy_training_action_sign_up.xml',
+        # 'demo/academy_training_resource.xml',
+        #'demo/academy_training_resource_file.xml',
     ],
     'js': [
         # 'static/src/js/appointment_manager.js'
