@@ -404,19 +404,19 @@ class App(object):
                     elif self._preamble and len(line) > 3:
                         preamble += line.strip()
                     else:
-                        print u'Skip line %s' % line
+                        print(u'Skip line %s' % line)
 
         except Exception as ex:
-            print ex
+            print(ex)
         else:
             self._register_test()
             self._sql = u'END; BEGIN; {} END;'.format(self._sql)
             if self._out:
                 with open(self._out, 'w') as foutput: #open the file
                     foutput.write(self._sql.encode('utf-8', errors='replace'))
-                print u'File %s has been written' % self._out
+                print(u'File %s has been written' % self._out)
             else:
-                print self._sql.encode(self._cp, errors='replace')
+                print(self._sql.encode(self._cp, errors='replace'))
 
     def main(self):
         """ The main application behavior, this method should be used to

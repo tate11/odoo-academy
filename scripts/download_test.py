@@ -18,7 +18,7 @@ import base64
 import hashlib
 import re
 import urllib
-import urlparse
+import urllib.parse as urlparse
 
 
 # -------------------------- MAIN SCRIPT BEHAVIOR -----------------------------
@@ -124,7 +124,7 @@ class App(object):
             if files:
                 self._id = int(files[0][:-3])
                 self._read_id_file(files[0])
-                print u'Using file ' + files[0] + ' and ' + self._report
+                print(u'Using file ' + files[0] + ' and ' + self._report)
 
         if args.title:
             self._title = args.title.decode(self._cp, errors=u'replace')
@@ -148,7 +148,7 @@ class App(object):
             self._odoo = odoorpc.ODOO(self._server, port=self._port)
             result = True
         except Exception as ex:
-            print ex
+            print(ex)
 
         return result
 
@@ -195,7 +195,6 @@ class App(object):
 
 
     def _download_report(self, report_id):
-        print self._report
         return self._odoo.report.download(
             self._report,
             [report_id]
@@ -250,7 +249,7 @@ class App(object):
                 self._logout()
 
         else:
-            print u'Please type an ID or a title, see --help'
+            print(u'Please type an ID or a title, see --help')
 
         sys.exit(result)
 

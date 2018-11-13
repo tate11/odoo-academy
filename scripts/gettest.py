@@ -385,9 +385,9 @@ class App(object):
             result = string.decode('utf-8', errors='replace')
         except:
             try:
-                string.decode('utf-8', errors='ignore')
+                result = string.decode('utf-8', errors='ignore')
             except Exception as ex:
-                print ex
+                print(ex)
 
         else:
             try:
@@ -396,7 +396,7 @@ class App(object):
                 try:
                     result = result.encode(codepage, errors='ignore')
                 except Exception as ex:
-                    print ex
+                    print(ex)
 
         return result
 
@@ -404,8 +404,8 @@ class App(object):
     def _autodecode(_in_text):
         """ Encode text in UTF-8 """
         if _in_text:
-            dbcode = 'utf-8' # chardet.detect(_in_text)['encoding']
-            return _in_text.decode(dbcode, errors='replace')
+            # dbcode = 'utf-8' # chardet.detect(_in_text)['encoding']
+            return _in_text # .decode(dbcode, errors='replace')
         else:
             return u''
 
@@ -468,9 +468,6 @@ class App(object):
 
                     answer_count += 1
 
-
-
-        print os_encoding
 
         # except Exception as ex:
         #     print ex
