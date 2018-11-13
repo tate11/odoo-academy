@@ -122,7 +122,7 @@
         <!-- Main menu for model.name -->
         <record id="menu_professional_area" model="ir.ui.menu" >
             <field name="name">Professional areas</field>
-            <field name="sequence" eval="10" />
+            <field name="sequence" eval="15" />
             <field name="action" ref="action_professional_area_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
         </record>

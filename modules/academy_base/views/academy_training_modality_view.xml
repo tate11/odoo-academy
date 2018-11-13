@@ -105,7 +105,7 @@
         <!-- Main menu for model.name -->
         <record id="menu_training_modality" model="ir.ui.menu" >
             <field name="name">Training modalities</field>
-            <field name="sequence" eval="10" />
+            <field name="sequence" eval="40" />
             <field name="action" ref="action_training_modality_act_window" />
             <field name="parent_id" ref="menu_academy_settings_helper" />
         </record>

@@ -108,7 +108,7 @@
         <!-- Main menu for model.name -->
         <record id="menu_knowledge_area" model="ir.ui.menu" >
             <field name="name">Knowledge areas</field>
-            <field name="sequence" eval="10" />
+            <field name="sequence" eval="35" />
             <field name="action" ref="action_knowledge_area_act_window" />
             <field name="parent_id" ref="menu_academy_settings_helper" />
         </record>

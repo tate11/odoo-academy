@@ -23,7 +23,7 @@ class AcademyCompetencyUnit(models.Model):
     accreditation.
 
     Fields:
-      name (Char): Human readable name which will identify each record.
+      competency_name (Char): Human readable name which will identify each record.
 
     """
 
@@ -31,11 +31,11 @@ class AcademyCompetencyUnit(models.Model):
     _description = u'Academy competency unit'
 
     _rec_name = 'name'
-    _order = 'professional_qualification_id ASC, sequence ASC, name ASC'
+    _order = 'professional_qualification_id ASC, sequence ASC, competency_name ASC'
 
     _inherits = {'academy.training.module': 'training_module_id'}
 
-    name = fields.Char(
+    competency_name = fields.Char(
         string='Name',
         required=True,
         readonly=False,
@@ -43,7 +43,8 @@ class AcademyCompetencyUnit(models.Model):
         default=None,
         help='Enter new name',
         size=100,
-        translate=True
+        translate=True,
+        oldname='name'
     )
 
     description = fields.Text(
@@ -124,3 +125,20 @@ class AcademyCompetencyUnit(models.Model):
             record.training_unit_count = \
                 len(record.training_module_id.training_unit_ids)
 
+
+    # -------------------------- OVERLOADED METHODS ---------------------------
+
+    @api.one
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        """ Prevents new record of the inherited (_inherits) model will be
+        created
+        """
+
+        default = dict(default or {})
+        default.update({
+            'training_module_id': self.training_module_id.id
+        })
+
+        rec = super(AcademyCompetencyUnit, self).copy(default)
+        return rec

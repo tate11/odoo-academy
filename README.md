@@ -94,12 +94,12 @@ After running the modules list update you can confirm the new modules are availa
 
 ### Academy Base
 
-- [ ] Finish enrolment
+- [x] Finish enrolment
       - [x] Date
       - [x] Sequence
-      - Kanban view
-      - [x]Filters
-      - It should has a contraint who disallow to enrol active student
+      - [x] **Kanban view**
+      - [x] Filters
+      - [x] It should has a contraint who disallow to enrol active student
 
 - [ ] Finish modules
       - Module must have own hours if it has not training units
@@ -116,7 +116,7 @@ After running the modules list update you can confirm the new modules are availa
         - Resource shoud be linked to units (inside module)(optional)
 
 - [ ] Finish menú
-      - Change and translate Helper (menú)
+      - [x] Change and translate Helper (menú)
       - Global menú should be sorted
 
 - [ ] Add tutor group
@@ -131,6 +131,10 @@ After running the modules list update you can confirm the new modules are availa
       - **Idea**: Store first date for modules
 
 - [ ] Ensure all models can be duplicated
+      - [ ] Enrolments
+      - [x] Activities
+      - [x] Actions
+      - [x] Competency units
 
 - [ ] Add rules
       - Consultants (view only asigned)

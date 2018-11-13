@@ -60,6 +60,7 @@ class Many2ManyThroughView(Many2many):
             self._notify_the_update() # in log
             self._drop_relation_if_exists(model.env.cr)
             self._create_view(model.env.cr)
+            self._add_rules(model.env.cr)
 
 
     # ------------------------- AUXILIARY METHODS -----------------------------
@@ -198,7 +199,36 @@ class Many2ManyThroughView(Many2many):
             sql = sql.format(self.relation)
             cursor.execute(sql)
         else:
+            self._drop_rules(cursor)
             sqltools.drop_view_if_exists(cursor, self.relation)
+
+
+    def _drop_rules(self, cursor):
+        """ Drops rules to INSERT, UPDATE or DELETE in view
+        """
+        actions = ['INSERT', 'UPDATE', 'DELETE']
+        sql = 'DROP RULE IF EXISTS {name} ON {rel} CASCADE;'
+
+        for action in actions:
+            name = '{}_on_{}'.format(self.relation, action).lower()
+            sql = sql.format(name=name, rel=self.relation)
+            cursor.execute(sql)
+
+
+    def _add_rules(self, cursor):
+        """ Adds rules when INSERT, UPDATE or DELETE to prevent Odoo
+        breaks on create, write or unlink
+        """
+        actions = ['INSERT', 'UPDATE', 'DELETE']
+        sql = 'CREATE RULE "{name}" AS ON {act} TO "{rel}" DO INSTEAD NOTHING;'
+
+        for action in actions:
+
+            self._drop_rules(cursor)
+
+            name = '{}_on_{}'.format(self.relation, action).lower()
+            sql = sql.format(name=name, act=action, rel=self.relation)
+            cursor.execute(sql)
 
 
     def _create_view(self, cursor):

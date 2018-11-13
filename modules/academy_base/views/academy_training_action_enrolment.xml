@@ -106,6 +106,52 @@
             </field>
         </record>
 
+        <record id="view_academy_training_action_enrolment_kanban" model="ir.ui.view">
+            <field name="name">view.academy.training.action.enrolment.kanban</field>
+            <field name="model">academy.training.action.enrolment</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="image_small"/>
+                    <field name="register" />
+                    <field name="deregister" />
+                    <field name="training_action_id" />
+                    <field name="res_partner_id" />
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click oe_kanban_academy_training_action_enrolment">
+                                <div class="o_kanban_image">
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-action.png&quot;" class="o_kanban_image"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
+                                    <ul>
+                                        <li class="o_ellipsis"><strong>Action:&#160;</strong><field name="training_action_id" /></li>
+                                        <li class="o_ellipsis"><strong>Student:&#160;</strong><field name="res_partner_id" /></li>
+                                        <t t-if="!record.deregister.raw_value">
+                                            <li class="o_ellipsis"><strong>Register:&#160;</strong><field name="register" widget="date" /></li>
+                                        </t>
+                                        <t t-else="">
+                                            <li class="o_ellipsis"><strong>Interval:&#160;</strong><field name="register" widget="date" />&#160;-&#160;<field name="deregister" widget="date" /></li>
+                                        </t>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
         <!-- Search view for "academy.training.action.enrolment" -->
         <record id="view_academy_training_action_enrolment_search" model="ir.ui.view">
             <field name="name">view.academy.training.action.enrolment.search</field>
@@ -151,7 +197,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Training action enrolment</field>
             <field name="res_model">academy.training.action.enrolment</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>

@@ -4,7 +4,7 @@
     <data noupdate="0">
 
         <record id="academy_competency_unit_office" model="academy.competency.unit">
-            <field name="name">Manage Microsoft office software and files in computer support</field>
+            <field name="competency_name">Manage Microsoft office software and files in computer support</field>
             <field name="description">The latest versions of the Microsoft office appliances for PC</field>
             <field name="active">True</field>
             <field name="sequence">1</field>
@@ -13,7 +13,7 @@
         </record>
 
         <record id="academy_competency_unit_libre" model="academy.competency.unit">
-            <field name="name">Manage Libre Office software and files in computer support</field>
+            <field name="competency_name">Manage Libre Office software and files in computer support</field>
             <field name="description">The latest versions of the Libre Office appliances for PC</field>
             <field name="active">True</field>
             <field name="sequence">1</field>
@@ -22,7 +22,7 @@
         </record>
 
         <record id="academy_competency_unit_mswin" model="academy.competency.unit">
-            <field name="name">Manage the last Microsoft operating system</field>
+            <field name="competency_name">Manage the last Microsoft operating system</field>
             <field name="description">The latest version of the Microsoft operating system for PC</field>
             <field name="active">True</field>
             <field name="sequence">1</field>

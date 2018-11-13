@@ -25,7 +25,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_training_action_tree" create="1" delete="1" edit="1">
-                    <field name="name" />
+                    <field name="action_name" />
                     <field name="start" class="oe_field_start" />
                     <field name="end" class="oe_field_end" />
                 </tree>
@@ -54,7 +54,7 @@
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
-                                <field name="name" class="oe_field_name"
+                                <field name="action_name" class="oe_field_name"
                                     placeholder="Name" />
                             </h1>
                         </div>
@@ -135,7 +135,7 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="image_small"/>
-                    <field name="name" />
+                    <field name="action_name" />
                     <field name="seating" />
                     <field name="end" />
 
@@ -150,9 +150,9 @@
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
-                                    <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
+                                    <h4><strong class="oe_partner_heading"><field name="action_name"/></strong></h4>
                                     <ul>
-                                        <li class="o_ellipsis"><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="end"  /></li>
+                                        <li class="o_ellipsis"><strong>Lifespan:&#160;</strong><field name="start" widget="date" />&#160;-&#160;<field name="end" widget="date" /></li>
                                         <li class="o_ellipsis"><strong>Training activity:&#160;</strong><field name="training_activity_id" /></li>
                                         <li class="o_ellipsis"><strong>Application scope:&#160;</strong><field name="application_scope_id" /></li>
                                      </ul>
@@ -174,7 +174,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <search string="academy_training_action_search">
-                    <field name="name" />
+                    <field name="action_name" />
                     <field name="action_code" />
 
                     <field name="application_scope_id" />
@@ -233,7 +233,7 @@
             <field name="name">Training actions</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_training_action_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
         </record>
 
 

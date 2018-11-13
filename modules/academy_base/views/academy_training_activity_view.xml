@@ -216,7 +216,7 @@
             <field name="name">Training activities</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_academy_training_activity_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>
 
     </data>

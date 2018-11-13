@@ -202,7 +202,7 @@
         <!-- Main menu for model.name -->
         <record id="menu_training_unit" model="ir.ui.menu" >
             <field name="name">Training units</field>
-            <field name="sequence" eval="10" />
+            <field name="sequence" eval="25" />
             <field name="action" ref="action_training_unit_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>

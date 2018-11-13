@@ -107,7 +107,7 @@
         <!-- Main menu for model.name -->
         <record id="menu_qualification_level" model="ir.ui.menu" >
             <field name="name">Qualification levels</field>
-            <field name="sequence" eval="10" />
+            <field name="sequence" eval="25" />
             <field name="action" ref="action_qualification_level_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
         </record>

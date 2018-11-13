@@ -871,7 +871,7 @@ msgstr "Unidades formativas agrupadas por módulo formativo"
 #. module: academy_base
 #: model:ir.ui.menu,name:academy_base.menu_academy_settings_helper
 msgid "Helper"
-msgstr "Ayudante"
+msgstr "Soporte"
 
 #. module: academy_base
 #: model:ir.actions.act_window,help:academy_base.action_students_act_window
@@ -1509,8 +1509,8 @@ msgstr "Este campo contiene la imagen utilizada como imagen para nuestros client
 
 #. module: academy_base
 #: model:ir.ui.menu,name:academy_base.menu_training_action
-msgid "Training Action"
-msgstr "Acción formativa"
+msgid "Training actions"
+msgstr "Acciónes formativas"
 
 #. module: academy_base
 #: model:ir.ui.menu,name:academy_base.menu_training_module

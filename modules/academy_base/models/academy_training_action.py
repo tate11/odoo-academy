@@ -29,7 +29,7 @@ class AcademyTrainingAction(models.Model):
     """ Each of the creditable qualifications in catalog.
 
     Fields:
-      name (Char): Human readable name which will identify each record.
+      action_name (Char): Human readable name which will identify each record.
 
     """
 
@@ -37,15 +37,15 @@ class AcademyTrainingAction(models.Model):
     _name = 'academy.training.action'
     _description = u'Academy training action'
 
-    _rec_name = 'name'
-    _order = 'name ASC'
+    _rec_name = 'action_name'
+    _order = 'action_name ASC'
 
     # 'appointment.manager',
     _inherit = ['academy.abstract.image', 'mail.thread', 'academy.abstract.observable']
 
     _inherits = {'academy.training.activity': 'training_activity_id'}
 
-    name = fields.Char(
+    action_name = fields.Char(
         string='Name',
         required=True,
         readonly=False,
@@ -53,7 +53,7 @@ class AcademyTrainingAction(models.Model):
         default=None,
         help='Enter new name',
         size=100,
-        translate=True
+        translate=True,
     )
 
     description = fields.Text(
@@ -263,6 +263,23 @@ class AcademyTrainingAction(models.Model):
                 raise ValidationError("End date must be greater then start date")
 
 
+    # -------------------------- OVERLOADED METHODS ---------------------------
+
+    @api.one
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        """ Prevents new record of the inherited (_inherits) model will be
+        created
+        """
+
+        default = dict(default or {})
+        default.update({
+            'training_activity_id': self.training_activity_id.id
+        })
+
+        rec = super(AcademyTrainingAction, self).copy(default)
+        return rec
+
     # -------------------------- AUXILIARY METHODS ----------------------------
 
     @api.model
@@ -287,3 +304,5 @@ class AcademyTrainingAction(models.Model):
             result = fields.Datetime.to_string(utc_ock)
 
         return result
+
+

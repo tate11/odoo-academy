@@ -24,7 +24,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_competency_unit_tree" create="1" delete="1" edit="1">
-                    <field name="name" />
+                    <field name="competency_name" />
                     <field name="training_module_id" />
                     <field name="training_unit_count" />
                     <field name="hours" />
@@ -54,7 +54,7 @@
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
-                                <field name="name" class="oe_field_name"
+                                <field name="competency_name" class="oe_field_name"
                                     placeholder="Name" />
                             </h1>
                         </div>
@@ -97,7 +97,7 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="image_small" />
-                    <field name="name" />
+                    <field name="competency_name" />
                     <field name="training_unit_count" />
                     <field name="hours" />
 
@@ -111,7 +111,7 @@
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
-                                    <strong class="oe_partner_heading"><field name="name"/></strong>
+                                    <strong class="oe_partner_heading"><field name="competency_name"/></strong>
                                     <ul>
                                        <li><strong>Units:&#160;</strong><field name="training_unit_count" /></li>
                                        <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
@@ -134,7 +134,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <search string="academy_competency_unit_search">
-                    <field name="name" />
+                    <field name="competency_name" />
                     <field name="training_module_id" />
                     <field name="professional_qualification_id" />
 
@@ -173,7 +173,7 @@
         <!-- Main menu for model.name -->
         <record id="menu_competency_unit" model="ir.ui.menu" >
             <field name="name">Competency units</field>
-            <field name="sequence" eval="10" />
+            <field name="sequence" eval="15" />
             <field name="action" ref="action_competency_unit_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
         </record>

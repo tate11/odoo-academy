@@ -10,6 +10,7 @@ from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
+from openerp.exceptions import ValidationError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -110,6 +111,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         limit=None
     )
 
+    # pylint: disable=locally-disabled, W0108
     register = fields.Date(
         string='Sign up',
         required=True,
@@ -140,6 +142,13 @@ class AcademyTrainingActionEnrolment(models.Model):
         compute=lambda self: self._compute_student_name()
     )
 
+    @api.multi
+    @api.depends('res_partner_id')
+    def _compute_student_name(self):
+        for record in self:
+            record.student_name = record.res_partner_id.name
+
+
     action_name = fields.Char(
         string='Action name',
         required=False,
@@ -153,18 +162,13 @@ class AcademyTrainingActionEnrolment(models.Model):
     )
 
     @api.multi
-    @api.depends('res_partner_id')
-    def _compute_student_name(self):
-        for record in self:
-            record.student_name = record.res_partner_id.name
-
-    @api.multi
     @api.depends('training_action_id')
     def _compute_action_name(self):
         for record in self:
             record.action_name = record.training_action_id.name
 
 
+    # ---------------------------- ONCHANGE EVENTS ----------------------------
 
     @api.multi
     @api.onchange('training_action_id')
@@ -179,11 +183,58 @@ class AcademyTrainingActionEnrolment(models.Model):
 
         if module_set:
             domain = {'training_module_ids':  [('id', 'in', ids)]}
-            print(domain)
             return {'domain': domain}
 
         return {'domain': {'training_module_ids':  [('id', '=', -1)]}}
 
+
+    # -------------------------- OVERLOADED METHODS ---------------------------
+
+    @api.one
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        """ Prevents new record of the inherited (_inherits) models will
+        be created. It also adds the following sequence value.
+        """
+
+        default = dict(default or {})
+        default.update({
+            'res_partner_id': self.res_partner_id.id,
+            'training_action_id': self.training_action_id.id,
+            'code': self._default_code()
+        })
+
+        rec = super(AcademyTrainingActionEnrolment, self).copy(default)
+        return rec
+
+
+    # -------------------------- PYTHON CONSTRAINTS ---------------------------
+
+    @api.one
+    @api.constrains('training_action_id', 'res_partner_id')
+    def _check_unique_enrolment(self):
+
+        action_id = self.training_action_id.id or -1
+        partner_id = self.res_partner_id.id or -1
+
+        domain = [
+            ('training_action_id', '=', action_id),
+            ('res_partner_id', '=', partner_id),
+            ('deregister', '=', False),
+            ('id', '<>', self.id)
+        ]
+        enroled_set = self.search(domain)
+        print(enroled_set, domain, self.deregister)
+        if enroled_set:
+            msg = '{student} already has been enrolled in {action}'
+            msg = msg.format(
+                student=self.res_partner_id.name,
+                action=self.training_action_id.name
+            )
+            raise ValidationError(msg)
+
+
+    # -------------------------- AUXILIARY METHODS ----------------------------
 
     @api.model
     def _default_code(self):
@@ -197,8 +248,7 @@ class AcademyTrainingActionEnrolment(models.Model):
 
         return result
 
-    # @api.one
-    # @api.constrains('training_action_id', 'res_partner_id')
-    # def _check_enrolment(self):
-    #     if self.name == self.description:
-    #         raise ValidationError("Fields name and description must be different")
+
+
+
+
