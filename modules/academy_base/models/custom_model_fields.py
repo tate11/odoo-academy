@@ -260,7 +260,7 @@ class Many2ManyThroughView(Many2many):
             atr."id" AS training_resource_id
         FROM
             academy_training_resource AS atr
-        INNER JOIN academy_training_resource_training_unit_rel AS rel ON rel.training_resource_id = atr."id"
+        INNER JOIN academy_training_unit_training_resource_rel AS rel ON rel.training_resource_id = atr."id"
         INNER JOIN academy_training_unit AS atu ON rel.training_unit_id = atu."id"
         INNER JOIN academy_training_module AS atm ON atm."id" = atu.training_module_id
         INNER JOIN academy_competency_unit AS acu ON acu.training_module_id = atm."id"
@@ -301,7 +301,7 @@ class Many2ManyThroughView(Many2many):
             ON acu.training_module_id = atm."id"
         INNER JOIN academy_training_unit AS atu
             ON atu.training_module_id = atm."id"
-        INNER JOIN academy_training_resource_training_unit_rel as rel2
+        INNER JOIN academy_training_unit_training_resource_rel as rel2
             ON rel2.training_unit_id = atu."id"
         INNER JOIN academy_training_resource as atr
             ON rel2.training_resource_id = atr."id"

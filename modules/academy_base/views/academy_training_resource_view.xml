@@ -107,6 +107,10 @@
                                 <field name="directory_file_ids" class="oe_field_directory_file_ids"
                                     placeholder="Press button to reload directory" />
                             </page>
+                            <page string="In modules" class="oe_page_in_modules" accesskey="M">
+                                <field name="training_module_ids" class="oe_field_training_module_ids"
+                                    placeholder="Choose related academy training modules" />
+                            </page>
                             <page string="In units" class="oe_page_in_units" accesskey="A">
                                 <field name="training_unit_ids" class="oe_field_training_unit_ids"
                                     placeholder="Choose related academy training units" />

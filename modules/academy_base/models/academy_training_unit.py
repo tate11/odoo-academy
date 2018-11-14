@@ -112,13 +112,12 @@ class AcademyTrainingUnit(models.Model):
         default=None,
         help=False,
         comodel_name='academy.training.resource',
-        relation='academy_training_resource_training_unit_rel',
-        column1='training_resource_id',
-        column2='training_unit_id',
+        relation='academy_training_unit_training_resource_rel',
+        column1='training_unit_id',
+        column2='training_resource_id',
         domain=[],
         context={},
-        limit=None,
-        oldname='training_resource_ids'
+        limit=None
     )
 
     # pylint: disable=W0212
