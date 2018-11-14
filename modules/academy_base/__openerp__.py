@@ -51,6 +51,8 @@
         'views/academy_training_action_enrolment.xml',
 
         'views/academy_training_resource_view.xml',
+        "views/academy_training_session_view.xml",
+
 
         'security/academy_application_scope.xml',
         'security/academy_base.xml',

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Academy Training Session"
+
+            - Model·········: academy.training.session
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: academy_base.menu_academy_monitoring
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There are not sessions
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "academy.training.session" -->
+        <record id="view_academy_training_session_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.session.tree</field>
+            <field name="model">academy.training.session</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_training_session_tree" create="1" delete="1" edit="1">
+                    <field name="name" />
+                    <field name="training_action_id" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "academy.training.session" -->
+        <record id="view_academy_training_session_form" model="ir.ui.view">
+            <field name="name">view.academy.training.session.form</field>
+            <field name="model">academy.training.session</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_training_session_form" create="1" delete="1" edit="1">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="Name" />
+                            </h1>
+                        </div>
+                        <group col="2">
+                            <field name="training_action_id" class="oe_field_training_action_id"
+                                colspan="4" placeholder="Enter new value for training action id" />
+                        </group>
+                        <group col="4">
+                            <field name="date_start" class="oe_field_date_start"
+                                placeholder="Choose niew date start" />
+                            <field name="date_delay" class="oe_field_date_delay"
+                                placeholder="Enter new value for date delay" widget="time" />
+                        </group>
+                        <notebook>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new value for description" />
+                            </page>
+                            <page string="Modules" class="oe_page_modules" accesskey="M">
+
+                            </page>
+                            <page string="Attendance" class="oe_page_attendance" accesskey="A">
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="view_academy_training_session_calendar" model="ir.ui.view">
+            <field name="name">view.academy.training.session.calendar</field>
+            <field name="model">academy.training.session</field>
+            <field name="type">calendar</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <calendar string="Invoices"
+                    date_start="date_start"
+                    color="training_action_id"
+                    readonly_form_view_id="academy_base.view_academy_training_session_form"
+                    form_view_id="academy_base.view_academy_training_session_form">
+                    <field name="name"/>
+                    <field name="training_action_id" />
+                </calendar>
+            </field>
+        </record>
+
+        <!-- Search view for "academy.training.session" -->
+        <record id="view_academy_training_session_search" model="ir.ui.view">
+            <field name="name">view.academy.training.session.search</field>
+            <field name="model">academy.training.session</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="academy_training_session_search">
+                    <field name="name" />
+                    <field name="training_action_id" />
+                </search>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_academy_training_session_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Academy Training Session</field>
+            <field name="res_model">academy.training.session</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_academy_training_session_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new Academy Training Session
+                </p><p>
+                    Something about model
+                </p>
+            </field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_academy_training_session" model="ir.ui.menu" >
+            <field name="name">Training Session</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_academy_training_session_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
+        </record>
+
+    </data>
+</openerp>
