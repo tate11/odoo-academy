@@ -1,12 +1,43 @@
-#pylint: disable=I0011,W0212,C0111,F0401,R0903
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this module.                   #
-###############################################################################
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+""" Academy Training Module
 
-from openerp import models, fields, api, api
+This module contains the academy.training.module an unique Odoo model
+which contains all Academy Training Module attributes and behavior.
 
+This model is the representation of the real life trainint module. This
+is based on Spanish Certificate Training.
+
+Classes:
+    AcademyTrainingModule: This is the unique model class in this module
+    and it defines an Odoo model with all its attributes and related behavior.
+
+    Inside this class can be, in order, the following attributes and methods:
+    * Object attributes like name, description, inheritance, etc.
+    * Entity fields with the full definition
+    * Computed fields and required computation methods
+    * Events (@api.onchange) and other field required methods like computed
+    domain, defaul values, etc...
+    * Overloaded object methods, like create, write, copy, etc.
+    * Public object methods will be called from outside
+    * Private auxiliary methods not related with the model fields, they will
+    be called from other class methods
+
+
+Todo:
+    * Complete the model attributes and behavior
+
+"""
+
+
+from logging import getLogger
+
+# pylint: disable=locally-disabled, E0401
+from openerp import models, fields, api
+
+
+# pylint: disable=locally-disabled, C0103
+_logger = getLogger(__name__)
 
 
 class AcademyTrainingModule(models.Model):
