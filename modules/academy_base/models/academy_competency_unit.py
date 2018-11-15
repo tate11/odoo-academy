@@ -106,24 +106,24 @@ class AcademyCompetencyUnit(models.Model):
 
     # --------------------------- MANAGEMENT FIELDS ---------------------------
 
-    # pylint: disable=W0212
-    training_unit_count = fields.Integer(
-        string='Training units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help='Number of training units in module',
-        compute=lambda self: self._compute_training_unit_count()
-    )
+    # # pylint: disable=W0212
+    # training_unit_count = fields.Integer(
+    #     string='Training units',
+    #     required=False,
+    #     readonly=True,
+    #     index=False,
+    #     default=0,
+    #     help='Number of training units in module',
+    #     compute=lambda self: self._compute_training_unit_count()
+    # )
 
 
-    @api.multi
-    @api.depends('training_module_id')
-    def _compute_training_unit_count(self):
-        for record in self:
-            record.training_unit_count = \
-                len(record.training_module_id.training_unit_ids)
+    # @api.multi
+    # @api.depends('training_module_id')
+    # def _compute_training_unit_count(self):
+    #     for record in self:
+    #         record.training_unit_count = \
+    #             len(record.training_module_id.training_unit_ids)
 
 
     # -------------------------- OVERLOADED METHODS ---------------------------

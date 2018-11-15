@@ -177,21 +177,21 @@ class AcademyTrainingActivity(models.Model):
         limit=None,
     )
 
-    training_unit_ids = custom_model_fields.Many2ManyThroughView(
-        string='Training units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.unit',
-        relation='academy_training_activity_training_unit_rel',
-        column1='training_activity_id',
-        column2='training_unit_id',
-        domain=[],
-        context={},
-        limit=None
-    )
+    # training_unit_ids = custom_model_fields.Many2ManyThroughView(
+    #     string='Training units',
+    #     required=False,
+    #     readonly=True,
+    #     index=False,
+    #     default=None,
+    #     help=False,
+    #     comodel_name='academy.training.unit',
+    #     relation='academy_training_activity_training_unit_rel',
+    #     column1='training_activity_id',
+    #     column2='training_unit_id',
+    #     domain=[],
+    #     context={},
+    #     limit=None
+    # )
 
     training_resource_ids = custom_model_fields.Many2ManyThroughView(
         string='Training resources',
@@ -249,22 +249,22 @@ class AcademyTrainingActivity(models.Model):
             record.training_action_count = len(record.training_action_ids)
 
 
-    # pylint: disable=W0212
-    training_unit_count = fields.Integer(
-        string='Training units',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        help=False,
-        compute=lambda self: self._compute_training_unit_count()
-    )
+    # # pylint: disable=W0212
+    # training_unit_count = fields.Integer(
+    #     string='Training units',
+    #     required=False,
+    #     readonly=True,
+    #     index=False,
+    #     default=0,
+    #     help=False,
+    #     compute=lambda self: self._compute_training_unit_count()
+    # )
 
-    @api.multi
-    @api.depends('training_unit_ids')
-    def _compute_training_unit_count(self):
-        for record in self:
-            record.training_unit_count = len(record.training_unit_ids)
+    # @api.multi
+    # @api.depends('training_unit_ids')
+    # def _compute_training_unit_count(self):
+    #     for record in self:
+    #         record.training_unit_count = len(record.training_unit_ids)
 
 
     # pylint: disable=W0212

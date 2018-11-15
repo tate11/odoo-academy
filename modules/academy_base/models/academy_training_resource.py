@@ -118,22 +118,22 @@ class AcademyTrainingResource(models.Model):
         limit=None
     )
 
-    # pylint: disable=locally-disabled, W0212
-    training_unit_ids = fields.Many2many(
-        string='Training units',
-        required=False,
-        readonly=False,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.unit',
-        relation='academy_training_unit_training_resource_rel',
-        column1='training_resource_id',
-        column2='training_unit_id',
-        domain=lambda self: self._domain_for_training_unit_ids(),
-        context={},
-        limit=None
-    )
+    # # pylint: disable=locally-disabled, W0212
+    # training_unit_ids = fields.Many2many(
+    #     string='Training units',
+    #     required=False,
+    #     readonly=False,
+    #     index=False,
+    #     default=None,
+    #     help=False,
+    #     comodel_name='academy.training.unit',
+    #     relation='academy_training_unit_training_resource_rel',
+    #     column1='training_resource_id',
+    #     column2='training_unit_id',
+    #     domain=lambda self: self._domain_for_training_unit_ids(),
+    #     context={},
+    #     limit=None
+    # )
 
     ir_attachment_ids = fields.Many2many(
         string='Attachments',
@@ -239,14 +239,14 @@ class AcademyTrainingResource(models.Model):
 
     # ---------------------- FIELD METHODS AND EVENTS -------------------------
 
-    def _domain_for_training_unit_ids(self):
-        """ Compute the domain for the training units, this restrict
-        allowed units to those are related with selected modules.
-        """
+    # def _domain_for_training_unit_ids(self):
+    #     """ Compute the domain for the training units, this restrict
+    #     allowed units to those are related with selected modules.
+    #     """
 
-        ids = self.training_module_ids.mapped('training_unit_ids').ids
+    #     ids = self.training_module_ids.mapped('training_unit_ids').ids
 
-        return [('id', 'in', ids) if ids else ('id', '=', -1)]
+    #     return [('id', 'in', ids) if ids else ('id', '=', -1)]
 
 
     @api.onchange('directory')
@@ -257,19 +257,19 @@ class AcademyTrainingResource(models.Model):
         self._reload_single_directory()
 
 
-    @api.onchange('training_module_ids')
-    def _training_module_ids(self):
-        """ training_module_ids change event. Update the trainint unit
-        list and domain
-        """
+    # @api.onchange('training_module_ids')
+    # def _training_module_ids(self):
+    #     """ training_module_ids change event. Update the trainint unit
+    #     list and domain
+    #     """
 
-        #STEP 1: Update the unit set according to the selected modules
-        utdel = self._get_units_to_remove()
-        utadd = self._get_units_to_add()
-        self.training_unit_ids = self.training_unit_ids - utdel +utadd
+    #     #STEP 1: Update the unit set according to the selected modules
+    #     utdel = self._get_units_to_remove()
+    #     utadd = self._get_units_to_add()
+    #     self.training_unit_ids = self.training_unit_ids - utdel +utadd
 
-        #STEP 1: Return new domain to restrict units within selected modules
-        return {'domain': {'training_unit_ids': self._domain_for_training_unit_ids()}}
+    #     #STEP 1: Return new domain to restrict units within selected modules
+    #     return {'domain': {'training_unit_ids': self._domain_for_training_unit_ids()}}
 
 
     # ------------------------- AUXLIARY METHODS ------------------------------

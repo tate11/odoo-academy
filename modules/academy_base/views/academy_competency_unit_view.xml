@@ -26,7 +26,7 @@
                 <tree string="academy_competency_unit_tree" create="1" delete="1" edit="1">
                     <field name="competency_name" />
                     <field name="training_module_id" />
-                    <field name="training_unit_count" />
+                    <!-- <field name="training_unit_count" /> -->
                     <field name="hours" />
                 </tree>
             </field>
@@ -68,13 +68,13 @@
                                 <field name="description" class="oe_field_description"
                                     placeholder="Enter new value for description" />
                             </page>
-                            <page string="Training units" class="oe_page_units" accesskey="U">
+                            <!-- <page string="Training units" class="oe_page_units" accesskey="U">
                                 <field name="training_unit_ids" class="oe_field_training_unit_ids"
                                     placeholder="Choose or create module training units"
                                     context="{'tree_view_ref' : 'academy_base.view_academy_training_unit_embed_tree'}"
                                     readonly="1" />
 
-                            </page>
+                            </page> -->
                         </notebook>
                     </sheet>
 
@@ -98,7 +98,7 @@
                 <kanban>
                     <field name="image_small" />
                     <field name="competency_name" />
-                    <field name="training_unit_count" />
+                    <!-- <field name="training_unit_count" /> -->
                     <field name="hours" />
 
                     <templates>
@@ -113,7 +113,7 @@
                                 <div class="oe_kanban_details">
                                     <strong class="oe_partner_heading"><field name="competency_name"/></strong>
                                     <ul>
-                                       <li><strong>Units:&#160;</strong><field name="training_unit_count" /></li>
+                                       <!-- <li><strong>Units:&#160;</strong><field name="training_unit_count" /></li> -->
                                        <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
                                      </ul>
                                 </div>

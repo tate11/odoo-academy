@@ -82,8 +82,8 @@
                             </page>
                             <page string="Training units" class="oe_page_training_units" accesskey="U">
                                 <field name="training_unit_ids" class="oe_field_training_unit_ids"
-                                    placeholder="Choose or create module training units"
-                                    context="{'tree_view_ref' : 'academy_base.view_academy_training_unit_embed_tree'}" />
+                                    placeholder="Choose or create module training units" />
+                                    <!-- context="{'tree_view_ref' : 'academy_base.view_academy_training_unit_embed_tree'}" -->
                             </page>
                         </notebook>
                     </sheet>
@@ -162,7 +162,7 @@
             <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
-            <field name="domain">[]</field>
+            <field name="domain">[('training_module_id', '=', False)]</field>
             <field name="context">{}</field>
             <field name="search_view_id" ref="view_academy_training_module_search" />
             <field name="help" type="html">

@@ -90,6 +90,20 @@ class AcademyTrainingModule(models.Model):
         help='Enables/disables the record'
     )
 
+    training_module_id = fields.Many2one(
+        string='Training module',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.module',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
     training_unit_ids = fields.One2many(
         string='Training units',
         required=False,
@@ -97,14 +111,14 @@ class AcademyTrainingModule(models.Model):
         index=False,
         default=None,
         help='Training units in this module',
-        comodel_name='academy.training.unit',
+        comodel_name='academy.training.module',
         inverse_name='training_module_id',
-        domain=[],
+        domain=[('training_module_id', '=', False)],
         context={},
         auto_join=False,
-        limit=None,
-        oldname='training_unit_ids'
+        limit=None
     )
+
 
     module_code = fields.Char(
         string='Code',

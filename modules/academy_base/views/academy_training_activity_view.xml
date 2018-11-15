@@ -88,10 +88,10 @@
                                 <field name="training_action_ids" class="oe_field_training_actions_ids"
                                     placeholder="Choose related training actions" />
                             </page>
-                            <page string="Units" class="oe_page_units" accesskey="U">
+                            <!-- <page string="Units" class="oe_page_units" accesskey="U">
                                 <field name="training_unit_ids" class="oe_field_training_unit_ids"
                                     placeholder="Choose related training units" />
-                            </page>
+                            </page> -->
                             <page string="Available resources" class="oe_page_available_resources" accesskey="R">
                                 <field name="training_resource_ids" class="oe_field_training_resource_ids"
                                     placeholder="Chooser related training resources" />
@@ -173,7 +173,7 @@
                     <field name="activity_code" />
 
                     <field name="competency_unit_ids" />
-                    <field name="training_unit_ids" />
+                    <!-- <field name="training_unit_ids" /> -->
 
                     <filter name="filter_by_training_action_count" help="Has actions"
                            domain="[('training_action_count','>', 0)]"/>
