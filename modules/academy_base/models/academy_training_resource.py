@@ -13,11 +13,12 @@ import os
 import re
 import zipfile
 import base64
-
+from pathlib import Path
 
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
 from openerp.tools import config
+
 from . import custom_model_fields
 
 try:
@@ -28,6 +29,13 @@ except ImportError:
 
 # pylint: disable=locally-disabled, c0103
 _logger = getLogger(__name__)
+
+
+DOWNLOAD_URL = (
+    '/web/content/?model=ir.attachment&id={id}'
+    '&filename_field=datas_fname&field=datas'
+    '&download=true&filename={name}'
+)
 
 
 class AcademyTrainingResource(models.Model):
@@ -177,7 +185,8 @@ class AcademyTrainingResource(models.Model):
         limit=None
     )
 
-    training_action_ids = custom_model_fields.Many2ManyThroughView(
+    # Many2manyThroughView
+    training_action_ids = fields.Many2many(
         string='Training actions',
         required=False,
         readonly=True,
@@ -193,13 +202,56 @@ class AcademyTrainingResource(models.Model):
         limit=None
     )
 
+    training_resource_id = fields.Many2one(
+        string='Current version',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.resource',
+        domain=[('training_resource_id', '!=', False)],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
+    historical_ids = fields.One2many(
+        string='Historical',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.resource',
+        inverse_name='training_resource_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
+    )
+
+    zip_attachment_id = fields.Many2one(
+        string='Zip attachment',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='ir.attachment',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
 
     # --------------------------- COMPUTED FIELDS -----------------------------
 
     attachmentcounting = fields.Integer(
         string='Attachments',
         required=False,
-        readonly=False,
+        readonly=True,
         index=False,
         default=0,
         help='Number of attachments in resource',
@@ -330,10 +382,12 @@ class AcademyTrainingResource(models.Model):
     @staticmethod
     def _zipdir(path, ziph):
         # ziph is zipfile handle
+        dirname = os.path.basename(path)
+
         for root, dirs, files in os.walk(path): # pylint: disable=locally-disabled, W0612
             for file in files:
                 relpath = os.path.relpath(root, path)
-                relfile = os.path.join(relpath, file)
+                relfile = os.path.join(dirname, relpath, file)
                 _logger.debug(u'### Zipping %s', relfile)
                 ziph.write(os.path.join(root, file), relfile)
 
@@ -358,27 +412,144 @@ class AcademyTrainingResource(models.Model):
         be inside a try...except block
         """
 
-        data_dir = config['data_dir']
+        self.ensure_one()
+
+        data_dir = config.filestore(self._cr.dbname)
         data_dir = os.path.abspath(data_dir)
+        action = None
+
+        # pylint: disable=locally-disabled, W0212
+        for record in self:
+            if record.directory:
+                zipname = u'{}.zip'.format(record.name)
+
+                in_memory = BytesIO()
+                zipf = zipfile.ZipFile(in_memory, 'w', zipfile.ZIP_DEFLATED)
+                record._zipdir(record.directory, zipf)
+                _logger.debug(in_memory.getbuffer().nbytes)
+
+                ira_ids = record.mapped('ir_attachment_ids')
+                for item in ira_ids:
+                    zipf.write(
+                        os.path.join(data_dir, Path(item.store_fname)),
+                        os.path.join('ir_attachments', item.datas_fname)
+                    )
+
+                zipf.close()
+
+                datas = base64.b64encode(in_memory.getvalue())
+                _logger.debug(u'zip size: %s', len(datas))
+
+                values = {
+                    'name': zipname,
+                    'datas': datas,
+                    'datas_fname': zipname,
+                    'res_model': record._name,
+                    'res_id': record.id
+                }
+
+                if not record.zip_attachment_id:
+                    print('Creating')
+                    record.zip_attachment_id = \
+                        record.zip_attachment_id.create(values)
+                else:
+                    print('Writing')
+                    _id = record.zip_attachment_id.id
+                    record.zip_attachment_id.write(values)
+
+                _id = record.zip_attachment_id.id
+                _name = record.zip_attachment_id.name
+
+                action = {
+                    'type': 'ir.actions.act_url',
+                    'url': DOWNLOAD_URL.format(id=_id, name=_name),
+                    'nodestroy': True,
+                    'target': 'new'
+                }
+
+        return action
+
+
+    # pylint: disable=locally-disabled, W0212
+    historical_count = fields.Integer(
+        string='Historical count',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Show number of historical records',
+        compute=lambda self: self._compute_historical_count()
+    )
+
+    @api.multi
+    @api.depends('historical_ids')
+    def _compute_historical_count(self):
+        for record in self:
+            record.historical_count = len(record.historical_ids)
+
+
+
+    @api.multi
+    def button_snapshot(self, values):
+        """
+            Update all record(s) in recordset, with new value comes as {values}
+            return True on success, False otherwise
+
+            @param values: dict of new values to be set
+
+            @return: True on success, False otherwise
+        """
 
         for record in self:
-            zipname = u'{}.zip'.format(record.name)
-            #zippath = os.path.join(data_dir, zipname)
-            #_logger.debug(zippath)
-            #_logger.debug(self.directory)
-            in_memory = BytesIO()
-            zipf = zipfile.ZipFile(in_memory, 'w', zipfile.ZIP_DEFLATED)
-            self._zipdir(self.directory, zipf)
-            _logger.debug(in_memory.getbuffer().nbytes)
-            zipf.close()
+            old_attachments = self.ir_attachment_ids.copy()
+            old_values = {
+                'name' : record.name,
+                'description' : record.description,
+                'active' : record.active,
+                'manager_id' : record.manager_id.id,
+                'last_update' : record.last_update,
+                'training_resource_id' : record.id,
+                'ir_attachment_ids' : [(6, None, old_attachments._ids)],
+                'directory' : self.directory,
+                'training_module_ids' : [(6, None, self.training_module_ids._ids)],
+                'directory_file_ids' : [(6, None, self.directory_file_ids._ids)],
+                'training_action_ids' : [(6, None, self.training_action_ids._ids)],
+                'historical_ids' : [(5, None, None)],
+            }
 
-            datas = base64.b64encode(in_memory.getvalue())
-            _logger.debug(u'zip size: %s', len(datas))
-            attach_obj = self.env['ir.attachment']
-            attach_obj.create({'name': zipname,
-                               'datas': datas,
-                               'datas_fname': zipname,
-                               'res_model': self._name,
-                               'res_id': self.id})
+            print(old_values)
 
+            super(AcademyTrainingResource, self).create(old_values)
+
+            # result = super(AcademyTrainingResource, self).write(values)
+            # old_resource.training_resource_id = result
+
+        # return result
+
+    @api.model
+    def _where_calc(self, domain, active_test=True):
+        """ This method has been overwritten to prevent old ticket states are
+        returned by the `search` and `read_group` methods.
+
+        It adds to the given domain a new clausule to include only the
+        records with NULL value in `current_state` field
+
+        :param domain: the domain to compute
+        :type domain: list
+        :param active_test: whether the default filtering of records with
+                            ``active`` field set to ``False`` should be applied
+        :return: the query expressing the given domain as provided in domain
+        :rtype: osv.query.Query
+        """
+        domain = domain[:]  # See the parent method
+
+        if domain:
+            # the item[0] trick below works for domain items and '&'/'|'/'!'
+            # operators too
+            if not any(item[0] == 'training_resource_id' for item in domain):
+                domain.insert(0, ('training_resource_id', '=', False))
+        else:
+            domain = [('training_resource_id', '=', False)]
+
+        return super(AcademyTrainingResource, self)._where_calc(domain, active_test)
 

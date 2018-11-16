@@ -25,6 +25,8 @@
             <field name="arch" type="xml">
                 <tree string="academy_training_resource_tree" create="1" delete="1" edit="1">
                     <field name="name" />
+                    <field name="manager_id" />
+                    <field name="last_update" />
                     <field name="attachmentcounting" />
                     <field name="directory_filecounting" />
                 </tree>
@@ -42,7 +44,17 @@
             <field name="arch" type="xml">
                 <form string="academy_training_resource_form" create="1" delete="1" edit="1">
                     <sheet>
+                        <field name="training_resource_id" invisible="1" />
+
                         <div class="oe_button_box" name="button_box">
+                            <button name="download_directory" type="object" class="oe_stat_button"
+                                icon="fa-download" attrs="{'invisible': [('training_resource_id', '!=', False)]}">
+                                <field name="zip_attachment_id" options="{'no_open': True}" class="o_ellipsis" />
+                            </button>
+                            <button name="button_snapshot" type="object" class="oe_stat_button"
+                                icon="fa-history" attrs="{'invisible': [('training_resource_id', '!=', False)]}">
+                                <field name="historical_count" widget="integer"/>
+                            </button>
                             <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
                                 <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
                             </button>
@@ -56,6 +68,8 @@
                             </h1>
                         </div>
 
+                        <separator />
+
                         <group col="4">
                             <field name="manager_id" class="oe_field_manager_id"
                                 placeholder="Choose resource manager" />
@@ -63,9 +77,9 @@
                                 placeholder="Choose last revision date" />
                         </group>
 
-                        <group col="2">
+                        <group col="2" class="oe_edit_only">
                             <field name="directory" class="oe_field_directory"
-                                placeholder="Enter directory full path"/>
+                                placeholder="Enter directory full path" />
                         </group>
 
                         <notebook>
@@ -89,6 +103,8 @@
                                 </field>
                             </page>
                             <page string="Directory" class="oe_page_files" accesskey="F" attrs="{'invisible': [('directory', '=', False)]}">
+                                <field name="directory_file_ids" class="oe_field_directory_file_ids"
+                                    placeholder="Press button to reload directory" />
                                 <group cols="2">
                                     <button name="reload_directory"
                                             string="Reload"
@@ -96,16 +112,7 @@
                                             default_focus="0"
                                             icon="fa-refresh"
                                             help="Click it to reload directory file list" />
-                                    <button name="download_directory"
-                                        string="Download"
-                                        type="object"
-                                        default_focus="0"
-                                        icon="fa-download"
-                                        help="Pulse para descargar todo el contenido del directorio"
-                                        attrs="{'invisible': [('directory', '=', False)]}"/>
                                 </group>
-                                <field name="directory_file_ids" class="oe_field_directory_file_ids"
-                                    placeholder="Press button to reload directory" />
                             </page>
                             <page string="In modules" class="oe_page_in_modules" accesskey="M">
                                 <field name="training_module_ids" class="oe_field_training_module_ids"
@@ -118,6 +125,11 @@
                             <page string="Training actions" class="oe_page_training_actions" accesskey="T">
                                 <field name="training_action_ids" class="oe_field_training_action_ids"
                                     placeholder="Enter new value for academy training action" />
+                            </page>
+                            <page string="Historical" class="oe_page_historical" accesskey="H">
+                                <field name="historical_ids" class="oe_field_historical_ids"
+                                    placeholder="Choose historical related resources"
+                                    context="{'tree_view_ref':'academy_base.view_academy_training_resource_embed_tree'}" />
                             </page>
                         </notebook>
                     </sheet>
@@ -201,6 +213,23 @@
             <field name="sequence" eval="10" />
             <field name="action" ref="action_resources_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_resources" />
+        </record>
+
+        <!-- Tree view for "academy.training.resource" -->
+        <record id="view_academy_training_resource_embed_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.resource.embed.tree</field>
+            <field name="model">academy.training.resource</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="20" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_resource_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager_id']" position="replace" />
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="create_date" string="Snapshot date" />
+                </xpath>
+            </field>
         </record>
 
     </data>

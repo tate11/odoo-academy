@@ -27,7 +27,6 @@
                 <tree string="academy_training_module_tree" create="1" delete="1" edit="1">
                     <field name="module_code" />
                     <field name="name" />
-                    <field name="training_unit_count" />
                     <field name="hours" class="oe_field_hours" />
                 </tree>
             </field>
@@ -59,31 +58,27 @@
                                     placeholder="Name" />
                             </h1>
                         </div>
+
                         <group col="2">
-                            <group col="2">
-                                <field name="training_unit_count" class="oe_field_training_unit_count"
-                                    placeholder="Enter new value for unit counting" />
-                                <field name="hours" class="oe_field_hours"
-                                    attrs="{'invisible': [('training_unit_ids', '=', [])]}"/>
-                                <field name="ownhours" class="oe_field_ownhours"
-                                    attrs="{'invisible': [('training_unit_ids', '!=', [])]}"/>
-                            </group>
-                            <group col="2">
-                                <field name="module_code" class="oe_field_module_code"
-                                    placeholder="Enter new value for code" />
-                            </group>
+                            <field name="module_code" class="oe_field_module_code"
+                                placeholder="Enter new value for code" />
                         </group>
+
                         <notebook>
                             <page string="Description" class="oe_page_description" accesskey="D">
-                                <group col="1">
-                                    <field name="description" nolabel="1" class="oe_field_description"
-                                        placeholder="Enter new value for description" />
-                                </group>
+                                <field name="description" nolabel="1" class="oe_field_description"
+                                    placeholder="Enter new value for description" />
                             </page>
-                            <page string="Training units" class="oe_page_training_units" accesskey="U">
-                                <field name="training_unit_ids" class="oe_field_training_unit_ids"
-                                    placeholder="Choose or create module training units" />
-                                    <!-- context="{'tree_view_ref' : 'academy_base.view_academy_training_unit_embed_tree'}" -->
+                            <page string="Resources" class="oe_page_resources" accesskey="R">
+                                <br />
+                                <p><label for="training_resource_ids" /></p>
+                                <field name="training_resource_ids" class="oe_field_training_resource_ids"
+                                    placeholder="Choose resources will be available to this module" />
+
+                                <p><label for="training_unit_resource_ids" /></p>
+                                <field name="training_unit_resource_ids" class="oe_field_training_unit_resource_ids"
+                                    placeholder="Enter new value for training unit resource ids"
+                                    context="{'form_view_ref' : 'academy_base.view_academy_training_module_embed_units_tree'}" />
                             </page>
                         </notebook>
                     </sheet>
@@ -125,11 +120,12 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <kanban>
+                    <field name="training_module_id" />
                     <field name="image_small"/>
                     <field name="name" />
-                    <field name="module_code" />
-                    <field name="training_unit_count" />
                     <field name="hours" />
+                    <field name="module_code" />s
+
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_module">
@@ -143,14 +139,72 @@
                                     <strong class="oe_partner_heading"><field name="name"/></strong>
                                     <ul>
                                        <li><strong>Code:&#160;</strong><field name="module_code" /></li>
-                                       <li><strong>Units:&#160;</strong><field name="training_unit_count" /></li>
                                        <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
                                      </ul>
                                 </div>
                             </div>
                         </t>
                     </templates>
+
                 </kanban>
+            </field>
+        </record>
+
+
+
+        <!-- MODULES AS MAIN MODULES
+             Folowing lines are specific to shown main modules (without units)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "academy.training.module" -->
+        <record id="view_academy_training_module_module_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.module.module.tree</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='hours']" position="before">
+                    <field name="training_unit_count" class="oe_field_training_unit_count"
+                        placeholder="Enter new value for training unit count" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Tree view for "academy.training.module" -->
+        <record id="view_academy_training_module_module_form" model="ir.ui.view">
+            <field name="name">view.academy.training.module.module.form</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_form" />
+            <field name="arch" type="xml">
+               <xpath expr="//notebook/page" position="after">
+                   <page string="Training units" class="oe_page_training_units" accesskey="U">
+                        <field name="training_unit_ids" class="oe_field_training_unit_ids"
+                            placeholder="Choose or create module training units" />
+                    </page>
+               </xpath>
+            </field>
+        </record>
+
+        <!-- Tree view for "academy.training.module" -->
+        <record id="view_academy_training_module_module_kanban" model="ir.ui.view">
+            <field name="name">view.academy.training.module.module.kanban</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_kanban" />
+            <field name="arch" type="xml">
+                <xpath expr="//ul/li[1]" position="after">
+                    <li><strong>Units:&#160;</strong><field name="training_unit_count" /></li>
+                </xpath>
             </field>
         </record>
 
@@ -165,6 +219,12 @@
             <field name="domain">[('training_module_id', '=', False)]</field>
             <field name="context">{}</field>
             <field name="search_view_id" ref="view_academy_training_module_search" />
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('academy_base.view_academy_training_module_module_kanban')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('academy_base.view_academy_training_module_module_form')}),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('academy_base.view_academy_training_module_module_tree')})
+                         ]"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to add new training module
@@ -180,6 +240,112 @@
             <field name="sequence" eval="20" />
             <field name="action" ref="action_training_module_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+        </record>
+
+
+
+        <!-- MODULES AS UNITS
+             Folowing lines are specific to shown submodules (units)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Tree view for "academy.training.module" -->
+        <record id="view_academy_training_module_unit_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.module.unit.tree</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='hours']" position="before">
+                    <field name="training_module_id" class="oe_field_training_module_id"
+                        placeholder="Choose the related training module" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_academy_training_module_unit_form" model="ir.ui.view">
+            <field name="name">view.academy.training.module.unit.form</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/field[1]" position="after">
+                    <field name="training_module_id" class="oe_field_training_module_id"
+                        placeholder="Choose related training module" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_academy_training_module_unit_kanban" model="ir.ui.view">
+            <field name="name">view.academy.training.module.unit.kanban</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_kanban" />
+            <field name="arch" type="xml">
+                <xpath expr="//ul/li[1]" position="after">
+                    <li><strong>Module:&#160;</strong><field name="training_module_id" /></li>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Main window action for model.name -->
+        <record id="action_training_module_units_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Training units</field>
+            <field name="res_model">academy.training.module</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[('training_module_id', '!=', False)]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_academy_training_module_search" />
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('academy_base.view_academy_training_module_unit_kanban')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('academy_base.view_academy_training_module_unit_form')}),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('academy_base.view_academy_training_module_unit_tree')})
+                         ]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new training module
+                </p><p>
+                    There are not training modules in catalog
+                </p>
+            </field>
+        </record>
+
+        <!-- Main menu for model.name -->
+        <record id="menu_training_module_unit" model="ir.ui.menu" >
+            <field name="name">Training units</field>
+            <field name="sequence" eval="20" />
+            <field name="action" ref="action_training_module_units_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+        </record>
+
+
+        <record id="view_academy_training_module_embed_units_tree" model="ir.ui.view">
+            <field name="name">view.academy.training.module.embed_unitstree</field>
+            <field name="model">academy.training.module</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_training_module_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='module_code']" position="before">
+                    <field name="sequence" widget="handle" />
+                </xpath>
+                <xpath expr="//field[@name='hours']" position="replace">
+                    <field name="ownhours" class="oe_field_own_hours" />
+                </xpath>
+            </field>
         </record>
 
     </data>

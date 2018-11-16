@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-""" Many2ManyThroughView (overload for fields.Many2many)
+""" Many2manyThroughView (overload for fields.Many2many)
 
 This module has an Odoo overloaded fields.Many2many with change the middle
 TABLE by an SQL VIEW
 
 Todo:
-    * Move the SQL outside Many2ManyThroughView class to paren models.Model
+    * Move the SQL outside Many2manyThroughView class to paren models.Model
 
 """
 
@@ -24,7 +24,7 @@ _logger = getLogger(__name__)
 
 
 # pylint: disable=locally-disabled, R0903
-class Many2ManyThroughView(Many2many):
+class Many2manyThroughView(Many2many):
     """ Custom Many2many field, it uses a SQL view as middle
     """
 
@@ -35,7 +35,7 @@ class Many2ManyThroughView(Many2many):
         """ Constructor overload, it ensures parent constructor will be called
         """
 
-        super(Many2ManyThroughView, self).__init__(
+        super(Many2manyThroughView, self).__init__(
             comodel_name=comodel_name,
             relation=relation,
             column1=column1,
@@ -44,7 +44,6 @@ class Many2ManyThroughView(Many2many):
             **kwargs
         )
 
-
     # pylint: disable=locally-disabled, W0613
     def update_db(self, model, columns):
         """ Overload method to create middle relation. This will make
@@ -52,7 +51,7 @@ class Many2ManyThroughView(Many2many):
         """
 
         # Parent method will never been called
-        # super(Many2ManyThroughView, self).update_db(model, columns)
+        # super(Many2manyThroughView, self).update_db(model, columns)
 
         if self._view_can_be_built(model) and \
            self._view_needs_update(model.env.cr):
@@ -116,8 +115,12 @@ class Many2ManyThroughView(Many2many):
         if Default in (self.relation, self.column1, self.column2):
             return False
 
+        # OLD :: Relation has a related SQL statement
+        # if not getattr(self, self.relation.upper()):
+        #     return False
+
         # Relation has a related SQL statement
-        if not getattr(self, self.relation.upper()):
+        if not hasattr(self, 'sql'):
             return False
 
         # Left table and right table must exist before VIEW creation
@@ -242,7 +245,8 @@ class Many2ManyThroughView(Many2many):
         Finally it executes SQL command to create the middle view.
         """
 
-        select_sql = getattr(self, self.relation.upper())
+        #select_sql = getattr(self, self.relation.upper())
+        select_sql = self.sql
         select_sql = select_sql.format(col1=self.column1, col2=self.column2)
 
         create_sql = 'CREATE VIEW {} AS {};'.format(

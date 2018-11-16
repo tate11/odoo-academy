@@ -89,6 +89,20 @@ class AcademyCompetencyUnit(models.Model):
         auto_join=False
     )
 
+    training_activity_id = fields.Many2one(
+        string='Training activity',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.activity',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
     professional_qualification_id = fields.Many2one(
         string='Academy professional qualification',
         required=False,

@@ -8,4 +8,5 @@ odoo.login('odoo_50110_dev_academy', 'admin', 'admin')
 
 module = odoo.env.ref('base.module_academy_base')
 
-print(module.button_immediate_upgrade())
+# print(module.button_immediate_upgrade())
+print(dir(odoo.env['ir.ui.view']))

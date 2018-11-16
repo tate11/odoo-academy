@@ -41,7 +41,6 @@
         'views/academy_professional_family_view.xml',
         'views/academy_professional_qualification_view.xml',
 
-        'views/academy_training_unit_view.xml',
         'views/academy_training_module_view.xml',
         'views/academy_competency_unit_view.xml',
         'views/academy_training_activity_view.xml',
@@ -51,8 +50,9 @@
         'views/academy_training_action_enrolment.xml',
 
         'views/academy_training_resource_view.xml',
-        "views/academy_training_session_view.xml",
+        'views/academy_training_session_view.xml',
 
+        'wizard/academy_training_session_wizard_view.xml',
 
         'security/academy_application_scope.xml',
         'security/academy_base.xml',
@@ -71,8 +71,6 @@
         'security/academy_training_resource.xml',
         'security/academy_training_resource_file.xml',
 
-        'security/academy_training_unit.xml',
-
         'data/academy_application_scope.xml',
         'data/academy_knowledge_area.xml',
         'data/academy_professional_family.xml',
@@ -84,7 +82,7 @@
 
     ],
     'qweb': [
-        'wizard/widget_templates.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
@@ -96,14 +94,13 @@
         'demo/academy_professional_qualification.xml',
 
         'demo/academy_training_module.xml',
-        'demo/academy_training_unit.xml',
         'demo/academy_competency_unit.xml',
 
         'demo/academy_training_activity.xml',
         'demo/academy_training_action.xml',
-        # 'demo/academy_training_action_sign_up.xml',
-        # 'demo/academy_training_resource.xml',
-        #'demo/academy_training_resource_file.xml',
+
+        'demo/ir_atachment.xml',
+        'demo/academy_training_resource.xml',
     ],
     'js': [
         # 'static/src/js/appointment_manager.js'

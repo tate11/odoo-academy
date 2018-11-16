@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="view_academy_training_session_wizard_form" model="ir.ui.view">
+            <field name="name">Academy Training Session Wizard</field>
+            <field name="model">academy.training.session.wizard</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+
+                <form string="Caption" create="1" delete="1" edit="1">
+
+                    <notebook>
+                        <page name="page_details" string="Meeting Details">
+                            <group col="4">
+
+                                <field name="start_date" string="Starting at"/>
+                                <field name="stop_date" string="Ending at"/>
+
+                                <field name="start_datetime" string="Starting at" widget="float_time" />
+
+                                <label for="duration"/>
+                                <div>
+                                    <field name="duration" widget="float_time" string="Duration" class="oe_inline"/>
+                                    <span> hours</span>
+                                </div>
+                                <field name="allday"/>
+                            </group>
+                        </page>
+
+                        <page name="page_options" string="Options">
+                            <group>
+                                <div>
+                                    <div>
+                                        <group>
+                                            <label for="interval"/>
+                                            <div class="o_row">
+                                                <field name="interval"/>
+                                                <field name="rrule_type"/>
+                                            </div>
+                                            <label string="Until" for="end_type"/>
+                                            <div class="o_row">
+                                                <field name="end_type"/>
+                                                <field name="count"/>
+                                                <field name="final_date"/>
+                                            </div>
+                                        </group>
+                                        <group name="weekdays">
+                                            <field name="mo"/>
+                                            <field name="tu"/>
+                                            <field name="we"/>
+                                            <field name="th"/>
+                                            <field name="fr"/>
+                                            <field name="sa"/>
+                                            <field name="su"/>
+                                        </group>
+                                        <group>
+                                            <label string="Day of Month" for="month_by"/>
+                                            <div class="o_row">
+                                                <field name="month_by"/>
+                                                <field name="day"
+                                                   />
+                                                <field name="byday" string="The"
+                                                   />
+                                                <field name="week_list" nolabel="1"
+                                                   />
+                                            </div>
+                                        </group>
+                                    </div>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </form>
+
+
+            </field>
+        </record>
+
+        <record id="action_academy_training_session_wizard_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Academy Trainin Session wizard</field>
+            <field name="res_model">academy.training.session.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="menu_session_wizard" model="ir.ui.menu" >
+            <field name="name">Session wizard</field>
+            <field name="sequence" eval="100" />
+            <field name="action" ref="academy_base.action_academy_training_session_wizard_act_window" />
+            <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
+        </record>
+
+
+    </data>
+</openerp>

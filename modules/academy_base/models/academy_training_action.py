@@ -235,7 +235,8 @@ class AcademyTrainingAction(models.Model):
     )
 
 
-    training_resource_ids = custom_model_fields.Many2ManyThroughView(
+    # Many2manyThroughView
+    training_resource_ids = fields.Many2many(
         string='Training resources',
         required=False,
         readonly=True,

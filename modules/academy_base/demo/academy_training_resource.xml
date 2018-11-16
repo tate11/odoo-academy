@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_training_resource_word" model="academy.training.resource">
+            <field name="name">Microsoft Word</field>
+            <field name="description"><![CDATA[Microsoft Word Icon]]></field>
+            <field name="active" eval="True" />
+            <field name="manager_id" ref="base.user_root" />
+            <field name="last_update" eval="time.strftime('%Y-%m-%d')" />
+            <field name="training_module_ids" eval="[(4, ref('academy_base.academy_training_unit_msw2010'))]"/>
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_academy_resource_word'))]"/>
+        </record>
+
+<!--         <record id="ir_attachment_academy_resource_word" model="ir.attachment">
+            <field name="res_id" ref="academy_base.academy_training_resource_word"/>
+        </record> -->
+
+        <record id="academy_training_resource_excel" model="academy.training.resource">
+            <field name="name">Microsoft Excel</field>
+            <field name="description"><![CDATA[Microsoft Excel Icon]]></field>
+            <field name="active" eval="True" />
+            <field name="manager_id" ref="base.user_root" />
+            <field name="last_update" eval="time.strftime('%Y-%m-%d')" />
+            <field name="training_module_ids" eval="[(4, ref('academy_base.academy_training_unit_msx2010'))]"/>
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_academy_resource_excel'))]"/>
+        </record>
+
+<!--         <record id="ir_attachment_academy_resource_excel" model="ir.attachment">
+            <field name="res_id" ref="academy_base.academy_training_resource_excel"/>
+        </record> -->
+
+
+        <record id="academy_training_resource_writer" model="academy.training.resource">
+            <field name="name">LibreOffice Writer</field>
+            <field name="description"><![CDATA[LibreOffice Writer Icon]]></field>
+            <field name="active" eval="True" />
+            <field name="manager_id" ref="base.user_root" />
+            <field name="last_update" eval="time.strftime('%Y-%m-%d')" />
+            <field name="training_module_ids" eval="[(4, ref('academy_base.academy_training_unit_lbw5'))]"/>
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_academy_resource_writer'))]"/>
+        </record>
+<!--
+        <record id="ir_attachment_academy_resource_writer" model="ir.attachment">
+            <field name="res_id" ref="academy_base.academy_training_resource_writer"/>
+        </record> -->
+
+        <record id="academy_training_resource_calc" model="academy.training.resource">
+            <field name="name">LibreOffice Calc</field>
+            <field name="description"><![CDATA[LibreOffice Calc Icon]]></field>
+            <field name="active" eval="True" />
+            <field name="manager_id" ref="base.user_root" />
+            <field name="last_update" eval="time.strftime('%Y-%m-%d')" />
+            <field name="training_module_ids" eval="[(4, ref('academy_base.academy_training_unit_lbc5'))]"/>
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_academy_resource_calc'))]"/>
+        </record>
+
+
+        <record id="academy_training_resource_lb" model="academy.training.resource">
+            <field name="name">LibreOffice - A Complete Guide</field>
+            <field name="description"><![CDATA[LibreOffice Icon]]></field>
+            <field name="active" eval="True" />
+            <field name="manager_id" ref="base.user_root" />
+            <field name="last_update" eval="time.strftime('%Y-%m-%d')" />
+            <field name="training_module_ids" eval="[(4, ref('academy_base.academy_training_module_lb5'))]"/>
+            <field name="ir_attachment_ids" eval="[(4, ref('ir_attachment_academy_resource_libre'))]"/>
+        </record>
+
+<!--
+        <record id="ir_attachment_academy_resource_calc" model="ir.attachment">
+            <field name="res_id" ref="academy_base.academy_training_resource_calc"/>
+        </record>
+ -->
+
+    </data>
+</openerp>

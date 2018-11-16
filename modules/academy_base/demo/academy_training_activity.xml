@@ -14,7 +14,7 @@
             <field name="general_competence">Perform administrative management operations</field>
             <field name="professional_field">This professional exercises his activity in the administration area</field>
             <field name="professional_sectors">It is present in all the productive sectors, as well as in the Public Administration</field>
-            <field name="competency_unit_ids" eval="[(4, ref('academy_base.academy_competency_unit_office')),(4, ref('academy_base.academy_competency_unit_libre'))]"/>
+            <field name="competency_unit_ids" eval="[(4, ref('academy_base.academy_competency_unit_libre'))]"/>
         </record>
 
         <record id="academy_training_activity_ms" model="academy.training.activity">

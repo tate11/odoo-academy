@@ -140,7 +140,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_academy_training_session" model="ir.ui.menu" >
-            <field name="name">Training Session</field>
+            <field name="name">Training sessions</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_academy_training_session_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_monitoring" />

@@ -92,32 +92,38 @@ After running the modules list update you can confirm the new modules are availa
 - [ ] Update languages
 - [ ] Change color to read only tabs
 
-### Academy Base
+### Academy Public Tendering
 
-- [x] Finish enrolment
-      - [x] Date
-      - [x] Sequence
-      - [x] **Kanban view**
-      - [x] Filters
-      - [x] It should has a contraint who disallow to enrol active student
+- [ ] Rename models (6)
+- [ ] Link to training actions
+- [ ] Link with training actions enroled students (view)
+- [ ] State in Kanban
+
+### Academy Base
 
 - [ ] Finish modules
       - Module must have own hours if it has not training units
       - List of available resources
       - List of students who have coursed this module
       - Modules have their own hours value if they have not units, otherwise
-      the hours will be the sum of unit hours
+        the hours will be the sum of unit hours
       - **Idea**: undefined time length allowed
 
-- [ ] Finish resource
-      - Add button to set directory
-      - Download as zip: directory + attachments
-      - Resource shoud be linked to modules as avaliable resources (mandatory)
-        - Resource shoud be linked to units (inside module)(optional)
+- [ ] Ensure all models can be duplicated except enrolment
+      - [ ] Enrolments (NO BUTTON)
+      - [x] Activities
+      - [x] Actions
+      - [x] Competency units
+      - [ ] Resource (without historical)
 
-- [ ] Finish menú
-      - [x] Change and translate Helper (menú)
-      - Global menú should be sorted
+- [ ] Finish resource
+      - [ ] Link with actions
+      - [ ] Resource shoud be linked to modules as avaliable resources (mandatory)
+      - [ ] Kanban view
+      - [ ] Search view
+      - [ ] **Revise** Download as zip: directory + attachments
+      - [ ] **Controller** to download single file from directory
+      - [ ] sizes and MIME in directory tree view
 
 - [ ] Add tutor group
       - Training actions have tutors
@@ -129,12 +135,7 @@ After running the modules list update you can confirm the new modules are availa
       - One session can be more than one modules/units
       - **Can be sessions without modules?**
       - **Idea**: Store first date for modules
-
-- [ ] Ensure all models can be duplicated
-      - [ ] Enrolments
-      - [x] Activities
-      - [x] Actions
-      - [x] Competency units
+      -[ ] WARNING odoo_50110_dev_academy odoo.modules.loading: The model academy.training.session has no access rules, consider adding one. E.g. access_academy_training_session,access_academy_training_session,model_academy_training_session,base.group_user,1,0,0,0
 
 - [ ] Add rules
       - Consultants (view only asigned)
@@ -153,7 +154,15 @@ After running the modules list update you can confirm the new modules are availa
 - [x] The model res.partner has no access rules
 - [x] Finish security descriptors
 - [x] Students should be sign up in modules but not in actions
-
+- [x] Finish enrolment
+      - [x] Date
+      - [x] Sequence
+      - [x] **Kanban view**
+      - [x] Filters
+      - [x] It should has a contraint who disallow to enrol active student
+- [x] Finish menú
+      - [x] Change and translate Helper (menú)
+      - [x] Global menú should be sorted
 
 > *Idea*:  weekly or monthy reports
 > *Idea*:  unit, module, action and activity reports

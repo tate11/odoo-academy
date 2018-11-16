@@ -35,11 +35,31 @@ from logging import getLogger
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
 
+from .custom_model_fields import Many2manyThroughView
+
 
 # pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
 
 
+INHERITED_RESOURCES_REL = """
+    SELECT
+        COALESCE(
+            atm.training_module_id, atm."id"
+        )::INTEGER as training_unit_id,
+        atr."id" as training_resource_id
+    FROM
+        academy_training_module AS atm
+    INNER JOIN academy_training_module_training_resource_rel AS rel
+        ON atm."id" = rel.training_module_id
+    INNER JOIN academy_training_resource AS atr
+        ON rel.training_resource_id = atr."id"
+    WHERE
+        atr.training_resource_id IS NULL;
+"""
+
+
+# pylint: disable=locally-disabled, R0903
 class AcademyTrainingModule(models.Model):
     """ Coherent block of training associated with each of the competency units.
 
@@ -96,9 +116,9 @@ class AcademyTrainingModule(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help=False,
+        help='Parent module',
         comodel_name='academy.training.module',
-        domain=[],
+        domain=[('training_module_id', '=', False)],
         context={},
         ondelete='cascade',
         auto_join=False
@@ -113,12 +133,11 @@ class AcademyTrainingModule(models.Model):
         help='Training units in this module',
         comodel_name='academy.training.module',
         inverse_name='training_module_id',
-        domain=[('training_module_id', '=', False)],
+        domain=[],
         context={},
         auto_join=False,
         limit=None
     )
-
 
     module_code = fields.Char(
         string='Code',
@@ -142,9 +161,49 @@ class AcademyTrainingModule(models.Model):
         help='Length in hours'
     )
 
+    training_resource_ids = fields.Many2many(
+        string='Resources',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.resource',
+        relation='academy_training_module_training_resource_rel',
+        column1='training_module_id',
+        column2='training_resource_id',
+        domain=[],
+        context={},
+        limit=None
+    )
+
+    training_unit_resource_ids = Many2manyThroughView(
+        string='Inherited resources',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.resource',
+        relation='academy_training_unit_training_resource_rel',
+        column1='training_unit_id',
+        column2='training_resource_id',
+        domain=[],
+        context={},
+        limit=None,
+        sql=INHERITED_RESOURCES_REL
+    )
+
+    sequence = fields.Integer(
+        string='Sequence',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help='Choose the unit order'
+    )
 
     # --------------------------- COMPUTED FIELDS -----------------------------
-
 
     hours = fields.Float(
         string='Hours',
@@ -157,6 +216,16 @@ class AcademyTrainingModule(models.Model):
         compute='_compute_hours',
     )
 
+    @api.multi
+    @api.depends('training_unit_ids', 'ownhours')
+    def _compute_hours(self):
+        for record in self:
+            if record.training_unit_ids:
+                record.hours = sum(record.training_unit_ids.mapped('hours'))
+            else:
+                record.hours = record.ownhours
+
+
     training_unit_count = fields.Integer(
         string='Units',
         required=False,
@@ -168,22 +237,24 @@ class AcademyTrainingModule(models.Model):
     )
 
 
-    # ----------------- AUXILIARY FIELD METHODS AND EVENTS --------------------
-
-
-    @api.multi
-    @api.depends('training_unit_ids', 'ownhours')
-    def _compute_hours(self):
-        for record in self:
-            if record.training_unit_ids:
-                record.hours = sum(record.training_unit_ids.mapped('hours'))
-            else:
-                record.hours = record.ownhours
-
     @api.multi
     @api.depends('training_unit_ids')
     def _compute_training_unit_count(self):
         for record in self:
             record.training_unit_count = len(record.training_unit_ids)
+
+    # ----------------- AUXILIARY FIELD METHODS AND EVENTS --------------------
+
+    @api.model
+    def create(self, values):
+        """ Updates sequence field after create
+        """
+
+        result = super(AcademyTrainingModule, self).create(values)
+
+        return result
+
+
+
 
 

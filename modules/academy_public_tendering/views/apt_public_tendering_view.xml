@@ -107,7 +107,7 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_apt_public_tendering">
                                 <div class="o_kanban_image">
-                                    
+
                                     <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
 
                                     <t t-if="!record.image_small.raw_value">
@@ -178,7 +178,7 @@
             <field name="name">Public Tendering</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_public_tendering_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_monitoring" />
         </record>
 
     </data>

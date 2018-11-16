@@ -26,7 +26,6 @@
                 <tree string="academy_competency_unit_tree" create="1" delete="1" edit="1">
                     <field name="competency_name" />
                     <field name="training_module_id" />
-                    <!-- <field name="training_unit_count" /> -->
                     <field name="hours" />
                 </tree>
             </field>
@@ -176,6 +175,23 @@
             <field name="sequence" eval="15" />
             <field name="action" ref="action_competency_unit_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+        </record>
+
+        <!-- Tree view for "academy.competency.unit" -->
+        <record id="view_academy_competency_unit_embed_tree" model="ir.ui.view">
+            <field name="name">view.academy.competency.unit.tree</field>
+            <field name="model">academy.competency.unit</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="academy_base.view_academy_competency_unit_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='competency_name']" position="before">
+                    <field name="sequence" class="oe_field_sequence" widget="handle"
+                        placeholder="Choose competency unit order in activity" />
+                </xpath>
+            </field>
         </record>
 
     </data>
