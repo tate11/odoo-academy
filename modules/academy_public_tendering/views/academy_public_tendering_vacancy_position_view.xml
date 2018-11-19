@@ -5,7 +5,7 @@
 
         <!-- VIEWS: "Vacancy position"
 
-            - Model·········: apt.vacancy.position
+            - Model·········: academy.public.tendering.vacancy.position
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
@@ -14,35 +14,35 @@
             - Action help···: There are not any vacancy position yet
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-        <!-- Tree view for "apt.vacancy.position" -->
-        <record id="view_apt_vacancy_position_tree" model="ir.ui.view">
-            <field name="name">view.apt.vacancy.position.tree</field>
-            <field name="model">apt.vacancy.position</field>
+        <!-- Tree view for "academy.public.tendering.vacancy.position" -->
+        <record id="view_academy_public_tendering_vacancy_position_tree" model="ir.ui.view">
+            <field name="name">view.academy.public.tendering.vacancy.position.tree</field>
+            <field name="model">academy.public.tendering.vacancy.position</field>
             <field name="type">tree</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <tree string="apt_vacancy_position_tree" create="1" delete="1" edit="1">
+                <tree string="academy_public_tendering_vacancy_position_tree" create="1" delete="1" edit="1">
                     <field name="name" class="oe_field_name" />
-                    <field name="group_id" class="oe_field_group_id" />
-                    <field name="class_id" class="oe_field_class_id" />
-                    <field name="kind_id" class="oe_field_kind" />
+                    <field name="employment_group_id" class="oe_field_employment_group_id" />
+                    <field name="hiring_type_id" class="oe_field_hiring_type_id" />
+                    <field name="exam_type_id" class="oe_field_exam_type_id" />
                     <field name="total_of_vacancies" class="oe_field_total_of_vacancies" />
                 </tree>
             </field>
         </record>
 
-        <!-- Form view for "apt.vacancy.position" -->
-        <record id="view_apt_vacancy_position_form" model="ir.ui.view">
-            <field name="name">view.apt.vacancy.position.form</field>
-            <field name="model">apt.vacancy.position</field>
+        <!-- Form view for "academy.public.tendering.vacancy.position" -->
+        <record id="view_academy_public_tendering_vacancy_position_form" model="ir.ui.view">
+            <field name="name">view.academy.public.tendering.vacancy.position.form</field>
+            <field name="model">academy.public.tendering.vacancy.position</field>
             <field name="type">form</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <form string="apt_vacancy_position_form" create="1" delete="1" edit="1">
+                <form string="academy_public_tendering_vacancy_position_form" create="1" delete="1" edit="1">
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
@@ -53,14 +53,14 @@
                         </div>
 
                         <group col="4" string="Exam">
-                            <field name="kind_id" class="oe_field_kind_id"
+                            <field name="exam_type_id" class="oe_field_exam_type_id_id"
                                 placeholder="Enter new value for kind" />
                         </group>
 
                         <group col="4" string="Requirements">
-                            <field name="group_id" class="oe_field_group_id"
-                                placeholder="Enter new value for group_id" />
-                            <field name="class_id" class="oe_field_class_id"
+                            <field name="employment_group_id" class="oe_field_employment_group_id"
+                                placeholder="Enter new value for employment_group_id" />
+                            <field name="hiring_type_id" class="oe_field_hiring_type_id"
                                 placeholder="Enter new value for class" />
                         </group>
 
@@ -85,16 +85,16 @@
             </field>
         </record>
 
-        <!-- Search view for "apt.vacancy.position" -->
-        <record id="view_apt_vacancy_position_search" model="ir.ui.view">
-            <field name="name">view.apt.vacancy.position.search</field>
-            <field name="model">apt.vacancy.position</field>
+        <!-- Search view for "academy.public.tendering.vacancy.position" -->
+        <record id="view_academy_public_tendering_vacancy_position_search" model="ir.ui.view">
+            <field name="name">view.academy.public.tendering.vacancy.position.search</field>
+            <field name="model">academy.public.tendering.vacancy.position</field>
             <field name="type">search</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <search string="apt_vacancy_position_search">
+                <search string="academy_public_tendering_vacancy_position_search">
                     <field name="name" />
                     <!-- ··· -->
                 </search>
@@ -105,13 +105,13 @@
         <record id="action_vacancy_positions_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Vacancy positions</field>
-            <field name="res_model">apt.vacancy.position</field>
+            <field name="res_model">academy.public.tendering.vacancy.position</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="search_view_id" ref="view_apt_vacancy_position_search" />
+            <field name="search_view_id" ref="view_academy_public_tendering_vacancy_position_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to add new Vacancy positions

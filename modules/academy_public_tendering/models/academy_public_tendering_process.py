@@ -20,10 +20,10 @@ class AptPublicTendering(models.Model):
 
     """
 
-    _name = 'apt.public.tendering'
+    _name = 'academy.public.tendering.process'
     _description = u'Public tendering'
 
-    _inherit = ['apt.image.model']
+    _inherit = ['academy.abstract.image']
 
     _rec_name = 'name'
     _order = 'approval DESC'
@@ -34,7 +34,7 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Name for this public tendering',
+        help='Name for this academy public tendering',
         size=50,
         translate=True
     )
@@ -45,7 +45,7 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Something about this public tendering',
+        help='Something about this academy public tendering',
         translate=True
     )
 
@@ -100,15 +100,15 @@ class AptPublicTendering(models.Model):
         help='Choose the last day for training'
     )
 
-    apt_vacancy_position_ids = fields.One2many(
+    vacancy_position_ids = fields.One2many(
         string='Vacancy positions',
         required=False,
         readonly=False,
         index=False,
         default=None,
         help='Add offered vacancy positions',
-        comodel_name='apt.vacancy.position',
-        inverse_name='apt_public_tendering_id',
+        comodel_name='academy.public.tendering.vacancy.position',
+        inverse_name='academy_public_tendering_process_id',
         domain=[],
         context={},
         auto_join=False,
@@ -121,11 +121,11 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Documents related with the public tendering',
+        help='Documents related with the academy public tendering',
         comodel_name='ir.attachment',
-        # relation='model_name_this_model_rel',
-        # column1='model_name_id',
-        # column2='this_model_id',
+        relation='academy_public_tendering_process_ir_attachment_rel',
+        column1='tendering_process_id',
+        column2='ir_atachment_id',
         domain=[],
         context={},
         limit=None
@@ -189,13 +189,13 @@ class AptPublicTendering(models.Model):
 
 
     @api.multi
-    @api.depends('apt_vacancy_position_ids')
+    @api.depends('vacancy_position_ids')
     def compute_total_of_vacancies(self):
         """ Returns computed value for total_of_vacancies field
         """
         for record in self:
             record.total_of_vacancies = \
-                sum(record.apt_vacancy_position_ids.mapped('total_of_vacancies'))
+                sum(record.vacancy_position_ids.mapped('total_of_vacancies'))
 
     # --------------------------- ONCHANGE EVENTS -----------------------------
 

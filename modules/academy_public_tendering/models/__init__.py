@@ -5,10 +5,10 @@
 ###############################################################################
 
 
-from . import apt_image_model
-from . import apt_group
-from . import apt_kind
-from . import apt_class
+from . import academy_public_tendering_abstract_image
+from . import academy_public_tendering_employment_group
+from . import academy_public_tendering_exam_type
+from . import academy_public_tendering_hiring_type
 
-from . import apt_vacancy_position
-from . import apt_public_tendering
+from . import academy_public_tendering_vacancy_position
+from . import academy_public_tendering_process

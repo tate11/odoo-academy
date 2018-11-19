@@ -210,21 +210,27 @@ class AcademyTrainingModule(models.Model):
         required=False,
         readonly=True,
         index=False,
-        default=0.0,
+        default=0.0, # pylint: disable=locally-disabled, W0212
         digits=(16, 2),
         help='Length in hours',
-        compute='_compute_hours',
+        compute=lambda self: self._compute_hours(), # pylint: disable=locally-disabled, W0212
     )
 
     @api.multi
     @api.depends('training_unit_ids', 'ownhours')
     def _compute_hours(self):
+        units_obj = self.env['academy.training.module']
+
         for record in self:
-            if record.training_unit_ids:
-                record.hours = sum(record.training_unit_ids.mapped('hours'))
+            units_domain = [('training_module_id', '=', record.id)]
+            units_set = units_obj.search(units_domain, \
+                offset=0, limit=None, order=None, count=False)
+
+            print(units_set)
+            if units_set:
+                record.hours = sum(units_set.mapped('ownhours'))
             else:
                 record.hours = record.ownhours
-
 
     training_unit_count = fields.Integer(
         string='Units',

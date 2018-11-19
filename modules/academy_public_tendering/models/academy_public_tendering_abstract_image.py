@@ -1,15 +1,17 @@
-#pylint: disable=I0011,C0111,R0903,F0401
 # -*- coding: utf-8 -*-
-###############################################################################
-#    License, author and contributors information in:                         #
-#    __openerp__.py file at the root folder of this module.                   #
-###############################################################################
+""" AcademyAbstractImage
 
+This module contains a abstract class with the common behavior to add one
+image in models which extends this
+"""
+
+
+# pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api, tools
 
 
-
-class AptImageModel(models.AbstractModel):
+# pylint: disable=locally-disabled, R0903
+class AcademyPublicTenderingAbstractImage(models.AbstractModel):
     """ Abstract model with needed fields and behavior to manage item image
 
     Fields:
@@ -19,7 +21,8 @@ class AptImageModel(models.AbstractModel):
 
     """
 
-    _name = 'apt.image.model'
+    _name = 'academy.public.tendering.abstract.image'
+    _description = u'Academy public tendering common model image behavior'
 
 
     # ---------------------------- ENTITY FIELDS ------------------------------
@@ -38,6 +41,7 @@ class AptImageModel(models.AbstractModel):
     # --------------------------- COMPUTED FIELDS -----------------------------
 
 
+    # pylint: disable=locally-disabled, W0212
     image_medium = fields.Binary(
         string='Image (auto-resized to 128x128)',
         required=False,
@@ -46,10 +50,11 @@ class AptImageModel(models.AbstractModel):
         default=0,
         help="Medium-sized image of the category. It is automatically " \
              "resized as a 128x128px image, with aspect ratio preserved. " \
-             "Use this field in form views or some kanban views.",
-        compute="_get_image",
+             "Use this field in form views or some Kanban views.",
+        compute=lambda self: self._get_image()
     )
 
+    # pylint: disable=locally-disabled, W0212
     image_small = fields.Binary(
         string='Image (auto-resized to 64x64)',
         required=False,
@@ -59,7 +64,7 @@ class AptImageModel(models.AbstractModel):
         help="Small-sized image of the category. It is automatically " \
              "resized as a 64x64px image, with aspect ratio preserved. " \
              "Use this field anywhere a small image is required.",
-        compute="_get_image",
+        compute=lambda self: self._get_image()
     )
 
 

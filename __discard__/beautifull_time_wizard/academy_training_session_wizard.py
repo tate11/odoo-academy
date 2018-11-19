@@ -33,7 +33,6 @@ from logging import getLogger
 from datetime import datetime, date, time
 from dateutil.relativedelta import relativedelta
 from sys import maxsize as maxint
-import math
 
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
@@ -59,9 +58,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     _rec_name = 'id'
     _order = 'id ASC'
 
-
-    # ---------------------------- ENTITY FIELDS ------------------------------
-
     training_action_id = fields.Many2one(
         string='Training action',
         required=False,
@@ -74,6 +70,21 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         context={},
         ondelete='cascade',
         auto_join=False
+    )
+
+    training_unit_ids = fields.One2many(
+        string='Training modules',
+        required=True,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.session.wizard.module',
+        inverse_name='session_wizard_id',
+        domain=[],
+        context={},
+        auto_join=False,
+        limit=None
     )
 
     start_date = fields.Date(
@@ -312,46 +323,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         ]
     )
 
-
-    # --------------------------- COMPUTED FIELDS -----------------------------
-
-    # IMPORTANT!
-    # Following field should be a computed field but instead I have used an
-    # @api.onchange (see below) because I need compute field domain at the
-    # same time. Even so, the non called compute method is down the field and
-    # it's used by the onchange method.
-    training_unit_ids = fields.One2many(
-        string='Training modules',
-        required=True,
-        readonly=False,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.session.wizard.module',
-        inverse_name='session_wizard_id',
-        domain=[],
-        context={},
-        auto_join=False,
-        limit=None,
-        # compute='_compute_training_unit_ids'
-    )
-
-    @api.multi
-    @api.depends('training_action_id')
-    def _compute_training_unit_ids(self):
-
-        print('Hola')
-        for record in self:
-
-            # pylint: disable=locally-disabled, w0212
-            unit_set = record._get_units()
-
-            for unit in unit_set:
-                record._append_unit_line(unit)
-
-
-    # ----------------------- REQUIRED FIELD METHODS --------------------------
-
     def _default_duration(self):    # pylint: disable=locally-disabled, R0201
         hour = time(5, 0, 0)
         hours = datetime.combine(date.min, hour) - datetime.min
@@ -362,80 +333,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         hour = time(9, 0, 0)
         hours = datetime.combine(date.min, hour) - datetime.min
         return hours.seconds / 3600.0
-
-
-    def _default_training_action_id(self):
-        action_domain = []
-        action_obj = self.env['academy.training.action']
-        action_set = action_obj.search(action_domain, \
-            offset=0, limit=1, order='create_date DESC', count=False)
-
-        return action_set
-
-    # --------------------------- ONCHANGE EVENTS -----------------------------
-
-    @api.onchange('training_action_id')
-    def _onchange_training_action_id(self):
-
-        self.training_unit_ids = None
-
-        if self.training_action_id:
-
-            self._compute_training_unit_ids()
-
-            self.state = 'step2'
-            domain = [('id', '=', self.training_unit_ids.mapped('id'))]
-
-        else:
-            domain = [('id', '=', -1)]
-            self.state = 'step1'
-
-        return {
-            'domain': {'training_unit_ids': domain}
-        }
-
-
-    @api.onchange('training_unit_ids')
-    def _onchange_training_unit_ids(self):
-        action_set = self.training_action_id
-        module_set = self.training_unit_ids
-
-        if module_set:
-            hours = module_set.mapped('duration')
-            self.count = int(sum(hours) / 2)
-        elif action_set:
-            self.state = 'step2'
-        else:
-            self.state = 'step1'
-
-
-    @api.onchange('state')
-    def _onchange_state(self):
-        if not self.training_action_id:
-            self.state = 'step1'
-        elif not self.training_unit_ids and self.state not in ('step1', 'step2'):
-            self.state = 'step2'
-
-
-    # --------------------------- PUBLIC METHODS ------------------------------
-
-    @api.multi
-    def execute(self):
-        """ Wizard execute button method """
-
-        #STEP 1: Ensure set has only one record
-        self.ensure_one()
-
-        date_list = [date.today()]
-        last_date = max(date_list)
-        for unit_line in self.training_unit_ids:
-            if date_list:
-                last_date = max(date_list)
-            date_list = self._get_computed_dates_for_module(unit_line, last_date)
-            print(date_list)
-
-
-    # -------------------------- AUXILIARY METHODS ----------------------------
 
 
     def _get_units(self):
@@ -475,8 +372,61 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         self.training_unit_ids = \
             self.training_unit_ids + wizard_model_obj.create(values)
 
-        print(self.training_unit_ids)
 
+    @api.onchange('training_action_id')
+    def _onchange_training_action_id(self):
+
+        self.training_unit_ids = None
+
+        if self.training_action_id:
+
+            unit_set = self._get_units()
+            for unit in unit_set:
+                self._append_unit_line(unit)
+
+            self.state = 'step2'
+            domain = [('id', '=', self.training_unit_ids.mapped('id'))]
+
+        else:
+            domain = [('id', '=', -1)]
+            self.state = 'step1'
+
+        return {
+            'domain': {'training_unit_ids': domain}
+        }
+
+
+    @api.onchange('training_unit_ids')
+    def _onchange_training_unit_ids(self):
+        action_set = self.training_action_id
+        module_set = self.training_unit_ids
+
+        if module_set:
+            hours = module_set.mapped('duration')
+            self.count = int(sum(hours) / 2)
+        elif action_set:
+            self.state = 'step2'
+        else:
+            self.state = 'step1'
+
+
+    @api.onchange('state')
+    def _onchange_state(self):
+        if not self.training_action_id:
+            self.state = 'step1'
+        elif not self.training_unit_ids and self.state not in ('step1', 'step2'):
+            self.state = 'step2'
+
+    def _default_training_action_id(self):
+        action_domain = []
+        action_obj = self.env['academy.training.action']
+        action_set = action_obj.search(action_domain, \
+            offset=0, limit=1, order='create_date DESC', count=False)
+
+        return action_set
+
+
+    # -------------------------------------------------------------------------
 
     @staticmethod
     def _to_python_date(field_value):
@@ -486,21 +436,18 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return fields.Date.from_string(field_value)
 
 
-    def _get_bounds(self, module, last_date):
+    def _get_bounds(self):
         """ Gets the model: start_date, stop_date and count, next it change
         to the maximum value stop_date or count based on end_type chosen value
         """
 
-        if module.start_date:
-            date1 = self._to_python_date(module.start_date)
-        else:
-            date1 = last_date
+        date1 = self._to_python_date(self.start_date)
 
-        if module.end_type == 'count':
+        if self.end_type == 'count':
             date2 = date.max
-            count = math.ceil(module.maximum / module.duration)
+            count = self.count
         else:
-            date2 = self._to_python_date(module.stop_date)
+            date2 = self._to_python_date(self.stop_date)
             count = maxint
 
         return date1, date2, count
@@ -566,14 +513,14 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return checked
 
 
-    def _get_computed_dates_for_module(self, module, last_date):
+    def _get_computed_dates_for_wizard(self):
         """ Computes all dates based on params given to the wizard.
 
         @return (list): list with all computed dates
         """
 
         #STEP 2: Get required values from record
-        date1, date2, count = self._get_bounds(module, last_date)
+        date1, date2, count = self._get_bounds()
         step = self._get_time_step()
         weekdays = self._get_weekdays()
         rrule_type = self.rrule_type
@@ -603,4 +550,16 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return date_list
 
 
+    @api.multi
+    def execute(self):
+        """ Wizard execute button method """
+
+        #STEP 1: Ensure set has only one record
+        self.ensure_one()
+
+        date_list = self._get_computed_dates_for_wizard()
+        action_item = self.training_action_id
+
+        for date_item in date_list:
+            pass
 

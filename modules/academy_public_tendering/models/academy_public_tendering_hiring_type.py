@@ -12,16 +12,16 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AptKind(models.Model):
-    """ Kind for vacancy position
+class AptClass(models.Model):
+    """ Class of public employee
 
     Fields:
       name (Char): Human readable name which will identify each record.
 
     """
 
-    _name = 'apt.kind'
-    _description = u'Kind for vacancy position'
+    _name = 'academy.public.tendering.hiring.type'
+    _description = u'Class of public employee'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -32,7 +32,7 @@ class AptKind(models.Model):
         readonly=False,
         index=True,
         default=None,
-        help='Name for this kind',
+        help='Name for this class',
         size=50,
         translate=True
     )
@@ -43,7 +43,7 @@ class AptKind(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Something about this kind',
+        help='Something about this class',
         translate=True
     )
 

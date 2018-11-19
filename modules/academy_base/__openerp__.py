@@ -53,6 +53,7 @@
         'views/academy_training_session_view.xml',
 
         'wizard/academy_training_session_wizard_view.xml',
+        'wizard/academy_training_session_wizard_module_view.xml',
 
         'security/academy_application_scope.xml',
         'security/academy_base.xml',
@@ -107,7 +108,6 @@
     ],
     'css': [
         'static/src/css/academy_training_action_view.css',
-        # 'static/src/css/academy_training_session_wizard.css'
     ],
     "external_dependencies": {
         "python" : []

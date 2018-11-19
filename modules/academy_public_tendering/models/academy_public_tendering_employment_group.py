@@ -20,7 +20,7 @@ class AptGroup(models.Model):
 
     """
 
-    _name = 'apt.group'
+    _name = 'academy.public.tendering.employment.group'
     _description = u'Group for vacancy position'
 
     _rec_name = 'name'

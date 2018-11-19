@@ -27,7 +27,7 @@
                 <tree string="academy_training_module_tree" create="1" delete="1" edit="1">
                     <field name="module_code" />
                     <field name="name" />
-                    <field name="hours" class="oe_field_hours" />
+                    <field name="hours" class="oe_field_hours" widget="float_time" />
                 </tree>
             </field>
         </record>
@@ -139,7 +139,7 @@
                                     <strong class="oe_partner_heading"><field name="name"/></strong>
                                     <ul>
                                        <li><strong>Code:&#160;</strong><field name="module_code" /></li>
-                                       <li><strong>Lifespan:&#160;</strong><field name="hours"/>&#160;horas</li>
+                                       <li><strong>Lifespan:&#160;</strong><field name="hours" widget="float_time" />&#160;horas</li>
                                      </ul>
                                 </div>
                             </div>
@@ -183,12 +183,22 @@
             <field name="active" eval="True" />
             <field name="inherit_id" ref="academy_base.view_academy_training_module_form" />
             <field name="arch" type="xml">
-               <xpath expr="//notebook/page" position="after">
+                <xpath expr="//notebook/page" position="after">
                    <page string="Training units" class="oe_page_training_units" accesskey="U">
                         <field name="training_unit_ids" class="oe_field_training_unit_ids"
                             placeholder="Choose or create module training units" />
                     </page>
-               </xpath>
+                </xpath>
+                <xpath expr="//field[@name='module_code']" position="after">
+                    <field name="ownhours" class="oe_field_ownhours"
+                        placeholder="Enter number of hours to this module"
+                        attrs="{'invisible': [('training_unit_count', '!=', 0)]}"/>
+                    <field name="hours" class="oe_field_hours"
+                        placeholder="Total of hours from all units in module"
+                        attrs="{'invisible': [('training_unit_count', '=', 0)]}"/>
+                    <field name="training_unit_count" class="oe_field_training_unit_count"
+                        placeholder="Enter new value for training unit count" />
+                </xpath>
             </field>
         </record>
 
@@ -277,6 +287,10 @@
                     <field name="training_module_id" class="oe_field_training_module_id"
                         placeholder="Choose related training module" />
                 </xpath>
+                 <xpath expr="//field[@name='module_code']" position="after">
+                    <field name="ownhours" class="oe_field_ownhours"
+                        placeholder="Enter number of hours to this module"/>
+                </xpath>
             </field>
         </record>
 
@@ -343,7 +357,7 @@
                     <field name="sequence" widget="handle" />
                 </xpath>
                 <xpath expr="//field[@name='hours']" position="replace">
-                    <field name="ownhours" class="oe_field_own_hours" />
+                    <field name="ownhours" class="oe_field_own_hours" widget="float_time" />
                 </xpath>
             </field>
         </record>

@@ -146,22 +146,6 @@ class AcademyTrainingActivity(models.Model):
         translate=True
     )
 
-    # competency_unit_ids = fields.Many2many(
-    #     string='Competency units',
-    #     required=False,
-    #     readonly=False,
-    #     index=False,
-    #     default=None,
-    #     help='Competency units that make up this activity',
-    #     comodel_name='academy.competency.unit',
-    #     relation='academy_training_activity_competency_unit_rel',
-    #     column1='training_activity_id',
-    #     column2='competency_unit_id',
-    #     domain=[],
-    #     context={},
-    #     limit=None,
-    # )
-
     competency_unit_ids = fields.One2many(
         string='Competency units',
         required=False,

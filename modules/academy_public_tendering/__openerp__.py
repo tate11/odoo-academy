@@ -27,26 +27,29 @@
     'data': [
         'data/res_partner_category_data.xml',
         'data/res_partner_data.xml',
-        'data/apt_group_data.xml',
-        'data/apt_kind_data.xml',
-        'data/apt_class_data.xml',
+        'data/academy_public_tendering_employment_group_data.xml',
+        'data/academy_public_tendering_exam_type_data.xml',
+        'data/academy_public_tendering_hiring_type_data.xml',
 
-        'security/apt_class.xml',
-        'security/apt_group.xml',
-        'security/apt_kind.xml',
-        'security/apt_public_tendering.xml',
-        'security/apt_vacancy_position.xml',
+        'security/academy_public_tendering_hiring_type.xml',
+        'security/academy_public_tendering_employment_group.xml',
+        'security/academy_public_tendering_exam_type.xml',
+        'security/academy_public_tendering_process.xml',
+        'security/academy_public_tendering_vacancy_position.xml',
 
         'views/academy_public_tendering.xml',
 
-        'views/apt_group_view.xml',
-        'views/apt_kind_view.xml',
-        'views/apt_class_view.xml',
-        'views/apt_vacancy_position_view.xml',
-        'views/apt_public_tendering_view.xml',
+        'views/academy_public_tendering_employment_group_view.xml',
+        'views/academy_public_tendering_exam_type_view.xml',
+        'views/academy_public_tendering_hiring_type_view.xml',
+        'views/academy_public_tendering_vacancy_position_view.xml',
+        'views/academy_public_tendering_process_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
+        'demo/res_partner_demo.xml',
+        'demo/academy_public_tendering_process_demo.xml',
+        'demo/academy_public_tendering_vacancy_position_demo.xml',
     ],
     'js': [
     ],

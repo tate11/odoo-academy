@@ -3,9 +3,9 @@
 <openerp>
     <data noupdate="0">
 
-        <record id="access_apt__res_groups" model="ir.model.access">
-            <field name="name">apt_ res_groups</field>
-            <field name="model_id" ref="academy_public_tendering.model_apt_group"/>
+        <record id="access_academy_public_tendering_hiring_type_base_group_user" model="ir.model.access">
+            <field name="name">academy_public_tendering_hiring_type base_group_user</field>
+            <field name="model_id" ref="academy_public_tendering.model_academy_public_tendering_hiring_type"/>
             <field name="group_id" ref="base.group_user"/>
             <field name="perm_read" eval="True" />
             <field name="perm_create" eval="True" />

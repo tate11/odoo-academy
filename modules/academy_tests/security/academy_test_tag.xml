@@ -3,10 +3,10 @@
 <openerp>
     <data noupdate="0">
 
-        <record id="access_academy_tag_base_group_restricted_user" model="ir.model.access">
-            <field name="name">academy.test.tag base_group_restricted_user</field>
+        <record id="access_academy_tag_base_academy_group_consultant" model="ir.model.access">
+            <field name="name">academy.test.tag base_academy_group_consultant</field>
             <field name="model_id" ref="academy_tests.model_academy_test_tag"/>
-            <field name="group_id" ref="academy_base.group_restricted_user"/>
+            <field name="group_id" ref="academy_base.academy_group_consultant"/>
             <field name="perm_read" eval="True" />
             <field name="perm_create" eval="False" />
             <field name="perm_write" eval="False" />
@@ -14,10 +14,10 @@
             <field name="active" eval="True" />
         </record>
 
-        <record id="access_academy_tag_base_group_editor" model="ir.model.access">
-            <field name="name">academy.test.answer base_group_editor</field>
+        <record id="access_academy_tag_base_academy_group_teacher" model="ir.model.access">
+            <field name="name">academy.test.answer base_academy_group_teacher</field>
             <field name="model_id" ref="academy_tests.model_academy_test_tag"/>
-            <field name="group_id" ref="academy_base.group_editor"/>
+            <field name="group_id" ref="academy_base.academy_group_teacher"/>
             <field name="perm_read" eval="True" />
             <field name="perm_create" eval="True" />
             <field name="perm_write" eval="True" />
