@@ -235,7 +235,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     month_by = fields.Selection(
         string='Month by',
         required=True,
-        readonly=True,
+        readonly=False,
         index=False,
         default='date',
         help='Month by',
