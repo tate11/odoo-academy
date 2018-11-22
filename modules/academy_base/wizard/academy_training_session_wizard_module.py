@@ -100,6 +100,36 @@ class AcademyTrainingSessionWizardModule(models.TransientModel):
         help='Module order in training session line'
     )
 
+    imparted = fields.Float(
+        string='Imparted',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0.0,
+        digits=(16, 2),
+        help='Number of hours which has been imparted',
+        compute=lambda self: self._compute_imparted() # pylint: disable=locally-disabled, W0212
+    )
+
+    @api.multi
+    @api.depends('training_module_id', 'session_wizard_id')
+    def _compute_imparted(self):
+        pass
+        # for record in self:
+        #     action_id = record.session_wizard_id.training_action_id
+        #     session_domain = [
+        #         ('training_action_id', '=', action_id.id),
+        #         ('training_module_id', '=', record.training_module_id.id)
+        #     ]
+        #     session_obj = self.env['academy.training.session']
+        #     session_set = session_obj.search(session_domain, \
+        #         offset=0, limit=None, order=None, count=False)
+
+        #     total = sum(session_set.mapped('hours'))
+
+        #     record.imparted = total
+
+
     following = fields.Boolean(
         string='Following',
         required=False,

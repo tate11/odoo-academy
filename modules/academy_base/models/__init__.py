@@ -31,4 +31,4 @@ from . import academy_training_resource
 from . import academy_training_resource_file
 
 from . import academy_training_action_enrolment
-from . import academy_training_session
+from . import academy_training_lesson

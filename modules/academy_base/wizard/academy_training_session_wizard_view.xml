@@ -34,41 +34,12 @@
                             placeholder="Choose related training modules" nolabel="1" widget="many2many"/>
                     </group>
 
-                    <group col="2" invisible="1">
-                        <group col="2">
-                            <field name="allday" class="oe_left"/>
-                            <field name="start_date" string="Starting at"/>
-                        </group>
-                        <group col="2">
-                            <label for="start_time" attrs="{'invisible': [('allday', '=', True)]}" />
-                            <div attrs="{'invisible': [('allday', '=', True)]}">
-                                <field name="start_time" widget="float_time" string="Duration"
-                                    class="oe_inline" attrs="{'readonly': [('allday', '=', True)]}" />
-                                <span> hours</span>
-                            </div>
-                            <label for="duration" attrs="{'invisible': [('allday', '=', True)]}" />
-                            <div attrs="{'invisible': [('allday', '=', True)]}">
-                                <field name="duration" widget="float_time" string="Duration"
-                                    class="oe_inline" attrs="{'readonly': [('allday', '=', True)]}" />
-                                <span> hours</span>
-                            </div>
-                        </group>
-                    </group>
-
                     <group col="2" attrs="{'invisible': [('state', '!=', 'step3')]}">
                         <group>
                             <label for="interval"/>
                             <div class="o_row">
                                 <field name="interval"/>
                                 <field name="rrule_type"/>
-                            </div>
-                            <label string="Until" for="end_type"/>
-                            <div class="o_row">
-                                <field name="end_type"/>
-                                <field name="count"
-                                    attrs="{'invisible': [('end_type', '!=', 'count')], 'readonly': [('end_type', '!=', 'count')]}" />
-                                <field name="stop_date"
-                                    attrs="{'invisible': [('end_type', '!=', 'end_date')], 'readonly': [('end_type', '!=', 'end_date')]}" />
                             </div>
                         </group>
                         <gropup>

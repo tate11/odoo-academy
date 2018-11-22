@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-""" Academy Training Session
+""" Academy Training Lesson
 
-This module contains the academy.training.session an unique Odoo model
-which contains all Academy Training Session attributes and behavior.
+This module contains the academy.training.lesson an unique Odoo model
+which contains all Academy Training Lesson attributes and behavior.
 
-This model is the representation of the real life training session. One
-session has some related resources and a linked list of students who have
+This model is the representation of the real life training lesson. One
+lesson has some related resources and a linked list of students who have
 attended.
 
 In addition, training you can designate the modules or units which have
 been imparted in it.
 
 Classes:
-    AcademyTrainingSession: This is the unique model class in this module
+    AcademyTrainingLesson: This is the unique model class in this module
     and it defines an Odoo model with all its attributes and related behavior.
 
     Inside this class can be, in order, the following attributes and methods:
@@ -47,9 +47,9 @@ _logger = getLogger(__name__)
 
 
 # pylint: disable=locally-disabled, R0903
-class AcademyTrainingSession(models.Model):
-    """ This model is the representation of the real life training session. One
-session has some related resources and a linked list of students who have
+class AcademyTrainingLesson(models.Model):
+    """ This model is the representation of the real life training lesson. One
+lesson has some related resources and a linked list of students who have
 attended.
 
     Fields:
@@ -62,11 +62,45 @@ attended.
     """
 
 
-    _name = 'academy.training.session'
-    _description = u'Academy Training Session'
+    _name = 'academy.training.lesson'
+    _description = u'Academy Training Lesson'
+
+    _inherits = {
+        'training_action_id': 'academy.training.action',
+        'training_module_id': 'academy.training.module'
+    }
 
     _rec_name = 'name'
     _order = 'name ASC'
+
+
+    training_action_id = fields.Many2one(
+        string='Training action',
+        required=True,
+        readonly=False,
+        index=True,
+        default=None,
+        help='Choose the related training action',
+        comodel_name='academy.training.acction',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
+    training_module_id = fields.Many2one(
+        string='Training module',
+        required=True,
+        readonly=False,
+        index=True,
+        default=None,
+        help=False,
+        comodel_name='academy.training.module',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
 
     # pylint: disable=locally-disabled, W0212
     name = fields.Char(
@@ -99,37 +133,14 @@ attended.
         help='Enables/disables the record'
     )
 
-    training_action_id = fields.Many2one(
-        string='Training action',
-        required=True,
-        readonly=False,
-        index=False,
-        default=None,
-        help=False,
-        comodel_name='academy.training.action',
-        domain=[],
-        context={},
-        ondelete='cascade',
-        auto_join=False
-    )
-
     date_start = fields.Datetime(
         string='Start date/time',
         required=True,
         readonly=False,
         index=False,
         default=fields.datetime.now(),
-        help='Start session date/time'
+        help='Start lesson date/time'
     )
-
-    # date_start = fields.Date(
-    #     string='Date start',
-    #     required=False,
-    #     readonly=False,
-    #     index=False,
-    #     default=None,
-    #     help=False
-    # )
 
     date_delay = fields.Float(
         string='Date delay',
@@ -138,7 +149,7 @@ attended.
         index=False,
         default=2.0,
         digits=(16, 2),
-        help="Time length of the session"
+        help="Time length of the lesson"
     )
 
     # -------------------------------------------------------------------------
@@ -149,7 +160,7 @@ attended.
         """ Get next value for sequence
         """
 
-        seqxid = 'academy_base.ir_sequence_academy_session'
+        seqxid = 'academy_base.ir_sequence_academy_lesson'
         seqobj = self.env.ref(seqxid)
 
         result = seqobj.next_by_id()

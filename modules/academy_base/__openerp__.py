@@ -50,7 +50,7 @@
         'views/academy_training_action_enrolment.xml',
 
         'views/academy_training_resource_view.xml',
-        'views/academy_training_session_view.xml',
+        'views/academy_training_lesson_view.xml',
 
         'wizard/academy_training_session_wizard_view.xml',
         'wizard/academy_training_session_wizard_module_view.xml',
