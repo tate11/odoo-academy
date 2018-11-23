@@ -421,71 +421,18 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         assert line_set[0].start_date, \
             _('First line start date is required')
 
-        start_date = self._to_python_date(line_set[0].start_date)
-        offset = 0
-
-        for line_id in line_set:
-            print(self._compute_first_date(start_date))
-
-
-    def _compute_first_date(self, start_date):
-        result = start_date
-        week_days = self._get_weekdays()
-
-        if self.rrule_type == 'weekly':
-            valid = self._get_week_dates( \
-                start_date, week_days, start_date, date.max, count=1)
-            result = result + self._get_time_step()
-            valid = self._get_week_dates( \
-                start_date, week_days, start_date, date.max, count=1)
-
-            result = valid[0] if valid else None
-
-        elif self.rrule_type == 'monthly':
-            if self.month_by == 'date':
-                last_day = monthrange(start_date.year, start_date.month)[1]
-                result = start_date.replace(day=min(last_day, self.day))
-
-                if result < start_date:
-                    result = result + self._get_time_step()
-            else: # day
-                pass
-
-        elif self.rrule_type == 'yearly':
-            pass
-        else:   # dayly
-            pass
+        date1 = self._to_python_date(line_set[0].start_date)
+        step = self._get_time_step()
+        weekdays = self._get_weekdays()
+        for line in line_set:
+            self._process_line(line, date1, step, weekdays, offset)
 
 
-        return result
-
-
-
-
-
-        # date1 = self._to_python_date(unit.start_date)
-        # count = math.ceil(unit.maximum / unit.duration)
-
-
+    def _process_line(self, line, date1, step, weekdays, offset):
+        count = math.ceil((unit.maximum - offset) / unit.duration)
 
 
     # -------------------------- AUXILIARY METHODS ----------------------------
-
-
-    # def _get_units(self):
-    #     """ Get all units in relation action, units will be a final unit.
-    #     Some units have subunits but other have not.
-    #     """
-
-    #     action_set = self.training_action_id
-    #     compet_set = action_set.mapped('competency_unit_ids')
-    #     unit_set = compet_set.mapped('training_module_id')
-
-    #     unit_set = unit_set.filtered(lambda item: not item.training_unit_ids)
-    #     unit_set = unit_set + unit_set.mapped('training_unit_ids')
-
-    #     return unit_set.sorted( \
-    #         key=lambda p: (p.training_module_id.sequence, p.sequence))
 
     def _get_units(self):
         action_id = self.training_action_id
@@ -530,22 +477,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return fields.Date.from_string(field_value)
 
 
-    def _get_bounds(self, unit, last_date):
-        """ Gets the model: start_date, stop_date and count, next it change
-        to the maximum value stop_date or count based on end_type chosen value
-        """
-
-        if unit.start_date:
-            date1 = self._to_python_date(unit.start_date)
-        else:
-            date1 = last_date
-
-        date2 = date.max
-        count = math.ceil(unit.maximum / unit.duration)
-
-        return date1, date2, count
-
-
     def _get_time_step(self):
         """ Returns the interval will be used to compute next session date
         """
@@ -564,35 +495,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return step
 
 
-    @staticmethod
-    def _get_week_dates(date_within_the_week, week_days=False, \
-                        mindate=date.min, maxdate=date.max, count=maxint):
-        """ Get all dates in the same week as the given date. Optionally,
-        you can specify that weekdays will be included.
-
-        @date_within_the_week (date): date within the week
-        @week_days (list): week days [0-6](mo-su) will be included
-        @mindate         : minimum valid date
-        @maxdate         : maximun valid date
-        """
-
-        week_days = week_days or [0, 1, 2, 3, 4, 5, 6]
-
-        weekday = date_within_the_week.weekday()
-        mo = date_within_the_week - relativedelta(days=weekday)
-        su = date_within_the_week + relativedelta(days=6-weekday)
-
-        dates = []
-        for ordinal in range(mo.toordinal(), su.toordinal() + 1):
-            current = date.fromordinal(ordinal)
-            if (mindate <= current <= maxdate) and count > 0:
-                if current.weekday() in week_days:
-                    dates.append(current)
-                    count = count - 1
-
-        return dates
-
-
     def _get_weekdays(self):
         """ Returns a zero start numeric list that represents the chosen weekdays
         """
@@ -605,51 +507,4 @@ class AcademyTrainingSessionWizard(models.TransientModel):
 
         return checked
 
-
-    def _get_computed_dates_for_unit(self, unit, last_date):
-        """ Computes all dates based on params given to the wizard.
-
-        @return (list): list with all computed dates
-        """
-
-        #STEP 2: Get required values from record
-        date1, date2, count = self._get_bounds(unit, last_date)
-        step = self._get_time_step()
-        weekdays = self._get_weekdays()
-        rrule_type = self.rrule_type
-
-        print(date1, date2, count)
-
-        #STEP 3: Set up pointer and list
-        date_list = []
-        current = date1
-
-        #STEP 4: Loop between bounts
-        while current <= date2 and count > 0:
-            if rrule_type == 'weekly':
-                week_dates = self._get_week_dates( \
-                    current, weekdays, date1, date2, count)
-                date_list.extend(week_dates)
-
-                # Monday of the next week
-                current = self._get_week_dates(current + step, [0])[0]
-                # Decrease as many days as dates have been added
-                count = count - len(week_dates)
-            else:
-                date_list.append(current)
-
-                current = current + step
-                count = count - 1
-
-        #STEP 5: return computed dates
-        return date_list
-
-    @staticmethod
-    def _get_start_date(wizard_line, current_date=None):
-        is_following = wizard_line.following
-        if is_following and not current_date:
-            unit_name = wizard_line.training_unit_id.name
-            raise UserError(_("There is not start date for %s" % unit_name))
-
-        return current_date if is_following else wizard_line.start_date
 
