@@ -66,8 +66,8 @@ attended.
     _description = u'Academy Training Lesson'
 
     _inherits = {
-        'training_action_id': 'academy.training.action',
-        'training_module_id': 'academy.training.module'
+        'academy.training.action' : 'training_action_id',
+        'academy.training.module' : 'training_module_id'
     }
 
     _rec_name = 'name'
@@ -81,7 +81,7 @@ attended.
         index=True,
         default=None,
         help='Choose the related training action',
-        comodel_name='academy.training.acction',
+        comodel_name='academy.training.action',
         domain=[],
         context={},
         ondelete='cascade',
@@ -133,7 +133,7 @@ attended.
         help='Enables/disables the record'
     )
 
-    date_start = fields.Datetime(
+    start_date = fields.Datetime(
         string='Start date/time',
         required=True,
         readonly=False,
@@ -142,7 +142,7 @@ attended.
         help='Start lesson date/time'
     )
 
-    date_delay = fields.Float(
+    duration = fields.Float(
         string='Date delay',
         required=True,
         readonly=False,

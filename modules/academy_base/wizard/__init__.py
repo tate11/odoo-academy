@@ -6,4 +6,4 @@
 
 
 from . import academy_training_session_wizard
-from . import academy_training_session_wizard_module
+from . import academy_training_session_wizard_line

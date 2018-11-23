@@ -6,7 +6,7 @@
         <record id="res_users_demo_consultant" model="res.users">
             <field name="name">Consultant</field>
             <field name="partner_id" ref="academy_demo_consultant"/>
-            <field name="mail">consultant</field>
+            <field name="email">consultant</field>
             <field name="login">consultant</field>
             <field name="password">consultant</field>
             <field name="signature"><![CDATA[<span>-- <br/>Mr Demo Consultant</span>]]></field>
@@ -16,7 +16,7 @@
         <record id="res_users_demo_teacher" model="res.users">
             <field name="name">Teacher</field>
             <field name="partner_id" ref="academy_demo_teacher"/>
-            <field name="mail">teacher</field>
+            <field name="email">teacher</field>
             <field name="login">teacher</field>
             <field name="password">teacher</field>
             <field name="signature"><![CDATA[<span>-- <br/>Mr Demo Teacher</span>]]></field>
@@ -26,7 +26,7 @@
         <record id="res_users_demo_technical" model="res.users">
             <field name="name">Technical</field>
             <field name="partner_id" ref="academy_demo_technical"/>
-            <field name="mail">technical</field>
+            <field name="email">technical</field>
             <field name="login">technical</field>
             <field name="password">technical</field>
             <field name="signature"><![CDATA[<span>-- <br/>Mr Demo Technical</span>]]></field>
@@ -36,7 +36,7 @@
         <record id="res_users_demo_manager" model="res.users">
             <field name="name">Manager</field>
             <field name="partner_id" ref="academy_demo_manager"/>
-            <field name="mail">manager</field>
+            <field name="email">manager</field>
             <field name="login">manager</field>
             <field name="password">manager</field>
             <field name="signature"><![CDATA[<span>-- <br/>Mr Demo Manager</span>]]></field>

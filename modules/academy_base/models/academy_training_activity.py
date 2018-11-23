@@ -18,6 +18,49 @@ from . import custom_model_fields
 _logger = getLogger(__name__)
 
 
+TRAINING_MODULE_IDS_SQL = """
+    SELECT
+        atv."id" AS training_activity_id,
+        atm."id" AS training_module_id
+    FROM academy_training_activity AS atv
+    INNER JOIN academy_competency_unit AS acu
+        ON atv."id" = acu.training_activity_id
+    INNER JOIN academy_training_module AS atm
+        ON acu.training_module_id = atm."id"
+"""
+
+TRAINING_UNIT_IDS_SQL = """
+    SELECT
+        atv."id" AS training_activity_id,
+        COALESCE(atu."id", atm."id")::INTEGER AS training_unit_id
+    FROM
+        academy_training_activity AS atv
+    INNER JOIN academy_competency_unit AS acu
+        ON atv."id" = acu.training_activity_id
+    INNER JOIN academy_training_module AS atm
+        ON acu.training_module_id = atm."id"
+    LEFT JOIN academy_training_module AS atu
+        ON atm."id" = atu.training_module_id
+"""
+
+TRAINING_RESOURCE_IDS_SQL = """
+    SELECT
+        atv."id" AS training_activity_id,
+        atr."id" AS training_resource_id
+    FROM
+        academy_training_activity AS atv
+    INNER JOIN academy_competency_unit AS acu
+        ON atv."id" = acu.training_activity_id
+    INNER JOIN academy_training_module AS atm
+        ON acu.training_module_id = atm."id"
+    LEFT JOIN academy_training_module AS atu
+        ON atm."id" = atu.training_module_id or atm."id" = atu."id"
+    INNER JOIN academy_training_module_training_resource_rel AS rel
+        ON COALESCE (atu."id", atm."id") = rel.training_module_id
+    LEFT JOIN academy_training_resource AS atr
+        ON rel.training_resource_id = atr."id"
+"""
+
 # pylint: disable=locally-disabled, R0903
 class AcademyTrainingActivity(models.Model):
     """ This describes the activity offered, its modules, training units
@@ -176,25 +219,42 @@ class AcademyTrainingActivity(models.Model):
         limit=None,
     )
 
-    # # Many2manyThroughView
-    # training_unit_ids = fields.Many2many(
-    #     string='Training units',
-    #     required=False,
-    #     readonly=True,
-    #     index=False,
-    #     default=None,
-    #     help=False,
-    #     comodel_name='academy.training.unit',
-    #     relation='academy_training_activity_training_unit_rel',
-    #     column1='training_activity_id',
-    #     column2='training_unit_id',
-    #     domain=[],
-    #     context={},
-    #     limit=None
-    # )
 
-    # Many2manyThroughView
-    training_resource_ids = fields.Many2many(
+    training_module_ids = custom_model_fields.Many2manyThroughView(
+        string='Training modules',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.module',
+        relation='academy_training_activity_training_module_rel',
+        column1='training_activity_id',
+        column2='training_module_id',
+        domain=[],
+        context={},
+        limit=None,
+        sql=TRAINING_MODULE_IDS_SQL
+    )
+
+    training_unit_ids = custom_model_fields.Many2manyThroughView(
+        string='Training units',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.module',
+        relation='academy_training_activity_training_unit_rel',
+        column1='training_activity_id',
+        column2='training_unit_id',
+        domain=[],
+        context={},
+        limit=None,
+        sql=TRAINING_UNIT_IDS_SQL
+    )
+
+    training_resource_ids = custom_model_fields.Many2manyThroughView(
         string='Training resources',
         required=False,
         readonly=True,
@@ -207,7 +267,8 @@ class AcademyTrainingActivity(models.Model):
         column2='training_resource_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        sql=TRAINING_RESOURCE_IDS_SQL
     )
 
 

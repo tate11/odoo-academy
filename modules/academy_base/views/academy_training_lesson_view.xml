@@ -64,9 +64,9 @@
                                 colspan="4" placeholder="Enter new value for training module id" />
                         </group>
                         <group col="4">
-                            <field name="date_start" class="oe_field_date_start"
+                            <field name="start_date" class="oe_field_start_date"
                                 placeholder="Choose niew date start" />
-                            <field name="date_delay" class="oe_field_date_delay"
+                            <field name="duration" class="oe_field_duration"
                                 placeholder="Enter new value for date delay" widget="time" />
                         </group>
                         <notebook>
@@ -97,7 +97,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <calendar string="Invoices"
-                    date_start="date_start"
+                    date_start="start_date"
                     color="training_action_id"
                     readonly_form_view_id="academy_base.view_academy_training_lesson_form"
                     form_view_id="academy_base.view_academy_training_lesson_form">

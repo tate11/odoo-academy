@@ -47,39 +47,44 @@
         'views/academy_training_action_view.xml',
 
         'views/res_parter_view.xml',
-        'views/academy_training_action_enrolment.xml',
-
-        'views/academy_training_resource_view.xml',
+        'views/academy_training_action_enrolment_view.xml',
         'views/academy_training_lesson_view.xml',
 
-        'wizard/academy_training_session_wizard_view.xml',
-        'wizard/academy_training_session_wizard_module_view.xml',
+        'views/academy_training_resource_view.xml',
 
-        'security/academy_application_scope.xml',
+        'wizard/academy_training_session_wizard_view.xml',
+        'wizard/academy_training_session_wizard_line_view.xml',
+
         'security/academy_base.xml',
+
+        'security/academy_training_methodology.xml',
+        'security/academy_training_modality.xml',
+        'security/academy_application_scope.xml',
         'security/academy_competency_unit.xml',
         'security/academy_knowledge_area.xml',
+        'security/academy_qualification_level.xml',
         'security/academy_professional_area.xml',
         'security/academy_professional_category.xml',
         'security/academy_professional_family.xml',
         'security/academy_professional_qualification.xml',
-        'security/academy_qualification_level.xml',
-        'security/academy_training_action.xml',
-        'security/academy_training_activity.xml',
-        'security/academy_training_methodology.xml',
-        'security/academy_training_modality.xml',
+
         'security/academy_training_module.xml',
+        'security/academy_training_activity.xml',
+        'security/academy_training_action.xml',
+
+        'security/res_parter.xml',
+        'security/academy_training_action_enrolment.xml',
+        'security/academy_training_lesson.xml',
+
         'security/academy_training_resource.xml',
         'security/academy_training_resource_file.xml',
 
-        'data/academy_application_scope.xml',
-        'data/academy_knowledge_area.xml',
-        'data/academy_professional_family.xml',
-        'data/academy_qualification_level.xml',
         'data/academy_training_methodology.xml',
         'data/academy_training_modality.xml',
-
-        'security/academy_training_action_enrolment.xml',
+        'data/academy_application_scope.xml',
+        'data/academy_knowledge_area.xml',
+        'data/academy_qualification_level.xml',
+        'data/academy_professional_family.xml',
 
     ],
     'qweb': [
@@ -107,7 +112,7 @@
         # 'static/src/js/appointment_manager.js'
     ],
     'css': [
-        'static/src/css/academy_training_action_view.css',
+        'static/src/css/academy_base_view.css',
     ],
     "external_dependencies": {
         "python" : []

@@ -149,23 +149,23 @@ class AcademyTrainingActionEnrolment(models.Model):
             record.student_name = record.res_partner_id.name
 
 
-    action_name = fields.Char(
-        string='Action name',
-        required=False,
-        readonly=True,
-        index=False,
-        default=None,
-        help='Show the name of the related training action',
-        size=50,
-        translate=True,
-        compute=lambda self: self._compute_action_name()
-    )
+    # action_name = fields.Char(
+    #     string='Action name',
+    #     required=False,
+    #     readonly=True,
+    #     index=False,
+    #     default=None,
+    #     help='Show the name of the related training action',
+    #     size=50,
+    #     translate=True,
+    #     compute=lambda self: self._compute_action_name()
+    # )
 
-    @api.multi
-    @api.depends('training_action_id')
-    def _compute_action_name(self):
-        for record in self:
-            record.action_name = record.training_action_id.name
+    # @api.multi
+    # @api.depends('training_action_id')
+    # def _compute_action_name(self):
+    #     for record in self:
+    #         record.action_name = record.training_action_id.name
 
 
     # ---------------------------- ONCHANGE EVENTS ----------------------------
@@ -224,7 +224,7 @@ class AcademyTrainingActionEnrolment(models.Model):
             ('id', '<>', self.id)
         ]
         enroled_set = self.search(domain)
-        print(enroled_set, domain, self.deregister)
+
         if enroled_set:
             msg = '{student} already has been enrolled in {action}'
             msg = msg.format(

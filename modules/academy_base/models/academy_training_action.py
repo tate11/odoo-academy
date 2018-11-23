@@ -15,13 +15,11 @@ from pytz import timezone, utc
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
 from openerp.exceptions import ValidationError
-
-from . import custom_model_fields
+from odoo.tools.safe_eval import safe_eval
 
 
 # pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
-
 
 
 # pylint: disable=locally-disabled, R0903
@@ -187,7 +185,7 @@ class AcademyTrainingAction(models.Model):
 
     training_activity_id = fields.Many2one(
         string='Training activity',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=None,
@@ -235,24 +233,6 @@ class AcademyTrainingAction(models.Model):
     )
 
 
-    # Many2manyThroughView
-    training_resource_ids = fields.Many2many(
-        string='Training resources',
-        required=False,
-        readonly=True,
-        index=False,
-        default=None,
-        help='Choose related resources',
-        comodel_name='academy.training.resource',
-        relation='academy_training_action_training_resource_rel',
-        column1='training_action_id',   # this is the name in the SQL VIEW
-        column2='training_resource_id', # this is the name in the SQL VIEW
-        domain=[],
-        context={},
-        limit=None,
-    )
-
-
     # ------------------------------ CONSTRAINS -------------------------------
 
 
@@ -280,6 +260,53 @@ class AcademyTrainingAction(models.Model):
 
         rec = super(AcademyTrainingAction, self).copy(default)
         return rec
+
+    # --------------------------- PUBLIC METHODS ------------------------------
+
+    @api.multi
+    def session_wizard(self):
+        """ Launch the Session wizard.
+        This wizard has a related window action, this method reads the action,
+        updates context using current evironment and sets the wizard training
+        action to this action.
+        """
+
+        act_xid = 'academy_base.action_academy_training_session_wizard_act_window'
+
+        self.ensure_one()
+
+        # STEP 1: Initialize variables
+        action = self.env.ref(act_xid)
+        actx = safe_eval(action.context)
+
+        # STEP 2 Update context:
+        ctx = dict()
+        ctx.update(self.env.context)    # dictionary from environment
+        ctx.update(actx)                # add action context
+
+        # STEP 3: Set training action for wizard. This action will be send in
+        # context as a default value. If this recordset have not records,
+        # any training action will be set
+        if self.id:
+            ctx.update(dict(default_training_action_id=self.id))
+
+        # STEP 4: Map training action and add computed context
+        action_map = {
+            'type' : action.type,
+            'name' : action.name,
+            'res_model' : action.res_model,
+            'view_mode' : action.view_mode,
+            'view_type' : action.view_type,
+            'target' : action.target,
+            'domain' : action.domain,
+            'context' : ctx,
+            'search_view_id' : action.search_view_id,
+            'help' : action.help,
+        }
+
+        # STEP 5: Return the action
+        return action_map
+
 
     # -------------------------- AUXILIARY METHODS ----------------------------
 

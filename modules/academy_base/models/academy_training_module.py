@@ -226,7 +226,6 @@ class AcademyTrainingModule(models.Model):
             units_set = units_obj.search(units_domain, \
                 offset=0, limit=None, order=None, count=False)
 
-            print(units_set)
             if units_set:
                 record.hours = sum(units_set.mapped('ownhours'))
             else:
