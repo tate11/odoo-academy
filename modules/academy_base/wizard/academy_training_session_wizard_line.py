@@ -205,8 +205,8 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
     def _onchange_training_unit_id(self):
         unit_set = self.training_unit_id
 
-        self.maximum = unit_set.hours
         self.imparted = self._get_imparted_hours()
+        self.maximum = unit_set.hours - self.imparted
 
 
     # -------------------------- AUXILIARY METHODS ----------------------------

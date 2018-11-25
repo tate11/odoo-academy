@@ -44,7 +44,6 @@ class AcademyTrainingActionEnrolment(models.Model):
         help='Enter new code',
         size=12,
         translate=True,
-        oldname='name'
     )
 
     description = fields.Text(
@@ -149,25 +148,6 @@ class AcademyTrainingActionEnrolment(models.Model):
             record.student_name = record.res_partner_id.name
 
 
-    # action_name = fields.Char(
-    #     string='Action name',
-    #     required=False,
-    #     readonly=True,
-    #     index=False,
-    #     default=None,
-    #     help='Show the name of the related training action',
-    #     size=50,
-    #     translate=True,
-    #     compute=lambda self: self._compute_action_name()
-    # )
-
-    # @api.multi
-    # @api.depends('training_action_id')
-    # def _compute_action_name(self):
-    #     for record in self:
-    #         record.action_name = record.training_action_id.name
-
-
     # ---------------------------- ONCHANGE EVENTS ----------------------------
 
     @api.multi
@@ -229,7 +209,7 @@ class AcademyTrainingActionEnrolment(models.Model):
             msg = '{student} already has been enrolled in {action}'
             msg = msg.format(
                 student=self.res_partner_id.name,
-                action=self.training_action_id.name
+                action=self.training_action_id.action_name
             )
             raise ValidationError(msg)
 

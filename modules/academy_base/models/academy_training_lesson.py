@@ -70,9 +70,8 @@ attended.
         'academy.training.module' : 'training_module_id'
     }
 
-    _rec_name = 'name'
-    _order = 'name ASC'
-
+    _rec_name = 'code'
+    _order = 'code ASC'
 
     training_action_id = fields.Many2one(
         string='Training action',
@@ -103,15 +102,16 @@ attended.
     )
 
     # pylint: disable=locally-disabled, W0212
-    name = fields.Char(
+    code = fields.Char(
         string='Code',
         required=True,
-        readonly=False,
+        readonly=True,
         index=True,
-        default=lambda self: self._default_name(),
+        default=lambda self: self._default_code(),
         help='Enter new name',
         size=12,
         translate=True,
+        oldname='name'
     )
 
     description = fields.Text(
@@ -156,7 +156,7 @@ attended.
 
 
     @api.model
-    def _default_name(self):
+    def _default_code(self):
         """ Get next value for sequence
         """
 

@@ -122,9 +122,9 @@
                                 <field name="training_unit_ids" class="oe_field_training_unit_ids"
                                     placeholder="Choose related academy training units" />
                             </page> -->
-                            <page string="Training actions" class="oe_page_training_actions" accesskey="T">
-                                <field name="training_action_ids" class="oe_field_training_action_ids"
-                                    placeholder="Enter new value for academy training action" />
+                            <page string="Training activities" class="oe_page_training_activities" accesskey="T">
+                                <field name="training_activity_ids" class="oe_field_training_activity_ids"
+                                    placeholder="Enter new value for academy training activity" />
                             </page>
                             <page string="Historical" class="oe_page_historical" accesskey="H">
                                 <field name="historical_ids" class="oe_field_historical_ids"
@@ -158,7 +158,7 @@
                     <field name="ir_attachment_ids" />
                     <field name="directory_file_ids" />
                     <!-- <field name="training_unit_ids" /> -->
-                    <field name="training_action_ids" />
+                    <field name="training_activity_ids" />
 
                     <filter string="From directory"
                         name="directory_resource"
@@ -177,10 +177,10 @@
                     <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
 
                     <group expand="1" string="Group By">
-                        <filter string="By training action"
-                            name="by_training_action"
+                        <filter string="By training activity"
+                            name="by_training_activity"
                             domain="[]"
-                            context="{'group_by':'training_action_ids'}"
+                            context="{'group_by':'training_activity_ids'}"
                             help="" />
                     </group>
                 </search>

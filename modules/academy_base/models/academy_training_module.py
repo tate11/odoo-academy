@@ -35,7 +35,7 @@ from logging import getLogger
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
 
-from .custom_model_fields import Many2manyThroughView
+from .lib.custom_model_fields import Many2manyThroughView
 
 
 # pylint: disable=locally-disabled, C0103

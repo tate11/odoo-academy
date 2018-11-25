@@ -19,7 +19,7 @@ from pathlib import Path
 from openerp import models, fields, api
 from openerp.tools import config
 
-from . import custom_model_fields
+from .lib.custom_model_fields import Many2manyThroughView, TRAINING_RESOURCE_IDS_SQL
 
 try:
     from BytesIO import BytesIO
@@ -126,23 +126,6 @@ class AcademyTrainingResource(models.Model):
         limit=None
     )
 
-    # # pylint: disable=locally-disabled, W0212
-    # training_unit_ids = fields.Many2many(
-    #     string='Training units',
-    #     required=False,
-    #     readonly=False,
-    #     index=False,
-    #     default=None,
-    #     help=False,
-    #     comodel_name='academy.training.unit',
-    #     relation='academy_training_unit_training_resource_rel',
-    #     column1='training_resource_id',
-    #     column2='training_unit_id',
-    #     domain=lambda self: self._domain_for_training_unit_ids(),
-    #     context={},
-    #     limit=None
-    # )
-
     ir_attachment_ids = fields.Many2many(
         string='Attachments',
         required=False,
@@ -186,20 +169,21 @@ class AcademyTrainingResource(models.Model):
     )
 
     # Many2manyThroughView
-    training_action_ids = fields.Many2many(
-        string='Training actions',
+    training_activity_ids = Many2manyThroughView(
+        string='Training activity',
         required=False,
         readonly=True,
         index=False,
         default=None,
-        help='Choose related training actions',
-        comodel_name='academy.training.action',
-        relation='academy_training_action_training_resource_rel',
+        help='Choose related training activities',
+        comodel_name='academy.training.activity',
+        relation='academy_training_activity_resource_rel',
         column1='training_resource_id', # this is the name in the SQL VIEW
-        column2='training_action_id',   # this is the name in the SQL VIEW
+        column2='training_activity_id',   # this is the name in the SQL VIEW
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        sql=TRAINING_RESOURCE_IDS_SQL
     )
 
     training_resource_id = fields.Many2one(

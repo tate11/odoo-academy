@@ -21,7 +21,7 @@
             <field name="name">Microsoft Windows 10</field>
             <field name="description">Students will gain basic practical experience using the current most used operating system</field>
             <field name="active">True</field>
-            <field name="ownhours">50</field>
+            <field name="ownhours">5</field>
             <field name="module_code">WIN10</field>
         </record>
 
@@ -31,7 +31,7 @@
             <field name="name">Microsoft Word 2010</field>
             <field name="description">You will create, edit, and enhance standard business documents using Microsoft® Office Word 2010</field>
             <field name="sequence">1</field>
-            <field name="ownhours">40</field>
+            <field name="ownhours">4</field>
             <field name="module_code">MSW2010</field>
             <field name="active">True</field>
             <field name="training_module_id" ref="academy_base.academy_training_module_ms2010" />
@@ -41,7 +41,7 @@
             <field name="name">Microsoft Excel 2010</field>
             <field name="description">This course is designed for students who want to gain the necessary skills to create, edit, format, and print basic Microsoft Excel 2010 worksheets</field>
             <field name="sequence">1</field>
-            <field name="ownhours">60</field>
+            <field name="ownhours">6</field>
             <field name="module_code">MSX2010</field>
             <field name="active">True</field>
             <field name="training_module_id" ref="academy_base.academy_training_module_ms2010" />
@@ -51,7 +51,7 @@
             <field name="name">LibreOffice Writer 5</field>
             <field name="description">You will create, edit, and enhance standard business documents using LibreOffice Writer 5</field>
             <field name="sequence">1</field>
-            <field name="ownhours">40</field>
+            <field name="ownhours">4</field>
             <field name="module_code">LBW5</field>
             <field name="active">True</field>
             <field name="training_module_id" ref="academy_base.academy_training_module_lb5" />
@@ -61,7 +61,7 @@
             <field name="name">LibreOffice Calc 5</field>
             <field name="description">This course is designed for students who want to gain the necessary skills to create, edit, format, and print basic LibreOffice worksheets</field>
             <field name="sequence">1</field>
-            <field name="ownhours">60</field>
+            <field name="ownhours">6</field>
             <field name="module_code">LBC5</field>
             <field name="active">True</field>
             <field name="training_module_id" ref="academy_base.academy_training_module_lb5" />
