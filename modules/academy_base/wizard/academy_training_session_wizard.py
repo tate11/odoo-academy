@@ -32,6 +32,7 @@ Todo:
         _complete_last_session: usa remaining como horas libres en la sessión
         _process_line: usa remaining como horas sin colocar de la línea
         **OBJETIVO** definir bien los valores de retorno de cada funnción
+        **OBJETIVO** remaining debe ser positivo o negativo de modo que valga para ambos
 
 """
 
@@ -44,7 +45,6 @@ from math import ceil
 # pylint: disable=locally-disabled, E0401
 from dateutil.relativedelta import relativedelta
 from openerp import models, fields, api, _
-from openerp.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -53,7 +53,7 @@ _logger = getLogger(__name__)
 
 
 
-# pylint: disable=locally-disabled, R0903
+# pylint: disable=locally-disabled, R0903, R0902
 class AcademyTrainingSessionWizard(models.TransientModel):
     """ This model is a wizard to create all sessions needed for an unit
 
@@ -592,10 +592,11 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     def _get_choosen_weekday_position(self):
         """ Get string value from self.byday selection field and returns
         a numerical value. This value will be a ZERO based nth weekday
-        position in month
+        position in month or -1 to designate the last day of month
         """
+        pos = safe_eval(self.byday)
 
-        return safe_eval(self.byday) - 1
+        return max(pos - 1, -1)
 
     def _get_time_step(self):
         """ Returns the interval will be used to compute next session date
@@ -628,17 +629,16 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return checked
 
 
-    @staticmethod
-    def _get_week_dates(date_inside, count, week_days=False, mindate=date.min):
+    def _get_week_dates(self, date_inside, count, mindate=date.min):
         """ Get all dates in the same week as the given date. Optionally,
         you can specify that weekdays will be included.
 
         @date_inside (date)  : date within the week
         @count           : maximun number of dates to return
-        @week_days (list): week days [0-6](mo-su) will be included
+        @weekdays (list): week days [0-6](mo-su) will be included
         """
 
-        week_days = week_days or [0, 1, 2, 3, 4, 5, 6]
+        weekdays = self._get_weekdays()
 
         weekday = date_inside.weekday()
         mo = date_inside - relativedelta(days=weekday)
@@ -648,23 +648,31 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         for ordinal in range(mo.toordinal(), su.toordinal() + 1):
             current = date.fromordinal(ordinal)
             if mindate <= current and count > 0:
-                if current.weekday() in week_days:
+                if current.weekday() in weekdays:
                     dates.append(current)
                     count = count - 1
 
         return dates
 
-    def _get_first_valid_date(self, start_date, weekdays):
+
+    def _get_first_valid_date(self, start_date):
         """ Returns the first date can be used as next session date
+            - daily           start_date
+            - weekly          firth match in range 0-8 days
+            - monthly date    start_date or next month match day
+            - monthly day     match in this month if it's less or equal
+            to start date or match in next month
+            - yearly          start_date
         """
 
         result = start_date
+        weekdays = self._get_weekdays()
         last_day_of_month = monthrange(start_date.year, result.month)[1]
         offset = 0
 
         if self.rrule_type == 'weekly':
             while offset < 8 and result.weekday() not in weekdays:
-                start_date = result + relativedelta(days=offset)
+                result = start_date + relativedelta(days=offset)
                 offset = offset + 1
 
         elif self.rrule_type == 'monthly':
@@ -704,8 +712,9 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         month = in_date.month
         datelist = cal.itermonthdates(in_date.year, month)
 
-        assert nth >= -1, \
-            'nth argument can not be less than 1 for _get_month_nth_weekday'
+        msg = 'nth ({}) param can not be less than -1 in _get_month_nth_weekday'
+        assert nth >= -1, msg.format(nth)
+
 
         valid = [
             item for item in datelist \
@@ -715,41 +724,50 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return valid[nth] if len(valid) >= nth else None
 
 
-    def _next_weekday(self, indate, weekdays):
+    def _next_weekday(self, indate):
         """ Returns the next valid week day that follows the given date
         """
 
         # STEP 1: Weekdays can not be an empty list
+        weekdays = weekdays = self._get_weekdays()
         msg = '{method} requires at least one day of the week to check'
         assert weekdays, msg.format('_next_weekday')
 
         # STEP 2: Check if there is any valid day left in this week
         nextnatural = indate + timedelta(days=1)
-        week_dates = self._get_week_dates( \
-            indate, 1, weekdays, nextnatural)
+        week_dates = self._get_week_dates(indate, 1, nextnatural)
 
         # STEP 3: If there is not any valid day left in this week
         # seach the first valid day in next week
         if not week_dates:
             nextmonday = indate + timedelta(days=7-indate.weekday())
-            week_dates = self._get_week_dates(nextmonday, 1, weekdays)
+            week_dates = self._get_week_dates(nextmonday, 1)
 
         # STEP 4: There will always be a valid day to return
         return week_dates[0]
 
 
-    def _next_date(self, last_date, step, weekdays):
+    def _next_date(self, current_date):
         """ Computes next date, this will be the one that follows the given
-        last_date. To do it, this method uses step of weekdays depending of
+        current_date. To do it, this method uses step of weekdays depending of
         the value choosen in rrule_type wizard field
         """
 
-        if self.rrule_type == 'weekly':
-            last_date = self._next_weekday(last_date, weekdays)
-        else:
-            last_date = last_date + step
+        computed_date = self._get_first_valid_date(current_date)
 
-        return last_date
+        if not computed_date > current_date:
+            step = self._get_time_step()
+
+            if self.rrule_type == 'weekly':
+                computed_date = self._next_weekday(computed_date)
+            elif self.rrule_type == 'monthly':
+                computed_date = computed_date + step
+                if self.month_by == 'day':
+                    computed_date = self._get_month_nth_weekday(computed_date)
+            else:
+                computed_date = computed_date + step
+
+        return computed_date
 
 
     def _complete_last_session(self, line, last_date, remaining):
@@ -757,7 +775,11 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         with previous line
         """
 
-        start_time = self._get_start_time(line)
+        msg = _(u'Could not remain more time %s than session length %s')
+        if remaining > self.duration:
+            raise ValueError(msg % (remaining, self.duration))
+
+        start_time = self.start_time #self._get_start_time(line)
         start_time = start_time + self.duration - remaining
         hours = min(line.maximum, remaining)
 
@@ -814,10 +836,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         """
         print(line, last_date, '<-', remaining)
 
-        # STEP 1: Get wizard variables
-        step = self._get_time_step()
-        weekdays = self._get_weekdays()
-
         # STEP 2: Get line variables
         start_time = self._get_start_time(line)
         first_date = self._get_start_date(line, last_date)
@@ -825,15 +843,15 @@ class AcademyTrainingSessionWizard(models.TransientModel):
 
         # STEP 3: Complete last session if there are remaining hours
         if remaining > 0:
-            remaining = self._complete_last_session( \
+            leftover = self._complete_last_session( \
                 line, last_date, remaining)
-            if not remaining:
-                last_date = self._next_date(last_date, step, weekdays)
+            if not leftover:
+                last_date = self._next_date(last_date)
             else:
-                return last_date, abs(remaining)
+                return last_date, abs(leftover)
 
         # STEP 4: Initialize the variables for loop
-        first_date = self._get_first_valid_date(first_date, weekdays)
+        first_date = self._get_first_valid_date(first_date)
         steps = ceil((line.maximum - remaining) / line.duration)
         current_date = first_date
         session_date = current_date
@@ -846,18 +864,18 @@ class AcademyTrainingSessionWizard(models.TransientModel):
                 session_date = self._get_month_nth_weekday(current_date)
                 hours = self._new_lesson( \
                     line, session_date, start_time, hours)
-                current_date = self._next_date(current_date, step, weekdays)
+                current_date = self._next_date(current_date)
 
             elif self.rrule_type == 'weekly':
                 week_dates = self._get_week_dates( \
-                    current_date, steps, weekdays, first_date)
+                    current_date, steps, first_date)
 
                 for session_date in week_dates:
                     steps = steps - 1
                     hours = self._new_lesson( \
                         line, session_date, start_time, hours)
 
-                current_date = self._next_date(session_date, step, weekdays)
+                current_date = self._next_date(session_date)
 
             else:
                 steps = steps - 1
@@ -865,7 +883,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
                 hours = self._new_lesson( \
                     line, session_date, start_time, hours)
 
-                current_date = self._next_date(current_date, step, weekdays)
+                current_date = self._next_date(current_date)
 
         # STEP 6: Compute return values (tuple)
         # - If there are remaining hours, returned value will be a tuble with
@@ -874,12 +892,11 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         # returned
         # - Otherwise, date caused the loop exit will be returned, this is a
         # valid date for next line
-        print(hours)
         if hours != 0 and line.incomplete == 'next':
             return session_date, abs(min(0, hours))
 
         if self.rrule_type == 'weekly':
-            return self._next_weekday(session_date, weekdays), 0
+            return self._next_weekday(session_date), 0
 
         return current_date, 0
 

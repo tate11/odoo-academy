@@ -6,7 +6,7 @@ This module contains unit test for academy.training.session.wizard model
 """
 
 from logging import getLogger
-from datetime import date, timedelta
+from datetime import date, datetime, time, timedelta
 
 # pylint: disable=locally-disabled, C0103
 _logger = getLogger(__name__)
@@ -133,6 +133,8 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
 
         wizard_set.ensure_one()
 
+        msg = msg + '\nStart date     : ' + str(wizard_set.start_date)
+        msg = msg + '\nStart time     : ' + str(wizard_set.start_time)
         msg = msg + '\nInterval       : ' + str(wizard_set.interval)
         msg = msg + '\nRrule type     : ' + wizard_set.rrule_type
         if wizard_set.rrule_type == 'weekly':
@@ -163,37 +165,577 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
 
         return msg
 
+    @staticmethod
+    def _set_weekdays(wizard, weekdays):
+        """ Returns a zero start numeric list that represents the chosen weekdays
+        """
+        fieldnames = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su']
 
-    def test__process_line_1(self):
+        index = 0
+        for field in fieldnames:
+            setattr(wizard, field, bool(index in weekdays))
+            index = index + 1
 
 
+    def test__get_first_valid_date_daily_and_yearly(self):
+        """ Unit tests for _get_first_valid_date
+            daily  2018-10-01
+            yearly 2016-10-01
+            yearly 2016-02-29
+        """
 
-        expected = (self._start_date + timedelta(days=1), 0)
-
+        # pylint: disable=locally-disabled, W0612
         wizard_set, line_set = self._new_wizard()
-        result = wizard_set._process_line(line_set[0], self._start_date, 0)
-        lesson_set = wizard_set.training_lesson_ids
 
-        msg = self._log_wizard_data(
-            wizard_set,
-            '_process_line(line_set[0], {}, {})'.format(self._start_date, 0),
-            'Result: {} - Expected: {}'.format(result, expected)
-        )
-        self.assertTrue(len(lesson_set) == 1 and result == expected, msg)
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'daily'
+        expected = date(2018, 10, 1)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.rrule_type = 'yearly'
+        expected = date(2018, 10, 1)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.rrule_type = 'yearly'
+        expected = date(2016, 2, 29)
+        result = wizard_set._get_first_valid_date(date29)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
 
 
-        expected = (self._start_date + timedelta(days=1), 1)
+    def test__get_first_valid_date_weekly(self):
+        """ Unit tests for _get_first_valid_date
+            weekly 2018-10-01 [mo]
+            weekly 2018-10-01 [tu]
+            weekly 2018-10-05 [mo]
+            weekly 2018-10-31 [th]
+            weekly 2018-10-31 [mo]
+        """
 
+        # pylint: disable=locally-disabled, W0612
         wizard_set, line_set = self._new_wizard()
-        result = wizard_set._process_line(line_set[0], self._start_date, 1)
-        lesson_set = wizard_set.training_lesson_ids
 
-        msg = self._log_wizard_data(
-            wizard_set,
-            '_process_line(line_set[0], {}, {})'.format(self._start_date, 1),
-            'Result: {} - Expected: {}'.format(result, expected)
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'weekly'
+        self._set_weekdays(wizard_set, [0])
+        expected = date(2018, 10, 1)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        self._set_weekdays(wizard_set, [1])
+        expected = date(2018, 10, 2)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        self._set_weekdays(wizard_set, [0])
+        expected = date(2018, 10, 8)
+        result = result = wizard_set._get_first_valid_date(date05)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        self._set_weekdays(wizard_set, [2])
+        expected = date(2018, 10, 31)
+        result = wizard_set._get_first_valid_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        self._set_weekdays(wizard_set, [0])
+        expected = date(2018, 11, 5)
+        result = wizard_set._get_first_valid_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+    def test__get_first_valid_date_monthly_day(self):
+        """ Unit tests for _get_first_valid_date
+            monthly date 2018-10-01 1st mo
+            monthly date 2018-10-01 2st mo
+            monthly date 2018-10-01 last mo
+            monthly date 2018-10-31 last[we]
+            monthly date 2018-10-31 1st mo
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'monthly'
+        wizard_set.month_by = 'day'
+
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '1'
+        expected = date(2018, 10, 1)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '2'
+        expected = date(2018, 10, 8)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '-1'
+        expected = date(2018, 10, 29)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.week_list = 'WD2'
+        wizard_set.byday = '-1'
+        expected = date(2018, 10, 31)
+        result = wizard_set._get_first_valid_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '1'
+        expected = date(2018, 11, 5)
+        result = wizard_set._get_first_valid_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+    def test__get_first_valid_date_monthly_date(self):
+        """ Unit tests for _get_first_valid_date
+
+            monthly date 2018-10-01 [1]
+            monthly date 2018-10-01 [5]
+            monthly date 2018-10-05 [1]
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'monthly'
+        wizard_set.month_by = 'date'
+
+        wizard_set.day = 1
+        expected = date(2018, 10, 1)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set, str(date01))
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.day = 5
+        expected = date(2018, 10, 5)
+        result = wizard_set._get_first_valid_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.day = 1
+        expected = date(2018, 11, 1)
+        result = wizard_set._get_first_valid_date(date05)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+    # ----------------------------- _NEXT_DATE --------------------------------
+
+
+
+    def test__next_date_dayly_and_yearly(self):
+        """ Unit tests for _next_date
+            daily  2018-10-01
+            yearly 2016-10-01
+            yearly 2016-02-29
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'daily'
+        expected = date(2018, 10, 2)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.rrule_type = 'yearly'
+        expected = date(2019, 10, 1)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        wizard_set.rrule_type = 'yearly'
+        expected = date(2017, 2, 28)
+        result = wizard_set._next_date(date29)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+    def test__next_date_weekly(self):
+        """ Unit tests for _next_date
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        # Next weekday in week is valid
+        wizard_set.rrule_type = 'weekly'
+        self._set_weekdays(wizard_set, [0, 1])
+        expected = date(2018, 10, 2)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # Next weekday in week is not valid
+        self._set_weekdays(wizard_set, [0, 2])
+        expected = date(2018, 10, 3)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # Previous and current weekday in week is valid, not the following
+        self._set_weekdays(wizard_set, [3, 4])
+        expected = date(2018, 10, 11)
+        result = result = wizard_set._next_date(date05)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # Only current weekday is valid
+        self._set_weekdays(wizard_set, [0])
+        expected = date(2018, 10, 8)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+    def test__next_date_monthly_day(self):
+        """ Unit tests for _next_date
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'monthly'
+        wizard_set.month_by = 'day'
+
+        # First monday in month to first monday in month
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '1'
+        expected = date(2018, 11, 5)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+        # First monday in month to second monday in month
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '2'
+        expected = date(2018, 10, 8)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # First monday in month to first sunday in month
+        wizard_set.week_list = 'WD6'
+        wizard_set.byday = '1'
+        expected = date(2018, 10, 7)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # First friday in month to first monday in month
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '1'
+        expected = date(2018, 11, 5)
+        result = wizard_set._next_date(date05)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # First monday in month to last monday in month
+        wizard_set.week_list = 'WD0'
+        wizard_set.byday = '-1'
+        expected = date(2018, 10, 29)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # Last wednesday in month to last wednesday in month
+        wizard_set.week_list = 'WD2'
+        wizard_set.byday = '-1'
+        expected = date(2018, 11, 28)
+        result = wizard_set._next_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # Last wednesday in month to first wednesday in month
+        wizard_set.week_list = 'WD2'
+        wizard_set.byday = '1'
+        expected = date(2018, 11, 7)
+        result = wizard_set._next_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+    def test__next_date_monthly_date(self):
+        """ Unit tests for _next_date
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+
+        date01 = date(2018, 10, 1)
+        date29 = date(2016, 2, 29)
+        date05 = date(2018, 10, 5)
+        date31 = date(2018, 10, 31)
+
+        wizard_set.rrule_type = 'monthly'
+        wizard_set.month_by = 'date'
+
+        # Current day is before valid date
+        wizard_set.day = 2
+        expected = date(2018, 10, 2)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set, str(date01))
+        self.assertEqual(result, expected, msg)
+
+        # Current day is a valid date
+        wizard_set.day = 1
+        expected = date(2018, 11, 1)
+        result = wizard_set._next_date(date01)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # Current day is after a valid date
+        wizard_set.day = 1
+        expected = date(2018, 11, 1)
+        result = wizard_set._next_date(date05)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # February, 29 (non leap-year)
+        date31 = date(2018, 1, 31)
+        wizard_set.day = 31
+        expected = date(2018, 2, 28)
+        result = wizard_set._next_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # February, 29 (non leap-year, case 2)
+        date29 = date(2018, 1, 29)
+        wizard_set.day = 29
+        expected = date(2018, 2, 28)
+        result = wizard_set._next_date(date29)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+        # February, 29 (leap-year)
+        date31 = date(2016, 1, 31)
+        wizard_set.day = 31
+        expected = date(2016, 2, 29)
+        result = wizard_set._next_date(date31)
+        msg = self._log_wizard_data(wizard_set)
+        self.assertEqual(result, expected, msg)
+
+
+    def test__complete_last_session(self):
+        """ Unit tests for _next_date
+
+          duration  remaining  maximum
+             <          =         =
+             >          =         =
+             3          1         2
+             2          1         3
+             2          3         1
+             3          2         1
+        """
+
+        # pylint: disable=locally-disabled, W0612
+        wizard_set, line_set = self._new_wizard()
+        line = line_set[0]
+        last_date = datetime.combine(date.today(), time(9, 0, 0))
+        msg = '_complete_last_session: line.duration %s line.maximum %s remaining %s'
+        last_date_str = fields.Datetime.to_string(last_date)
+        last_date_str2 = fields.Datetime.to_string(last_date + timedelta(hours=1))
+        last_date_str3 = fields.Datetime.to_string(last_date + timedelta(hours=2))
+
+        # Session length 1, hours in line 1, empty 1
+        wizard_set.duration, line.maximum, remaining = (1, 1, 1)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str, 1.0, -0.0),
+            msg=msg % (line.duration, line.maximum, remaining)
         )
-        self.assertTrue(len(lesson_set) == 2 and result == expected, msg)
+
+        # Session length 1, hours in line 2, empty 1
+        wizard_set.duration, line.maximum, remaining = (1, 2, 1)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str, 1.0, -0.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+        # # Session length 1, hours in line 1, empty 2
+        # wizard_set.duration, line.maximum, remaining = (1, 1, 2)
+        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        # self.assertRaises(ValueError)
+
+        # # Session length 1, hours in line 2, empty 2
+        # wizard_set.duration, line.maximum, remaining = (1, 2, 2)
+        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        # self.assertRaises(ValueError)
+
+        # # Session length 1, hours in line 3, empty 2
+        # wizard_set.duration, line.maximum, remaining = (1, 3, 2)
+        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        # self.assertRaises(ValueError)
+
+        # # Session length 1, hours in line 2, empty 3
+        # wizard_set.duration, line.maximum, remaining = (1, 2, 3)
+        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        # self.assertRaises(ValueError)
+
+        # # Session length 1, hours in line 3, empty 3
+        # wizard_set.duration, line.maximum, remaining = (1, 3, 3)
+        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        # self.assertRaises(ValueError)
+
+        # Session length 2, hours in line 1, empty 1
+        wizard_set.duration, line.maximum, remaining = (2, 1, 1)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str2, 1.0, -0.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+        # Session length 2, hours in line 2, empty 1
+        wizard_set.duration, line.maximum, remaining = (2, 2, 1)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str2, 1.0, -0.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+        # Session length 2, hours in line 3, empty 1
+        wizard_set.duration, line.maximum, remaining = (2, 3, 1)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str2, 1.0, -0.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+        # Session length 2, hours in line 1, empty 2
+        wizard_set.duration, line.maximum, remaining = (2, 1, 2)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str, 1.0, -1.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+        # # Session length 2, hours in line 1, empty 3
+        # wizard_set.duration, line.maximum, remaining = (2, 1, 3)
+        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        # self.assertRaises(ValueError)
+
+        # Session length 3, hours in line 2, empty 1
+        wizard_set.duration, line.maximum, remaining = (3, 2, 1)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str3, 1.0, -0.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+        # Session length 3, hours in line 1, empty 2
+        wizard_set.duration, line.maximum, remaining = (3, 1, 2)
+        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
+        self.assertTupleEqual(
+            (lesson.start_date, lesson.duration, leftover),
+            (last_date_str2, 1.0, -1.0),
+            msg=msg % (line.duration, line.maximum, remaining)
+        )
+
+
+
+    # def test__process_line_1(self):
+
+
+
+    #     expected = (self._start_date + timedelta(days=1), 0)
+
+    #     wizard_set, line_set = self._new_wizard()
+    #     result = wizard_set._process_line(line_set[0], self._start_date, 0)
+    #     lesson_set = wizard_set.training_lesson_ids
+
+    #     msg = self._log_wizard_data(
+    #         wizard_set,
+    #         '_process_line(line_set[0], {}, {})'.format(self._start_date, 0),
+    #         'Result: {} - Expected: {}'.format(result, expected)
+    #     )
+    #     self.assertTrue(len(lesson_set) == 1 and result == expected, msg)
+
+
+    #     expected = (self._start_date + timedelta(days=1), 1)
+
+    #     wizard_set, line_set = self._new_wizard()
+    #     result = wizard_set._process_line(line_set[0], self._start_date, 1)
+    #     lesson_set = wizard_set.training_lesson_ids
+
+    #     msg = self._log_wizard_data(
+    #         wizard_set,
+    #         '_process_line(line_set[0], {}, {})'.format(self._start_date, 1),
+    #         'Result: {} - Expected: {}'.format(result, expected)
+    #     )
+    #     self.assertTrue(len(lesson_set) == 2 and result == expected, msg)
 
 
 
