@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: academy_base.menu_academy_monitoring
             - View priority·: 16    Sequence····: 10
-            - Action help···: Here are not training sessions
+            - Action help···: Here are not training resources
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.training.resource" -->
@@ -49,7 +49,7 @@
                         <div class="oe_button_box" name="button_box">
                             <button name="download_directory" type="object" class="oe_stat_button"
                                 icon="fa-download" attrs="{'invisible': [('training_resource_id', '!=', False)]}">
-                                <field name="zip_attachment_id" options="{'no_open': True}" class="o_ellipsis" />
+                                <field name="zip_attachment_id" class="o_ellipsis" />
                             </button>
                             <button name="button_snapshot" type="object" class="oe_stat_button"
                                 icon="fa-history" attrs="{'invisible': [('training_resource_id', '!=', False)]}">
@@ -59,6 +59,8 @@
                                 <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
                             </button>
                         </div>
+
+                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
 
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
@@ -71,10 +73,13 @@
                         <separator />
 
                         <group col="4">
-                            <field name="manager_id" class="oe_field_manager_id"
-                                placeholder="Choose resource manager" />
-                            <field name="last_update" class="oe_field_last_update"
-                                placeholder="Choose last revision date" />
+                                <field name="manager_id" class="oe_field_manager_id"
+                                    placeholder="Choose resource manager" />
+                                <field name="id" invisible="1" />
+                                <field name="updater_id" class="oe_field_updater_id"
+                                    placeholder="Choose resource updater" />
+                                <field name="last_update" class="oe_field_last_update"
+                                    placeholder="Choose last revision date" />
                         </group>
 
                         <group col="2" class="oe_edit_only">
@@ -114,17 +119,13 @@
                                             help="Click it to reload directory file list" />
                                 </group>
                             </page>
-                            <page string="In modules" class="oe_page_in_modules" accesskey="M">
+                            <page string="Modules/Units" class="oe_page_in_modules" accesskey="M">
                                 <field name="training_module_ids" class="oe_field_training_module_ids"
                                     placeholder="Choose related academy training modules" />
                             </page>
-                            <!-- <page string="In units" class="oe_page_in_units" accesskey="A">
-                                <field name="training_unit_ids" class="oe_field_training_unit_ids"
-                                    placeholder="Choose related academy training units" />
-                            </page> -->
-                            <page string="Training activities" class="oe_page_training_activities" accesskey="T">
-                                <field name="training_activity_ids" class="oe_field_training_activity_ids"
-                                    placeholder="Enter new value for academy training activity" />
+                            <page string="Training actions" class="oe_page_training_action_ids" accesskey="T">
+                                <field name="training_action_ids" class="oe_field_training_action_ids"
+                                    placeholder="Enter new value for academy training action" />
                             </page>
                             <page string="Historical" class="oe_page_historical" accesskey="H">
                                 <field name="historical_ids" class="oe_field_historical_ids"
@@ -141,6 +142,49 @@
                 </form>
             </field>
         </record>
+
+
+        <record id="view_academy_training_resource_kanban" model="ir.ui.view">
+            <field name="name">view.academy.training.resource.kanban</field>
+            <field name="model">academy.training.resource</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="image_small"/>
+                    <field name="name" />
+
+                    <field name="manager_id" />
+                    <field name="updater_id" />
+                    <field name="last_update" />
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click oe_kanban_academy_training_resource">
+                                <div class="o_kanban_image">
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/resource.png&quot;" class="o_kanban_image"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
+                                    <ul>
+                                        <li class="o_ellipsis"><strong>Manager:&#160;</strong><field name="manager_id" /></li>
+                                        <li class="o_ellipsis"><strong>Updater:&#160;</strong><field name="updater_id" /></li>
+                                        <li class="o_ellipsis"><strong>Last update:&#160;</strong><field name="last_update" /></li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
 
         <!-- Search view for "academy.training.resource" -->
         <record id="view_academy_training_resource_search" model="ir.ui.view">
@@ -192,7 +236,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Resources</field>
             <field name="res_model">academy.training.resource</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>

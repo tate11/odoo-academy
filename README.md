@@ -109,12 +109,20 @@ After running the modules list update you can confirm the new modules are availa
         the hours will be the sum of unit hours
       - **Idea**: undefined time length allowed
 
+- [] Finish custom model field
+      - Views always should be rebuild
+      - View rules should be removed on uninstall hook
+
 - [ ] Ensure all models can be duplicated except enrolment
       - [ ] Enrolments (NO BUTTON)
       - [x] Activities
       - [x] Actions
       - [x] Competency units
       - [ ] Resource (without historical)
+
+- [ ] Check enrolment
+      - Descriptions stores False
+      - Modules don't be saved properly
 
 - [ ] Finish resource
       - [ ] Link with actions

@@ -23,7 +23,7 @@ class AptPublicTendering(models.Model):
     _name = 'academy.public.tendering.process'
     _description = u'Public tendering'
 
-    _inherit = ['academy.abstract.image']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'approval DESC'
@@ -162,6 +162,23 @@ class AptPublicTendering(models.Model):
         compute='compute_total_of_vacancies',
         help='Set number of vacancies'
     )
+
+    training_action_ids = fields.Many2many(
+        string='Training action',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.action',
+        relation='academy_training_action_public_tendering_process_rel',
+        column1='public_tendering_id',
+        column2='training_action_id',
+        domain=[],
+        context={},
+        limit=None
+    )
+
 
     # ----------------------- AUXILIAR FIELD METHODS --------------------------
 

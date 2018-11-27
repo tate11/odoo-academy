@@ -94,6 +94,11 @@
                         </page>
                     </notebook>
                 </sheet>
+
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                     </form>
                 </xpath>
             </field>
@@ -106,11 +111,38 @@
             <field name="mode">primary</field>
             <field name="priority" eval="26" />
             <field name="active" eval="True" />
-            <field name="inherit_id" ref="base.res_partner_kanban_view" />
+            <!-- <field name="inherit_id" ref="base.res_partner_kanban_view" /> -->
             <field name="arch" type="xml">
-                <xpath expr="//kanban" position="inside">
+                <kanban>
+                    <field name="image_small"/>
+                    <field name="name" />
 
-                </xpath>
+                    <field name="phone" />
+                    <field name="mobile" />
+                    <field name="email" />
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click oe_kanban_academy_student">
+                                <div class="o_kanban_image">
+                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/student.png&quot;" class="o_kanban_image"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
+                                    <ul>
+                                        <li class="o_ellipsis"><strong>Phone:&#160;</strong><field name="phone" /></li>
+                                        <li class="o_ellipsis"><strong>Mobile:&#160;</strong><field name="mobile" /></li>
+                                        <li class="o_ellipsis"><strong>Email:&#160;</strong><field name="email" /></li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
 
@@ -158,9 +190,9 @@
             <field name="context">{'default_is_student': True}</field>
             <field name="view_ids"
                    eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_res_partner_student_kanban')}),
                           (0, 0, {'view_mode': 'tree', 'view_id': ref('view_res_partner_student_tree')}),
-                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_student_form')}),
-                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_res_partner_student_kanban')})]"/>
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_student_form')})]"/>
             <field name="search_view_id" ref="academy_base.view_res_partner_student_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -181,58 +213,3 @@
     </data>
 </openerp>
 
-
-<!--
-<?xml version="1.0"?>
-<tree string="Contacts">
-                    <field name="display_name" string="Name"/>
-                    <field name="function" invisible="1"/>
-                    <field name="phone"/>
-                    <field name="email"/>
-                    <field name="user_id" invisible="1"/>
-                    <field name="is_company" invisible="1"/>
-                    <field name="country_id" invisible="1"/>
-                    <field name="parent_id" invisible="1"/>
-                    <field name="active" invisible="1"/>
-                </tree>
- -->
-        <!--
-        <record id="view_res_partner_student_form" model="ir.ui.view">
-            <field name="name">res.partner.student.orm</field>
-            <field name="model">res.partner</field>
-            <field name="type">form</field>
-            <field name="mode">primary</field>
-            <field name="priority" eval="26" />
-            <field name="active" eval="True" />
-            <field name="inherit_id" ref="base.view_partner_form" />
-            <field name="arch" type="xml">
-
-            </field>
-        </record>
-
-        <record id="view_res_partner_student_search" model="ir.ui.view">
-            <field name="name">res.partner.student.earch</field>
-            <field name="model">res.partner</field>
-            <field name="type">search</field>
-            <field name="mode">primary</field>
-            <field name="priority" eval="26" />
-            <field name="active" eval="True" />
-            <field name="inherit_id" ref="base.view_partner_search" />
-            <field name="arch" type="xml">
-
-            </field>
-        </record>
-
-        <record id="view_res_partner_student_search" model="ir.ui.view">
-            <field name="name">res.partner.student.earch</field>
-            <field name="model">res.partner</field>
-            <field name="type">search</field>
-            <field name="mode">primary</field>
-            <field name="priority" eval="26" />
-            <field name="active" eval="True" />
-            <field name="inherit_id" ref="base.view_partner_search" />
-            <field name="arch" type="xml">
-
-            </field>
-        </record>
- -->

@@ -773,6 +773,18 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     def _complete_last_session(self, line, last_date, remaining):
         """ Complete hours of the last session when it has not been filled
         with previous line
+
+        | Session  | Remain     | Returned  |
+        | complete | line hours | value     |
+        | -------- | ---------- | --------- |
+        |  False   |   False    | Negative  |
+        |  True    |   True     | Positive  |
+        |  True    |   False    | Zero      |
+        |  Falso   |   True     | Imposible |
+
+
+        @return: returns a value like you can see in table above
+
         """
 
         msg = _(u'Could not remain more time %s than session length %s')

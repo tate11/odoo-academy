@@ -25,6 +25,8 @@ from . import academy_training_activity
 from . import academy_training_action
 
 from . import res_partner
+from . import res_users
+from . import academy_teacher
 
 from . import academy_training_resource
 from . import academy_training_resource_file

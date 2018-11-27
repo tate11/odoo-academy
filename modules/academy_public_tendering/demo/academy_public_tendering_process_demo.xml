@@ -12,7 +12,7 @@
             <field name="approval">2018-05-14</field>
             <field name="announcement">2018-05-25</field>
             <field name="target_date">2018-05-29</field>
-
+            <field name="training_action_ids" eval="[(4, ref('academy_base.academy_training_action'))]"/>
             <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_sansa_city_hall.png"/>
         </record>
 

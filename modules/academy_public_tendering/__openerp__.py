@@ -44,6 +44,8 @@
         'views/academy_public_tendering_hiring_type_view.xml',
         'views/academy_public_tendering_vacancy_position_view.xml',
         'views/academy_public_tendering_process_view.xml',
+
+        'views/academy_training_action_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

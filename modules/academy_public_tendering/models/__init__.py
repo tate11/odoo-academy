@@ -12,3 +12,5 @@ from . import academy_public_tendering_hiring_type
 
 from . import academy_public_tendering_vacancy_position
 from . import academy_public_tendering_process
+
+from . import academy_training_action

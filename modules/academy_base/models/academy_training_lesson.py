@@ -73,6 +73,9 @@ attended.
     _rec_name = 'code'
     _order = 'code ASC'
 
+    _inherit = ['mail.thread']
+
+
     training_action_id = fields.Many2one(
         string='Training action',
         required=True,
@@ -150,6 +153,20 @@ attended.
         default=2.0,
         digits=(16, 2),
         help="Time length of the lesson"
+    )
+
+    teacher_id = fields.Many2one(
+        string='Teacher',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='Choose the teacher who expound the lesson',
+        comodel_name='academy.teacher',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
     )
 
     # -------------------------------------------------------------------------

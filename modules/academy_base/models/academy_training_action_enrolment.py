@@ -34,6 +34,9 @@ class AcademyTrainingActionEnrolment(models.Model):
         'academy.training.action': 'training_action_id'
     }
 
+    _inherit = ['mail.thread']
+
+
     # pylint: disable=locally-disabled, W0212
     code = fields.Char(
         string='Code',
@@ -105,7 +108,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         relation='academy_action_enrolment_training_module_rel',
         column1='action_enrolment_id',
         column2='training_module_id',
-        domain=[('id', '=', -1)],   # later will be dinamically updated
+        domain=[],
         context={},
         limit=None
     )

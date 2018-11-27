@@ -19,7 +19,8 @@ from pathlib import Path
 from openerp import models, fields, api
 from openerp.tools import config
 
-from .lib.custom_model_fields import Many2manyThroughView, TRAINING_RESOURCE_IDS_SQL
+from .lib.custom_model_fields import Many2manyThroughView, \
+    TRAINING_RESOURCE_IDS_SQL, TRAINING_ACTION_RESOURCE_IDS_SQL
 
 try:
     from BytesIO import BytesIO
@@ -89,6 +90,20 @@ class AcademyTrainingResource(models.Model):
 
     manager_id = fields.Many2one(
         string='Manager',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=u'False',
+        comodel_name='res.users',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
+    )
+
+    updater_id = fields.Many2one(
+        string='Updater',
         required=False,
         readonly=False,
         index=False,
@@ -184,6 +199,24 @@ class AcademyTrainingResource(models.Model):
         context={},
         limit=None,
         sql=TRAINING_RESOURCE_IDS_SQL
+    )
+
+    # Many2manyThroughView
+    training_action_ids = Many2manyThroughView(
+        string='Training action',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Choose related training actions',
+        comodel_name='academy.training.action',
+        relation='academy_training_action_resource_rel',
+        column1='training_resource_id', # this is the name in the SQL VIEW
+        column2='training_action_id',   # this is the name in the SQL VIEW
+        domain=[],
+        context={},
+        limit=None,
+        sql=TRAINING_ACTION_RESOURCE_IDS_SQL
     )
 
     training_resource_id = fields.Many2one(
@@ -404,15 +437,17 @@ class AcademyTrainingResource(models.Model):
 
         # pylint: disable=locally-disabled, W0212
         for record in self:
-            if record.directory:
+            ira_ids = record.mapped('ir_attachment_ids')
+            if record.directory or ira_ids:
                 zipname = u'{}.zip'.format(record.name)
 
                 in_memory = BytesIO()
                 zipf = zipfile.ZipFile(in_memory, 'w', zipfile.ZIP_DEFLATED)
-                record._zipdir(record.directory, zipf)
-                _logger.debug(in_memory.getbuffer().nbytes)
 
-                ira_ids = record.mapped('ir_attachment_ids')
+                if record.directory:
+                    record._zipdir(record.directory, zipf)
+                    _logger.debug(in_memory.getbuffer().nbytes)
+
                 for item in ira_ids:
                     zipf.write(
                         os.path.join(data_dir, Path(item.store_fname)),

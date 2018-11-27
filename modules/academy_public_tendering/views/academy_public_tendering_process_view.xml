@@ -83,8 +83,17 @@
                                 <field name="ir_atachment_ids" class="oe_field_ir_atachment_ids"
                                     placeholder="Attach documents and other stuff" />
                             </page>
+                            <page string="Training actions" class="oe_page_training_actions" accesskey="T">
+                                <field name="training_action_ids" class="oe_field_training_action_ids"
+                                    placeholder="Chosse related training actions" />
+                            </page>
                         </notebook>
                     </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
