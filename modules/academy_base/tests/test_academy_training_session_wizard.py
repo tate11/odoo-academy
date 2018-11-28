@@ -48,9 +48,11 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
         }
 
         wizard_set = self._wizard_obj .create(wdata)
+        wizard_set._onchange_training_action_id()
 
         line_set = wizard_set.wizard_line_ids.sorted( \
             key=lambda p: (p.training_module_id.sequence, p.sequence))
+
         line_set[0].update(values)
 
         return wizard_set, line_set
@@ -567,7 +569,7 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
         self.assertEqual(result, expected, msg)
 
 
-    def test__complete_last_session(self):
+    def test__complete_session(self):
         """ Unit tests for _next_date
 
           duration  remaining  maximum
@@ -583,124 +585,124 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
         wizard_set, line_set = self._new_wizard()
         line = line_set[0]
         last_date = datetime.combine(date.today(), time(9, 0, 0))
-        msg = '_complete_last_session: line.duration %s line.maximum %s remaining %s'
+        msg = '_complete_session: line.duration %s line.maximum %s remaining %s'
         last_date_str = fields.Datetime.to_string(last_date)
         last_date_str2 = fields.Datetime.to_string(last_date + timedelta(hours=1))
         last_date_str3 = fields.Datetime.to_string(last_date + timedelta(hours=2))
 
         # Session length 1, hours in line 1, empty 1
         wizard_set.duration, line.maximum, remaining = (1, 1, 1)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str, 1.0, -0.0),
+            (last_date_str, 1.0, 0.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # Session length 1, hours in line 2, empty 1
         wizard_set.duration, line.maximum, remaining = (1, 2, 1)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str, 1.0, -0.0),
+            (last_date_str, 1.0, 0.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # # Session length 1, hours in line 1, empty 2
         # wizard_set.duration, line.maximum, remaining = (1, 1, 2)
-        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # leftover = wizard_set._complete_session(line, last_date, remaining)
         # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         # self.assertRaises(ValueError)
 
         # # Session length 1, hours in line 2, empty 2
         # wizard_set.duration, line.maximum, remaining = (1, 2, 2)
-        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # leftover = wizard_set._complete_session(line, last_date, remaining)
         # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         # self.assertRaises(ValueError)
 
         # # Session length 1, hours in line 3, empty 2
         # wizard_set.duration, line.maximum, remaining = (1, 3, 2)
-        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # leftover = wizard_set._complete_session(line, last_date, remaining)
         # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         # self.assertRaises(ValueError)
 
         # # Session length 1, hours in line 2, empty 3
         # wizard_set.duration, line.maximum, remaining = (1, 2, 3)
-        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # leftover = wizard_set._complete_session(line, last_date, remaining)
         # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         # self.assertRaises(ValueError)
 
         # # Session length 1, hours in line 3, empty 3
         # wizard_set.duration, line.maximum, remaining = (1, 3, 3)
-        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # leftover = wizard_set._complete_session(line, last_date, remaining)
         # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         # self.assertRaises(ValueError)
 
         # Session length 2, hours in line 1, empty 1
         wizard_set.duration, line.maximum, remaining = (2, 1, 1)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str2, 1.0, -0.0),
+            (last_date_str2, 1.0, 0.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # Session length 2, hours in line 2, empty 1
         wizard_set.duration, line.maximum, remaining = (2, 2, 1)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str2, 1.0, -0.0),
+            (last_date_str2, 1.0, 0.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # Session length 2, hours in line 3, empty 1
         wizard_set.duration, line.maximum, remaining = (2, 3, 1)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str2, 1.0, -0.0),
+            (last_date_str2, 1.0, 0.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # Session length 2, hours in line 1, empty 2
         wizard_set.duration, line.maximum, remaining = (2, 1, 2)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str, 1.0, -1.0),
+            (last_date_str, 1.0, 1.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # # Session length 2, hours in line 1, empty 3
         # wizard_set.duration, line.maximum, remaining = (2, 1, 3)
-        # leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        # leftover = wizard_set._complete_session(line, last_date, remaining)
         # lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         # self.assertRaises(ValueError)
 
         # Session length 3, hours in line 2, empty 1
         wizard_set.duration, line.maximum, remaining = (3, 2, 1)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str3, 1.0, -0.0),
+            (last_date_str3, 1.0, 0.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 
         # Session length 3, hours in line 1, empty 2
         wizard_set.duration, line.maximum, remaining = (3, 1, 2)
-        leftover = wizard_set._complete_last_session(line, last_date, remaining)
+        leftover = wizard_set._complete_session(line, last_date, remaining)
         lesson = wizard_set.training_lesson_ids.sorted(key='id', reverse=True)[0]
         self.assertTupleEqual(
             (lesson.start_date, lesson.duration, leftover),
-            (last_date_str2, 1.0, -1.0),
+            (last_date_str2, 1.0, 1.0),
             msg=msg % (line.duration, line.maximum, remaining)
         )
 

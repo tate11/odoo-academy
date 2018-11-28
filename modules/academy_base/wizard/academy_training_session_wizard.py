@@ -29,8 +29,7 @@ Todo:
     * _float_to_time should convert milliseconds
 
     **IMPORTANT**:
-        _complete_last_session: usa remaining como horas libres en la sessión
-        _process_line: usa remaining como horas sin colocar de la línea
+        _float_to_time: this method should use microseconds too
         **OBJETIVO** definir bien los valores de retorno de cada funnción
         **OBJETIVO** remaining debe ser positivo o negativo de modo que valga para ambos
 
@@ -53,7 +52,7 @@ _logger = getLogger(__name__)
 
 
 
-# pylint: disable=locally-disabled, R0903, R0902
+# pylint: disable=locally-disabled, R0903, R0902, E1101
 class AcademyTrainingSessionWizard(models.TransientModel):
     """ This model is a wizard to create all sessions needed for an unit
 
@@ -315,7 +314,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         required=False,
         readonly=True,
         index=False,
-        default=None,
+        default=lambda self: self._default_training_unit_ids(), # pylint: disable=locally-disabled, W0212
         help=False,
         comodel_name='academy.training.module',
         relation='academy_training_session_wizard_trainining_module_rel',
@@ -324,16 +323,13 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         domain=[],
         context={},
         limit=None,
-        compute=lambda self: self._compute_training_unit_ids() # pylint: disable=locally-disabled, W0212
     )
 
     @api.multi
     @api.depends('training_action_id')
-    def _compute_training_unit_ids(self):
-        for record in self:
-            # pylint: disable=locally-disabled, W0212
-
-            record.training_unit_ids = record._get_units()
+    def _default_training_unit_ids(self):
+        unit_set = self._get_units()
+        return [(6, None, unit_set.ids)]
 
 
     wizard_line_ids = fields.One2many(
@@ -341,34 +337,27 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         required=True,
         readonly=False,
         index=False,
-        default=None,
+        default=lambda self: self._default_wizard_line_ids(),   # pylint: disable=locally-disabled, W0212
         help=False,
         comodel_name='academy.training.session.wizard.line',
         inverse_name='session_wizard_id',
         domain=[],
         context={},
         auto_join=False,
-        limit=None,
-        compute='_compute_wizard_line_ids'
+        limit=None
     )
 
-    @api.multi
-    @api.depends('training_action_id')
-    def _compute_wizard_line_ids(self):
+    def _default_wizard_line_ids(self):
+        unit_set = self._get_units()
 
-        for record in self:
-            # pylint: disable=locally-disabled, w0212
-            unit_set = record._get_units() or self.env['academy.training.module']
+        unit_lines = []
+        index = 1
+        for unit in unit_set:
+            unit_line = self._wizard_line_to_append(unit, index)
+            unit_lines.append(unit_line)
+            index = index + 1
 
-            unit_lines = []
-            index = 1
-            for unit in unit_set:
-                unit_line = record._wizard_line_to_append(unit, index)
-                unit_lines.append(unit_line)
-                index = index + 1
-
-            if unit_lines:
-                self.wizard_line_ids = unit_lines
+        return unit_lines
 
 
     training_lesson_ids = fields.Many2many(
@@ -415,20 +404,20 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     @api.onchange('training_action_id')
     def _onchange_training_action_id(self):
 
-        self.wizard_line_ids = None
+        self.wizard_line_ids = [(5, None, None)]
 
         if self.training_action_id:
 
-            self._compute_training_unit_ids()
-            self._compute_wizard_line_ids()
+            self.training_unit_ids = self._default_training_unit_ids()
+            self.wizard_line_ids = self._default_wizard_line_ids()
 
             self.state = 'step2'
             # pylint: disable=locally-disabled, E1101
             domain = [('id', '=', self.wizard_line_ids.mapped('id'))]
 
         else:
-            self.training_unit_ids = self.env['academy.training.module']
-            self.wizard_line_ids = self.env['academy.training.session.wizard.line']
+            self.training_unit_ids = [(5, None, None)]
+            self.wizard_line_ids = [(5, None, None)]
             domain = [('id', '=', -1)]
             self.state = 'step1'
 
@@ -474,21 +463,21 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         assert line_set[0].start_date, \
             _('First line start date is required')
 
-        remaining = 0
+        to_complete = 0
 
         self.start_date = line_set[0].start_date
         self.start_time = line_set[0].start_time
         self.duration = line_set[0].duration
 
-        current_date = self._to_python_date(line_set[0].start_date)
-        remaining = 0
+        current_date = fields.Date.from_string(line_set[0].start_date)
+        to_complete = 0
         for line in line_set:
 
-            current_date, remaining = \
-                self._process_line(line, current_date, remaining)
+            current_date, to_complete = \
+                self._process_line(line, current_date, to_complete)
 
             if line.incomplete != 'next':
-                remaining = 0
+                to_complete = 0
 
 
     # -------------------------- AUXILIARY METHODS ----------------------------
@@ -496,6 +485,8 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     @staticmethod
     def _float_to_time(num, delta=False):
         """ Converts given float time to a valid python time
+
+        @return (tim): python valid time struct
         """
 
         minu = num % 1 * 60
@@ -512,18 +503,12 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return result
 
 
-    @staticmethod
-    def _to_python_date(field_value):
-        """ Transforms given field (fields.Date) value to a python date
-        """
-
-        return fields.Date.from_string(field_value)
-
-
     def _get_units(self):
         """ Search all training training units (final training modues)
         and they are relatated whith choosen training action
 
+        @return (academy.training.mudule): sorted recordset with all units
+        in choosen training action.
         """
 
         action_id = self.training_action_id
@@ -545,6 +530,8 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     def _wizard_line_to_append(self, unit, sequence):
         """ Returns a valid One2many append operation can be used to add
         the given wizard line to wizard_line_ids field
+
+        @return (tuple): python Many2many valid operation line
         """
 
         start_date = fields.Date.today() if sequence == 1 else None
@@ -565,17 +552,27 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return (0, 0, values)
 
 
-    def _get_start_date(self, line, last_date):
+    @staticmethod
+    def _get_start_date(line, last_date):
         """ Returns line start date if it not follow previous line or given
-        current date
+        current date.
+
+        @return (date): return python valid start date
         """
 
-        return last_date if line.following else self._to_python_date(line.start_date)
+        if line.following:
+            result = last_date
+        else:
+            result = fields.Date.from_string(line.start_date)
+
+        return result
 
 
     def _get_start_time(self, line):
         """ Returns line start time if it not follow previous line or given
         start time
+
+        @return (float): float start time
         """
 
         return line.start_time if not line.following else self.start_time
@@ -584,6 +581,8 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     def _get_choosen_weekday(self):
         """ Get string value from self.week_list selection field and returns
         a numerical value. This will be the ZERO index of the weekday
+
+        @return (integer): 0 => Monday, ..., 6 => Sunday
         """
 
         return safe_eval(self.week_list[-1:])
@@ -597,6 +596,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         pos = safe_eval(self.byday)
 
         return max(pos - 1, -1)
+
 
     def _get_time_step(self):
         """ Returns the interval will be used to compute next session date
@@ -770,60 +770,90 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         return computed_date
 
 
-    def _complete_last_session(self, line, last_date, remaining):
+    def _complete_session(self, line, current_date, to_complete):
         """ Complete hours of the last session when it has not been filled
         with previous line
 
-        | Session  | Remain     | Returned  |
-        | complete | line hours | value     |
-        | -------- | ---------- | --------- |
-        |  False   |   False    | Negative  |
-        |  True    |   True     | Positive  |
-        |  True    |   False    | Zero      |
-        |  Falso   |   True     | Imposible |
+        @param line        : wizard line will be used to get required values
+        @param current_date: date of the session will be complete
+        @param to_complte  : maximun number of hours can be set to complete
+        the session
 
-
-        @return: returns a value like you can see in table above
-
+        @return (integer): empty hours in session can be completed with the
+        following line
         """
 
         msg = _(u'Could not remain more time %s than session length %s')
-        if remaining > self.duration:
-            raise ValueError(msg % (remaining, self.duration))
+        if to_complete > self.duration:
+            raise ValueError(msg % (to_complete, self.duration))
 
         start_time = self.start_time #self._get_start_time(line)
-        start_time = start_time + self.duration - remaining
-        hours = min(line.maximum, remaining)
+        start_time = start_time + self.duration - to_complete
+        hours = min(line.maximum, to_complete)
 
-        self._new_lesson(line, last_date, start_time, hours)
+        lesson = self._new_lesson(line, current_date, start_time, hours)
+        self.training_lesson_ids = self.training_lesson_ids + lesson
 
-        return max((remaining - hours), 0) * -1
+        return to_complete - hours
 
 
-    def _register_lesson(self, lesson):
-        # pylint: disable=locally-disabled, E1101
-        #_ids = self.training_lesson_ids.mapped('id')
-        #_ids.append(lesson.id)
+    def _new_session(self, line, start_date=None, start_time=None, available=None):
+        """ Creates new lesson and appends it to wizard.
+
+        @param line      : wizard line to get values
+        @param start_date: start date for lesson, keep empty to use from wizard
+        @param start_time: start time for lesson, keep empty to use from wizard
+        @param available : available hours can be used for lesson, keep empty
+        to use full session time (line.duration)
+
+        @return          : POSITIVE integer if there are available hours can be
+        used to create new lessons, NEGATIVE integer if given availabel hours
+        have not been enough to complete sesson, ZERO if lesson has complete
+        session
+        """
+
+        lesson = self._new_lesson(line, start_date, start_time, available)
 
         self.training_lesson_ids = self.training_lesson_ids + lesson
 
+        print(line.training_unit_id.name, available - lesson.duration)
 
-    def _new_lesson(self, line, start_date, start_time, remaining):
+        return available - self.duration
+
+
+    def _new_lesson(self, line, start_date=None, start_time=None, available=None):
         """ Creates new training lesson using given values and returns
         remaining hours in session
+
+        @param line       : wizard line to get values
+        @param start_date : start date for lesson, keep empty to use from wizard
+        @param start_time : start time for lesson, keep empty to use from wizard
+        @param available  : available hours can be used for lesson, keep empty
+        to use full session time (line.duration)
+
+        @return           : return value will be new created lesson
         """
 
-        assert_msg = 'There are not enough ({hours}) hours for new lesson'
-        assert remaining > 0, assert_msg.format(hours=remaining)
+        # STEP 1: Fill values if they have not been given
+        start_date = fields.Date.from_string(self.start_date) \
+            if start_date is None else start_date
+        start_time = self.start_time if start_time is None else start_time
+        available = line.duration if available is None else available
 
-        if line.incomplete == 'fill':
+        # STEP 2: Lessons must have a duration greater than zero
+        assert_msg = 'There are not enough ({hours}) hours for new lesson'
+        assert available > 0, assert_msg.format(hours=available)
+
+        # STEP 3: Lesson will occup full session  if so has been indicated in
+        # wizard line or if available (hours) value has not been set
+        if line.incomplete == 'fill' or available is None:
             duration = line.duration
         else:
-            duration = min(remaining, line.duration)
+            duration = min(available, line.duration)
 
+        # STEP 4: Build dictionary will be used to create lesson
         start_time = self._float_to_time(start_time)
         start_time = datetime.combine(start_date, start_time)
-
         values = dict(
             training_action_id=self.training_action_id.id,
             training_module_id=line.training_unit_id.id,
@@ -833,38 +863,36 @@ class AcademyTrainingSessionWizard(models.TransientModel):
             duration=duration
         )
 
-        # pylint: disable=locally-disabled, W0125
-        print(self.training_action_id.id, start_time, duration)
+        # STEP 5: Create lesson and return it
         lesson_obj = self.env['academy.training.lesson']
         lesson_set = lesson_obj.create(values)
-        self._register_lesson(lesson_set)
 
-        return remaining - duration
+        return lesson_set
 
 
     # pylint: disable=locally-disabled, R0913
-    def _process_line(self, line, last_date, remaining):
+    def _process_line(self, line, last_date, to_complete):
         """ Proccess each line in wizard an creates needed sessions
         """
-        print(line, last_date, '<-', remaining)
+        print(line, last_date, '<-', to_complete)
+
+        # STEP 1: Complete last session if there are to_complete hours
+        if to_complete > 0:
+            to_complete = self._complete_session( \
+                line, last_date, to_complete)
+            if not to_complete:
+                last_date = self._next_date(last_date)
+            else:
+                return last_date, abs(to_complete)
 
         # STEP 2: Get line variables
         start_time = self._get_start_time(line)
         first_date = self._get_start_date(line, last_date)
-        hours = line.maximum - remaining
+        hours = line.maximum - to_complete
 
-        # STEP 3: Complete last session if there are remaining hours
-        if remaining > 0:
-            leftover = self._complete_last_session( \
-                line, last_date, remaining)
-            if not leftover:
-                last_date = self._next_date(last_date)
-            else:
-                return last_date, abs(leftover)
-
-        # STEP 4: Initialize the variables for loop
+        # STEP 3: Initialize the variables for loop
         first_date = self._get_first_valid_date(first_date)
-        steps = ceil((line.maximum - remaining) / line.duration)
+        steps = ceil((line.maximum - to_complete) / line.duration)
         current_date = first_date
         session_date = current_date
 
@@ -874,7 +902,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
             if self.rrule_type == 'monthly' and self.month_by == 'day':
                 steps = steps - 1
                 session_date = self._get_month_nth_weekday(current_date)
-                hours = self._new_lesson( \
+                hours = self._new_session( \
                     line, session_date, start_time, hours)
                 current_date = self._next_date(current_date)
 
@@ -884,7 +912,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
 
                 for session_date in week_dates:
                     steps = steps - 1
-                    hours = self._new_lesson( \
+                    hours = self._new_session( \
                         line, session_date, start_time, hours)
 
                 current_date = self._next_date(session_date)
@@ -892,7 +920,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
             else:
                 steps = steps - 1
                 session_date = current_date
-                hours = self._new_lesson( \
+                hours = self._new_session( \
                     line, session_date, start_time, hours)
 
                 current_date = self._next_date(current_date)
