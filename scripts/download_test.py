@@ -127,14 +127,14 @@ class App(object):
                 print(u'Using file ' + files[0] + ' and ' + self._report)
 
         if args.title:
-            self._title = args.title.decode(self._cp, errors=u'replace')
+            self._title = args.title #.decode(self._cp, errors=u'replace')
 
     def _read_id_file(self, fname):
         """ Read specifications from ID file """
         with open(fname, 'r') as finput: #open the file
             lines = finput.readlines()
             for line_raw in lines:
-                line = line_raw.decode('utf-8', errors='replace')
+                line = line_raw #.decode('utf-8', errors='replace')
                 if re.match(r'^report\= *[^ ]+ *$', line, re.IGNORECASE):
                     self._report = line.replace(u'report=', u'').strip()
 
