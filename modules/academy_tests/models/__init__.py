@@ -15,3 +15,5 @@ from . import at_test_at_question_rel
 from . import at_test
 from . import at_answers_table
 from . import at_question_impugnment
+
+from . import ir_ui_view
