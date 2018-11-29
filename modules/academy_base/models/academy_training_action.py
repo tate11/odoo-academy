@@ -232,6 +232,21 @@ class AcademyTrainingAction(models.Model):
         limit=None
     )
 
+    tuttor_id = fields.Many2one(
+        string='Tuttor',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help='Choose which teacher will tutorize this group',
+        comodel_name='academy.teacher',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False,
+        track_visibility='onchange'
+    )
+
 
     # ------------------------------ CONSTRAINS -------------------------------
 

@@ -28,6 +28,7 @@
                     <field name="action_name" />
                     <field name="start" class="oe_field_start" />
                     <field name="end" class="oe_field_end" />
+                    <field name="tuttor_id" />
                 </tree>
             </field>
         </record>
@@ -76,6 +77,7 @@
                             <field name="start" class="oe_field_start" />
                             <field name="seating" class="oe_field_seating" />
                             <field name="end" class="oe_field_end" />
+                            <field name="tuttor_id" class="od_field_tuttor_id" />
                         </group>
 
                         <notebook>

@@ -98,16 +98,47 @@ After running the modules list update you can confirm the new modules are availa
 - [ ] Link to training actions
 - [ ] Link with training actions enroled students (view)
 - [ ] State in Kanban
+- [ ] Add a search view
+- [ ] **Add filter by public tendering in training action**
+- [ ] Add categories: C1, C2, C3, etc.... to professional category
+- [ ] Add all public administrations as application scope
+
 
 ### Academy Base
 
+- [ ] Finish wizard
+      - [ ] Add teacher in wizard lines
+      - [ ] Add checkbox to auto assign material
+      - [ ] Remove execute button and perform actions on a new step name Finish,
+      this step must display created sessions.
+
+- [ ] Lessons
+      - Remove modules page from form view
+      - Add a custom Miniform view in calendar choosing action and module
+      - Add attendance field in form view
+      - Add resource field in form view
+      - Add teacher filter in search view
+
+- [ ] Training actions
+      - State on kanban view: pending, in progress, finished
+      - **State filter**: perhaps could be a related view (Readonly Many2one)
+      - Add filter: Only active. This will be default filter
+      - Add group by application scope (this will be administration)
+
+- [ ] Resource
+      - [ ] Remove manager from resource
+      - Add group by updater in search view
+      - Add filter by updater in search view
+
 - [ ] Finish modules
-      - Module must have own hours if it has not training units
-      - List of available resources
-      - List of students who have coursed this module
-      - Modules have their own hours value if they have not units, otherwise
+      - [ ] Module must have own hours if it has not training units
+      - [ ] List of available resources
+      - [ ] List of students who have coursed this module
+      - [ ] Modules have their own hours value if they have not units, otherwise
         the hours will be the sum of unit hours
       - **Idea**: undefined time length allowed
+      - Add a page or button in student form view displaying training actions
+
 
 - [] Finish custom model field
       - Views always should be rebuild
