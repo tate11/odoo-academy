@@ -354,8 +354,9 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         index = 1
         for unit in unit_set:
             unit_line = self._wizard_line_to_append(unit, index)
-            unit_lines.append(unit_line)
-            index = index + 1
+            if unit_line:
+                unit_lines.append(unit_line)
+                index = index + 1
 
         return unit_lines
 
@@ -534,6 +535,12 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         @return (tuple): python Many2many valid operation line
         """
 
+        unit_set = self.env['academy.training.module']
+        imparted = unit_set.get_imparted_hours_for( \
+                    self.training_action_id.id, unit.id)
+        if (unit.ownhours - imparted) <= 0:
+            return False
+
         start_date = fields.Date.today() if sequence == 1 else None
         following = False if sequence == 1 else True
 
@@ -545,7 +552,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
             'start_date'        : start_date,
             'start_time'        : 9.0,
             'duration'          : 5.0,
-            'maximum'           : unit.ownhours,
+            'maximum'           : unit.ownhours - imparted,
             'incomplete'        : 'next'
         }
 

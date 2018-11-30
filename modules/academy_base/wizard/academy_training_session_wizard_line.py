@@ -48,12 +48,30 @@ _logger = getLogger(__name__)
 class AcademyTrainingSessionWizardLine(models.TransientModel):
     """ This model is the representation of the academy training session wizard line
 
-    Fields:
+    Entity fields:
       name (Char)       : Human readable name which will identify each record
       description (Text): Something about the record or other information witch
-      has not an specific defined field to store it.
+    has not an specific defined field to store it.
       active (Boolean)  : Checked do the record will be found by search and
       browse model methods, unchecked hides the record.
+
+      training_unit_id  : unit will be used in lessons
+      session_wizard_id : wizard to which the line belongs
+      own_sequence      : order position of this line in wizard
+      following         : if checked, start date will be the next date to
+    the previous line last date
+      start_date        : date will be used in first lesson
+      start_time (foat) : day hour will be used as start_time for lessons
+      duration          : time length for lessons
+      incomplete        : how the last session will be completed if the hours
+    in this line are not enough to complete it
+      maximum           : maximum hours can be used to create sessions, default
+    value will be all hours which have not been assigned to previous lessons
+      teacher_id        : professor will teach the lesson, by default will be
+    the training action tutor
+
+    Management fields:
+      imparted          : number of hours have been assigned yet
 
     """
 
@@ -75,7 +93,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         default=None,
         help='Related training unit',
         comodel_name='academy.training.module',
-        domain=[('id', '=', -1)],
+        domain=[],
         context={},
         ondelete='cascade',
         auto_join=False
@@ -119,7 +137,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         required=False,
         readonly=False,
         index=False,
-        default=None,
+        default=fields.Date.today(),
         help=False
     )
 
@@ -163,9 +181,23 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         required=True,
         readonly=False,
         index=False,
-        default=0,
+        default=0,  # Will change when training_action_id will be changed
         digits=(16, 2),
         help='Maximum number of hours will be ocuppied'
+    )
+
+    teacher_id = fields.Many2one(
+        string='Teacher',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,   # Will change when training_action_id will be changed
+        help=False,
+        comodel_name='academy.teacher',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
     )
 
 
@@ -187,7 +219,9 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
     def _compute_imparted(self):
         for record in self:
             # pylint: disable=locally-disabled, W0212
+            unit_set = record.training_unit_id
             record.imparted = record._get_imparted_hours()
+            record.maximum = unit_set.hours - record.imparted
 
 
     # --------------- ONCHANGE EVENTS AND OTHER FIELD METHODS -----------------
@@ -203,27 +237,21 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
 
     @api.onchange('training_unit_id')
     def _onchange_training_unit_id(self):
-        unit_set = self.training_unit_id
-
-        self.imparted = self._get_imparted_hours()
-        self.maximum = unit_set.hours - self.imparted
+        self._compute_imparted()
 
 
     # -------------------------- AUXILIARY METHODS ----------------------------
 
     def _get_imparted_hours(self):
-        act_id = self.session_wizard_id.training_action_id.id or -1
-        uni_id = self.training_unit_id.id or -1
+        unit_set = self.training_unit_id
+        wizard_set = self.session_wizard_id.training_action_id
 
-        lesson_domain = [
-            '&',
-            ('training_action_id', '=', act_id),
-            ('training_module_id', '=', uni_id),
-        ]
-        lesson_obj = self.env['academy.training.lesson']
-        lesson_set = lesson_obj.search(lesson_domain, \
-            offset=0, limit=None, order=None, count=False)
+        act_id = wizard_set.id or -1
+        uni_id = unit_set.id or -1
 
-        return sum(lesson_set.mapped('duration') or [0])
+        return unit_set.get_imparted_hours_for(act_id, uni_id)
+
+
+
 
 

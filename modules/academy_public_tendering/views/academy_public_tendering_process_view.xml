@@ -107,7 +107,7 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <kanban>
+                <kanban default_group_by="state">
                     <field name="image_small"/>
                     <field name="approval" />
                     <field name="announcement" />
@@ -157,7 +157,13 @@
             <field name="arch" type="xml">
                 <search string="academy_public_tendering_process_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="administration_id" />
+                    <field name="state" />
+
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_administration_id" string="Administration" domain="[]" context="{'group_by' : 'administration_id'}" />
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    </group>
                 </search>
             </field>
         </record>

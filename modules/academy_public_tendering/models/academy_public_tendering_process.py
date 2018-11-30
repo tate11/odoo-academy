@@ -28,6 +28,21 @@ class AptPublicTendering(models.Model):
     _rec_name = 'name'
     _order = 'approval DESC'
 
+
+    STATES = [
+        ('0', 'Expected'),
+        ('1', 'Announced'),
+        ('2', 'Approved'),
+        ('3', 'Finished')
+    ]
+
+    # States that should be folded in Kanban view
+    # used by the `state_groups` method
+    FOLDED_STATES = [
+        'finished',
+    ]
+
+
     name = fields.Char(
         string='Name',
         required=True,
@@ -179,6 +194,16 @@ class AptPublicTendering(models.Model):
         limit=None
     )
 
+    state = fields.Selection(
+        string='State',
+        required=False,
+        readonly=False,
+        index=False,
+        default='expected',
+        help=False,
+        selection=lambda self: self.STATES
+    )
+
 
     # ----------------------- AUXILIAR FIELD METHODS --------------------------
 
@@ -214,6 +239,52 @@ class AptPublicTendering(models.Model):
             record.total_of_vacancies = \
                 sum(record.vacancy_position_ids.mapped('total_of_vacancies'))
 
-    # --------------------------- ONCHANGE EVENTS -----------------------------
 
+    # ------------------------- OVERLOADED METHODS ----------------------------
+
+
+    def _state_updated(self, values):
+        minstr = datetime.min.strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.now()
+
+        announced = values.get('announcement', self.announcement) or minstr
+        approval = values.get('approval', self.approval) or minstr
+        target_date = values.get('target_date', self.target_date) or minstr
+
+        print(announced, approval, target_date)
+
+        if fields.Datetime.from_string(target_date) <= now:
+            values['state'] = self.STATES[3][0]
+        elif fields.Datetime.from_string(approval) <= now:
+            values['state'] = self.STATES[2][0]
+        elif fields.Datetime.from_string(announced) <= now:
+            values['state'] = self.STATES[1][0]
+        else:
+            values['state'] = self.STATES[0][0]
+
+        return values
+
+
+    @api.model
+    def create(self, values):
+        """ Set right state
+        """
+
+        values = self._state_updated(values)
+        print(values)
+        result = super(AptPublicTendering, self).create(values)
+
+        return result
+
+
+    @api.multi
+    def write(self, values):
+        """ Set right state
+        """
+
+        values = self._state_updated(values)
+        print(values)
+        result = super(AptPublicTendering, self).write(values)
+
+        return result
 

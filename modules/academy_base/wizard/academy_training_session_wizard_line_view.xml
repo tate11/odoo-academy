@@ -11,10 +11,11 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <tree string="Modules" create="1" delete="1" edit="1" editable="bottom">
+                <tree string="Modules" create="1" delete="1" edit="1" editable="bottom" decoration-danger="maximum &lt;= 0.0">
                     <field name="own_sequence" widget="handle" />
                     <field name="session_wizard_id" invisible="1" />
                     <field name="training_unit_id" />
+                    <field name="teacher_id" />
                     <field name="imparted" />
                     <field name="following" />
                     <field name="start_date" widget="date"

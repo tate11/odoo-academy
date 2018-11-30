@@ -33,7 +33,8 @@ Todo:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import ValidationError
 
 from .lib.custom_model_fields import Many2manyThroughView
 
@@ -260,6 +261,63 @@ class AcademyTrainingModule(models.Model):
         return result
 
 
+    # --------------------------- PUBLIC METHODS ------------------------------
+
+    @api.multi
+    def get_imparted_hours_in(self, action_id):
+        """ Get all hours assigned an a given action (id) for this recordset
+
+        @param action_id (recordset/int)  : academy.training.action record or id
+
+        @return (float): total time length
+        """
+
+        result = 0
+
+        for record in self:
+            result = result + self.get_imparted_hours_for(action_id, record.id)
+
+        return result
+
+
+    @api.model
+    def get_imparted_hours_for(self, action_id, module_id):
+        """ Get all hours assigned for given module (id) an a given action (id)
+
+        @param action_id (recordset/int): academy.training.action record or id
+        @param module_id (recordset/int): academy.training.module record or id
+
+        @return (float): total time length
+        """
+
+        action_id = self._get_id(action_id) or -1
+        module_id = self._get_id(module_id) or -1
+
+
+        lesson_domain = [
+            '&',
+            ('training_action_id', '=', action_id),
+            ('training_module_id', '=', module_id),
+        ]
+        lesson_obj = self.env['academy.training.lesson']
+        lesson_set = lesson_obj.search(lesson_domain, \
+            offset=0, limit=None, order=None, count=False)
+
+        return sum(lesson_set.mapped('duration') or [0])
+
+
+    # -------------------------- AUXILIARY METHODS ----------------------------
+
+    def _get_id(self, model_or_id):
+        """ Returns a valid id or rises an error
+        """
+        if isinstance(model_or_id, int):
+            result = model_or_id
+        else:
+            self.ensure_one()
+            result = model_or_id.id
+
+        return result
 
 
 

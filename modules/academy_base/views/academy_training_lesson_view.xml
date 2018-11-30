@@ -116,6 +116,45 @@
             </field>
         </record>
 
+<!-- Kanban view for "academy.training.lesson" -->
+        <record id="view_academy_training_lesson_kanban" model="ir.ui.view">
+            <field name="name">view.academy.training.lesson.kanban</field>
+            <field name="model">academy.training.lesson</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <kanban edit="0">
+                    <field name="image_small"/>
+                    <field name="code" />
+                    <field name="start_date" />
+                    <field name="training_action_id" />
+                    <field name="training_module_id" />
+                    <field name="teacher_id" />
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click oe_kanban_academy_training_lesson">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="_s + &quot;/academy_base/static/src/img/training-lesson.png&quot;" class="o_kanban_image"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <h4><strong class="oe_partner_heading"><field name="code"/></strong></h4>
+                                    <ul>
+                                        <li class="o_ellipsis"><strong>Date/time:&#160;</strong><field name="start_date" widget="datetime" />&#160;-&#160;<field name="duration" widget="float_time" /></li>
+                                        <li class="o_ellipsis"><strong>Training action:&#160;</strong><field name="training_action_id" /></li>
+                                        <li class="o_ellipsis"><strong>Training unit:&#160;</strong><field name="training_module_id" /></li>
+                                        <li class="o_ellipsis"><strong>Teacher:&#160;</strong><field name="teacher_id" /></li>
+                                     </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <!-- Search view for "academy.training.lesson" -->
         <record id="view_academy_training_lesson_search" model="ir.ui.view">
             <field name="name">view.academy.training.lesson.search</field>
@@ -129,6 +168,30 @@
                     <field name="code" />
                     <field name="training_action_id" />
                     <field name="training_module_id" />
+                    <field name="start_date" />
+
+                    <filter string="This week" name="currentandlastlastweeks" domain="[
+                            ('start_date','&gt;=',(context_today()+relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                            ('start_date','&lt;',(context_today()+relativedelta(weekday=7)).strftime('%Y-%m-%d'))
+                                        ]" help="Journal invoices of the current and the last weeks" />
+
+                    <filter string="This month" name="currentandlastlastweeks" domain="[
+                            ('start_date','&gt;=',(context_today()+relativedelta(day=1)).strftime('%Y-%m-%d')),
+                            ('start_date','&lt;',(context_today()+relativedelta(day=1, months=1)).strftime('%Y-%m-%d'))
+                                        ]" help="Journal invoices of the current and the last weeks" />
+
+                    <separator/>
+
+
+                    <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_by_training_action_id" string="Training action" domain="[]" context="{'group_by' : 'training_action_id'}" />
+                        <filter name="group_by_training_module_id" string="Training unit" context="{'group_by': 'training_module_id'}"/>
+                        <filter name="group_by_teacher" string="Teacher" context="{'group_by': 'teacher_id'}"/>
+                        <filter string="Month" domain="[ ]" context="{'group_by': 'start_date:month'}" />
+                        <filter string="Week" domain="[ ]" context="{'group_by': 'start_date:week'}" />
+                   </group>
                 </search>
             </field>
         </record>
@@ -138,7 +201,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="name">Academy Training Lesson</field>
             <field name="res_model">academy.training.lesson</field>
-            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_mode">calendar,tree,kanban,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[]</field>

@@ -55,6 +55,8 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
 
         line_set[0].update(values)
 
+        wizard_set.training_lesson_ids.unlink()
+
         return wizard_set, line_set
 
 
@@ -707,37 +709,118 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
         )
 
 
+    def test__process_line_not_lines(self):
+        pass
 
-    # def test__process_line_1(self):
+    def test__process_line_one_line(self):
+        # pylint: disable=locally-disabled, W0612
+
+        msg = '_process_line: lesson.duration %s lesson.duration %s'
+        wizard_set, line_set = self._new_wizard()
+
+        wizard_set.write({'wizard_line_ids': [(2, line_set[0].id, None)]})
+        line_set = wizard_set.wizard_line_ids
+        print(line_set)
+
+        # duration = maximum
+        line_set.start_date = fields.Date.to_string(self._start_date)
+        line_set.start_time = 0.0
+        line_set.teacher_id = False
+        line_set.duration = 5
+        line_set.maximum = 5
+
+        wizard_set.execute()
+        self._check_lessons(
+            wizard_set.training_lesson_ids,
+            [{
+                'start_date' : line_set.start_date,
+                'start_time' : line_set.start_time,
+                'duration'   : line_set.duration,
+                'teacher_id' : line_set.teacher_id
+            }],
+            True
+        )
+
+        line_set.maximum = 4
+        wizard_set.execute()
+        self._check_lessons(
+            wizard_set.training_lesson_ids,
+            [{
+                'start_date' : line_set.start_date,
+                'start_time' : line_set.start_time,
+                'duration'   : 4,
+                'teacher_id' : line_set.teacher_id
+            }],
+            True
+        )
+
+        line_set.maximum = 6
+
+        wizard_set.execute()
+        self._check_lessons(
+            wizard_set.training_lesson_ids,
+            [{
+                'start_date' : line_set.start_date,
+                'start_time' : line_set.start_time,
+                'duration'   : line_set.duration,
+                'teacher_id' : line_set.teacher_id
+            }, {
+                'start_date' : fields.Date.to_string(self._start_date + timedelta(days=1)),
+                'start_time' : line_set.start_time,
+                'duration'   : 1,
+                'teacher_id' : line_set.teacher_id
+            }],
+            True
+        )
 
 
+    def _check_lessons(self, lesson_set, expected, remove=False):
+        """
+        expected = [
+            {
+            'start_date'        : fields.Date,
+            'start_time'        : float,
+            'duration'          : float,
+            'teacher_id'        : int
+            },
+            ...
+        ]
+        """
 
-    #     expected = (self._start_date + timedelta(days=1), 0)
+        msg = 'There are an unexpected number of lessons %s de %s'
+        self.assertTrue(len(lesson_set) == len(expected), \
+            msg % (len(lesson_set), len(expected)))
 
-    #     wizard_set, line_set = self._new_wizard()
-    #     result = wizard_set._process_line(line_set[0], self._start_date, 0)
-    #     lesson_set = wizard_set.training_lesson_ids
+        for index, lesson in enumerate(lesson_set): # pylint: disable=locally-disabled, W0612
+            expect = expected[index]
+            start_time = self._date_time_str(expect['start_date'], expect['start_time'])
 
-    #     msg = self._log_wizard_data(
-    #         wizard_set,
-    #         '_process_line(line_set[0], {}, {})'.format(self._start_date, 0),
-    #         'Result: {} - Expected: {}'.format(result, expected)
-    #     )
-    #     self.assertTrue(len(lesson_set) == 1 and result == expected, msg)
+            msg = 'Lesson %s start time not match' % str(index + 1)
+            self.assertEqual(lesson.start_date, start_time, msg)
+
+            msg = 'Lesson %s duration not match' % str(index + 1)
+            self.assertEqual(lesson.duration, expect['duration'], msg)
+
+            msg = 'Lesson %s duration not match' % str(index + 1)
+            self.assertEqual(lesson.teacher_id, expect['teacher_id'], msg)
+
+        if remove:
+            lesson_set.unlink()
 
 
-    #     expected = (self._start_date + timedelta(days=1), 1)
+    def _date_time_str(self, start_date, start_time):
 
-    #     wizard_set, line_set = self._new_wizard()
-    #     result = wizard_set._process_line(line_set[0], self._start_date, 1)
-    #     lesson_set = wizard_set.training_lesson_ids
+        if isinstance(start_date, str):
+            start_date = fields.Date.from_string(start_date)
 
-    #     msg = self._log_wizard_data(
-    #         wizard_set,
-    #         '_process_line(line_set[0], {}, {})'.format(self._start_date, 1),
-    #         'Result: {} - Expected: {}'.format(result, expected)
-    #     )
-    #     self.assertTrue(len(lesson_set) == 2 and result == expected, msg)
+        start_time = self._wizard_obj._float_to_time(start_time)
 
+        start_time = datetime.combine(start_date, start_time)
+        start_time = fields.Datetime.to_string(start_time)
+
+        return start_time
+
+
+        # duration > maximum
 
 

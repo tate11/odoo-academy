@@ -10,7 +10,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog
+            - Parent menu ··: academy_base.menu_academy_monitoring
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not training actions in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
