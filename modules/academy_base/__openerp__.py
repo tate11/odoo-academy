@@ -96,6 +96,7 @@
     'demo': [
         'demo/res_partner.xml',
         'demo/res_users.xml',
+        'demo/academy_teacher_demo.xml',
 
         'demo/academy_professional_area.xml',
         'demo/academy_professional_category.xml',

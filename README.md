@@ -95,9 +95,9 @@ After running the modules list update you can confirm the new modules are availa
 ### Academy Public Tendering
 
 - [ ] Rename models (6)
-- [ ] Link to training actions
+- [x] Link to training actions
 - [ ] Link with training actions enroled students (view)
-- [ ] State in Kanban
+- [x] State in Kanban
 - [ ] Add a search view
 - [ ] **Add filter by public tendering in training action**
 - [ ] Add categories: C1, C2, C3, etc.... to professional category
@@ -107,7 +107,7 @@ After running the modules list update you can confirm the new modules are availa
 ### Academy Base
 
 - [ ] Finish wizard
-      - [ ] Add teacher in wizard lines
+      - [x] Add teacher in wizard lines
       - [ ] Add checkbox to auto assign material
       - [ ] Remove execute button and perform actions on a new step name Finish,
       this step must display created sessions.

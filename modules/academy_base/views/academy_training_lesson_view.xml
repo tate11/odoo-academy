@@ -76,11 +76,12 @@
                                 <field name="description" class="oe_field_description"
                                     placeholder="Enter new value for description" />
                             </page>
-                            <page string="Modules" class="oe_page_modules" accesskey="M">
-
+                            <page string="Resources" class="oe_page_resources" accesskey="R">
+                                <field name="training_resource_ids" class="oe_field_training_resource_ids"
+                                    placeholder="Choose training resources" />
                             </page>
                             <page string="Attendance" class="oe_page_attendance" accesskey="A">
-
+                                <p>This area will be occupied by assists</p>
                             </page>
                         </notebook>
                     </sheet>

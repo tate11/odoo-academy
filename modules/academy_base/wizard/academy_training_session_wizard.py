@@ -544,6 +544,11 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         start_date = fields.Date.today() if sequence == 1 else None
         following = False if sequence == 1 else True
 
+        if self.training_action_id:
+            teacher_id = self.training_action_id.tuttor_id
+        else:
+            teacher_id = None
+
         values = {
             'session_wizard_id' : self.id,
             'training_unit_id'  : unit.id,
@@ -553,7 +558,8 @@ class AcademyTrainingSessionWizard(models.TransientModel):
             'start_time'        : 9.0,
             'duration'          : 5.0,
             'maximum'           : unit.ownhours - imparted,
-            'incomplete'        : 'next'
+            'incomplete'        : 'next',
+            'teacher_id'        : teacher_id.id if teacher_id else None
         }
 
         return (0, 0, values)
@@ -818,14 +824,16 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         have not been enough to complete sesson, ZERO if lesson has complete
         session
         """
+        if available:
+            lesson = self._new_lesson(line, start_date, start_time, available)
+            #lesson._onchange_training_action_id()
+            lesson._onchange_training_module_id()
 
-        lesson = self._new_lesson(line, start_date, start_time, available)
+            self.training_lesson_ids = self.training_lesson_ids + lesson
 
-        self.training_lesson_ids = self.training_lesson_ids + lesson
+            return available - self.duration
 
-        print(line.training_unit_id.name, available - lesson.duration)
-
-        return available - self.duration
+        return 0
 
 
     def _new_lesson(self, line, start_date=None, start_time=None, available=None):
@@ -867,7 +875,8 @@ class AcademyTrainingSessionWizard(models.TransientModel):
             description=None,
             active=True,
             start_date=fields.Datetime.to_string(start_time),
-            duration=duration
+            duration=duration,
+            teacher_id=line.teacher_id.id if line.teacher_id else None
         )
 
         # STEP 5: Create lesson and return it
@@ -881,13 +890,15 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     def _process_line(self, line, last_date, to_complete):
         """ Proccess each line in wizard an creates needed sessions
         """
-        print(line, last_date, '<-', to_complete)
+        print(line.training_unit_id.name, last_date, '<-', to_complete)
 
         # STEP 1: Complete last session if there are to_complete hours
+        complete = to_complete
         if to_complete > 0:
             to_complete = self._complete_session( \
                 line, last_date, to_complete)
-            if not to_complete:
+            complete = complete - to_complete
+            if to_complete >= 0:
                 last_date = self._next_date(last_date)
             else:
                 return last_date, abs(to_complete)
@@ -895,7 +906,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         # STEP 2: Get line variables
         start_time = self._get_start_time(line)
         first_date = self._get_start_date(line, last_date)
-        hours = line.maximum - to_complete
+        hours = line.maximum - complete
 
         # STEP 3: Initialize the variables for loop
         first_date = self._get_first_valid_date(first_date)

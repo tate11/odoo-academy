@@ -169,6 +169,22 @@ attended.
         auto_join=False
     )
 
+    training_resource_ids = fields.Many2many(
+        string='Trainin resources',
+        required=False,
+        readonly=False,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.training.resource',
+        relation='academy_training_resource_lesson_rel',
+        column1='training_lesson_id',
+        column2='training_resource_id',
+        domain=[],
+        context={},
+        limit=None
+    )
+
     # -------------------------------------------------------------------------
 
 
@@ -184,3 +200,31 @@ attended.
 
         return result
 
+
+    @api.onchange('training_module_id')
+    def _onchange_training_module_id(self):
+        module_set = self.training_module_id
+        res_list = []
+
+        for res in module_set.training_resource_ids:
+            res_list.append((4, res.id, None))
+
+        for res in module_set.training_unit_resource_ids:
+            res_list.append((4, res.id, None))
+
+        self.training_resource_ids = res_list
+
+
+    @api.onchange('training_action_id')
+    def _onchange_training_action_id(self):
+        if self.training_action_id:
+            ids = self.training_action_id.training_unit_ids.mapped('id')
+            domain = [('id', 'in', ids)]
+        else:
+            domain = [('id', '=', -1)]
+
+        return {
+            'domain': {
+                'training_module_id': domain
+            }
+        }
