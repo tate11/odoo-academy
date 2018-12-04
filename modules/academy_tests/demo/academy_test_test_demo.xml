@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_test_demo_1" model="academy.test">
+            <field name="name">About Odoo</field>
+            <field name="preamble">OpenERP (formally Odoo) is a complete open source business management system (ERP)</field>
+            <field name="description">This test contains some questions related with Odoo</field>
+            <field name="active" eval="true">
+        </record>
+
+    </data>
+</openerp>
