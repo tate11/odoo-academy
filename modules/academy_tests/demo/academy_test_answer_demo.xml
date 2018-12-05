@@ -3,6 +3,8 @@
 <openerp>
     <data noupdate="0">
 
+        <!-- QUESTION 1 -->
+
         <record id="academy_test_answer_A_to_question_1" model="academy.test.answer">
             <field name="name">LGPL</field>
             <field name="description">GNU Lesser General Public License</field>
@@ -29,10 +31,12 @@
             <field name="sequence" eval="3" />
         </record>
 
+        <!-- QUESTION 2 -->
+
         <record id="academy_test_answer_A_to_question_2" model="academy.test.answer">
             <field name="name">Python</field>
             <field name="active" eval="true" />
-            <field name="academy_test_question_id" ref="academy_test_question_demo_1" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_2" />
             <field name="is_correct" eval="true" />
             <field name="sequence" eval="1" />
         </record>
@@ -41,31 +45,90 @@
             <field name="name">Ada</field>
             <field name="description">This language received name in honor of Augusta Ada, Countess of Lovelace</field>
             <field name="active" eval="false" />
-            <field name="academy_test_question_id" ref="academy_test_question_demo_1" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_2" />
             <field name="is_correct" eval="true" />
             <field name="sequence" eval="2" />
         </record>
 
         <record id="academy_test_answer_C_to_question_2" model="academy.test.answer">
             <field name="name">Velázquez Visual</field>
-            <field name="description">Microsoft Open License Program</field>
+            <field name="description">Formely Velneo</field>
             <field name="active" eval="false" />
-            <field name="academy_test_question_id" ref="academy_test_question_demo_1" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_2" />
             <field name="is_correct" eval="true" />
             <field name="sequence" eval="3" />
         </record>
 
         <record id="academy_test_answer_D_to_question_2" model="academy.test.answer">
-            <field name="name">MOLP</field>
-            <field name="description">Microsoft Open License Program</field>
+            <field name="name">JavaScript</field>
+            <field name="description">JavaScript es una marca registrada de Oracle Corporation</field>
             <field name="active" eval="false" />
-            <field name="academy_test_question_id" ref="academy_test_question_demo_1" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_2" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="4" />
+        </record>
+
+        <!-- QUESTION 3 -->
+
+        <record id="academy_test_answer_A_to_question_3" model="academy.test.answer">
+            <field name="name">Yes</field>
+            <field name="active" eval="true" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_3" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="1" />
+        </record>
+
+        <record id="academy_test_answer_B_to_question_3" model="academy.test.answer">
+            <field name="name">No</field>
+            <field name="active" eval="true" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_3" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="2" />
+        </record>
+
+        <!-- QUESTION 4 -->
+
+        <record id="academy_test_answer_A_to_question_4" model="academy.test.answer">
+            <field name="name">First logo (1)</field>
+            <field name="active" eval="true" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_4" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="1" />
+        </record>
+
+        <record id="academy_test_answer_B_to_question_4" model="academy.test.answer">
+            <field name="name">Second logo (2)</field>
+            <field name="active" eval="false" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_4" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="2" />
+        </record>
+
+        <record id="academy_test_answer_C_to_question_4" model="academy.test.answer">
+            <field name="name">Third logo (3)</field>
+            <field name="active" eval="false" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_4" />
             <field name="is_correct" eval="true" />
             <field name="sequence" eval="3" />
         </record>
 
+        <!-- QUESTION 5 -->
 
+        <record id="academy_test_answer_A_to_question_5" model="academy.test.answer">
+            <field name="name">https://wwww.odoo.es</field>
+            <field name="active" eval="false" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_5" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="1" />
+        </record>
 
+        <record id="academy_test_answer_B_to_question_5" model="academy.test.answer">
+            <field name="name">https://odoospain.odoo.com</field>
+            <field name="active" eval="true" />
+            <field name="academy_test_question_id" ref="academy_test_question_demo_5" />
+            <field name="is_correct" eval="true" />
+            <field name="sequence" eval="2" />
+        </record>
 
     </data>
 </openerp>

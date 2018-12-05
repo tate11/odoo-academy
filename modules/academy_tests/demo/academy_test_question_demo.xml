@@ -4,7 +4,7 @@
     <data noupdate="0">
 
         <record id="academy_test_question_demo_1" model="academy.test.question">
-            <field name="name">¿What is the type of license using by Odoo Community?</field>
+            <field name="name">What is the type of license using by Odoo Community?</field>
             <field name="preamble">Odoo has two editions, Community and Enterprise</field>
             <field name="description">GNU Lesser General Public License</field>
             <field name="active" eval="true" />
@@ -15,7 +15,7 @@
         </record>
 
         <record id="academy_test_question_demo_2" model="academy.test.question">
-            <field name="name">¿In which language has the Odoo code been written?</field>
+            <field name="name">In which language has the Odoo code been written?</field>
             <field name="preamble">Odoo is developed by a heterogeneous community, but all programmers use the same language</field>
             <field name="active" eval="true" />
             <field name="academy_test_topic_id" ref="" />
@@ -25,7 +25,7 @@
         </record>
 
         <record id="academy_test_question_demo_3" model="academy.test.question">
-            <field name="name">¿Which database management system is used by Odoo to store information?</field>
+            <field name="name">Is PostgreSQL the unique database management system can be used by Odoo to store information?</field>
             <field name="description">PostgreSQL is an object-relational database management system (ORDBMS)</field>
             <field name="active" eval="true" />
             <field name="academy_test_topic_id" ref="" />
@@ -35,7 +35,7 @@
         </record>
 
         <record id="academy_test_question_demo_4" model="academy.test.question">
-            <field name="name">¿Which of the logos shown in the image corresponds to Odoo?</field>
+            <field name="name">Which of the logos shown in the image corresponds to Odoo?</field>
             <field name="preamble">OpenERP logo was changed at the same time the name was changed</field>
             <field name="description">Odoo logos was available to download in Odoo home page</field>
             <field name="active" eval="true" />
@@ -46,7 +46,7 @@
         </record>
 
         <record id="academy_test_question_demo_5" model="academy.test.question">
-            <field name="name">¿Where is the Odoo spain homepage URL?</field>
+            <field name="name">Where is the Odoo spain homepage URL?</field>
             <field name="active" eval="true" />
             <field name="academy_test_topic_id" ref="" />
             <field name="academy_test_category_ids" eval="" />

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+name
+description
+active
+sequence
+academy_test_topic_id
+academy_test_question_ids
+
+
+    </data>
+</openerp>
