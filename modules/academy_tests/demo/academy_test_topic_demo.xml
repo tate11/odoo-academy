@@ -4,6 +4,11 @@
     <data noupdate="0">
 
 
+        <record id="academy_test_topic_demo" model="academy.test.topic">
+            <field name="name">Enterprise Resource Planning</field>
+            <field name="description">Enterprise Resource Planning Open Source Software</field>
+            <field name="active" eval="True" />
+        </record>
 
     </data>
 </openerp>

@@ -5,11 +5,11 @@
 
         <!-- VIEWS: "Relationship bettween tests and questions"
 
-            - Model·········: academy.test.academy.test.question.rel
+            - Model·········: academy.test.test.question.rel
             - _rec_name·····: academy_test_question_id
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy.test.academy.test.question.rel
+            - Parent menu ··: academy.test.test.question.rel
             - View priority·: 16    Sequence····: 10
             - Action help···: Any question has beeen linked
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -17,7 +17,7 @@
         <!-- Tree view for "academy_test_academy_question_rel" -->
         <record id="view_academy_test_academy_question_rel_tree" model="ir.ui.view">
             <field name="name">view.academy_test_academy_question_rel.tree</field>
-            <field name="model">academy.test.academy.test.question.rel</field>
+            <field name="model">academy.test.test.question.rel</field>
             <field name="type">tree</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
@@ -33,7 +33,7 @@
         <!-- Tree view for "academy_test_academy_question_rel" -->
         <record id="view_academy_test_academy_question_inv_tree" model="ir.ui.view">
             <field name="name">view.academy_test_academy_question_rel.inverse.tree</field>
-            <field name="model">academy.test.academy.test.question.rel</field>
+            <field name="model">academy.test.test.question.rel</field>
             <field name="type">tree</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
@@ -48,7 +48,7 @@
         <!-- Form view for "academy_test_academy_question_rel" -->
         <record id="view_academy_test_academy_question_rel_form" model="ir.ui.view">
             <field name="name">view.academy_test_academy_question_rel.form</field>
-            <field name="model">academy.test.academy.test.question.rel</field>
+            <field name="model">academy.test.test.question.rel</field>
             <field name="type">form</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
@@ -72,7 +72,7 @@
         <!-- Search view for "academy_test_academy_question_rel" -->
         <record id="view_academy_test_academy_question_rel_search" model="ir.ui.view">
             <field name="name">view.academy_test_academy_question_rel.search</field>
-            <field name="model">academy.test.academy.test.question.rel</field>
+            <field name="model">academy.test.test.question.rel</field>
             <field name="type">search</field>
             <field name="mode">primary</field>
             <field name="priority" eval="16" />
@@ -89,7 +89,7 @@
 <!--         <record id="action_relationship_bettween_tests_and_questions_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Relationship bettween tests and questions</field>
-            <field name="res_model">academy.test.academy.test.question.rel</field>
+            <field name="res_model">academy.test.test.question.rel</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
             <field name="target">current</field>
@@ -110,7 +110,7 @@
             <field name="name">Relationship bettween tests and questions</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_relationship_bettween_tests_and_questions_act_window" />
-            <field name="parent_id" ref="academy.test.academy.test.question.rel" />
+            <field name="parent_id" ref="academy.test.test.question.rel" />
         </record> -->
 
     </data>

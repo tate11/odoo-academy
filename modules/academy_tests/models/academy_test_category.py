@@ -13,7 +13,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtCategory(models.Model):
+class AcademyCategory(models.Model):
     """ Category of the question
 
     Fields:

@@ -13,7 +13,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtLevel(models.Model):
+class AcademyLevel(models.Model):
     """ Question difficulty level
 
     Fields:

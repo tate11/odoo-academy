@@ -12,7 +12,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtTest(models.Model):
+class AcademyTest(models.Model):
     """ Stored tests which can be reused in future
 
     Fields:
@@ -70,14 +70,14 @@ class AtTest(models.Model):
               'hide record without removing it')
     )
 
-    academy_test_academy_test_question_ids = fields.One2many(
+    academy_test_ids = fields.One2many(
         string='Questions',
         required=False,
         readonly=False,
         index=False,
         default=None,
         help=False,
-        comodel_name='academy.test.academy.test.question.rel',
+        comodel_name='academy.test.test.question.rel',
         inverse_name='academy_test_id',
         domain=[],
         context={},

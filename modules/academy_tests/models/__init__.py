@@ -11,7 +11,7 @@ from . import academy_test_tag
 from . import academy_test_level
 from . import academy_test_answer
 from . import academy_test_question
-from . import academy_test_academy_test_question_rel
+from . import academy_test_test_question_rel
 from . import academy_test
 from . import academy_test_answers_table
 from . import academy_test_question_impugnment

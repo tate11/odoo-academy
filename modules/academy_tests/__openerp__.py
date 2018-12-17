@@ -57,6 +57,13 @@
     ],
     # only loaded in demonstration mode
     'demo': [
+        'demo/academy_test_tag_demo.xml',
+        'demo/academy_test_topic_demo.xml',
+        'demo/academy_test_category_demo.xml',
+        'demo/academy_test_test_demo.xml',
+        'demo/academy_test_question_demo.xml',
+        'demo/academy_test_answer_demo.xml',
+        'demo/academy_test_test_question_rel_demo.xml',
     ],
     'js': [
         'static/src/js/academy_tests.js'

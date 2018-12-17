@@ -13,7 +13,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtAnswersTable(models.Model):
+class AcademyAnswersTable(models.Model):
     """ The summary line for a class docstring should fit on one line.
 
     Fields:

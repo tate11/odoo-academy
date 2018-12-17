@@ -13,7 +13,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtTopic(models.Model):
+class AcademyTopic(models.Model):
     """ Topics are used to group serveral categories. IE, a topic named
     Internet could group the following categories: web pages, email, etc.
 

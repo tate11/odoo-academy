@@ -16,7 +16,7 @@ from re import search
 _logger = getLogger(__name__)
 
 
-class AtQuestion(models.Model):
+class AcademyQuestion(models.Model):
     """ Questions are the academy tests cornerstone. Each one of the questions
     belongs to a single topic but they can belong to more than one question in
     the selected topic.
@@ -188,19 +188,20 @@ class AtQuestion(models.Model):
         compute='_compute_ir_attachment_image_ids',
     )
 
-    academy_test_academy_test_question_ids = fields.One2many(
+    academy_test_ids = fields.One2many(
         string='Used in',
         required=False,
         readonly=True,
         index=False,
         default=None,
         help='Test in witch this question has been used',
-        comodel_name='academy.test.academy.test.question.rel',
+        comodel_name='academy.test.test.question.rel',
         inverse_name='academy_test_question_id',
         domain=[],
         context={},
         auto_join=False,
-        limit=None
+        limit=None,
+        oldname='academy_test_academy_test_question_ids'
     )
 
 
@@ -281,14 +282,14 @@ class AtQuestion(models.Model):
 
 
 
-    academy_test_academy_test_question_ids = fields.One2many(
+    academy_test_ids = fields.One2many(
         string='Tests',
         required=False,
         readonly=False,
         index=False,
         default=None,
         help=False,
-        comodel_name='academy.test.academy.test.question.rel',
+        comodel_name='academy.test.test.question.rel',
         inverse_name='academy_test_question_id',
         domain=[],
         context={},

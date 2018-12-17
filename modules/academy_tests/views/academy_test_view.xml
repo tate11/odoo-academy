@@ -58,7 +58,7 @@
                                     placeholder="Enter new text for description" />
                             </page>
                             <page string="Questions" class="oe_page_questions" accesskey="D">
-                                <field name="academy_test_academy_test_question_ids" class="oe_field_academy_test_question_ids" 
+                                <field name="academy_test_ids" class="oe_field_academy_test_question_ids"
                                     context="{'tree_view_ref' : 'academy_tests.view_academy_test_academy_question_rel_tree'}" />
                             </page>
                         </notebook>

@@ -2,13 +2,22 @@
 
 <openerp>
     <data noupdate="0">
-name
-description
-active
-sequence
-academy_test_topic_id
-academy_test_question_ids
 
+        <record id="academy_test_category_demo_development" model="academy.test.category">
+            <field name="name">Development</field>
+            <field name="description">Code development</field>
+            <field name="active" eval="True" />
+            <field name="sequence" eval="1" />
+            <field name="academy_test_topic_id" ref="academy_tests.academy_test_topic_demo" />
+        </record>
+
+        <record id="academy_test_category_demo_brand" model="academy.test.category">
+            <field name="name">Brand</field>
+            <field name="description">Information about the software</field>
+            <field name="active" eval="True" />
+            <field name="sequence" eval="2" />
+            <field name="academy_test_topic_id" ref="academy_tests.academy_test_topic_demo" />
+        </record>
 
     </data>
 </openerp>

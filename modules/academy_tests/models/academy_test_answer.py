@@ -13,7 +13,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtAnswer(models.Model):
+class AcademyAnswer(models.Model):
     """ Answer for a question
 
     Fields:

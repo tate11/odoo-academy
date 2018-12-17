@@ -12,7 +12,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtQuestionImpugnment(models.Model):
+class AcademyQuestionImpugnment(models.Model):
     """ Question impugnment
 
     Fields:

@@ -3,7 +3,22 @@
 <openerp>
     <data noupdate="0">
 
+        <record id="academy_test_tag_demo_brand" model="academy.test.tag">
+            <field name="name">Brand</field>
+            <field name="description">Information about the software</field>
+            <field name="active" eval="True" />
+        </record>
 
+        <record id="academy_test_tag_demo_code" model="academy.test.tag">
+            <field name="name">Code</field>
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_test_tag_demo_third_party" model="academy.test.tag">
+            <field name="name">Third party</field>
+            <field name="description">Third party software</field>
+            <field name="active" eval="True" />
+        </record>
 
     </data>
 </openerp>

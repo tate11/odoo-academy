@@ -519,7 +519,7 @@ msgstr "La pregunta estará relacionada con el test"
 
 #. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_questions_act_window
-#: model:ir.model.fields,field_description:academy_tests.field_academy_test_academy_test_academy_test_question_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_test_academy_test_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_test_category_academy_test_question_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_test_tag_academy_test_question_ids
 #: model:ir.ui.menu,name:academy_tests.menu_questions
@@ -548,7 +548,7 @@ msgid "Referred question"
 msgstr "Pregunta referida"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_test_academy_test_question_rel
+#: model:ir.model,name:academy_tests.model_academy_test_test_question_rel
 msgid "Relationship between tests and questions, this model keeps sequence order"
 msgstr "Relación entre tests y preguntas, este modelo mantiene el orden de la secuencia"
 
@@ -648,7 +648,7 @@ msgstr "Prueba a la que pertenece este elemento"
 
 #. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_tests_act_window
-#: model:ir.model.fields,field_description:academy_tests.field_academy_test_question_academy_test_academy_test_question_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_test_question_academy_test_ids
 #: model:ir.ui.menu,name:academy_tests.menu_tests
 msgid "Tests"
 msgstr "Tests"

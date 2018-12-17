@@ -13,7 +13,7 @@ from logging import getLogger
 _logger = getLogger(__name__)
 
 
-class AtTag(models.Model):
+class AcademyTag(models.Model):
     """ Tag can be used to better describe this question
 
     Fields:
