@@ -52,14 +52,14 @@ odoo.define('academy_tests_web.service', function (require) {
 
         },
 
-        requery : function (academy_test_question_id, mode) {
+        requery : function (academy_question_id, mode) {
 
-            values = {'academy_test_question_id': academy_test_question_id, mode};
+            values = {'academy_question_id': academy_question_id, mode};
 
             ready = session.rpc("/get-question", values).then(function (result) {
 
                     /* STEP 2: Get question LI DOM item */
-                    academy_test_question = jQuery('#academy-test-question-' + academy_test_question_id);
+                    academy_test_question = jQuery('#academy-test-question-' + academy_question_id);
 
                     /* STEP 3: Get parent */
                     swap_area = jQuery(academy_test_question);
@@ -81,9 +81,9 @@ odoo.define('academy_tests_web.service', function (require) {
             self = this;
 
             /* STEP 1: Get ID stored in a button DATA attribute  */
-            academy_test_question_id = jQuery(self).data('question-id');
+            academy_question_id = jQuery(self).data('question-id');
 
-            obj.requery(academy_test_question_id, 'edit');
+            obj.requery(academy_question_id, 'edit');
         },
 
         on_btn_revise_question_click : function(e) {
@@ -96,10 +96,10 @@ odoo.define('academy_tests_web.service', function (require) {
                 timer = setTimeout(function() {
 
                     /* STEP 1: Get ID stored in a button DATA attribute  */
-                    academy_test_question_id = jQuery(self).data('question-id');
+                    academy_question_id = jQuery(self).data('question-id');
 
                     /* STEP 2: Get question LI DOM item */
-                    academy_test_question = jQuery('#academy-test-question-' + academy_test_question_id);
+                    academy_test_question = jQuery('#academy-test-question-' + academy_question_id);
 
                     /* STEP 3: Toggle visibility */
                     chksel = '.academy-test-answer-iscorrect-checkmark';
@@ -125,12 +125,12 @@ odoo.define('academy_tests_web.service', function (require) {
 
                 /* STEP 4: Change visibility of all check marks in oposite to the
                 selected question */
-                academy_test_question_ids = jQuery('.academy-test-question-ids')
+                academy_question_ids = jQuery('.academy-test-question-ids')
 
                 if (is_checked == true) {
-                    visible = jQuery(academy_test_question_ids).find('.academy-test-answer-iscorrect-checkmark').hide();
+                    visible = jQuery(academy_question_ids).find('.academy-test-answer-iscorrect-checkmark').hide();
                 } else {
-                    visible = jQuery(academy_test_question_ids).find('.academy-test-answer-iscorrect-checkmark').show();
+                    visible = jQuery(academy_question_ids).find('.academy-test-answer-iscorrect-checkmark').show();
                 }
 
                 clicks = 0;             //after action performed, reset counter
@@ -164,19 +164,19 @@ odoo.define('academy_tests_web.service', function (require) {
         on_btn_edit_question_backend : function(e) {
 
             /* STEP 1: Get ID stored in a button DATA attribute  */
-            academy_test_question_id = jQuery(self).data('question-id');
+            academy_question_id = jQuery(self).data('question-id');
 
             /* STEP 2: Get question LI DOM item */
-            academy_test_question = jQuery('#academy-test-question-' + academy_test_question_id);
+            academy_test_question = jQuery('#academy-test-question-' + academy_question_id);
 
             new Model('ir.model.data').call('get_object_reference', ['academy_tests', 'action_questions_act_window']).then(function(action_id) {
                 action_id = action_id[1];
 
                 /** --- THIS MUST BE CHANGED ---**/
-                url = '/web#id=' + academy_test_question_id + '&view_type=form&model=academy.test.question&menu_id=128&action=' + action_id;
+                url = '/web#id=' + academy_question_id + '&view_type=form&model=academy.test.question&menu_id=128&action=' + action_id;
                 window.open(url, 'backend').focus();
 
-                obj.requery(academy_test_question_id, 'show');
+                obj.requery(academy_question_id, 'show');
 
             });
         },
@@ -186,31 +186,31 @@ odoo.define('academy_tests_web.service', function (require) {
             self = this;
 
             /* STEP 1: Get ID stored in a button DATA attribute  */
-            academy_test_question_id = jQuery(self).data('question-id');
+            academy_question_id = jQuery(self).data('question-id');
 
-            obj.requery(academy_test_question_id, 'show');
+            obj.requery(academy_question_id, 'show');
         },
 
         on_btn_edit_question_save : function(e) {
 
             /* STEP 1: Get ID stored in a button DATA attribute  */
-            academy_test_question_id = jQuery(this).data('question-id');
+            academy_question_id = jQuery(this).data('question-id');
 
             /* STEP 2: Get question LI DOM item */
-            academy_test_question = jQuery('#academy-test-question-' + academy_test_question_id);
+            academy_test_question = jQuery('#academy-test-question-' + academy_question_id);
 
-            values = obj.get_data(academy_test_question, academy_test_question_id);
+            values = obj.get_data(academy_test_question, academy_question_id);
 
             delete values['question_id'];
 
             /* --- PERHAPS THIS SHOULD BE TROUGHT THE CONTROLLER ---*/
-            new Model('academy.test.question').call('write', [[academy_test_question_id], values]).done(function(result) {
+            new Model('academy.test.question').call('write', [[academy_question_id], values]).done(function(result) {
                 console.log(result);
             }).always(function(result) {
                 if (result != true) {
                     window.alert(JSON.stringify(result));
                 } else {
-                    obj.requery(academy_test_question_id, 'show');
+                    obj.requery(academy_question_id, 'show');
                 };
 
             });
@@ -222,14 +222,14 @@ odoo.define('academy_tests_web.service', function (require) {
                 'name': li_obj.find('.academy-test-question-name').val(),
                 'preamble': li_obj.find(".academy-test-question-preamble").val(),
                 'description': li_obj.find('.academy-test-question-description').val(),
-                'academy_test_answer_ids': []
+                'academy_answer_ids': []
             }
 
             li_obj.find('.academy-test-answer').each(function(i){
                 id = $(this).data('id');
                 name = $(this).find('.academy-test-answer-name').val();
                 checked = $(this).find('input[type=checkbox]').prop('checked');
-                values['academy_test_answer_ids'].push([1, id, {'name': name, 'is_correct': checked }]);
+                values['academy_answer_ids'].push([1, id, {'name': name, 'is_correct': checked }]);
             });
 
             return values;
@@ -243,20 +243,20 @@ odoo.define('academy_tests_web.service', function (require) {
     $('#academy-post-test-inpugnment-modal').on('show.bs.modal', function (e) {
         self = this;
 
-        academy_test_question_id = jQuery(e.relatedTarget).data('question-id');
+        academy_question_id = jQuery(e.relatedTarget).data('question-id');
 
         /*-- STEP 1: Change modal title --*/
         atqid_span = 'span.academy-test-question-inpugment-academy-test-question-id'
-        jQuery(self).find(atqid_span).text(academy_test_question_id);
+        jQuery(self).find(atqid_span).text(academy_question_id);
 
-        /*-- STEP 2: Set token and academy_test_question_id --*/
+        /*-- STEP 2: Set token and academy_question_id --*/
         token = 'input[name="csrf_token"]'
         csrf_token = $("#csrf_token").val()
 
         jQuery(self).find(token).val(csrf_token);
 
         atqid = 'input[name="academy-test-question-inpugment-academy-test-question-id"]';
-        jQuery(self).find(atqid).val(academy_test_question_id);
+        jQuery(self).find(atqid).val(academy_question_id);
 
         /*-- STEP 3:  Clear fields --*/
         name = 'input[name="academy-test-question-inpugment-name"]';
@@ -277,7 +277,7 @@ odoo.define('academy_tests_web.service', function (require) {
         desc = 'textarea[name="academy-test-question-inpugment-description"]';
 
         values = {
-            'academy_test_question_id' : jQuery(atqid).val(),
+            'academy_question_id' : jQuery(atqid).val(),
             'name' : jQuery(name).val(),
             'description' : jQuery(desc).val(),
         };
@@ -293,7 +293,7 @@ odoo.define('academy_tests_web.service', function (require) {
                     msgp = jQuery(resm).find('.impugnment-result-message');
 
                     jQuery('.impugnment-result-modal-academy-test-question-inpugment-id').text(result);
-                    jQuery('.impugnment-result-modal-academy-test-question-id').text(values['academy_test_question_id']);
+                    jQuery('.impugnment-result-modal-academy-test-question-id').text(values['academy_question_id']);
                     jQuery('.impugnment-result-modal-name').text(values['name']);
                     jQuery('.impugnment-result-modal-description').text(values['description']);
 

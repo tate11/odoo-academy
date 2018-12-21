@@ -41,8 +41,8 @@ class IrUiView(ir_ui_view.View):
             "academy_tests.view_academy_answer_qweb",
             "academy_tests.view_academy_question_qweb",
             "academy_tests.view_academy_answers_table_qweb",
-            "academy_tests.view_academy_test_document_qweb",
-            "academy_tests.view_academy_test_qweb",
+            "academy_tests.view_academy_tests_document_qweb",
+            "academy_tests.view_academy_tests_qweb",
             "academy_tests.action_report_printable_test",
         ]
 

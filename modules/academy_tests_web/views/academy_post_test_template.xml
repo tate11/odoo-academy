@@ -18,16 +18,16 @@
                     <div class="container">
                         <div class="row">
 
-                            <section class="at-post-test-test posted-test-body col-xs-12 ">
-                                <header class="page-header at-test-header hidden-print">
-                                    <h2 class="at-test-name"><t t-esc="academy_test_id.name" /></h2>
+                            <section class="academy-post-test-test posted-test-body col-xs-12 ">
+                                <header class="page-header academy-test-header hidden-print">
+                                    <h2 class="academy-test-name"><t t-esc="academy_test_id.name" /></h2>
 
                                     <t t-if="academy_test_id.description">
-                                        <p class="at-test-description"><t t-esc="academy_test_id.description" /></p>
+                                        <p class="academy-test-description"><t t-esc="academy_test_id.description" /></p>
                                     </t>
 
                                     <t t-if="academy_test_id.preamble">
-                                        <p class="at-test-preamble"><t t-esc="academy_test_id.preamble" /></p>
+                                        <p class="academy-test-preamble"><t t-esc="academy_test_id.preamble" /></p>
                                     </t>
                                 </header>
 
@@ -36,17 +36,17 @@
 
                                 <ol class="academy-test-question-ids">
 
-                                    <t t-foreach="academy_test_id.academy_test_academy_test_question_ids" t-as="academy_test_academy_test_question_ids">
+                                    <t t-foreach="academy_test_id.academy_question_ids" t-as="academy_question_ids">
 
                                     <!-- define ``question`` variable will be used in subtemplates -->
-                                    <t t-set="academy_test_question_id" t-value="academy_test_academy_test_question_ids.academy_test_question_id" />
+                                    <t t-set="academy_question_id" t-value="academy_question_ids.academy_question_id" />
 
-                                    <li class="academy-test-question academy-test-question-swap-content" t-attf-id="academy-test-question-{{ academy_test_question_id.id }}" t-attf-data-question-id="{{ academy_test_question_id.id }}">
+                                    <li class="academy-test-question academy-test-question-swap-content" t-attf-id="academy-test-question-{{ academy_question_id.id }}" t-attf-data-question-id="{{ academy_question_id.id }}">
                                     <!-- QUESTION: Subtemplate -->
                                         <t t-call="academy_tests_web.academy_post_test_question_show" />
                                     </li>
 
-                                    </t><!-- academy_test_academy_test_question_ids -->
+                                    </t><!-- academy_question_ids -->
 
                                 </ol>
                             </section>
@@ -78,15 +78,15 @@
 
         <template id="academy_post_test_question_show" name="academy_post_test_question_show">
 
-                <article class="at-post-test-question at-post-test-question-show">
+                <article class="academy-post-test-question academy-post-test-question-show">
 
 
-                    <t t-if="academy_test_question_id.preamble">
-                        <p class="academy-test-question-preamble"><t t-esc="academy_test_question_id.preamble" /></p>
+                    <t t-if="academy_question_id.preamble">
+                        <p class="academy-test-question-preamble"><t t-esc="academy_question_id.preamble" /></p>
                     </t>
 
                     <!-- IMAGE-ATTACHMENTS:: BEGIN -->
-                    <t t-foreach="academy_test_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
+                    <t t-foreach="academy_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
                         <t t-call="academy_tests_web.academy_post_test_question_image" />
                     </t>
                     <!-- IMAGE-ATTACHMENTS:: END -->
@@ -94,10 +94,10 @@
                     <!-- QUESTION BUTTONS : Subtemplate -->
                     <t t-call="academy_tests_web.academy_post_test_question_options" />
 
-                    <p class="academy-test-question-name"><t t-esc="academy_test_question_id.name" /></p>
+                    <p class="academy-test-question-name"><t t-esc="academy_question_id.name" /></p>
                     <ol class="academy-test-answer-ids">
 
-                        <t t-foreach="academy_test_question_id.academy_test_answer_ids" t-as="academy_test_answer_id">
+                        <t t-foreach="academy_question_id.academy_answer_ids" t-as="academy_test_answer_id">
 
                         <li class="academy-test-answer" t-attf-id="academy-test-question-{{ academy_test_answer_id.id }}" t-attf-correct="{{ academy_test_answer_id.is_correct }}" t-attf-data-id="{{ academy_test_answer_id.id }}">
                             <t t-call="academy_tests_web.academy_post_test_answer_show" />
@@ -119,7 +119,7 @@
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <template id="academy_post_test_answer_show" name="academy_post_test_answer_show">
-            <span class="at-post-test-answer at-post-test-answer-show">
+            <span class="academy-post-test-answer academy-post-test-answer-show">
                 <t t-esc="academy_test_answer_id.name" />
                 <t t-if="academy_test_answer_id.is_correct==True">
                     <span class="text-success fa fa-check academy-test-answer-iscorrect-checkmark" style="display: none" />
@@ -138,33 +138,33 @@
 
         <template id="academy_post_test_question_edit" name="academy_post_test_question_edit">
 
-                <article class="at-post-test-question at-post-test-question-edit panel panel-primary">
+                <article class="academy-post-test-question academy-post-test-question-edit panel panel-primary">
 
                     <header class="panel-heading">
-                        <button type="button" class="close btn-edit-question-close" data-dismiss="modal" aria-label="Close" t-attf-data-question-id="{{ academy_test_question_id.id }}"><span aria-hidden="true">&#215;</span></button>
-                        <h3 class="panel-title">Question #<t t-esc="academy_test_question_id.id" /></h3>
+                        <button type="button" class="close btn-edit-question-close" data-dismiss="modal" aria-label="Close" t-attf-data-question-id="{{ academy_question_id.id }}"><span aria-hidden="true">&#215;</span></button>
+                        <h3 class="panel-title">Question #<t t-esc="academy_question_id.id" /></h3>
                     </header>
 
                     <div class="panel-body">
-                        <textarea class="academy-test-question-preamble form-control" rows="4" name="academy_test_question_preamble" placeholder="Text for preamble"><t t-esc="academy_test_question_id.preamble" /></textarea>
+                        <textarea class="academy-test-question-preamble form-control" rows="4" name="academy_test_question_preamble" placeholder="Text for preamble"><t t-esc="academy_question_id.preamble" /></textarea>
 
                         <!-- IMAGE-ATTACHMENTS:: BEGIN -->
-                        <t t-foreach="academy_test_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
+                        <t t-foreach="academy_question_id.ir_attachment_image_ids" t-as="ir_attachment_image_id">
                             <t t-call="academy_tests_web.academy_post_test_question_image" />
                         </t>
                         <!-- IMAGE-ATTACHMENTS:: END -->
 
                         <textarea class="academy-test-question-name form-control"
                             rows="2" name="academy_test_question_name"
-                            placeholder="Text for name"><t t-esc="academy_test_question_id.name" /></textarea>
+                            placeholder="Text for name"><t t-esc="academy_question_id.name" /></textarea>
 
                         <textarea class="academy-test-question-description form-control"
                             rows="2" name="academy_test_question_description"
-                            placeholder="Text for description"><t t-esc="academy_test_question_id.description" /></textarea>
+                            placeholder="Text for description"><t t-esc="academy_question_id.description" /></textarea>
 
                         <ol class="academy-test-answer-ids">
 
-                            <t t-foreach="academy_test_question_id.academy_test_answer_ids" t-as="academy_test_answer_id">
+                            <t t-foreach="academy_question_id.academy_answer_ids" t-as="academy_test_answer_id">
 
                             <li class="academy-test-answer" t-attf-id="academy-test-question-{{ academy_test_answer_id.id }}" t-attf-correct="{{ academy_test_answer_id.is_correct }}" t-attf-data-id="{{ academy_test_answer_id.id }}">
                                 <t t-call="academy_tests_web.academy_post_test_answer_edit" />
@@ -176,14 +176,14 @@
                     </div>
 
                     <footer class="academy-test-question-edit-footer panel-footer">
-                        <button type="button" class="btn btn-sm btn-edit-question-backend" t-attf-data-question-id="{{ academy_test_question_id.id }}">
+                        <button type="button" class="btn btn-sm btn-edit-question-backend" t-attf-data-question-id="{{ academy_question_id.id }}">
                             <i class="fa fa-external-link text-info" aria-hidden="true"></i> Backend
                         </button>
-                        <button type="button" class="btn btn-sm btn-default btn-edit-question-discard"  t-attf-data-question-id="{{ academy_test_question_id.id }}">
+                        <button type="button" class="btn btn-sm btn-default btn-edit-question-discard"  t-attf-data-question-id="{{ academy_question_id.id }}">
                             <i class="fa fa-undo text-warning" aria-hidden="true"></i> Discard
                         </button>
                         &#160;
-                        <button type="button" class="btn btn-primary btn-edit-question-save" t-attf-data-question-id="{{ academy_test_question_id.id }}">
+                        <button type="button" class="btn btn-primary btn-edit-question-save" t-attf-data-question-id="{{ academy_question_id.id }}">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
                         </button>
                     </footer>
@@ -254,12 +254,12 @@
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <template id="academy_post_test_test_options" name="academy_post_test_test_options">
-            <div class="at-test-opcions-row" style="text-align: right;">
+            <div class="academy-test-opcions-row" style="text-align: right;">
 
                 <!-- TOOLBAR:: BEGIN -->
-                <div class="at-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
-                    <a class="btn btn-default btn-at-test-print"
-                        t-attf-href="/report/pdf/academy_tests.view_academy_test_qweb/{{ academy_test_id.id }}"
+                <div class="academy-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
+                    <a class="btn btn-default btn-academy-test-print"
+                        t-attf-href="/report/pdf/academy_tests.view_academy_tests_qweb/{{ academy_test_id.id }}"
                         target="_blank" title="Download as PDF"
                         t-attf-data-test-id="{{ academy_test_id.id }}">
                         <span class="fa fa-file-pdf-o"></span>
@@ -268,7 +268,7 @@
                         <a class="dropdown-toggle"  data-toggle="dropdown" href="#"><span class="fa fa fa-bars"></span></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li role="presentation">
-                                <a role="menuitem" tabindex="-1" t-attf-href="/report/html/academy_tests.view_academy_test_qweb/{{ academy_test_id.id }}" target="_blank" title="View on web">
+                                <a role="menuitem" tabindex="-1" t-attf-href="/report/html/academy_tests.view_academy_tests_qweb/{{ academy_test_id.id }}" target="_blank" title="View on web">
                                     <span class="fa fa-globe"></span> View on web
                                 </a>
                             </li>
@@ -297,19 +297,19 @@
 
             <!-- TOOLBAR:: BEGIN -->
             <div class="academy-test-question-options btn-group btn-group-xs hidden-print " role="group" aria-label="Options">
-                <button type="button" class="btn btn-default btn-revise-question" title="Revise" t-attf-data-question-id="{{ academy_test_question_id.id }}" >
+                <button type="button" class="btn btn-default btn-revise-question" title="Revise" t-attf-data-question-id="{{ academy_question_id.id }}" >
                     <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
                 </button>
 
-                <t t-if="academy_test_question_id.description">
+                <t t-if="academy_question_id.description">
 
                 <button type="button"
                     data-toggle="popover"
                     data-placement="right"
                     class="btn btn-default btn-describe-question"
-                    t-attf-data-question-id="{{ academy_test_question_id.id }}"
+                    t-attf-data-question-id="{{ academy_question_id.id }}"
                     t-attf-title="Description"
-                    t-attf-data-content="{{ academy_test_question_id.description }}">
+                    t-attf-data-content="{{ academy_question_id.description }}">
                     <i class="fa fa-info text-info" aria-hidden="true"></i>
                 </button>
 
@@ -317,12 +317,12 @@
 
                 <button type="button" class="btn btn-default btn-impugn-question"
                     data-toggle="modal"
-                    data-target="#at-post-test-inpugnment-modal"
+                    data-target="#academy-post-test-inpugnment-modal"
                     title="Impugn"
-                    t-attf-data-question-id="{{ academy_test_question_id.id }}">
+                    t-attf-data-question-id="{{ academy_question_id.id }}">
                     <i class="fa fa-fire text-danger" aria-hidden="true"></i>&#160;
                 </button>
-                <button type="button" class="btn btn-default btn-edit-question" title="Edit" t-attf-data-question-id="{{ academy_test_question_id.id }}">
+                <button type="button" class="btn btn-default btn-edit-question" title="Edit" t-attf-data-question-id="{{ academy_question_id.id }}">
                     <i class="fa fa-pencil-square-o text-active" aria-hidden="true"></i>
                 </button>
             </div>
@@ -340,7 +340,7 @@
 
         <template id="academy_post_image_zoom_modal">
 
-            <div class="modal fade no-print image-zoom-dialog" tabindex="-1" role="dialog" id="at-post-test-image-zoom">
+            <div class="modal fade no-print image-zoom-dialog" tabindex="-1" role="dialog" id="academy-post-test-image-zoom">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -366,7 +366,7 @@
 
         <template id="academy_post_test_inpugnment_modal">
 
-            <div class="modal fade no-print impugnment-dialog" tabindex="-1" role="dialog" id="at-post-test-inpugnment-modal">
+            <div class="modal fade no-print impugnment-dialog" tabindex="-1" role="dialog" id="academy-post-test-inpugnment-modal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">

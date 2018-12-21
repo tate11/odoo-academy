@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_tests_tag_demo_brand" model="academy.tests.tag">
+            <field name="name">Brand</field>
+            <field name="description">Information about the software</field>
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_tag_demo_code" model="academy.tests.tag">
+            <field name="name">Code</field>
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_tag_demo_third_party" model="academy.tests.tag">
+            <field name="name">Third party</field>
+            <field name="description">Third party software</field>
+            <field name="active" eval="True" />
+        </record>
+
+    </data>
+</openerp>

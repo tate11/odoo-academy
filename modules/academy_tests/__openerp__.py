@@ -28,49 +28,49 @@
 
     # always loaded
     'data': [
-        'data/academy_test_level_data.xml',
+        'data/academy_tests_level_data.xml',
 
-        'security/academy_test_answer.xml',
-        'security/academy_test_answers_table.xml',
-        'security/academy_test_category.xml',
-        'security/academy_test_level.xml',
-        'security/academy_test_question.xml',
-        'security/academy_test_question_impugnment.xml',
-        'security/academy_test_tag.xml',
-        'security/academy_test.xml',
-        'security/academy_test_academy_test_question_rel.xml',
-        'security/academy_test_topic.xml',
+        'security/academy_tests_answer.xml',
+        'security/academy_tests_answers_table.xml',
+        'security/academy_tests_category.xml',
+        'security/academy_tests_level.xml',
+        'security/academy_tests_question.xml',
+        'security/academy_tests_question_impugnment.xml',
+        'security/academy_tests_tag.xml',
+        'security/academy_tests_tets.xml',
+        'security/academy_tests_academy_tests_question_rel.xml',
+        'security/academy_tests_topic.xml',
 
         'views/academy_tests.xml',
-        'views/academy_test_answer_view.xml',
-        'views/academy_test_category_view.xml',
-        'views/academy_test_level_view.xml',
-        'views/academy_test_question_impugnment_view.xml',
-        'views/academy_test_question_view.xml',
-        'views/academy_test_tag_view.xml',
-        'views/academy_test_academy_test_question_rel.xml',
-        'views/academy_test_view.xml',
-        'views/academy_test_topic_view.xml',
+        'views/academy_tests_answer_view.xml',
+        'views/academy_tests_category_view.xml',
+        'views/academy_tests_level_view.xml',
+        'views/academy_tests_question_impugnment_view.xml',
+        'views/academy_tests_question_view.xml',
+        'views/academy_tests_tag_view.xml',
+        'views/academy_tests_academy_tests_question_rel.xml',
+        'views/academy_tests_tets_view.xml',
+        'views/academy_tests_topic_view.xml',
         'views/ir_attachment_view.xml',
 
-        'views/academy_test_report.xml',
+        'views/academy_tests_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/academy_test_tag_demo.xml',
-        'demo/academy_test_topic_demo.xml',
-        'demo/academy_test_category_demo.xml',
-        'demo/academy_test_test_demo.xml',
-        'demo/academy_test_question_demo.xml',
-        'demo/academy_test_answer_demo.xml',
-        'demo/academy_test_test_question_rel_demo.xml',
+        'demo/academy_tests_tag_demo.xml',
+        'demo/academy_tests_topic_demo.xml',
+        'demo/academy_tests_category_demo.xml',
+        'demo/academy_tests_test_demo.xml',
+        'demo/academy_tests_question_demo.xml',
+        'demo/academy_tests_answer_demo.xml',
+        'demo/academy_tests_test_question_rel_demo.xml',
     ],
     'js': [
         'static/src/js/academy_tests.js'
     ],
     'css': [
         'static/src/css/styles-backend.css',
-        'static/src/css/academy_test_report.css'
+        'static/src/css/academy_tests_report.css'
     ],
 
     'license': 'AGPL-3'

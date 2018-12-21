@@ -30,7 +30,7 @@ class PostTests(Controller):
         """
 
         academy_test_domain = [('id', '>=', 1)]
-        academy_test_obj = request.env['academy.test']
+        academy_test_obj = request.env['academy.tests.test']
         academy_test_set = academy_test_obj.search(academy_test_domain)
 
         return request.render('academy_tests_web.academy_post_tests', {
@@ -44,7 +44,7 @@ class PostTests(Controller):
         """
 
         academy_test_domain = [('id', '=', kw['test_id'])]
-        academy_test_obj = request.env['academy.test']
+        academy_test_obj = request.env['academy.tests.test']
         academy_test_set = academy_test_obj.search(academy_test_domain)
 
         return request.render('academy_tests_web.academy_post_test_test', {
@@ -63,7 +63,7 @@ class PostTests(Controller):
             values = {
                 'name' : kw['name'],
                 'description' : kw['description'],
-                'academy_test_question_id' : kw['question_id']
+                'academy_question_id' : kw['question_id']
             }
 
             inpugnment_new = None
@@ -93,11 +93,11 @@ class PostTests(Controller):
 
         result, html = 400, None
 
-        if kw and isinstance(kw, dict) and 'academy_test_question_id' in kw:
+        if kw and isinstance(kw, dict) and 'academy_question_id' in kw:
 
             result = 204
 
-            question_id = int(kw['academy_test_question_id'])
+            question_id = int(kw['academy_question_id'])
             academy_test_question_obj = request.env['academy.test.question']
             academy_test_question_set = academy_test_question_obj.browse(question_id)
 
@@ -110,7 +110,7 @@ class PostTests(Controller):
                         view = request.env['ir.model.data'].get_object(
                             'academy_tests_web', 'academy_post_test_question_edit')
                         html = view.render(
-                            {'academy_test_question_id': academy_test_question_set}, engine='ir.qweb')
+                            {'academy_question_id': academy_test_question_set}, engine='ir.qweb')
                     else:
                         result = 401
                 else:
@@ -119,7 +119,7 @@ class PostTests(Controller):
                         'academy_tests_web', 'academy_post_test_question_show')
 
                     html = view.render(
-                        {'academy_test_question_id': academy_test_question_set}, engine='ir.qweb')
+                        {'academy_question_id': academy_test_question_set}, engine='ir.qweb')
 
         return json.dumps({'result': result, 'html': html})
 
@@ -145,11 +145,11 @@ class PostTests(Controller):
         """
 
         academy_test_domain = [('id', '=', kw['test_id'])]
-        academy_test_obj = request.env['academy.test']
+        academy_test_obj = request.env['academy.tests.test']
         academy_test_set = academy_test_obj.search(academy_test_domain)
 
         academy_test_answers_domain = [('academy_test_id', '=', int(kw['test_id']))]
-        academy_test_answers_obj = request.env['academy.test.answers.table']
+        academy_test_answers_obj = request.env['academy.tests.answers.table']
         academy_test_answers_set = academy_test_answers_obj.search(academy_test_answers_domain)
 
         return request.render('academy_tests_web.academy_test_answers_table', {

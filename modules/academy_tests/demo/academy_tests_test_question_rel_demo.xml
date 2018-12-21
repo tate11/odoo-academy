@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_tests_test_question_rel_1" model="academy.tests.test.question.rel">
+            <field name="academy_test_id" ref="academy_tests.academy_tests_demo_1" />
+            <field name="academy_question_id" ref="academy_tests.academy_tests_question_demo_1" />
+            <field name="sequence" eval="1" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_test_question_rel_2" model="academy.tests.test.question.rel">
+            <field name="academy_test_id" ref="academy_tests.academy_tests_demo_1" />
+            <field name="academy_question_id" ref="academy_tests.academy_tests_question_demo_2" />
+            <field name="sequence" eval="2" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_test_question_rel_3" model="academy.tests.test.question.rel">
+            <field name="academy_test_id" ref="academy_tests.academy_tests_demo_1" />
+            <field name="academy_question_id" ref="academy_tests.academy_tests_question_demo_3" />
+            <field name="sequence" eval="3" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_test_question_rel_4" model="academy.tests.test.question.rel">
+            <field name="academy_test_id" ref="academy_tests.academy_tests_demo_1" />
+            <field name="academy_question_id" ref="academy_tests.academy_tests_question_demo_4" />
+            <field name="sequence" eval="4" />
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_test_question_rel_5" model="academy.tests.test.question.rel">
+            <field name="academy_test_id" ref="academy_tests.academy_tests_demo_1" />
+            <field name="academy_question_id" ref="academy_tests.academy_tests_question_demo_5" />
+            <field name="sequence" eval="5" />
+            <field name="active" eval="True" />
+        </record>
+
+    </data>
+</openerp>
