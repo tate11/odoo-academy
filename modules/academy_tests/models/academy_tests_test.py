@@ -86,7 +86,7 @@ class AcademyTestsTest(models.Model):
         translate=True
     )
 
-    academy_question_ids = fields.One2many(
+    question_ids = fields.One2many(
         string='Questions',
         required=False,
         readonly=False,
@@ -94,15 +94,15 @@ class AcademyTestsTest(models.Model):
         default=None,
         help=False,
         comodel_name='academy.tests.test.question.rel',
-        inverse_name='academy_test_id',
+        inverse_name='test_id',
         domain=[],
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_test_ids'
+        oldname='academy_question_ids'
     )
 
-    academy_answers_table_ids = fields.One2many(
+    answers_table_ids = fields.One2many(
         string='Answers table',
         required=False,
         readonly=True,
@@ -110,11 +110,12 @@ class AcademyTestsTest(models.Model):
         default=None,
         help='Summary with answers table',
         comodel_name='academy.tests.answers.table',
-        inverse_name='academy_test_id',
+        inverse_name='test_id',
         domain=[],
         context={},
         auto_join=False,
-        limit=None
+        limit=None,
+        oldname='academy_answers_table_ids'
     )
 
     # -------------------------- MANAGEMENT FIELDS ----------------------------
@@ -130,10 +131,10 @@ class AcademyTestsTest(models.Model):
     )
 
     @api.multi
-    @api.depends('academy_question_ids')
+    @api.depends('question_ids')
     def _compute_question_count(self):
         for record in self:
-            record.question_count = len(record.academy_question_ids)
+            record.question_count = len(record.question_ids)
 
 
     lang = fields.Char(

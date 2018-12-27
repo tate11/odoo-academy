@@ -68,7 +68,7 @@ class AcademyTestsAnswersTable(models.Model):
         translate=True
     )
 
-    academy_test_id = fields.Many2one(
+    test_id = fields.Many2one(
         string='Test',
         required=True,
         readonly=False,
@@ -79,10 +79,11 @@ class AcademyTestsAnswersTable(models.Model):
         domain=[],
         context={},
         ondelete='cascade',
-        auto_join=False
+        auto_join=False,
+        oldname='academy_test_id'
     )
 
-    academy_question_id = fields.Many2one(
+    question_id = fields.Many2one(
         string='Question',
         required=True,
         readonly=False,
@@ -93,7 +94,8 @@ class AcademyTestsAnswersTable(models.Model):
         domain=[],
         context={},
         ondelete='cascade',
-        auto_join=False
+        auto_join=False,
+        oldname='academy_question_id'
     )
 
     sequence = fields.Integer(
@@ -118,39 +120,39 @@ class AcademyTestsAnswersTable(models.Model):
             -- Ensure answers sequence
                 SELECT
                     academy_tests_answer."id",
-                    (row_number() OVER (PARTITION BY academy_tests_answer.academy_question_id ORDER BY academy_tests_answer.academy_question_id ASC, academy_tests_answer."sequence", academy_tests_answer."id"))::integer AS "sequence",
-                    academy_tests_answer.academy_question_id,
+                    (row_number() OVER (PARTITION BY academy_tests_answer.question_id ORDER BY academy_tests_answer.question_id ASC, academy_tests_answer."sequence", academy_tests_answer."id"))::integer AS "sequence",
+                    academy_tests_answer.question_id,
                     academy_tests_answer.is_correct
                 FROM academy_tests_answer
                 WHERE active = TRUE
-                ORDER BY academy_tests_answer.academy_question_id ASC, academy_tests_answer."sequence", academy_tests_answer."id"
+                ORDER BY academy_tests_answer.question_id ASC, academy_tests_answer."sequence", academy_tests_answer."id"
 
             ), ordered_quesions AS (
 
             -- Ensure questions sequence
                 SELECT
-                    rel.academy_test_id,
-                    rel.academy_question_id,
-                    ROW_NUMBER() OVER(PARTITION BY rel.academy_test_id ORDER BY  rel.academy_test_id DESC, rel."sequence" ASC, rel.academy_question_id ASC) as atq_index
+                    rel.test_id,
+                    rel.question_id,
+                    ROW_NUMBER() OVER(PARTITION BY rel.test_id ORDER BY  rel.test_id DESC, rel."sequence" ASC, rel.question_id ASC) as atq_index
                     FROM academy_tests_test_question_rel AS rel
                     WHERE active = TRUE
-                ORDER BY rel.academy_test_id DESC, rel."sequence" ASC, rel.academy_question_id ASC
+                ORDER BY rel.test_id DESC, rel."sequence" ASC, rel.question_id ASC
 
             )
 
             -- Main query
             SELECT
-                ROW_NUMBER() OVER(ORDER BY oq.academy_test_id DESC, oq.atq_index ASC, oq.academy_question_id ASC, oa."sequence" ASC, oa."id" ASC)::INTEGER AS "id",
-                oq.academy_test_id::INTEGER,
-                oq.academy_question_id::INTEGER,
+                ROW_NUMBER() OVER(ORDER BY oq.test_id DESC, oq.atq_index ASC, oq.question_id ASC, oa."sequence" ASC, oa."id" ASC)::INTEGER AS "id",
+                oq.test_id::INTEGER,
+                oq.question_id::INTEGER,
                 oa."id"::INTEGER as academy_tests_answer_id,
                 oq.atq_index::INTEGER as "sequence",
                 SUBSTRING('ABCDEFGHIJKLMNOPQRSTUVWXYZ' FROM oa."sequence" FOR 1)::VARCHAR AS "name",
                 atq."description"::TEXT
             FROM ordered_quesions as oq
-            LEFT JOIN (SELECT * FROM ordered_answers WHERE is_correct IS TRUE) as oa on oq.academy_question_id = oa.academy_question_id
-            LEFT JOIN academy_tests_question as atq on atq."id" = oq.academy_question_id
-            ORDER BY oq.academy_test_id DESC, oq.atq_index ASC, oq.academy_question_id ASC, oa."sequence" ASC, oa."id" ASC
+            LEFT JOIN (SELECT * FROM ordered_answers WHERE is_correct IS TRUE) as oa on oq.question_id = oa.question_id
+            LEFT JOIN academy_tests_question as atq on atq."id" = oq.question_id
+            ORDER BY oq.test_id DESC, oq.atq_index ASC, oq.question_id ASC, oa."sequence" ASC, oa."id" ASC
         """
 
         drop_view_if_exists(self._cr, self._table)

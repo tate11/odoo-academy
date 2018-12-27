@@ -72,7 +72,7 @@ class AcademyTestsTag(models.Model):
               'hide record without removing it')
     )
 
-    academy_question_ids = fields.Many2many(
+    question_ids = fields.Many2many(
         string='Questions',
         required=False,
         readonly=False,
@@ -80,12 +80,13 @@ class AcademyTestsTag(models.Model):
         default=None,
         help='Questions relating to this tag',
         comodel_name='academy.tests.question',
-        #relation='academy_question_this_model_rel',
-        #column1='academy_question_id}',
-        #column2='this_model_id',
+        relation='academy_tests_question_tag_rel',
+        column1='tag_id',
+        column2='question_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        oldname='academy_question_ids'
     )
 
     # --------------------------- SQL_CONTRAINTS ------------------------------

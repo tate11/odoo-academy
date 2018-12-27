@@ -6,7 +6,7 @@
         <!-- VIEWS: "Relationship bettween tests and questions"
 
             - Model·········: academy.tests.test.question.rel
-            - _rec_name·····: academy_question_id
+            - _rec_name·····: question_id
             - Domain········: []
             - Context·······: {}
             - Parent menu ··: academy.tests.test.question.rel
@@ -25,7 +25,7 @@
             <field name="arch" type="xml">
                 <tree string="academy_tests_academy_question_rel_tree" create="1" delete="1" edit="1" editable="bottom">
                     <field name="sequence" widget="handle" />
-                    <field name="academy_question_id" />
+                    <field name="question_id" />
                 </tree>
             </field>
         </record>
@@ -40,7 +40,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_tests_academy_question_rel_tree" create="0" delete="0" edit="0" editable="bottom">
-                    <field name="academy_test_id" />
+                    <field name="test_id" />
                 </tree>
             </field>
         </record>
@@ -57,9 +57,9 @@
                 <form string="academy_tests_academy_question_rel_form" create="1" delete="1" edit="1">
                     <sheet>
                         <div class="oe_title">
-                            <label for="academy_question_id" class="oe_edit_only" />
+                            <label for="question_id" class="oe_edit_only" />
                             <h1>
-                                <field name="academy_question_id" class="oe_field_academy_question_id"
+                                <field name="question_id" class="oe_field_question_id"
                                     placeholder="Enter new value for question" />
                             </h1>
                         </div>
@@ -79,7 +79,7 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <search string="academy_tests_academy_question_rel_search">
-                    <field name="academy_question_id" />
+                    <field name="question_id" />
                     <!-- ··· -->
                 </search>
             </field>

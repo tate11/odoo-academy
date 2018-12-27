@@ -62,7 +62,7 @@ class AcademyTestsQuestionImpugnment(models.Model):
         translate=True
     )
 
-    academy_question_id = fields.Many2one(
+    question_id = fields.Many2one(
         string='Question',
         required=True,
         readonly=False,
@@ -73,7 +73,8 @@ class AcademyTestsQuestionImpugnment(models.Model):
         domain=[],
         context={},
         ondelete='cascade',
-        auto_join=False
+        auto_join=False,
+        oldname='academy_question_id'
     )
 
     active = fields.Boolean(

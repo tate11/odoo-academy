@@ -3,145 +3,155 @@
 <openerp>
     <data noupdate="0">
 
-    <!-- VIEWS: "Questions"
+        <!-- VIEWS: "Questions"
 
-        - Model·········: academy.tests.question
-        - _rec_name·····: name
-        - Domain········: []
-        - Context·······: {}
-        - Parent menu ··: academy_tests.menu_academy
-        - View priority·: 16    Sequence····: 10
-        - Action help···: There is not any question yet
-    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+            - Model·········: academy.tests.question
+            - _rec_name·····: name
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: academy_tests.menu_academy
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There is not any question yet
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!-- Tree view for "academy.tests.question" -->
-    <record id="view_academy_question_tree" model="ir.ui.view">
-        <field name="name">view.academy.tests.question.tree</field>
-        <field name="model">academy.tests.question</field>
-        <field name="type">tree</field>
-        <field name="mode">primary</field>
-        <field name="priority" eval="16" />
-        <field name="active" eval="True" />
-        <field name="arch" type="xml">
-            <tree string="academy_question_tree" create="1" delete="1" edit="1">
-                <field name="name" class="oe_field_name" />
-           </tree>
-        </field>
-    </record>
+        <!-- Tree view for "academy.tests.question" -->
+        <record id="view_academy_question_tree" model="ir.ui.view">
+            <field name="name">view.academy.tests.question.tree</field>
+            <field name="model">academy.tests.question</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_question_tree" create="1" delete="1" edit="1">
+                    <field name="name" class="oe_field_name" />
+                    <field name="topic_id" class="oe_field_topic_id" />
+                    <field name="level_id" class="oe_field_level_id" />
+                    <field name="answer_count" class="oe_field_answer_count" />
+                    <field name="attachment_count" class="oe_field_attachment_count" />
+               </tree>
+            </field>
+        </record>
 
-    <!-- Form view for "academy.tests.question" -->
-    <record id="view_academy_question_form" model="ir.ui.view">
-        <field name="name">view.academy.tests.question.form</field>
-        <field name="model">academy.tests.question</field>
-        <field name="type">form</field>
-        <field name="mode">primary</field>
-        <field name="priority" eval="16" />
-        <field name="active" eval="True" />
-        <field name="arch" type="xml">
-            <form string="academy_question_form" create="1" delete="1" edit="1">
-                <sheet>
-                    <div class="oe_title">
-                        <label for="name" class="oe_edit_only" />
-                        <h1>
-                            <field name="name" class="oe_field_name" widget="text"
-                                placeholder="Enter new text for question" />
-                        </h1>
+        <!-- Form view for "academy.tests.question" -->
+        <record id="view_academy_question_form" model="ir.ui.view">
+            <field name="name">view.academy.tests.question.form</field>
+            <field name="model">academy.tests.question</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_question_form" create="1" delete="1" edit="1">
+                    <sheet>
+
+                        <div class="oe_title_question">
+                            <label for="name" class="oe_edit_only" />
+                            <h1>
+                                <field name="name" class="oe_field_name"
+                                    placeholder="Name" widget="text" />
+                            </h1>
+                        </div>
+
+                        <div>
+                            <separator />
+                            <label for="preamble" class="oe_edit_only" />
+                            <div>
+                                <field name="preamble" class="oe_field_preamble" widget="text"
+                                    placeholder="Enter new text for preamble" />
+                            </div>
+                        </div>
+
+                        <group col="4">
+                            <field name="topic_id" class="oe_field_topic_id" />
+                            <field name="level_id" class="oe_field_level_id"
+                                placeholder="Enter new value for level" />
+                            <field name="category_ids" class="oe_field_category_ids"
+                                widget="many2many_tags" colspan="4"
+                                attrs="{'readonly': [('topic_id', '=', False)]}"
+                                domain="[('topic_id', '=', topic_id)]" />
+                            <field name="tag_ids" class="oe_field_tag_ids"
+                                widget="many2many_tags"  colspan="4" />
+                            <field name="active" class="oe_field_active"
+                                placeholder="Choose vale for active" />
+                        </group>
+
+                        <notebook>
+                            <page string="Answers" class="oe_page_answers" accesskey="A">
+                                <field name="answer_ids" class="oe_field_answer_ids"
+                                    context="{'tree_view_ref' : 'academy_tests.view_academy_answer_tree_x2many'}" />
+                            </page>
+                            <page string="Attachments" class="oe_page_attachments" accesskey="T">
+                                <field name="ir_attachment_ids" class="oe_field_ir_attachment_ids"
+                                    context="{'tree_view_ref' : 'academy_tests.view_ir_attachment_tree'}" />
+                            </page>
+                            <page string="Images" class="oe_page_images" accesskey="I">
+                                <field name="ir_attachment_image_ids" class="oe_field_ir_attachment_image_ids" />
+                            </page>
+                            <page string="Description" class="oe_page_description" accesskey="D">
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new text for description" />
+                            </page>
+                            <page string="Used in" class="oe_page_usedin" accesskey="U">
+                                <field name="test_ids" class="oe_field_test_ids"
+                                    context="{'tree_view_ref' : 'academy_tests.view_academy_tests_academy_question_inv_tree'}" />
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
                     </div>
+                </form>
+            </field>
+        </record>
 
-                    <group col="2">
-                        <field name="preamble" class="oe_field_preamble" widget="text"
-                            placeholder="Enter new text for preamble" />
-                    </group>
+        <!-- Search view for "academy.tests.question" -->
+        <record id="view_academy_question_search" model="ir.ui.view">
+            <field name="name">view.academy.tests.question.search</field>
+            <field name="model">academy.tests.question</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="academy_question_search">
+                    <field name="name" string="Name" />
+                    <field name="test_ids" string="Test" />
+                    <field name="topic_id" string="Topic" />
+                </search>
+            </field>
+        </record>
 
-                    <group col="4">
-                        <field name="academy_topic_id" class="oe_field_academy_topic_id" />
-                        <field name="academy_level_id" class="oe_field_academy_level_id"
-                            placeholder="Enter new value for level" />
-                        <field name="academy_category_ids" class="oe_field_academy_category_ids"
-                            widget="many2many_tags" colspan="4"
-                            attrs="{'readonly': [('academy_topic_id', '=', False)]}" />
-                        <field name="academy_tag_ids" class="oe_field_academy_tag_ids"
-                            widget="many2many_tags"  colspan="4" />
-                        <field name="active" class="oe_field_active"
-                            placeholder="Check or uncheck to show or hide question in test" />
-                    </group>
+        <!-- Main window action for model.name -->
+        <record id="action_questions_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Questions</field>
+            <field name="res_model">academy.tests.question</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_academy_question_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new question
+                </p>
+                <p>
+                    Questions are the academy testss cornerstone
+                </p>
+            </field>
+        </record>
 
-                    <notebook>
-                        <page string="Answers" class="oe_page_answers" accesskey="A">
-                            <field name="academy_answer_ids" class="oe_field_academy_answer_ids"
-                                context="{'tree_view_ref' : 'academy_tests.view_academy_answer_tree_x2many'}" />
-                        </page>
-                        <page string="Attachments" class="oe_page_attachments" accesskey="T">
-                            <field name="ir_attachment_ids" class="oe_field_ir_attachment_ids"
-                                context="{'tree_view_ref' : 'academy_tests.view_ir_attachment_tree'}" />
-                        </page>
-                        <page string="Images" class="oe_page_images" accesskey="I">
-                            <field name="ir_attachment_image_ids" class="oe_field_ir_attachment_image_ids" />
-                        </page>
-                        <page string="Description" class="oe_page_description" accesskey="D">
-                            <field name="description" class="oe_field_description"
-                                placeholder="Enter new text for description" />
-                        </page>
-                        <page string="Used in" class="oe_page_usedin" accesskey="U">
-                            <field name="academy_test_ids" class="oe_field_academy_test_ids"
-                                context="{'tree_view_ref' : 'academy_tests.view_academy_tests_academy_question_inv_tree'}" />
-                        </page>
-                    </notebook>
-
-                </sheet>
-                <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                </div>
-            </form>
-        </field>
-    </record>
-
-    <!-- Search view for "academy.tests.question" -->
-    <record id="view_academy_question_search" model="ir.ui.view">
-        <field name="name">view.academy.tests.question.search</field>
-        <field name="model">academy.tests.question</field>
-        <field name="type">search</field>
-        <field name="mode">primary</field>
-        <field name="priority" eval="16" />
-        <field name="active" eval="True" />
-        <field name="arch" type="xml">
-            <search string="academy_question_search">
-                <field name="name" string="Name" />
-                <field name="academy_test_ids" string="Test" />
-                <field name="academy_topic_id" string="Topic" />
-            </search>
-        </field>
-    </record>
-
-    <!-- Main window action for model.name -->
-    <record id="action_questions_act_window" model="ir.actions.act_window">
-        <field name="type">ir.actions.act_window</field>
-        <field name="name">Questions</field>
-        <field name="res_model">academy.tests.question</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_type">form</field>
-        <field name="target">current</field>
-        <field name="domain">[]</field>
-        <field name="context">{}</field>
-        <field name="search_view_id" ref="view_academy_question_search" />
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                Click to add a new question
-            </p>
-            <p>
-                Questions are the academy testss cornerstone
-            </p>
-        </field>
-    </record>
-
-    <!-- Main menu for model.name -->
-    <record id="menu_questions" model="ir.ui.menu" >
-        <field name="name">Questions</field>
-        <field name="sequence" eval="15" />
-        <field name="action" ref="action_questions_act_window" />
-        <field name="parent_id" ref="academy_tests.menu_test_top" />
-    </record>
+        <!-- Main menu for model.name -->
+        <record id="menu_questions" model="ir.ui.menu" >
+            <field name="name">Questions</field>
+            <field name="sequence" eval="15" />
+            <field name="action" ref="action_questions_act_window" />
+            <field name="parent_id" ref="academy_tests.menu_test_top" />
+        </record>
 
 
     </data>

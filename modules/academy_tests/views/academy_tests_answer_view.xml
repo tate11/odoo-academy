@@ -44,7 +44,7 @@
                     <field name="is_correct" class="oe_field_is_correct" string="C" />
                     <field name="name" class="oe_field_name"
                         placeholder="Enter new text for name" />
-                    <button name="cmd_open_in_form" string="&#xF044;"
+                    <button name="cmd_open_in_form" string="Open in form view" icon="fa-external-link"
                          type="object" help="Open in form view" />
                 </tree>
             </field>

@@ -29,13 +29,15 @@ class PostTests(Controller):
         """ Allow students to access tests through the Odoo web
         """
 
-        academy_test_domain = [('id', '>=', 1)]
-        academy_test_obj = request.env['academy.tests.test']
-        academy_test_set = academy_test_obj.search(academy_test_domain)
+        academy_tests_domain = [('id', '>=', 1)]
+        academy_tests_obj = request.env['academy.tests.test']
+        academy_tests_set = academy_tests_obj.search(academy_tests_domain)
 
-        return request.render('academy_tests_web.academy_post_tests', {
-            'tests': academy_test_set,
+        result = request.render('academy_tests_web.academy_post_tests', {
+            'tests': academy_tests_set,
         })
+
+        return result
 
 
     @route('/posted-test', type='http', auth='user', website=True)
@@ -43,14 +45,16 @@ class PostTests(Controller):
         """ Allow students to view a single test
         """
 
-        academy_test_domain = [('id', '=', kw['test_id'])]
-        academy_test_obj = request.env['academy.tests.test']
-        academy_test_set = academy_test_obj.search(academy_test_domain)
+        academy_tests_domain = [('id', '=', kw['test_id'])]
+        academy_tests_obj = request.env['academy.tests.test']
+        academy_tests_set = academy_tests_obj.search(academy_tests_domain)
 
-        return request.render('academy_tests_web.academy_post_test_test', {
-            'academy_test_id': academy_test_set,
+        result = request.render('academy_tests_web.academy_post_test_test', {
+            'test_id': academy_tests_set,
             'edit': self._has_edit_rights(request.env.context['uid'])
         })
+
+        return result
 
 
     @route('/proccess-impugnment', type='http', auth='user')
@@ -58,12 +62,12 @@ class PostTests(Controller):
         """ Proccess Ajax request """
 
         try:
-            inpugnment_obj = request.env['academy.test.question.impugnment']
+            inpugnment_obj = request.env['academy.tests.question.impugnment']
 
             values = {
                 'name' : kw['name'],
                 'description' : kw['description'],
-                'academy_question_id' : kw['question_id']
+                'question_id' : kw['question_id']
             }
 
             inpugnment_new = None
@@ -78,9 +82,11 @@ class PostTests(Controller):
             result = request.render('academy_tests_web.academy_post_test_impugnment_response', {
                 'inpugnment': kw,
             })
+
+            result = result
         except Exception as ex:
             print('Error', ex)
-            result = unicode(ex)
+            result = ex
 
         return result
 
@@ -93,15 +99,15 @@ class PostTests(Controller):
 
         result, html = 400, None
 
-        if kw and isinstance(kw, dict) and 'academy_question_id' in kw:
+        if kw and isinstance(kw, dict) and 'question_id' in kw:
 
             result = 204
 
-            question_id = int(kw['academy_question_id'])
-            academy_test_question_obj = request.env['academy.test.question']
-            academy_test_question_set = academy_test_question_obj.browse(question_id)
+            question_id = int(kw['question_id'])
+            academy_tests_question_obj = request.env['academy.tests.question']
+            academy_tests_question_set = academy_tests_question_obj.browse(question_id)
 
-            if academy_test_question_set:
+            if academy_tests_question_set:
                 mode = kw.get('mode', 'show')
 
                 if mode == 'edit':
@@ -110,7 +116,9 @@ class PostTests(Controller):
                         view = request.env['ir.model.data'].get_object(
                             'academy_tests_web', 'academy_post_test_question_edit')
                         html = view.render(
-                            {'academy_question_id': academy_test_question_set}, engine='ir.qweb')
+                            {'question_id': academy_tests_question_set}, engine='ir.qweb')
+
+                        html = html.decode('utf-8', errors='replace')
                     else:
                         result = 401
                 else:
@@ -119,9 +127,11 @@ class PostTests(Controller):
                         'academy_tests_web', 'academy_post_test_question_show')
 
                     html = view.render(
-                        {'academy_question_id': academy_test_question_set}, engine='ir.qweb')
+                        {'question_id': academy_tests_question_set}, engine='ir.qweb')
 
-        return json.dumps({'result': result, 'html': html})
+                    html = html.decode('utf-8', errors='replace')
+
+        return json.dumps({'result': result, 'html': str(html)})
 
 
     @route('/update-question', csrf=False, type='json', auth="public")
@@ -129,14 +139,14 @@ class PostTests(Controller):
         """ Proccess Ajax request to update question"""
 
         question_id = int(kw.pop('question_id'))
-        academy_test_question_obj = request.env['academy.test.question']
-        academy_test_question_set = academy_test_question_obj.browse(question_id)
+        academy_tests_question_obj = request.env['academy.tests.question']
+        academy_tests_question_set = academy_tests_question_obj.browse(question_id)
 
-        academy_test_question_set.write(kw)
+        academy_tests_question_set.write(kw)
 
-        academy_test_question_set = academy_test_question_obj.browse(question_id)
+        academy_tests_question_set = academy_tests_question_obj.browse(question_id)
 
-        return json.dumps(academy_test_question_set.read())
+        return json.dumps(academy_tests_question_set.read())
 
 
     @route('/answers-table', type='http', auth='user', website=True)
@@ -144,18 +154,20 @@ class PostTests(Controller):
         """ Return the answers table for test
         """
 
-        academy_test_domain = [('id', '=', kw['test_id'])]
-        academy_test_obj = request.env['academy.tests.test']
-        academy_test_set = academy_test_obj.search(academy_test_domain)
+        academy_tests_domain = [('id', '=', kw['test_id'])]
+        academy_tests_obj = request.env['academy.tests.test']
+        academy_tests_set = academy_tests_obj.search(academy_tests_domain)
 
-        academy_test_answers_domain = [('academy_test_id', '=', int(kw['test_id']))]
-        academy_test_answers_obj = request.env['academy.tests.answers.table']
-        academy_test_answers_set = academy_test_answers_obj.search(academy_test_answers_domain)
+        academy_tests_answers_domain = [('test_id', '=', int(kw['test_id']))]
+        academy_tests_answers_obj = request.env['academy.tests.answers.table']
+        academy_tests_answers_set = academy_tests_answers_obj.search(academy_tests_answers_domain)
 
-        return request.render('academy_tests_web.academy_test_answers_table', {
-            'test': academy_test_set,
-            'answers': academy_test_answers_set
+        result = request.render('academy_tests_web.academy_tests_answers_table', {
+            'test': academy_tests_set,
+            'answers': academy_tests_answers_set
         })
+
+        return result
 
 
     @route('/web/binary/download_document', type='http', auth="public")
@@ -190,8 +202,10 @@ class PostTests(Controller):
         """ Get current user
         """
 
-        user_obj = request.env['res.users']
-        user_set = user_obj.browse(uid)
+        # user_obj = request.env['res.users']
+        # user_set = user_obj.browse(uid)
 
-        return user_set.user_has_groups('academy_base.group_editor')
+        # return user_set.user_has_groups('academy_base.res_users_demo_teacher')
+
+        return True
 

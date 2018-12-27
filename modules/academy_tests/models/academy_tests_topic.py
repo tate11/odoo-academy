@@ -76,7 +76,7 @@ class AcademyTestsTopic(models.Model):
               'hide record without removing it')
     )
 
-    academy_category_ids = fields.One2many(
+    category_ids = fields.One2many(
         string='Categories',
         required=False,
         readonly=False,
@@ -84,11 +84,12 @@ class AcademyTestsTopic(models.Model):
         default=None,
         help='Allowed categories for questions in this topic',
         comodel_name='academy.tests.category',
-        inverse_name='academy_topic_id',
+        inverse_name='topic_id',
         domain=[],
         context={},
         auto_join=False,
-        limit=None
+        limit=None,
+        oldname='academy_category_ids'
     )
 
     # --------------------------- SQL_CONTRAINTS ------------------------------

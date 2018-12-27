@@ -75,25 +75,25 @@
                 <t t-name="academy_tests.view_academy_question_qweb">
                     <article class="academy-post-test-question academy-post-test-question-show">
 
-                        <t t-if="academy_question_id.preamble">
-                            <p class="academy-question-preamble"><t t-esc="academy_question_id.preamble" /></p>
+                        <t t-if="question_id.preamble">
+                            <p class="academy-question-preamble"><t t-esc="question_id.preamble" /></p>
                         </t>
 
                         <!-- IMAGE-ATTACHMENTS:: BEGIN -->
-                        <t t-set="display_image_ids" t-value="academy_question_id.ir_attachment_image_ids" />
+                        <t t-set="display_image_ids" t-value="question_id.ir_attachment_image_ids" />
                         <!-- Prevent the same image was displayed in consecutive questions -->
-                        <t t-if="academy_test_ids_index and academy_test_ids_index &gt; 0">
-                            <t t-set="display_image_ids" t-value="display_image_ids - academy_test_id.academy_question_ids[academy_test_ids_index - 1].academy_question_id.ir_attachment_image_ids" />
+                        <t t-if="test_ids_index and test_ids_index &gt; 0">
+                            <t t-set="display_image_ids" t-value="display_image_ids - test_id.question_ids[test_ids_index - 1].question_id.ir_attachment_image_ids" />
                         </t>
                         <t t-foreach="display_image_ids" t-as="ir_attachment_image_id">
                             <t t-call="academy_tests.academy_post_test_question_image" />
                         </t>
                         <!-- IMAGE-ATTACHMENTS:: END -->
 
-                        <p class="academy-question-name"><t t-esc="academy_question_id.name" /></p>
+                        <p class="academy-question-name"><t t-esc="question_id.name" /></p>
                         <ol class="academy-answer-ids">
 
-                            <t t-foreach="academy_question_id.academy_answer_ids" t-as="academy_answer_id">
+                            <t t-foreach="question_id.answer_ids" t-as="academy_answer_id">
 
                             <li class="academy-answer" t-attf-id="academy-question-{{ academy_answer_id.id }}" t-attf-correct="{{ academy_answer_id.is_correct }}" t-attf-data-id="{{ academy_answer_id.id }}">
                                 <t t-call="academy_tests.view_academy_answer_qweb" />
@@ -124,7 +124,7 @@
                             <th class="answers-table-description">Description</th>
                         </thead>
                         <tbody>
-                        <t t-foreach="o.academy_answers_table_ids" t-as="answer">
+                        <t t-foreach="o.answers_table_ids" t-as="answer">
                             <tr>
                                 <th><t t-esc="answer.sequence" /></th>
                                 <td><t t-esc="answer.name" /></td>
@@ -160,14 +160,14 @@
                                     </t>
 
                                     <ol class="academy-question-ids">
-                                        <t t-foreach="o.academy_question_ids" t-as="academy_question_rel_id">
+                                        <t t-foreach="o.question_ids" t-as="academy_question_rel_id">
 
-                                        <t t-set="academy_question_id" t-value="academy_question_rel_id.academy_question_id" />
-                                        <li class="academy-question academy-question-swap-content" t-attf-id="academy-question-{{ academy_question_id.id }}" t-attf-data-question-id="{{ academy_question_id.id }}">
+                                        <t t-set="question_id" t-value="academy_question_rel_id.question_id" />
+                                        <li class="academy-question academy-question-swap-content" t-attf-id="academy-question-{{ question_id.id }}" t-attf-data-question-id="{{ question_id.id }}">
                                             <t t-call="academy_tests.view_academy_question_qweb" />
                                         </li>
 
-                                        </t><!-- academy_test_ids -->
+                                        </t><!-- test_ids -->
                                     </ol>
                                 </section>
 

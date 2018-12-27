@@ -20,6 +20,7 @@ from logging import getLogger
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
 from openerp.tools.translate import _
+from openerp.exceptions import ValidationError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -90,7 +91,7 @@ class AcademyTestsQuestion(models.Model):
               'hide record without removing it')
     )
 
-    academy_topic_id = fields.Many2one(
+    topic_id = fields.Many2one(
         string='Topic',
         required=True,
         readonly=False,
@@ -103,9 +104,10 @@ class AcademyTestsQuestion(models.Model):
         ondelete='cascade',
         auto_join=False,
         track_visibility='onchange',
+        oldname='academy_topic_id'
     )
 
-    academy_category_ids = fields.Many2many(
+    category_ids = fields.Many2many(
         string='Categories',
         required=True,
         readonly=False,
@@ -113,16 +115,17 @@ class AcademyTestsQuestion(models.Model):
         default=None,
         help='Categories relating to this question',
         comodel_name='academy.tests.category',
-        #relation='model_name_this_model_rel',
-        #column1='model_name_id}',
-        #column2='this_model_id',
-        domain=lambda self: self._compute_academy_category_ids_domain(),
+        relation='academy_tests_question_category_rel',
+        column1='question_id',
+        column2='category_id',
+        domain=[],
         context={},
         limit=None,
-        track_visibility='onchange'
+        track_visibility='onchange',
+        oldname='academy_category_ids'
     )
 
-    academy_answer_ids = fields.One2many(
+    answer_ids = fields.One2many(
         string='Answers',
         required=True,
         readonly=False,
@@ -130,15 +133,16 @@ class AcademyTestsQuestion(models.Model):
         default=None,
         help='Answers will be shown as choice options for this question',
         comodel_name='academy.tests.answer',
-        inverse_name='academy_question_id',
+        inverse_name='question_id',
         domain=[],
         context={},
         auto_join=False,
         limit=None,
         track_visibility='onchange',
+        oldname='academy_answer_ids'
     )
 
-    academy_tag_ids = fields.Many2many(
+    tag_ids = fields.Many2many(
         string='Tags',
         required=False,
         readonly=False,
@@ -146,28 +150,30 @@ class AcademyTestsQuestion(models.Model):
         default=None,
         help='Tag can be used to better describe this question',
         comodel_name='academy.tests.tag',
-        # relation='model_name_this_model_rel',
-        # column1='model_name_id}',
-        # column2='this_model_id',
+        relation='academy_tests_question_tag_rel',
+        column1='question_id',
+        column2='tag_id',
         domain=[],
         context={},
         limit=None,
-        track_visibility='onchange'
+        track_visibility='onchange',
+        oldname='academy_tag_ids'
     )
 
-    academy_level_id = fields.Many2one(
-        string='Difficulty level',
+    level_id = fields.Many2one(
+        string='Difficulty',
         required=True,
         readonly=False,
         index=False,
-        default=lambda self: self._default_academy_level_id(),
+        default=lambda self: self._default_level_id(),
         help='Difficulty level of this question',
         comodel_name='academy.tests.level',
         domain=[],
         context={},
         ondelete='cascade',
         auto_join=False,
-        track_visibility='onchange'
+        track_visibility='onchange',
+        oldname='academy_level_id'
     )
 
     ir_attachment_ids = fields.Many2many(
@@ -178,12 +184,13 @@ class AcademyTestsQuestion(models.Model):
         default=None,
         help='Attachments needed to solve this question',
         comodel_name='ir.attachment',
-        # relation='ir_attachment_this_model_rel',
-        # column1='ir_attachment_id',
-        # column2='this_model_id',
+        relation='academy_tests_question_ir_attachment_rel',
+        column1='question_id',
+        column2='attachment_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        oldname='academy_ir_attachment_ids'
     )
 
     ir_attachment_image_ids = fields.Many2many(
@@ -198,9 +205,10 @@ class AcademyTestsQuestion(models.Model):
         context={},
         limit=None,
         compute='_compute_ir_attachment_image_ids',
+        oldname='academy_ir_attachment_image_ids'
     )
 
-    academy_test_ids = fields.One2many(
+    test_ids = fields.One2many(
         string='Used in',
         required=False,
         readonly=True,
@@ -208,28 +216,19 @@ class AcademyTestsQuestion(models.Model):
         default=None,
         help='Test in witch this question has been used',
         comodel_name='academy.tests.test.question.rel',
-        inverse_name='academy_question_id',
+        inverse_name='question_id',
         domain=[],
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_academy_question_ids'
+        oldname='academy_test_ids',
     )
 
 
     # ----------------------- AUXILIARY FIELD METHODS -------------------------
 
-    def _compute_academy_category_ids_domain(self):
-        """ Computes domain for academy_category_ids, this should allow categories
-        only in the selected topic.
-        """
 
-        id_list = self.academy_topic_id.academy_category_ids.mapped('id')
-
-        return [('id', 'in', tuple(id_list))]
-
-
-    def _default_academy_level_id(self):
+    def _default_level_id(self):
         """ Computes the level_id default value
         """
 
@@ -261,18 +260,15 @@ class AcademyTestsQuestion(models.Model):
 
     # --------------------------- ONCHANGE EVENTS -----------------------------
 
-    @api.onchange('academy_topic_id')
+    @api.onchange('topic_id')
     def _onchange_academy_topid_id(self):
-        """ Updates domain form academy_category_ids, this shoud allow categories
+        """ Updates domain form category_ids, this shoud allow categories
         only in the selected topic.
         """
-        domain = self._compute_academy_category_ids_domain()
-        _logger.debug(domain)
-        return {
-            'domain': {
-                'academy_category_ids': domain
-            }
-        }
+        topic_set = self.topic_id
+        valid_ids = topic_set.category_ids & self.category_ids
+
+        self.category_ids = [(6, None, valid_ids.mapped('id'))]
 
 
     @api.onchange('ir_attachment_ids')
@@ -282,19 +278,16 @@ class AcademyTestsQuestion(models.Model):
 
     # -------------------------- PYTHON CONSTRAINS ----------------------------
 
-    @api.constrains('academy_answer_ids')
-    def _check_academy_answer_ids(self):
+    @api.constrains('answer_ids', 'name')
+    def _check_answer_ids(self):
         """ Check if question have at last one valid answer
         """
-
         message = _(u'You must specify at least one correct answer')
-        if not True in self.academy_answer_ids.mapped('is_correct'):
+        if not True in self.answer_ids.mapped('is_correct'):
             raise ValidationError(message)
 
 
-
-
-    academy_test_ids = fields.One2many(
+    test_ids = fields.One2many(
         string='Tests',
         required=False,
         readonly=False,
@@ -302,9 +295,44 @@ class AcademyTestsQuestion(models.Model):
         default=None,
         help=False,
         comodel_name='academy.tests.test.question.rel',
-        inverse_name='academy_question_id',
+        inverse_name='question_id',
         domain=[],
         context={},
         auto_join=False,
-        limit=None
+        limit=None,
+        oldname='academy_test_ids'
     )
+
+
+    attachment_count = fields.Integer(
+        string='Attachments',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help='Number of attachments',
+        compute=lambda self: self._compute_attachment_count()
+    )
+
+    @api.multi
+    @api.depends('ir_attachment_ids')
+    def _compute_attachment_count(self):
+        for record in self:
+            record.attachment_count = len(record.ir_attachment_ids)
+
+
+    answer_count = fields.Integer(
+        string='Answers',
+        required=False,
+        readonly=False,
+        index=False,
+        default=0,
+        help='Number of answers',
+        compute=lambda self: self._compute_answer_count()
+    )
+
+    @api.multi
+    @api.depends('answer_ids')
+    def _compute_answer_count(self):
+        for record in self:
+            record.answer_count = len(record.answer_ids)

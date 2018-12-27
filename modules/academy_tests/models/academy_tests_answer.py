@@ -76,7 +76,7 @@ class AcademyTestsAnswer(models.Model):
               'hide record without removing it')
     )
 
-    academy_question_id = fields.Many2one(
+    question_id = fields.Many2one(
         string='Question',
         required=True,
         readonly=False,
@@ -87,7 +87,8 @@ class AcademyTestsAnswer(models.Model):
         domain=[],
         context={},
         ondelete='cascade',
-        auto_join=False
+        auto_join=False,
+        oldname='academy_question_id'
     )
 
     is_correct = fields.Boolean(
@@ -113,7 +114,7 @@ class AcademyTestsAnswer(models.Model):
     _sql_constraints = [
         (
             'answer_by_question_uniq',
-            'UNIQUE(name, academy_question_id)',
+            'UNIQUE(name, question_id)',
             _(u'There is already another answer with the same text')
         )
     ]

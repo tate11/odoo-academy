@@ -42,25 +42,36 @@
             <field name="arch" type="xml">
                 <form string="academy_tests_form" create="1" delete="1" edit="1">
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
+
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
-                                    string="Name" placeholder="Name"
-                                    help="Enter new value for name" />
+                                    placeholder="Name" />
                             </h1>
                         </div>
-                        <notebook>
-                            <page string="Preamble" class="oe_page_preamble" accesskey="D">
-                                <field name="preamble" class="oe_field_preamble"
+
+                        <div>
+                            <separator />
+                            <label for="preamble" class="oe_edit_only" />
+                            <div>
+                                <field name="preamble" class="oe_field_preamble" widget="text"
                                     placeholder="Enter new text for preamble" />
-                            </page>
+                            </div>
+                        </div>
+
+                        <notebook>
                             <page string="Description" class="oe_page_description" accesskey="D">
                                 <field name="description" class="oe_field_desription"
                                     placeholder="Enter new text for description" />
                             </page>
                             <page string="Questions" class="oe_page_questions" accesskey="D">
-                                <field name="academy_question_ids" class="oe_field_academy_question_ids"
+                                <field name="question_ids" class="oe_field_question_ids"
                                     context="{'tree_view_ref' : 'academy_tests.view_academy_tests_academy_question_rel_tree'}" />
                             </page>
                         </notebook>

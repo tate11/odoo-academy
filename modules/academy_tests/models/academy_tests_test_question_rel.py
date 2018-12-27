@@ -40,10 +40,10 @@ class AcademyTestsTestQuestionRel(models.Model):
     _description = (u'Relationship between tests and questions, this model '
                     'keeps sequence order')
 
-    _rec_name = 'academy_test_id'
+    _rec_name = 'test_id'
     _order = 'sequence ASC, id ASC'
 
-    academy_test_id = fields.Many2one(
+    test_id = fields.Many2one(
         string='Test',
         required=False,
         readonly=False,
@@ -55,9 +55,10 @@ class AcademyTestsTestQuestionRel(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
+        oldname='academy_test_id'
     )
 
-    academy_question_id = fields.Many2one(
+    question_id = fields.Many2one(
         string='Question',
         required=False,
         readonly=False,
@@ -69,6 +70,7 @@ class AcademyTestsTestQuestionRel(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
+        oldname='academy_question_id'
     )
 
     sequence = fields.Integer(
@@ -88,6 +90,6 @@ class AcademyTestsTestQuestionRel(models.Model):
         default=True,
         help=('If the active field is set to false, it will allow you to '
               'hide record without removing it'),
-        related='academy_question_id.active',
+        related='question_id.active',
         store=True
     )

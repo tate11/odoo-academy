@@ -60,7 +60,7 @@ msgstr "Repuestas"
 
 #. module: academy_tests
 #: model:ir.model,name:academy_tests.model_academy_tests_answers_table
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_academy_answers_table_ids
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_answers_table_ids
 msgid "Answers table"
 msgstr "Tabla de respuestas"
 
@@ -199,12 +199,12 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: academy_tests
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_question_academy_level_id
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_question_level_id
 msgid "Difficulty level"
 msgstr "Nivel de dificultad"
 
 #. module: academy_tests
-#: model:ir.model.fields,help:academy_.field_academy_tests_question_academy_level_id
+#: model:ir.model.fields,help:academy_.field_academy_tests_question_level_id
 msgid "Difficulty level of this question"
 msgstr "Nivel de dificultad de esta pregunta"
 
@@ -289,7 +289,7 @@ msgstr "Difícil"
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_answer_id
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_answers_table_id
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_category_id
-#: model:ir.model.fields,field_description:academy_.field_academy_test_id
+#: model:ir.model.fields,field_description:academy_.field_test_id
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_level_id
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_question_id
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_question_impugnment_id
@@ -519,7 +519,7 @@ msgstr "La pregunta estará relacionada con el test"
 
 #. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_questions_act_window
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_academy_test_ids
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_test_ids
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_category_academy_tests_question_ids
 #: model:ir.model.fields,field_description:academy_.field_academy_tests_tag_academy_tests_question_ids
 #: model:ir.ui.menu,name:academy_tests.menu_questions
@@ -553,7 +553,7 @@ msgid "Relationship between tests and questions, this model keeps sequence order
 msgstr "Relación entre tests y preguntas, este modelo mantiene el orden de la secuencia"
 
 #. module: academy_tests
-#: model:ir.model.fields,help:academy_.field_academy_tests_academy_answers_table_ids
+#: model:ir.model.fields,help:academy_.field_academy_tests_answers_table_ids
 msgid "Summary with answers table"
 msgstr "Resumen con tabla de respuestas"
 
@@ -615,13 +615,13 @@ msgid "Tag can be used to better describe question"
 msgstr "La etiqueta se puede utilizar para describir mejor la pregunta"
 
 #. module: academy_tests
-#: model:ir.model.fields,help:academy_.field_academy_tests_question_academy_tag_ids
+#: model:ir.model.fields,help:academy_.field_academy_tests_question_tag_ids
 msgid "Tag can be used to better describe this question"
 msgstr "La etiqueta se puede utilizar para describir mejor esta pregunta"
 
 #. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_tags_act_window
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_question_academy_tag_ids
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_question_tag_ids
 #: model:ir.ui.menu,name:academy_tests.menu_tags
 msgid "Tags"
 msgstr "Etiquetas"
@@ -632,8 +632,8 @@ msgid "Tags are used to describe, organize and search interrelated questions"
 msgstr "Las etiquetas se utilizan para describir, organizar y buscar preguntas relacionadas entre sí."
 
 #. module: academy_tests
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_academy_tests_question_rel_academy_test_id
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_answers_table_academy_test_id
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_academy_tests_question_rel_test_id
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_answers_table_test_id
 #: model:ir.ui.menu,name:academy_tests.menu_test_settings_top
 #: model:ir.ui.menu,name:academy_tests.menu_test_top
 #: model:ir.ui.view,arch_db:academy_tests.view_at_question_search
@@ -641,14 +641,14 @@ msgid "Test"
 msgstr "Test"
 
 #. module: academy_tests
-#: model:ir.model.fields,help:academy_.field_academy_tests_academy_tests_question_rel_academy_test_id
-#: model:ir.model.fields,help:academy_.field_academy_tests_answers_table_academy_test_id
+#: model:ir.model.fields,help:academy_.field_academy_tests_academy_tests_question_rel_test_id
+#: model:ir.model.fields,help:academy_.field_academy_tests_answers_table_test_id
 msgid "Test to which this item belongs"
 msgstr "Prueba a la que pertenece este elemento"
 
 #. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_tests_act_window
-#: model:ir.model.fields,field_description:academy_.field_academy_tests_question_academy_test_ids
+#: model:ir.model.fields,field_description:academy_.field_academy_tests_question_test_ids
 #: model:ir.ui.menu,name:academy_tests.menu_tests
 msgid "Tests"
 msgstr "Tests"

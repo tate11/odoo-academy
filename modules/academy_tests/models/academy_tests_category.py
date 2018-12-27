@@ -84,7 +84,7 @@ class AcademyTestsCategory(models.Model):
               'the topic')
     )
 
-    academy_topic_id = fields.Many2one(
+    topic_id = fields.Many2one(
         string='Topic',
         required=True,
         readonly=False,
@@ -96,9 +96,10 @@ class AcademyTestsCategory(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
+        oldname='academy_topic_id',
     )
 
-    academy_question_ids = fields.Many2many(
+    question_ids = fields.Many2many(
         string='Questions',
         required=False,
         readonly=False,
@@ -106,12 +107,13 @@ class AcademyTestsCategory(models.Model):
         default=None,
         help='Questions relating to this category',
         comodel_name='academy.tests.question',
-        # relation='academy_question_this_model_rel',
-        # column1='academy_question_id}',
-        # column2='this_model_id',
+        relation='academy_tests_question_category_rel',
+        column1='category_id',
+        column2='question_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        oldname='academy_question_ids'
     )
 
     # --------------------------- SQL_CONTRAINTS ------------------------------
@@ -119,7 +121,7 @@ class AcademyTestsCategory(models.Model):
     _sql_constraints = [
         (
             'categoryr_by_topic_uniq',
-            'UNIQUE(academy_topic_id, name)',
+            'UNIQUE(topic_id, name)',
             _(u'There is already another category with the same name in this topic')
         )
     ]
