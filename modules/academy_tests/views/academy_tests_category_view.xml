@@ -67,6 +67,10 @@
                         </div>
 
                         <group col="2">
+                            <field name="topic_id" class="oe_field_topic_id"
+                                placeholder="Choose topic"
+                                attrs="{'invisible': [('topic_id', '!=', False)]}"/>
+
                             <field name="description" class="oe_field_description"
                                 placeholder="Enter new text for description" />
                         </group>

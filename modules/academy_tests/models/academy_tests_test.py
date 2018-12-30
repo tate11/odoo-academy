@@ -24,6 +24,9 @@ from logging import getLogger
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
 from openerp.tools.translate import _
+from openerp.addons.academy_base.models.lib.custom_model_fields import Many2manyThroughView
+from .lib.custom_sql import ACADEMY_TESTS_TEST_TOPIC_IDS_SQL
+
 
 
 # pylint: disable=locally-disabled, C0103
@@ -135,6 +138,23 @@ class AcademyTestsTest(models.Model):
     def _compute_question_count(self):
         for record in self:
             record.question_count = len(record.question_ids)
+
+    topic_ids = Many2manyThroughView(
+        string='Topics',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.tests.topic',
+        relation='academy_tests_test_topic_rel',
+        column1='test_id',
+        column2='topic_id',
+        domain=[],
+        context={},
+        limit=None,
+        sql=ACADEMY_TESTS_TEST_TOPIC_IDS_SQL
+    )
 
 
     lang = fields.Char(

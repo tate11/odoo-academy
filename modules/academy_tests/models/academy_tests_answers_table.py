@@ -107,6 +107,54 @@ class AcademyTestsAnswersTable(models.Model):
         help='Preference order for this question'
     )
 
+
+    topic_id = fields.Many2one(
+        string='Topic',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.tests.topic',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False,
+        compute=lambda self: self._compute_topic_id()
+    )
+
+    @api.multi
+    @api.depends('question_id')
+    def _compute_topic_id(self):
+        for record in self:
+            record.topic_id = record.question_id.topic_id
+
+
+    category_ids = fields.Many2many(
+        string='Categories',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.tests.category',
+        relation='academy_test_answer_table_category_rel',
+        column1='answer_table_id',
+        column2='category_id',
+        domain=[],
+        context={},
+        limit=None,
+        compute=lambda self: self._compute_category_ids()
+    )
+
+    @api.multi
+    @api.depends('question_id')
+    def _compute_category_ids(self):
+        for record in self:
+            ids = record.question_id.category_ids.mapped('id') or []
+            record.category_ids = [(6, None, ids)]
+
+
     @api.model_cr
     def init(self):
         """ Build database view which will be used as module origin

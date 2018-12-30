@@ -54,6 +54,8 @@
         'views/ir_attachment_view.xml',
 
         'views/academy_tests_report.xml',
+
+        'wizard/academy_tests_question_categorize_view.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

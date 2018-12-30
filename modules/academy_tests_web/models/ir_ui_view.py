@@ -44,6 +44,7 @@ class IrUiView(ir_ui_view.View):
             "academy_tests.view_academy_tests_document_qweb",
             "academy_tests.view_academy_tests_qweb",
             "academy_tests.action_report_printable_test",
+            "academy_tests.academy_tests_answers_table"
         ]
 
         ctx = self.env.context

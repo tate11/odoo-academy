@@ -122,6 +122,8 @@
                             <th class="answers-table-question">Question</th>
                             <th class="answers-table-answer">Answer</th>
                             <th class="answers-table-description">Description</th>
+                            <th class="answers-table-topic">Topic</th>
+                            <th class="answers-table-category">Category</th>
                         </thead>
                         <tbody>
                         <t t-foreach="o.answers_table_ids" t-as="answer">
@@ -129,6 +131,20 @@
                                 <th><t t-esc="answer.sequence" /></th>
                                 <td><t t-esc="answer.name" /></td>
                                 <td><t t-esc="answer.description" /></td>
+                                <td>
+                                    <t t-if="answer.topic_id">
+                                        <t t-esc="answer.topic_id.name" />
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="answer.category_ids">
+                                        <ul class="list-inline">
+                                        <t t-foreach="answer.category_ids" t-as="category_id">
+                                            <li class="list-inline-item"><t t-esc="category_id.name" /></li>
+                                        </t>
+                                        </ul>
+                                    </t>
+                                </td>
                             </tr>
                         </t>
                         </tbody>
