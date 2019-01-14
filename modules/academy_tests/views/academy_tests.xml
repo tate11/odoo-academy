@@ -5,8 +5,8 @@
 
         <template id="view_academy_tests_assets" name="website assets for academy tests" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <link rel="stylesheet" href="academy_tests/static/src/css/styles-backend.css" />
-                <script type="text/javascript" src="academy_tests/static/src/js/academy_tests.js" />
+                <link rel="stylesheet" href="/academy_tests/static/src/css/styles-backend.css" />
+                <script type="text/javascript" src="/academy_tests/static/src/js/academy_tests.js" />
             </xpath>
         </template>
 

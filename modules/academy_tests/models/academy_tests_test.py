@@ -20,6 +20,7 @@ TODO:
 
 
 from logging import getLogger
+import operator
 
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
@@ -45,7 +46,7 @@ class AcademyTestsTest(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['mail.thread']
+    _inherit = ['academy.abstract.image', 'mail.thread']
 
     name = fields.Char(
         string='Name',
@@ -121,6 +122,7 @@ class AcademyTestsTest(models.Model):
         oldname='academy_answers_table_ids'
     )
 
+
     # -------------------------- MANAGEMENT FIELDS ----------------------------
 
     question_count = fields.Integer(
@@ -155,6 +157,62 @@ class AcademyTestsTest(models.Model):
         limit=None,
         sql=ACADEMY_TESTS_TEST_TOPIC_IDS_SQL
     )
+
+    topic_count = fields.Integer(
+        string='Topics',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Display the number of topics related with test',
+        compute=lambda self: self._compute_topic_count()
+    )
+
+    @api.multi
+    @api.depends('question_ids')
+    def _compute_topic_count(self):
+        for record in self:
+            question_set = record.question_ids.mapped('question_id')
+            topic_set = question_set.mapped('topic_id')
+            ids = topic_set.mapped('id')
+
+            record.topic_count = len(ids)
+
+    topic_id = fields.Many2one(
+        string='Topic',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help=False,
+        comodel_name='academy.tests.topic',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False,
+        compute=lambda self: self._compute_topic_id()
+    )
+
+    @api.multi
+    @api.depends('question_ids')
+    def _compute_topic_id(self):
+        for record in self:
+            rel_ids = record.question_ids.filtered(
+                lambda rel: rel.question_id.topic_id)
+            question_ids = rel_ids.mapped('question_id')
+            topics = {k.id : 0 for k in question_ids.mapped('topic_id')}
+
+            if not topics:
+                record.topic_id = None
+            else:
+                for question_id in question_ids:
+                    _id = question_id.topic_id.id
+                    topics[_id] = topics[_id] + 1
+
+                topic_id = max(topics.items(), key=operator.itemgetter(1))[0]
+
+                topic_obj = self.env['academy.tests.topic']
+                record.topic_id = topic_obj.browse(topic_id)
 
 
     lang = fields.Char(

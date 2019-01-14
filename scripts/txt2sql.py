@@ -128,7 +128,7 @@ class App(object):
 
         return u"""
             WITH tmp AS (
-                INSERT INTO "public"."at_question" (
+                INSERT INTO "public"."academy_tests_question" (
                     "name",
                     "description",
                     "preamble",
@@ -137,8 +137,9 @@ class App(object):
                     "write_uid",
                     "write_date",
                     "active",
-                    "at_topic_id",
-                    "at_level_id"
+                    "topic_id",
+                    "level_id",
+                    "kind"
                 ) VALUES (
                     '{}',
                     '{}',
@@ -148,13 +149,14 @@ class App(object):
                     '1',
                     now()::TIMESTAMP (0),
                     't',
-                    (SELECT id FROM "public"."at_topic" WHERE NAME = 'TEST2SQL'),
-                    '4'
+                    (SELECT id FROM "public"."academy_tests_topic" WHERE NAME = 'TEST2SQL'),
+                    '4',
+                    'th'
                 ) RETURNING "id"
-            ) INSERT INTO at_category_at_question_rel
-                (at_category_id, at_question_id)
+            ) INSERT INTO academy_tests_question_category_rel
+                (category_id, question_id)
             VALUES
-                ( (SELECT id FROM "public"."at_category" WHERE NAME = 'TEST2SQL'), (SELECT id FROM tmp));
+                ( (SELECT id FROM "public"."academy_tests_category" WHERE NAME = 'TEST2SQL'), (SELECT id FROM tmp));
         """.format(line, description, preamble)
 
     def _is_answer(self, line):
@@ -172,7 +174,7 @@ class App(object):
         line = line.replace('\'', '\'\'')
 
         return u"""
-            INSERT INTO "public"."at_answer" (
+            INSERT INTO "public"."academy_tests_answer" (
                 "sequence",
                 "name",
                 "description",
@@ -181,7 +183,7 @@ class App(object):
                 "write_uid",
                 "write_date",
                 "is_correct",
-                "at_question_id",
+                "question_id",
                 "active"
             ) VALUES (
                 {},
@@ -192,7 +194,7 @@ class App(object):
                 '1',
                 now()::TIMESTAMP (0),
                 {},
-                (SELECT "id" FROM at_question ORDER BY ID DESC LIMIT 1),
+                (SELECT "id" FROM academy_tests_question ORDER BY ID DESC LIMIT 1),
                 't'
             );
         """.format(self._answer_sequence, line, u'true' if is_correct else u'false')
@@ -217,14 +219,14 @@ class App(object):
         """ Cliear questions
         """
         is_correct = line and line[0].lower() == 'x'
-        return re.search(r'^[abcdxABCDX]{1,2}[\)\.\- ]+ (.*)$', line).group(1), is_correct
+        return re.search(r'^[abcdefghijxABCDEFGHIJX]{1,2}[\)\.\- ]+ (.*)$', line).group(1), is_correct
 
     def _register_topic(self):
         """ SQL to ensure topic
         """
 
         self._sql += u"""
-        INSERT INTO "public"."at_topic" (
+        INSERT INTO "public"."academy_tests_topic" (
             "name",
             "description",
             "create_uid",
@@ -243,7 +245,7 @@ class App(object):
             't'
         WHERE
             NOT EXISTS (
-                    SELECT id FROM "public"."at_topic" WHERE NAME = 'TEST2SQL'
+                    SELECT id FROM "public"."academy_tests_topic" WHERE NAME = 'TEST2SQL'
         );
         """
 
@@ -252,7 +254,7 @@ class App(object):
         """
 
         self._sql += u"""
-        INSERT INTO "public"."at_category" (
+        INSERT INTO "public"."academy_tests_category" (
             "name",
             "description",
             "create_uid",
@@ -261,7 +263,7 @@ class App(object):
             "write_date",
             "sequence",
             "active",
-            "at_topic_id"
+            "topic_id"
         )
         SELECT
             'TEST2SQL',
@@ -272,10 +274,10 @@ class App(object):
             now()::TIMESTAMP (0),
             1024,
             't',
-            (SELECT id FROM "public"."at_topic" WHERE NAME = 'TEST2SQL' )
+            (SELECT id FROM "public"."academy_tests_topic" WHERE NAME = 'TEST2SQL' )
         WHERE
                 NOT EXISTS (
-                                SELECT id FROM "public"."at_category" WHERE NAME = 'TEST2SQL'
+                                SELECT id FROM "public"."academy_tests_category" WHERE NAME = 'TEST2SQL'
         );
         """
 
@@ -285,7 +287,7 @@ class App(object):
 
         self._sql += u"""
              WITH newtest AS (
-                INSERT INTO "public"."at_test" (
+                INSERT INTO "public"."academy_tests_test" (
                     "name",
                     "description",
                     "create_date",
@@ -304,9 +306,9 @@ class App(object):
                         now()::TIMESTAMP (0),
                         't'
                     ) RETURNING ID
-            ) INSERT INTO "public"."at_test_at_question_rel" (
-                "at_test_id",
-                "at_question_id",
+            ) INSERT INTO "public"."academy_tests_test_question_rel" (
+                "test_id",
+                "question_id",
                 "sequence",
                 "create_uid",
                 "create_date",
@@ -314,8 +316,8 @@ class App(object):
                 "write_date",
                 "active"
             ) SELECT
-                (SELECT ID FROM newtest) AS at_test_id,
-                ID AS at_question_id,
+                (SELECT "id" FROM newtest) AS test_id,
+                "id" AS question_id,
                 ROW_NUMBER () OVER () AS "secuence",
                 1 AS create_uid,
                 now()::TIMESTAMP (0) AS create_date,
@@ -323,7 +325,7 @@ class App(object):
                 now()::TIMESTAMP (0) AS write_date,
                 TRUE
             FROM
-                at_question
+                academy_tests_question
             ORDER BY
                 ID DESC
             LIMIT {};
@@ -348,12 +350,12 @@ class App(object):
 
         self._sql += u"""
 
-        INSERT INTO at_question_ir_attachment_rel (
-            at_question_id,
-            ir_attachment_id
+        INSERT INTO academy_tests_question_ir_attachment_rel (
+            question_id,
+            attachment_id
             )
         VALUES (
-            (SELECT "id" FROM at_question ORDER BY ID DESC LIMIT 1),
+            (SELECT "id" FROM academy_tests_question ORDER BY ID DESC LIMIT 1),
             (SELECT "id" FROM ir_attachment WHERE url = '{}')
         );
 

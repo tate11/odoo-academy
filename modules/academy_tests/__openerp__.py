@@ -21,8 +21,8 @@
     # any module necessary for this one to work correctly
     'depends': [
         'mail',
-        # 'report',
-        # 'website',
+        'web',
+        'web_one2many_kanban',
         'academy_base',
     ],
 
@@ -53,9 +53,12 @@
         'views/academy_tests_topic_view.xml',
         'views/ir_attachment_view.xml',
 
-        'views/academy_tests_report.xml',
+        'report/academy_tests_report_assets.xml',
+        'report/academy_test_report.xml',
+        'report/academy_test_answers_table_report.xml',
 
-        'wizard/academy_tests_question_categorize_view.xml'
+        'wizard/academy_tests_question_categorize_view.xml',
+        'wizard/academy_tests_question_append_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

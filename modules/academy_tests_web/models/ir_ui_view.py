@@ -24,6 +24,43 @@ class IrUiView(ir_ui_view.View):
     _inherit = ['ir.ui.view']
 
 
+    def _get_module_by_id(self, xml_id):
+        module = False
+
+        try:
+            view_domain = ['&', ('res_id', '=', xml_id), ('model', '=', 'ir.ui.view')]
+            view_obj = self.env['ir.ui.view']
+            view_set = view_obj.search(view_domain, limit=1)
+            module = view_set.module
+        except: # pylint: disable=locally-disabled, W0702
+            pass
+
+        return module
+
+
+    @staticmethod
+    def _get_module_by_xmlid(xml_id):
+        module = False
+
+        try:
+            module = xml_id.split('.')[0]
+        except: # pylint: disable=locally-disabled, W0702
+            pass
+
+        return module
+
+
+    def _is_test_module(self, xml_id, modules):
+        _logger.debug('Overwritten get_view_id (xml_id: %s', xml_id)
+
+        if isinstance(xml_id, int):
+            module = self._get_module_by_id(xml_id)
+        else:
+            module = self._get_module_by_xmlid(xml_id)
+
+        return module in modules
+
+
     @api.model
     @tools.ormcache_context('self._uid', 'xml_id', keys=('website_id',))
     def get_view_id(self, xml_id):
@@ -36,21 +73,11 @@ class IrUiView(ir_ui_view.View):
         another solution.
         """
 
-        views = [
-            "academy_tests.academy_post_test_question_image",
-            "academy_tests.view_academy_answer_qweb",
-            "academy_tests.view_academy_question_qweb",
-            "academy_tests.view_academy_answers_table_qweb",
-            "academy_tests.view_academy_tests_document_qweb",
-            "academy_tests.view_academy_tests_qweb",
-            "academy_tests.action_report_printable_test",
-            "academy_tests.academy_tests_answers_table"
-        ]
-
+        modules = ['academy_tests', 'academy_tests_web']
         ctx = self.env.context
-        if xml_id in views and 'website_id' in ctx:
-            ctx = {item:ctx[item] for item in ctx if item!='website_id'}
-            print('In', self.with_context(ctx)._context)
+
+        if self._is_test_module(xml_id, modules) and 'website_id' in ctx:
+            ctx = {item:ctx[item] for item in ctx if item != 'website_id'}
 
         return super(IrUiView, self.with_context(ctx)).get_view_id(xml_id)
 

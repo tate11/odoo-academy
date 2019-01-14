@@ -16,6 +16,7 @@ Classes:
 
 
 from logging import getLogger
+from re import search
 
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
@@ -224,6 +225,19 @@ class AcademyTestsQuestion(models.Model):
         oldname='academy_test_ids',
     )
 
+    kind = fields.Selection(
+        string='Kind',
+        required=True,
+        readonly=False,
+        index=False,
+        default='th',
+        help=False,
+        selection=[
+            ('th', 'Theoretical'),
+            ('pr', 'Practical'),
+            ('mx', 'Mixed')
+        ]
+    )
 
     # ----------------------- AUXILIARY FIELD METHODS -------------------------
 
@@ -282,9 +296,14 @@ class AcademyTestsQuestion(models.Model):
     def _check_answer_ids(self):
         """ Check if question have at last one valid answer
         """
-        message = _(u'You must specify at least one correct answer')
-        if not True in self.answer_ids.mapped('is_correct'):
-            raise ValidationError(message)
+
+        if self.active:
+            if not True in self.answer_ids.mapped('is_correct'):
+                message = _(u'You must specify at least one correct answer')
+                raise ValidationError(message)
+            if not False in self.answer_ids.mapped('is_correct'):
+                message = _(u'You must specify at least one incorrect answer')
+                raise ValidationError(message)
 
 
     test_ids = fields.One2many(
@@ -336,3 +355,33 @@ class AcademyTestsQuestion(models.Model):
     def _compute_answer_count(self):
         for record in self:
             record.answer_count = len(record.answer_ids)
+
+
+    category_count = fields.Integer(
+        string='Categories',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Number of categories',
+        compute=lambda self: self._compute_category_count()
+    )
+
+    @api.multi
+    @api.depends('category_ids')
+    def _compute_category_count(self):
+        for record in self:
+            record.category_count = len(record.category_ids)
+
+    @api.multi
+    def townhall_file(self):
+        """ Get filename to use in townhall report
+        """
+        result = u''
+        for record in self:
+            if record.preamble:
+                matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', record.preamble)
+                if matches:
+                    result += matches.group()
+
+        return result

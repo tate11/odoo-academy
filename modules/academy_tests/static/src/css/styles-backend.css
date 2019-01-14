@@ -1,0 +1,93 @@
+.o_question_kanban {
+    position: relative;
+    padding-bottom: 2.25em!important;
+}
+
+.o_question_kanban_answer_list {
+    padding-left: 18px;
+    list-style-type: none;
+    counter-reset: question_kanban_answer_list;
+}
+
+.o_question_kanban_answer_list li[data-is-correct=true] > span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.o_question_kanban_answer_list li {
+    list-style-type: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.o_question_kanban_answer_list li:before {
+    content: counter(question_kanban_answer_list, lower-alpha)") ";
+    counter-increment: question_kanban_answer_list;
+}
+
+.o_question_kanban_status_bar {
+    position:absolute;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    height: 2em;
+/*    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;*/
+    border-collapse: collapse;
+    border-style: none;
+}
+
+.o_question_kanban_status_bar td {
+    font-size: 90%;
+    font-variant: monospace;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: #F0F0F0;
+    padding: 0px 6px;
+    cursor: auto;
+}
+
+.o_question_kanban_status_bar td + td {
+    border-left: 1px solid white;
+}
+
+.o_question_kanban_status_topic {
+    text-align: left;
+    font-weight: bold;
+    width: 60%;
+}
+
+
+.o_question_kanban_status_level {
+    text-align: center;
+    width: 40%;
+}
+
+.o_question_kanban_status_category,
+.o_question_kanban_status_attachment,
+.o_question_kanban_status_preamble,
+.o_question_kanban_status_description,
+.o_question_kanban_status_menu {
+    text-align: center;
+    width: 20px;
+    min-width: 20px;
+}
+
+.o_question_kanban_status_menu,
+.o_question_kanban_status_menu > a {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+.o_question_kanban_status_menu {
+    overflow: visible!important;
+}
+
+.o_question_kanban_status_menu .dropdown-menu {
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+}

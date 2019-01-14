@@ -130,5 +130,26 @@
             <field name="sequence" eval="2" />
         </record>
 
+
+        <record id="academy_tests_question_demo_1" model="academy.tests.question">
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_question_demo_2" model="academy.tests.question">
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_question_demo_3" model="academy.tests.question">
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_question_demo_4" model="academy.tests.question">
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_question_demo_5" model="academy.tests.question">
+            <field name="active" eval="True" />
+        </record>
+
     </data>
 </openerp>

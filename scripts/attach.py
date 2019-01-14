@@ -239,6 +239,8 @@ class App(object):
 
         self._odoo.logout()
 
+        self._odoo.config['timeout'] = 120;
+
         self._verbose(MessageType.Info, VM_LOGIN, self._server, self._port)
 
         try:

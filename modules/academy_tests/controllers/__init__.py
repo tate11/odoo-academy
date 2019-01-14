@@ -4,6 +4,5 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import models
-from . import wizard
-from . import controllers
+
+from . import download_resources

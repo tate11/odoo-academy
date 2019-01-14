@@ -6,3 +6,4 @@
 
 
 from . import academy_tests_question_categorize
+from . import academy_tests_question_append

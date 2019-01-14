@@ -10,7 +10,7 @@
 
                 <t t-set="title">Posted tests</t>
 
-                <div class="oe_structure">
+                <div class="oe_structure" id="academy_post_tests">
                     <div class="container">
 
                         <div class="page-header">
@@ -42,13 +42,14 @@
                                         <th><t t-esc="test.id"/></th>
                                         <td>
 
-                                            <a t-attf-href="/posted-test?test_id={{test.id}}">
+                                            <a t-attf-href="/academy/publish/test?test_id={{test.id}}">
                                                 <t t-esc="test.name"/>
                                             </a>
 
                                         </td>
-                                        <td>
-                                            <a t-attf-href="/report/pdf/academy_tests.view_academy_tests_qweb/{{ test.id }}" target="_blank" title="Download as PDF">
+                                        <td><!-- /report/pdf/academy_tests.view_academy_tests_qweb/ -->
+                                            <a t-attf-data-download-pdf="{{ test.id }}" target="_self" title="Download as PDF"
+                                                t-attf-href="/academy/download/test?test_id={{ test.id }}">
                                                 <span class="fa fa-file-pdf-o"></span>
                                             </a>
                                         </td>
@@ -57,12 +58,12 @@
                                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa fa-bars"></span></a>
                                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                                     <li role="presentation">
-                                                        <a role="menuitem" tabindex="-1" t-attf-href="/report/html/academy_tests.view_academy_tests_qweb/{{ test.id }}" target="_blank" title="View on web">
+                                                        <a role="menuitem" tabindex="-1" t-attf-href="/academy/download/test?test_id={{ test.id }}&amp;type=html" target="_blank" title="View on web">
                                                             <span class="fa fa-globe"></span> View on web
                                                         </a>
                                                     </li>
                                                     <li role="presentation">
-                                                        <a role="menuitem"  t-attf-href="/answers-table?test_id={{ test.id }}" title="Answers table">
+                                                        <a role="menuitem"  t-attf-href="/academy/publish/answers?test_id={{ test.id }}" title="Answers table">
                                                             <span class="fa fa-table" /> View answers
                                                         </a>
                                                     </li>

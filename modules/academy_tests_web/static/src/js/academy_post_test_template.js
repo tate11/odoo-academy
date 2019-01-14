@@ -56,7 +56,7 @@ odoo.define('academy_tests_web.service', function (require) {
 
             values = {'question_id': question_id, mode};
 
-            ready = session.rpc("/get-question", values).then(function (result) {
+            ready = session.rpc("/ajax/get-question", values).then(function (result) {
 
                     /* STEP 2: Get question LI DOM item */
                     academy_test_question = jQuery('#academy-test-question-' + question_id);

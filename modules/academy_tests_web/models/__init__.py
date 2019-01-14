@@ -4,4 +4,4 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import ir_ui_view
+# from . import ir_ui_view

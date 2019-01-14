@@ -229,10 +229,10 @@
                 <div class="col-xs-12 col-sm-6 col-md-3">
                     <figure class="ir-attachment-image figure img-thumbnail">
                         <a  class='ir-attachment-image-datas'
-                            t-attf-href="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
+                            t-attf-href="/academy/download/attachment?id={{ ir_attachment_image_id.id }}"
                             t-attf-title="{{ ir_attachment_image_id.name }}">
                             <img class="img-responsive ir-attachment-image-datas"
-                                t-attf-src="web/binary/download_document?id={{ ir_attachment_image_id.id }}"
+                                t-attf-src="/academy/download/attachment?id={{ ir_attachment_image_id.id }}"
                                 alt="Image tag"
                                 title="Image tag" />
                         </a>
@@ -259,7 +259,7 @@
                 <!-- TOOLBAR:: BEGIN -->
                 <div class="academy-test-options btn-group btn-group-sm hidden-print " role="group" aria-label="Options">
                     <a class="btn btn-default btn-academy-test-print"
-                        t-attf-href="/report/pdf/academy_tests.view_academy_tests_qweb/{{ test_id.id }}"
+                        t-attf-href="/academy/download/test?test_id={{ test_id.id }}"
                         target="_blank" title="Download as PDF"
                         t-attf-data-test-id="{{ test_id.id }}">
                         <span class="fa fa-file-pdf-o"></span>
@@ -268,12 +268,12 @@
                         <a class="dropdown-toggle"  data-toggle="dropdown" href="#"><span class="fa fa fa-bars"></span></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li role="presentation">
-                                <a role="menuitem" tabindex="-1" t-attf-href="/report/html/academy_tests.view_academy_tests_qweb/{{ test_id.id }}" target="_blank" title="View on web">
+                                <a role="menuitem" tabindex="-1" t-attf-href="/academy/download/test?test_id={{ test_id.id }}&amp;type=html" target="_blank" title="View on web">
                                     <span class="fa fa-globe"></span> View on web
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a role="menuitem"  t-attf-href="/answers-table?test_id={{ test_id.id }}" title="Answers table">
+                                <a role="menuitem"  t-attf-href="/academy/publish/answers?test_id={{ test_id.id }}" title="Answers table">
                                     <span class="fa fa-table" /> View answers
                                 </a>
                             </li>

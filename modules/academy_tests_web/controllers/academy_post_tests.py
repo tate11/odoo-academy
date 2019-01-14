@@ -24,7 +24,7 @@ class PostTests(Controller):
           /posted-test: allow to view a single test
     """
 
-    @route('/posted-tests', type='http', auth='user', website=True)
+    @route('/academy/publish/tests', type='http', auth='user', website=True)
     def posted_tests(self, **kw):
         """ Allow students to access tests through the Odoo web
         """
@@ -40,7 +40,7 @@ class PostTests(Controller):
         return result
 
 
-    @route('/posted-test', type='http', auth='user', website=True)
+    @route('/academy/publish/test', type='http', auth='user', website=True)
     def posted_test(self, **kw):
         """ Allow students to view a single test
         """
@@ -57,7 +57,7 @@ class PostTests(Controller):
         return result
 
 
-    @route('/proccess-impugnment', type='http', auth='user')
+    @route('/ajax/proccess-impugnment', type='http', auth='user')
     def proccess_impugnment(self, **kw):
         """ Proccess Ajax request """
 
@@ -91,7 +91,7 @@ class PostTests(Controller):
         return result
 
 
-    @route('/get-question', csrf=True, type='json', auth='user')
+    @route('/ajax/get-question', csrf=True, type='json', auth='user')
     def get_question(self, **kw):
         """ Proccess Ajax request to get question
             :return: 400 (Bad Request), 204 (No Content), 200 (Success)
@@ -134,7 +134,7 @@ class PostTests(Controller):
         return json.dumps({'result': result, 'html': str(html)})
 
 
-    @route('/update-question', csrf=False, type='json', auth="public")
+    @route('/ajax/update-question', csrf=False, type='json', auth="public")
     def update_question(self, **kw):
         """ Proccess Ajax request to update question"""
 
@@ -149,7 +149,7 @@ class PostTests(Controller):
         return json.dumps(academy_tests_question_set.read())
 
 
-    @route('/answers-table', type='http', auth='user', website=True)
+    @route('/academy/publish/answers', type='http', auth='user', website=True)
     def answers_table(self, **kw):
         """ Return the answers table for test
         """
@@ -170,30 +170,32 @@ class PostTests(Controller):
         return result
 
 
-    @route('/web/binary/download_document', type='http', auth="public")
-    @serialize_exception
-    def download_document(self, **kw):
-        """ Download link for files stored as binary fields.
-        :param str model: name of the model to fetch the binary from
-        :param str field: binary field
-        :param str id: id of the record from which to fetch the binary
-        :param str filename: field holding the file's name, if any
-        :returns: :class:`werkzeug.wrappers.Response`
-        """
+    # Following lines should be removed
+    ###########################################################################
+    # @route('/web/binary/download_document', type='http', auth="public")
+    # @serialize_exception
+    # def download_document(self, **kw):
+    #     """ Download link for files stored as binary fields.
+    #     :param str model: name of the model to fetch the binary from
+    #     :param str field: binary field
+    #     :param str id: id of the record from which to fetch the binary
+    #     :param str filename: field holding the file's name, if any
+    #     :returns: :class:`werkzeug.wrappers.Response`
+    #     """
 
 
-        ir_attachment_domain = [('id', '=', int(kw['id']))]
-        ir_attachment_obj = request.env['ir.attachment']
-        ir_attachment_set = ir_attachment_obj.search(ir_attachment_domain)
+    #     ir_attachment_domain = [('id', '=', int(kw['id']))]
+    #     ir_attachment_obj = request.env['ir.attachment']
+    #     ir_attachment_set = ir_attachment_obj.search(ir_attachment_domain)
 
-        filename = ir_attachment_set.datas_fname
-        filecontent = base64.b64decode(ir_attachment_set.datas or '')
-        if not filecontent:
-            return request.not_found()
-        else:
-            return request.make_response(filecontent, \
-                [('Content-Type', ir_attachment_set.mimetype), \
-                ('Content-Disposition', content_disposition(filename))])
+    #     filename = ir_attachment_set.datas_fname
+    #     filecontent = base64.b64decode(ir_attachment_set.datas or '')
+    #     if not filecontent:
+    #         return request.not_found()
+    #     else:
+    #         return request.make_response(filecontent, \
+    #             [('Content-Type', ir_attachment_set.mimetype), \
+    #             ('Content-Disposition', content_disposition(filename))])
 
     # -------------------------- AUXILIAR METHODS -----------------------------
 

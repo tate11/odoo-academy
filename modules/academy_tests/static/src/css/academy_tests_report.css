@@ -188,26 +188,7 @@ div.ir-attachment-image-ids img {
 Styles applied when document is printed
 -----------------------------------------------------------------------------*/
 /*
-@media print {
-    section.posted-test-body .ir-attachment-image-ids .figure {
-        border-style: none;
-        max-width: 25%;
-        padding: 0 5px;
-    }
 
-    img {
-        margin: 0 auto;
-        width: auto;
-        height: auto;
-        display: block;
-    }
-
-    section.academy-post-test-test  li.academy-question {
-        border-style: none!important;
-        padding: 0;
-        margin: 0;
-    }
-}
 */
 /*
 .popover-content {
@@ -220,12 +201,20 @@ Styles applied when document is printed
     display: none;
 }
 
-.academy-test-report-header * {
+
+
+*/
+
+
+
+.academy-test-report-header-title,
+.academy-test-report-header-date,
+.academy-test-report-header-category,
+.academy-test-report-header-image {
     padding: 0px;
-    margin: 0px;
 }
 
-.academy-test-report-header .academy-test-report-header-title h1 {
+.academy-test-report-header-title h1 {
     height: 24px;
 
     font-family: Arial;
@@ -255,15 +244,42 @@ Styles applied when document is printed
     vertical-align: middle;
 }
 
-
-.academy-test-report-footer {
+.academy-test-report-footer-editor,
+.academy-test-report-footer-counter {
     border-top: 2px solid black;
     padding-top: 1px;
+    font-family: Arial;
+    font-size: 10pt;
+    padding: 0px;
 }
 
-
-.answers-table {
-    page-break-before: always;
-    white-space: pre-line;
+.academy-test-report-footer-counter .text-muted {
+    color: inherit!important;
 }
-*/
+
+.line-between-test-and-answers {
+    page-break-after: always;
+    visibility: visible;
+}
+
+@media print {
+    section.posted-test-body .ir-attachment-image-ids .figure {
+        border-style: none;
+        max-width: 25%;
+        padding: 0 5px;
+    }
+
+    img {
+        margin: 0 auto;
+        width: auto;
+        height: auto;
+        display: block;
+    }
+
+    section.academy-post-test-test  li.academy-question {
+        border-style: none!important;
+        padding: 0;
+        margin: 0;
+    }
+}
+

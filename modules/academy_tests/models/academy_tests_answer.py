@@ -39,7 +39,7 @@ class AcademyTestsAnswer(models.Model):
     _description = u'Answer for a question'
 
     _rec_name = 'name'
-    _order = 'sequence ASC'
+    _order = 'sequence ASC, id ASC'
 
     _inherit = ['mail.thread']
 

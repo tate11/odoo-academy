@@ -3,27 +3,9 @@
 <openerp>
     <data noupdate="0">
 
-        <!-- REPORT: "Printable test"
 
-            - Module: academy_tests    Model: academy.tests
-            - Language field used to translate it: lang
-            - Report uses attachment: False
-            - Report paperformat: report.paperformat_euro
-            - View priority: 16    Active: True
-            - Action help: Printable test in PDF
+        <!-- REPORT: "Image figure and figcaption"
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!--         <template id="assets_common" name="academy_tests.view_academy_tests_assets_qweb" inherit_id="website.assets_frontend">
-            <xpath expr="." position="inside">
-                <link href="/academy_tests/static/src/css/academy_tests_report.css" rel="stylesheet"/>
-            </xpath>
-        </template> -->
-
-        <template id="assets_common" name="academy_tests_assets_common" inherit_id="web.report_assets_common">
-            <xpath expr="." position="inside">
-                <link href="/academy_tests/static/src/css/academy_tests_report.css" rel="stylesheet"/>
-            </xpath>
-        </template>
-
         <record id="academy_post_test_question_image" model="ir.ui.view">
             <field name="name">Printable image attachment</field>
             <field name="model">ir.attachment</field>
@@ -48,6 +30,10 @@
             </field>
         </record>
 
+
+
+        <!-- REPORT: "Answer content (without li)"
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <record id="view_academy_answer_qweb" model="ir.ui.view">
             <field name="name">Printable answer</field>
             <field name="model">academy.tests.answer</field>
@@ -64,6 +50,10 @@
             </field>
         </record>
 
+
+
+        <!-- REPORT: "Question content (article)"
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <record id="view_academy_question_qweb" model="ir.ui.view">
             <field name="name">Printable question</field>
             <field name="model">academy.tests.question</field>
@@ -108,53 +98,8 @@
         </record>
 
 
-        <record id="view_academy_answers_table_qweb" model="ir.ui.view">
-            <field name="name">Answers table</field>
-            <field name="model">academy.tests.answers.table</field>
-            <field name="type">qweb</field>
-            <field name="mode">primary</field>
-            <field name="priority" eval="16" />
-            <field name="active" eval="True" />
-            <field name="arch" type="xml">
-                <t t-name="academy_tests.view_academy_answers_table_qweb">
-                    <table class="table answers-table table-striped table-hover table-condensed">
-                        <thead>
-                            <th class="answers-table-question">Question</th>
-                            <th class="answers-table-answer">Answer</th>
-                            <th class="answers-table-description">Description</th>
-                            <th class="answers-table-topic">Topic</th>
-                            <th class="answers-table-category">Category</th>
-                        </thead>
-                        <tbody>
-                        <t t-foreach="o.answers_table_ids" t-as="answer">
-                            <tr>
-                                <th><t t-esc="answer.sequence" /></th>
-                                <td><t t-esc="answer.name" /></td>
-                                <td><t t-esc="answer.description" /></td>
-                                <td>
-                                    <t t-if="answer.topic_id">
-                                        <t t-esc="answer.topic_id.name" />
-                                    </t>
-                                </td>
-                                <td>
-                                    <t t-if="answer.category_ids">
-                                        <ul class="list-inline">
-                                        <t t-foreach="answer.category_ids" t-as="category_id">
-                                            <li class="list-inline-item"><t t-esc="category_id.name" /></li>
-                                        </t>
-                                        </ul>
-                                    </t>
-                                </td>
-                            </tr>
-                        </t>
-                        </tbody>
-                    </table>
-                </t>
-            </field>
-        </record>
-
-
-        <!-- Report "Printable test" document template -->
+        <!-- REPORT: "Single test content"
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <record id="view_academy_tests_document_qweb" model="ir.ui.view">
             <field name="name">Printable test</field>
             <field name="model">academy.tests.test</field>
@@ -187,12 +132,18 @@
                                     </ol>
                                 </section>
 
+                            </div>
+
+                            <hr class="clearfix line-between-test-and-answers" />
+
+                            <!-- <div class="row">
+
                                 <section class="col-xs-12">
                                     <t t-call="academy_tests.view_academy_answers_table_qweb" />
                                 </section>
-                            </div> <!-- row -->
+                            </div>  --><!-- row -->
 
-                            <div class="oe_structure"/>
+
                         </div> <!-- page -->
 
                     </t> <!-- t-call -->
@@ -201,7 +152,10 @@
             </field>
         </record>
 
-        <!-- Report "Printable test" translate_doc template -->
+
+
+        <!-- REPORT: "Loop over test recordset"
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <record id="view_academy_tests_qweb" model="ir.ui.view">
             <field name="name">Printable test</field>
             <field name="model">academy.tests.test</field>
@@ -220,19 +174,21 @@
             </field>
         </record>
 
+
+
         <!-- Report action to show: "Printable test" -->
         <record id="action_report_printable_test" model="ir.actions.report">
-          <field name="name">Printable test</field>
-          <field name="model">academy.tests.test</field>
-          <field name="report_type">qweb-pdf</field>
-          <field name="report_name">academy_tests.view_academy_tests_qweb</field>
-          <field name="attachment_use" eval="False" />
-          <field name="attachment">(object.name+'.pdf')</field>
-          <field name="paperformat_id" ref="base.paperformat_euro" />
-          <field name="help">Printable test in PDF</field>
-          <!-- Following line adds print dropdown menú -->
-          <field name="binding_model_id" ref="academy_tests.model_academy_tests_test" />
-      </record>
+            <field name="name">Printable test</field>
+            <field name="model">academy.tests.test</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">academy_tests.view_academy_tests_qweb</field>
+            <field name="attachment_use" eval="False" />
+            <field name="attachment">(object.name+'.pdf')</field>
+            <field name="paperformat_id" ref="base.paperformat_euro" />
+            <field name="help">Printable test in PDF</field>
+            <!-- Following line adds print dropdown menú -->
+            <field name="binding_model_id" ref="academy_tests.model_academy_tests_test" />
+        </record>
 
     </data>
 </openerp>

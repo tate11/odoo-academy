@@ -3,6 +3,11 @@
 <openerp>
     <data noupdate="0">
 
+        <!-- Questions will be created with active field set to False, this
+             prevents answers will be required. Later, when answer records
+             will have been loades, this questions will be activated
+        -->
+
         <record id="academy_tests_question_demo_1" model="academy.tests.question">
             <field name="name">What is the type of license using by Odoo Community?</field>
             <field name="preamble">Odoo has two editions, Community and Enterprise</field>
@@ -12,6 +17,7 @@
             <field name="category_ids" eval="[(4, ref('academy_tests.academy_tests_category_demo_brand'))]" />
             <field name="tag_ids" eval="[(4, ref('academy_tests.academy_tests_tag_demo_brand'))]" />
             <field name="level_id" ref="academy_tests.academy_level_12" />
+            <field name="active" eval="False" />
         </record>
 
         <record id="academy_tests_question_demo_2" model="academy.tests.question">
@@ -22,6 +28,7 @@
             <field name="category_ids" eval="[(4, ref('academy_tests.academy_tests_category_demo_development'))]" />
             <field name="tag_ids" eval="[(4, ref('academy_tests.academy_tests_tag_demo_code'))]" />
             <field name="level_id" ref="academy_tests.academy_level_12" />
+            <field name="active" eval="False" />
         </record>
 
         <record id="academy_tests_question_demo_3" model="academy.tests.question">
@@ -32,6 +39,7 @@
             <field name="category_ids" eval="[(4, ref('academy_tests.academy_tests_category_demo_development')), (4, ref('academy_tests.academy_tests_category_demo_brand'))]" />
             <field name="tag_ids" eval="[(4, ref('academy_tests.academy_tests_tag_demo_third_party')), (4, ref('academy_tests.academy_tests_tag_demo_code'))]" />
             <field name="level_id" ref="academy_tests.academy_level_12" />
+            <field name="active" eval="False" />
         </record>
 
         <record id="academy_tests_question_demo_4" model="academy.tests.question">
@@ -43,6 +51,7 @@
             <field name="category_ids" eval="[(4, ref('academy_tests.academy_tests_category_demo_brand'))]" />
             <field name="tag_ids" eval="[(4, ref('academy_tests.academy_tests_tag_demo_brand'))]" />
             <field name="level_id" ref="academy_tests.academy_level_12" />
+            <field name="active" eval="False" />
         </record>
 
         <record id="academy_tests_question_demo_5" model="academy.tests.question">
@@ -52,6 +61,7 @@
             <field name="category_ids" eval="[(4, ref('academy_tests.academy_tests_category_demo_brand'))]" />
             <field name="tag_ids" eval="[(4, ref('academy_tests.academy_tests_tag_demo_brand'))]" />
             <field name="level_id" ref="academy_tests.academy_level_12" />
+            <field name="active" eval="False" />
         </record>
 
     </data>
