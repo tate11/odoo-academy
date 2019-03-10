@@ -11,7 +11,7 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <form string="QuestionCategorizeWizard" create="0" delete="0" edit="1">
+                <form string="Question Categorize Wizard" create="0" delete="0" edit="1">
                     <header>
                         <button name="update_targets" type="object"
                                 string="Update" class="oe_highlight"
@@ -33,10 +33,32 @@
                         </tree>
                     </field>
 
-                    <group col="2" states="step2">
-                        <field name="topic_id" class="oe_field_topic_id" />
+                    <group states="step2" col="4">
+                        <field name="change_topic" class="oe_field_change_topic"
+                            colspan="4"/>
+
+                        <field name="topic_id" class="oe_field_topic_id"
+                            attrs="{'invisible': [('change_topic', '=', False)], 'required' : [('change_topic', '=', True)]}" />
+                        <field name="category_action" class="oe_field_category_action"
+                            attrs="{'invisible': [('change_topic', '=', False)], 'required' : [('change_topic', '=', True)]}" />
                         <field name="category_ids" class="oe_field_category_ids"
-                            domain="[('topic_id', '=', topic_id)]" />
+                            domain="[('topic_id', '=', topic_id)]" colspan="4" widget="many2many_tags"
+                            attrs="{'invisible': [('change_topic', '=', False)], 'required' : [('change_topic', '=', True)]}" />
+                    </group>
+
+                    <group  states="step2" col="4">
+                        <field name="change_type" class="oe_field_change_type" />
+                        <field name="type_id" class="oe_field_type_id"
+                            attrs="{'readonly': [('change_type', '=', False)], 'required' : [('change_type', '=', True)]}" />
+
+                        <field name="change_level" class="oe_field_change_level" />
+                        <field name="level_id" class="oe_field_level_id"
+                            attrs="{'readonly': [('change_level', '=', False)], 'required' : [('change_level', '=', True)]}" />
+
+                        <field name="tag_action" class="oe_field_tag_action" />
+                        <field name="tag_ids" class="oe_field_tag_ids"
+                            widget="many2many_tags"
+                            attrs="{'readonly': [('tag_action', '=', False)], 'required' : [('tag_action', '=', 'new')]}" />
                     </group>
 
                     <footer />

@@ -68,7 +68,7 @@
         </record>
 
         <record id="academy_professional_family_17" model="academy.professional.family">
-            <field name="name">Instalation and maintenance</field>
+            <field name="name">Installation and maintenance</field>
         </record>
 
         <record id="academy_professional_family_18" model="academy.professional.family">

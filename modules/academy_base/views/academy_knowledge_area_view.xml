@@ -57,7 +57,7 @@
                         </div>
                         <group col="2">
                             <field name="knowle_code" class="oe_field_knowle_code"
-                                placeholder="Enter new value for knowle code" />
+                                placeholder="Enter new value for knowledge area code" />
                             <field name="description" class="oe_field_description"
                                 placeholder="Enter new value for description" />
                         </group>

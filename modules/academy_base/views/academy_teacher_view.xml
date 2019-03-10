@@ -59,7 +59,7 @@
                                 <field name="name" class="oe_field_name"
                                     placeholder="Name" attrs="{'invisible': [('create_uid', '=', False)]}" />
                                 <field name="res_users_id" class="oe_field_res_users_id"
-                                    placeholder="Enter new value for res users id" attrs="{'invisible': [('create_uid', '!=', False)]}" />
+                                    placeholder="Choose an existing user" attrs="{'invisible': [('create_uid', '!=', False)]}" />
                             </h1>
                         </div>
 

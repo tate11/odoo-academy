@@ -74,7 +74,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Choose enroled student',
+        help='Choose enrolled student',
         comodel_name='res.partner',
         domain=[('is_student', '=', True)],
         context={},
@@ -88,7 +88,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Choose training action in which the student will be enroled',
+        help='Choose training action in which the student will be enrolled',
         comodel_name='academy.training.action',
         domain=[],
         context={},
@@ -103,7 +103,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Choose modules in which the student will be enroled',
+        help='Choose modules in which the student will be enrolled',
         comodel_name='academy.training.module',
         relation='academy_action_enrolment_training_module_rel',
         column1='action_enrolment_id',
@@ -120,7 +120,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         readonly=False,
         index=False,
         default=lambda self: fields.Date.context_today(self),
-        help='Date in which student has been enroled'
+        help='Date in which student has been enrolled'
     )
 
     deregister = fields.Date(

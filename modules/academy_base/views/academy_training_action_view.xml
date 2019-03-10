@@ -69,7 +69,7 @@
                             <field name="training_activity_id" class="oe_field_training_activity_id"
                                 placeholder="Choose related training activity" />
                             <field name="application_scope_id" class="od_field_application_scope"
-                                placeholder="application_scope" />
+                                placeholder="Choose new application scope" />
                         </group>
 
                         <group col="4">
@@ -84,13 +84,13 @@
                             <page string="Data" class="oe_page_data" accesskey="T">
                                 <group col="2">
                                     <field name="knowledge_area_ids" class="od_field_knowledge_area"
-                                        placeholder="knowledge_area" widget="many2many_tags" />
+                                        placeholder="Choose knowledge area" widget="many2many_tags" />
                                     <field name="professional_category_id" class="od_field_professional_category"
-                                        placeholder="professional_category" />
+                                        placeholder="Choose professional category" />
                                     <field name="training_modality_ids" class="od_field_training_modality"
-                                        placeholder="training_modality" widget="many2many_tags" />
+                                        placeholder="Choose training modality" widget="many2many_tags" />
                                     <field name="training_methodology_ids" class="od_field_training_methodology"
-                                        placeholder="training_methodology" widget="many2many_tags" />
+                                        placeholder="Choose training methodology" widget="many2many_tags" />
                                 </group>
                             </page>
 

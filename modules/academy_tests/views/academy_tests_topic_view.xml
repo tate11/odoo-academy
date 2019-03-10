@@ -25,6 +25,8 @@
             <field name="arch" type="xml">
                 <tree string="academy_topic_tree" create="1" delete="1" edit="1">
                     <field name="name" class="oe_field_name" />
+                    <field name="description" class="oe_field_category_count" />
+                    <field name="category_count" class="oe_field_category_count" />
                 </tree>
             </field>
         </record>

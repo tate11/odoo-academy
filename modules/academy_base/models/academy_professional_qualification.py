@@ -146,7 +146,7 @@ class AcademyProfessionalQualification(models.Model):
         readonly=True,
         index=False,
         default=0,
-        help='Nomber of competency units related with this professional qualification',
+        help='Number of competency units related with this professional qualification',
         compute=lambda self: self._compute_competency_unit_count()
     )
 

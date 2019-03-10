@@ -37,8 +37,11 @@ class AcademyTestsTestQuestionRel(models.Model):
     """
 
     _name = 'academy.tests.test.question.rel'
-    _description = (u'Relationship between tests and questions, this model '
-                    'keeps sequence order')
+    _description = (u'Test-question relationship')
+
+    _inherits = {
+        'academy.tests.question': 'question_id'
+    }
 
     _rec_name = 'test_id'
     _order = 'sequence ASC, id ASC'
@@ -93,3 +96,11 @@ class AcademyTestsTestQuestionRel(models.Model):
         related='question_id.active',
         store=True
     )
+
+    _sql_constraints = [
+        (
+            'prevent_duplicate_questions',
+            'UNIQUE (test_id, question_id)',
+            _(u'Duplicate question in test')
+        )
+    ]

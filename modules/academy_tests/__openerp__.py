@@ -29,6 +29,7 @@
     # always loaded
     'data': [
         'data/academy_tests_level_data.xml',
+        'data/academy_tests_question_type_data.xml',
 
         'security/academy_tests_answer.xml',
         'security/academy_tests_answers_table.xml',
@@ -38,7 +39,7 @@
         'security/academy_tests_question_impugnment.xml',
         'security/academy_tests_tag.xml',
         'security/academy_tests_tets.xml',
-        'security/academy_tests_academy_tests_question_rel.xml',
+        'security/academy_tests_test_question_rel_view.xml',
         'security/academy_tests_topic.xml',
 
         'views/academy_tests.xml',
@@ -48,7 +49,7 @@
         'views/academy_tests_question_impugnment_view.xml',
         'views/academy_tests_question_view.xml',
         'views/academy_tests_tag_view.xml',
-        'views/academy_tests_academy_tests_question_rel.xml',
+        'views/academy_tests_test_question_rel_view.xml',
         'views/academy_tests_tets_view.xml',
         'views/academy_tests_topic_view.xml',
         'views/ir_attachment_view.xml',
@@ -57,8 +58,11 @@
         'report/academy_test_report.xml',
         'report/academy_test_answers_table_report.xml',
 
-        'wizard/academy_tests_question_categorize_view.xml',
-        'wizard/academy_tests_question_append_view.xml',
+        'wizard/academy_tests_question_categorize_wizard_view.xml',
+        'wizard/academy_tests_question_append_wizard_view.xml',
+        'wizard/academy_tests_question_import_wizard_view.xml',
+        'wizard/academy_tests_random_wizard_line_view.xml',
+        'wizard/academy_tests_random_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

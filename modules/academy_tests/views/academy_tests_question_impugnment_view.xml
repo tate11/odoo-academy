@@ -119,7 +119,7 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_question_impugnment" model="ir.ui.menu" >
-            <field name="name">Question impugnment</field>
+            <field name="name">Impugnments</field>
             <field name="sequence" eval="20" />
             <field name="action" ref="action_question_impugnment_act_window" />
             <field name="parent_id" ref="academy_tests.menu_test_top" />

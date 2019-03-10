@@ -128,7 +128,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         readonly=False,
         index=False,
         default=False,
-        help='Check it if this unit start after previous unit is complete',
+        help='Check it if this unit starts after previous unit is complete',
         oldname='follow_previous'
     )
 
@@ -183,7 +183,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         index=False,
         default=0,  # Will change when training_action_id will be changed
         digits=(16, 2),
-        help='Maximum number of hours will be ocuppied'
+        help='Maximum number of hours will be occupied'
     )
 
     teacher_id = fields.Many2one(

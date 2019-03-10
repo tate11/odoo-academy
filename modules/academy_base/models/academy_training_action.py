@@ -233,12 +233,12 @@ class AcademyTrainingAction(models.Model):
     )
 
     tuttor_id = fields.Many2one(
-        string='Tuttor',
+        string='Tutor',
         required=False,
         readonly=False,
         index=False,
         default=None,
-        help='Choose which teacher will tutorize this group',
+        help='Choose which teacher will oversee this group',
         comodel_name='academy.teacher',
         domain=[],
         context={},

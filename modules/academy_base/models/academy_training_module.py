@@ -5,7 +5,7 @@
 This module contains the academy.training.module an unique Odoo model
 which contains all Academy Training Module attributes and behavior.
 
-This model is the representation of the real life trainint module. This
+This model is the representation of the real life training module. This
 is based on Spanish Certificate Training.
 
 Classes:

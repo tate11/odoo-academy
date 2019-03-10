@@ -36,10 +36,10 @@ class AcademyTestsQuestionImpugnment(models.Model):
     """
 
     _name = 'academy.tests.question.impugnment'
-    _description = u' Question impugnment'
+    _description = u'Question impugnment'
 
     _rec_name = 'name'
-    _order = 'name ASC'
+    _order = 'write_date DESC, create_date DESC'
 
     name = fields.Char(
         string='Title',

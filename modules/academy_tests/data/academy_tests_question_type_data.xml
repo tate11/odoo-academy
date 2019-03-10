@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <record id="academy_tests_question_type_1" model="academy.tests.question.type">
+            <field name="name">Theoretical</field>
+            <field name="description">Questions about concepts, these can be answered without any other resource</field>
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_question_type_2" model="academy.tests.question.type">
+            <field name="name">Practical</field>
+            <field name="description">These questions ask about an external resource or about some work performed on this</field>
+            <field name="active" eval="True" />
+        </record>
+
+        <record id="academy_tests_question_type_3" model="academy.tests.question.type">
+            <field name="name">Supposed</field>
+            <field name="description">These questions expose a situation and propose several alternatives being only one of them the correct on</field>
+            <field name="active" eval="True" />
+        </record>
+    </data>
+</openerp>

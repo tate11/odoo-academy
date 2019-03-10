@@ -170,7 +170,7 @@ attended.
     )
 
     training_resource_ids = fields.Many2many(
-        string='Trainin resources',
+        string='Training resources',
         required=False,
         readonly=False,
         index=False,

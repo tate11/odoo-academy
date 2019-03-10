@@ -24,7 +24,6 @@ _logger = getLogger(__name__)
 # pylint: disable=locally-disabled, R0903
 class Nameofmodel(models.TransientModel):
     """ This model is the representation of the name of model
-
     """
 
 
@@ -37,7 +36,7 @@ class Nameofmodel(models.TransientModel):
         required=True,
         readonly=False,
         index=False,
-        default=lambda self: self._default_test_id(),
+        default=lambda self: self.default_test_id(),
         help='Test to which questions will be append',
         comodel_name='academy.tests.test',
         domain=[],
@@ -59,17 +58,23 @@ class Nameofmodel(models.TransientModel):
         domain=[],
         context={},
         limit=None,
-        default=lambda self: self._default_question_ids(),
+        default=lambda self: self.default_question_ids(),
     )
 
 
-    def _default_question_ids(self):
+    def default_question_ids(self):
+        """ Get default `id` values from context, these will be questions
+        had been choosen before launch this wizard
+        """
         ids = self.env.context.get('active_ids', [])
-        print(self.env.context)
         return [(6, None, ids)] if ids else False
 
 
-    def _default_test_id(self):
+    def default_test_id(self):
+        """ Get last test used with wizard. Wizard is a transient model
+        therefore there could be none.
+        """
+
         uid = self.env.context.get('uid', -1)
         domain = ['|', ('create_uid', '=', uid), ('write_uid', '=', uid)]
         order = 'write_date desc, create_date desc, id desc'
@@ -85,6 +90,7 @@ class Nameofmodel(models.TransientModel):
 
 
     def _ensure_required(self):
+        # pylint: disable=locally-disabled, W0101
         if not self.test_id:
             raise ValidationError(_('Test field is required'))
             return False

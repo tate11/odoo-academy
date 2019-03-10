@@ -5,34 +5,20 @@
 This module contains the academy.test.report.townhall an unique Odoo model
 which contains all Academy Test Report Townhall attributes and behavior.
 
-This model is the representation of the real life academy test report townhall
-
-Classes:
-    AcademyTestReportTownhall: This is the unique model class in this module
-    and it defines an Odoo model with all its attributes and related behavior.
-
-    Inside this class can be, in order, the following attributes and methods:
-    * Object attributes like name, description, inheritance, etc.
-    * Entity fields with the full definition
-    * Computed fields and required computation methods
-    * Events (@api.onchange) and other field required methods like computed
-    domain, defaul values, etc...
-    * Overloaded object methods, like create, write, copy, etc.
-    * Public object methods will be called from outside
-    * Private auxiliary methods not related with the model fields, they will
-    be called from other class methods
-
-
 Todo:
-    * Complete the model attributes and behavior
+    - [x] Add report class
+    - [x] Move code to the report class
+    - [x] Add pagebreak before answer table
+    * Rename o
 
 """
 
 
 from logging import getLogger
+from re import search
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from openerp import models, api
 from openerp.tools.translate import _
 
 
@@ -43,23 +29,52 @@ _logger = getLogger(__name__)
 
 # pylint: disable=locally-disabled, R0903
 class AcademyTestReportTownhall(models.AbstractModel):
-    """ This model is the representation of the academy test report townhall
+    """ This controls the academy test report townhall.
 
-    Fields:
-      name (Char)       : Human readable name which will identify each record
-      description (Text): Something about the record or other information witch
-      has not an specific defined field to store it.
-      active (Boolean)  : Checked do the record will be found by search and
-      browse model methods, unchecked hides the record.
-
+    Public methods
+    - townhall_file: this uses regex to search for filename in question
+    preamble, this is needed to fill tawnhall test template.
     """
 
 
-    _name = 'academy.test.report.townhall'
+    _name = 'report.academy_tests_reports.view_academy_test_townhall_qweb'
     _description = u'Academy Test Report Townhall'
+
+    _model = 'academy.tests.test'
+
 
 
     @api.model
     def get_report_values(self, docids, data=None):
-        print('Hola')
-        super(AcademyTestReportTownhall, self).get_report_values(docids, data)
+        """ This adds a self reference as named ``report `` item, then public
+        methods in this object can be called from report.
+        """
+
+        test_domain = [('id', 'in', docids)]
+        test_obj = self.env[self._model]
+        test_set = test_obj.search(test_domain)
+
+        return {
+            'doc_ids': docids,
+            'doc_model': self._model,
+            'docs': test_set,
+            'data': data,
+            'report': self
+        }
+
+
+
+    @api.model
+    # pylint: disable=locally-disabled, R0201
+    def townhall_file(self, preamble):
+        """ This searches for file name in given question preamble and return
+        it as an string
+
+        @param (string): question preamble
+        @return returns filename or empty string
+        """
+
+        matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', preamble)
+
+        return matches.group() if matches else ''
+

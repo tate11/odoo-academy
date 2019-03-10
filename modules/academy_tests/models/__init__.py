@@ -10,6 +10,7 @@ from . import academy_tests_category
 from . import academy_tests_tag
 from . import academy_tests_level
 from . import academy_tests_answer
+from . import academy_tests_question_type
 from . import academy_tests_question
 from . import academy_tests_test_question_rel
 from . import academy_tests_test

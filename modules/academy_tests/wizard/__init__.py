@@ -5,5 +5,9 @@
 ###############################################################################
 
 
-from . import academy_tests_question_categorize
-from . import academy_tests_question_append
+from . import academy_tests_question_categorize_wizard
+from . import academy_tests_question_append_wizard
+from . import academy_tests_question_import_wizard
+from . import academy_tests_random_wizard_line
+from . import academy_tests_random_wizard_set
+from . import academy_tests_random_wizard

@@ -361,6 +361,9 @@ class App(object):
 
         """.format(url)
 
+    def _clear_line(self, line):
+        line = re.sub('[ \t]+', ' ', line) or '';
+        return line.strip()
 
     def _txt2sql(self):
         """ Main method docstring
@@ -380,6 +383,7 @@ class App(object):
                 lines = finput.readlines()
                 for line_raw in lines:
                     line = line_raw.decode('utf-8', errors='replace')
+                    line = self._clear_line(line)
                     if self._is_attachment(line):
                         #pylint: disable=I0011,W0612
                         title, path = self._split_attachment(line)

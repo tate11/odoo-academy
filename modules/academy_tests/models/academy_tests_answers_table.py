@@ -40,10 +40,10 @@ class AcademyTestsAnswersTable(models.Model):
     """
 
     _name = 'academy.tests.answers.table'
-    _description = u'Answers table'
+    _description = u'Answers table entry'
 
     _rec_name = 'name'
-    _order = 'sequence ASC'
+    _order = 'sequence ASC, id ASC'
 
     _auto = False
 

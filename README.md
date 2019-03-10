@@ -215,6 +215,31 @@ After running the modules list update you can confirm the new modules are availa
 - [ ] Category view (from menu) could not allow to create new
 - [x] Test reports should be accessible from action menu
 - [ ] Link tests and resources
+- [x] Categorize wizard should allow to choose kind, level and tags too
+      - User should can check if topic and categories will changed
+      - User should can check if kind will be changed
+      - User should can check if level will be changed
+      - User should can check if tags will be changed
+
+- [x] test_id should be readonly after set it
+- [ ] import and random should read defaults from choosen tests
+- [x] import wizard needs css to ensure minimun content field height
+- [x] import wizard content label can be removed
+- [ ] question used_in field should be a button (count tests)
+- [ ] questions and tests should be a button to share it
+- [ ] users by default can only read own questions and tests
+- [ ] add options="{'no_create': True} and other widget options
+      - see: http://ludwiktrammer.github.io/odoo/form-widgets-many2many-fields-options-odoo.html#many2manytags-widget
+- [ ] import wizard attachments should have a many2many_kanban widget or a many2many_binary
+      - see: http://ludwiktrammer.github.io/odoo/form-widgets-many2many-fields-options-odoo.html#many2manytags-widget
+- [ ] when many2many_binary binary is used the attachments will be stored in
+      the database even if they are not being used. A cron task should be added
+      to remove them (linked to model: academy.tests.question.import.wizard)
+- [ ] Import wizard should read attachments by id, by filename (only in wizard)
+      and by URL (only in wizard)
+
+academy.tests.question.import.wizard
+
 
 #### Create ap3_academy_tests
 

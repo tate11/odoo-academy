@@ -101,7 +101,7 @@ class App(object):
                             help=u'test title')
 
         parser.add_argument('-r', '--report', type=str, dest='report',
-                            default=u'academy_tests.view_at_test_qweb',
+                            default=u'academy_tests.view_academy_tests_qweb',
                             help=u'available test report')
 
         parser.add_argument('-o', '--output', type=str, dest='output',
@@ -192,7 +192,7 @@ class App(object):
         if self._title:
             domain.append(('name', 'ilike', self._title))
 
-        test_ids = self._odoo.env['at.test'].search(domain)
+        test_ids = self._odoo.env['academy.tests.test'].search(domain)
 
         return test_ids[0] if test_ids else 0
 

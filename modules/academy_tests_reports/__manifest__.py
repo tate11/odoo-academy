@@ -32,7 +32,8 @@
 
         'views/test_report_layout.xml',
 
-        'views/academy_tests_report_townhall.xml'
+        'views/simple_report.xml',
+        'views/townhall_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

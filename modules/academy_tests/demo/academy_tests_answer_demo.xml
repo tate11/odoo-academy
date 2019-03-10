@@ -43,7 +43,7 @@
 
         <record id="academy_tests_answer_B_to_question_2" model="academy.tests.answer">
             <field name="name">Ada</field>
-            <field name="description">This language received name in honor of Augusta Ada, Countess of Lovelace</field>
+            <field name="description">This language received name in honour of Augusta Ada, Countess of Lovelace</field>
             <field name="active" eval="True" />
             <field name="question_id" ref="academy_tests_question_demo_2" />
             <field name="is_correct" eval="False" />
@@ -52,7 +52,7 @@
 
         <record id="academy_tests_answer_C_to_question_2" model="academy.tests.answer">
             <field name="name">Velázquez Visual</field>
-            <field name="description">Formely Velneo</field>
+            <field name="description">Formally Velneo</field>
             <field name="active" eval="True" />
             <field name="question_id" ref="academy_tests_question_demo_2" />
             <field name="is_correct" eval="False" />
@@ -61,7 +61,7 @@
 
         <record id="academy_tests_answer_D_to_question_2" model="academy.tests.answer">
             <field name="name">JavaScript</field>
-            <field name="description">JavaScript es una marca registrada de Oracle Corporation</field>
+            <field name="description">JavaScript is an Oracle Corporation registered trademark</field>
             <field name="active" eval="True" />
             <field name="question_id" ref="academy_tests_question_demo_2" />
             <field name="is_correct" eval="False" />

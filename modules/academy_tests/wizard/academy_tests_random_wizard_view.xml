@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- Form view for "academy.tests.random.wizard" -->
+        <record id="view_academy_tests_random_wizard_form" model="ir.ui.view">
+            <field name="name">view.academy.tests.random.wizard.form</field>
+            <field name="model">academy.tests.random.wizard</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_tests_random_wizard_form" create="1" delete="1" edit="1">
+                    <header>
+                        <button name="append_questions" type="object"
+                            string="Append" class="btn btn-primary pull-right"
+                            style="margin-right: 36px;"
+                            attrs="{'readonly': [('random_wizard_line_ids', '=', [])]}"/>
+                    </header>
+
+                    <field name="random_wizard_set_id" invisible="1" required="1" />
+
+                    <group col="8">
+                        <field name="test_id" class="oe_field_test_id" colspan="6" />
+
+                        <field name="overwrite" class="oe_field_overwrite"
+                            attrs="{'readonly': [('test_id', '=', False)]}"
+                            placeholder="Check it to overwrite" />
+                        </group>
+
+                    <group>
+                        <field name="random_wizard_line_ids" colspan="8"
+                            class="oe_field_random_wizard_line_ids" nolabel="1"
+                            placeholder="Add or manage lines" widget="one2many" />
+                    </group>
+
+                    <p>
+                        <a class="btn btn-success btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <b>More&#160;&#160;&gt;&gt;</b>
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+
+                            <group col="8">
+                                <field name="random_wizard_template_id"
+                                    class="oe_field_random_wizard_id" colspan="6"
+                                    options="{'no_open': True, 'no_create': True, 'no_quick_create': True, 'no_create_edit': True }"
+                                    placeholder="Enter new value for random wizard id" />
+
+                                <field name="last_update" class="oe_field_last_update"
+                                    widget="date" colspan="2"
+                                    attrs="{'invisible': [('random_wizard_template_id', '=', False)]}"/>
+
+                                <separator colspan="8" />
+
+                                <field name="name" class="oe_field_name" colspan="6"
+                                    placeholder="Enter new value for name"
+                                    attrs="{'required': [('save', '!=', False)]}"/>
+
+                                <field name="save" class="oe_field_save"
+                                    colspan="2" />
+
+                                <field name="description" class="oe_field_description"
+                                    placeholder="Enter new value for description"
+                                    colspan="8"/>
+                            </group>
+
+                            </div>
+                    </div>
+                    <footer />
+
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -39,7 +39,7 @@ class AcademyTestsLevel(models.Model):
     _description = u'Question difficulty level'
 
     _rec_name = 'name'
-    _order = 'name ASC'
+    _order = 'sequence ASC, name ASC'
 
     name = fields.Char(
         string='Name',

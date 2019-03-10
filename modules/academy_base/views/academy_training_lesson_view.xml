@@ -67,7 +67,7 @@
                         </group>
                         <group col="4">
                             <field name="start_date" class="oe_field_start_date"
-                                placeholder="Choose niew date start" />
+                                placeholder="Choose new date start" />
                             <field name="duration" class="oe_field_duration"
                                 placeholder="Enter new value for date delay" widget="float_time" />
                         </group>

@@ -267,19 +267,23 @@ class App(object):
     def _verbose(self, message_type, message_name, *arg):
         """ Prints messages """
 
-        msg = message_name % arg
+        try:
+            msg = message_name % arg
+        except:
+            msg= message_name
+            print(arg)
 
         if message_type == MessageType.Debug and self._level <= MessageType.Debug:
             msg = u'  ' + msg
-            print msg
+            print(msg)
         elif message_type == MessageType.Warn and self._level <= MessageType.Warn:
             msg = u'  *' + msg
-            print msg
+            print(msg)
         elif message_type == MessageType.Error and self._level <= MessageType.Error:
             msg = u'  **' + msg
-            print msg
+            print(msg)
         elif  message_type == MessageType.Info and self._level <= MessageType.Info:
-            print msg
+            print(msg)
 
 
     def _get_mimetype(self, path):

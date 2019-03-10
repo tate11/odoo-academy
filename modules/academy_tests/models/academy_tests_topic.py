@@ -37,7 +37,7 @@ class AcademyTestsTopic(models.Model):
     """
 
     _name = 'academy.tests.topic'
-    _description = u'Topic in which several questions will be grouped'
+    _description = u'Question topic'
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -92,6 +92,29 @@ class AcademyTestsTopic(models.Model):
         oldname='academy_category_ids'
     )
 
+
+    # -------------------------- MANAGEMENT FIELDS ----------------------------
+
+    category_count = fields.Integer(
+        string='Categories',
+        required=False,
+        readonly=True,
+        index=False,
+        default=0,
+        help='Show number of categories',
+        compute=lambda self: self.compute_category_count()
+    )
+
+    @api.multi
+    @api.depends('category_ids')
+    def compute_category_count(self):
+        """ Computes `category_count` field value, this will be the number
+        of categories related with this topic
+        """
+        for record in self:
+            record.category_count = len(record.category_ids)
+
+
     # --------------------------- SQL_CONTRAINTS ------------------------------
 
     _sql_constraints = [
@@ -101,4 +124,5 @@ class AcademyTestsTopic(models.Model):
             _(u'There is already another topic with the same name')
         )
     ]
+
 

@@ -54,9 +54,9 @@
 
                         <group col="2">
                             <field name="res_partner_id" class="oe_field_res_partner_id"
-                                    placeholder="Choose student who will be enroled" />
+                                    placeholder="Choose student who will be enrolled" />
                             <field name="training_action_id" class="oe_field_training_action_id"
-                                    placeholder="Choose action in which the student will be enroled"
+                                    placeholder="Choose action in which the student will be enrolled"
                                     invisible="context.get('training_action_id', False)"/>
                         </group>
 
@@ -89,7 +89,7 @@
                                     <field name="action_name" class="oe_field_action_name"
                                         placeholder="Enter new value for action name" readonly="1" />
                                     <field name="action_code" class="oe_field_action_code"
-                                        placeholder="Enter new value for action_code" readonly="1" />
+                                        placeholder="Enter new value for action code" readonly="1" />
                                     <field name="start" class="oe_field_start"
                                         placeholder="Enter new value for start" readonly="1" />
                                     <field name="end" class="oe_field_end"
@@ -98,7 +98,7 @@
                             </page>
                             <page string="Modules" class="oe_page_modules" accesskey="M">
                                 <field name="training_module_ids" class="oe_field_training_module_ids"
-                                    placeholder="Choose modules in which student will be enroled" />
+                                    placeholder="Choose modules in which student will be enrolled" />
                             </page>
                         </notebook>
                     </sheet>

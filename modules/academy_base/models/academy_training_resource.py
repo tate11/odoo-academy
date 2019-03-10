@@ -328,7 +328,7 @@ class AcademyTrainingResource(models.Model):
 
     # @api.onchange('training_module_ids')
     # def _training_module_ids(self):
-    #     """ training_module_ids change event. Update the trainint unit
+    #     """ training_module_ids change event. Update the training unit
     #     list and domain
     #     """
 

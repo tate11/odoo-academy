@@ -67,20 +67,20 @@
                     <t t-call="academy_tests_reports.academy_test_layout">
                         <div class="page">
 
-                        <t t-if="o.preamble">
-                            <p class="academy-test-preamble"><t t-esc="o.preamble" /></p>
+                        <t t-if="test.preamble">
+                            <p class="academy-test-preamble"><t t-esc="test.preamble" /></p>
                         </t>
 
                             <table class="table table-bordered academy-tests-post-test-test posted-test-body">
                                 <tbody>
 
-                                <t t-foreach="o.question_ids" t-as="question_ids">
+                                <t t-foreach="test.question_ids" t-as="question_ids">
 
                                     <t t-set="question_id" t-value="question_ids.question_id" />
 
                                     <tr class="academy-tests-post-test-question">
 
-                                        <td><span class="academy-tests-question-preamble"><t t-esc="question_id.townhall_file()" /></span></td>
+                                        <td><span class="academy-tests-question-preamble"><t t-esc="report.townhall_file(question_id.preamble)" /></span></td>
                                         <td><span class="academy-tests-question-order"></span></td>
                                         <td><t t-call="academy_tests_reports.view_academy_test_question_inner_townhall_qweb" /></td>
                                     </tr>
@@ -90,7 +90,8 @@
                                 </tbody>
                             </table>
 
-                            <t t-set="test_id" t-value="o" />
+                            <hr class="clearfix line-between-test-and-answers" />
+
                             <t t-call="academy_tests.view_academy_answers_table_qweb" />
 
                         </div>
@@ -112,7 +113,7 @@
             <field name="arch" type="xml">
                 <t t-name="academy_tests_reports.view_academy_test_townhall_qweb">
                     <t t-call="web.html_container">
-                        <t t-foreach="docs" t-as="o">
+                        <t t-foreach="docs" t-as="test">
                             <t t-call="academy_tests_reports.view_academy_test_document_townhall_qweb" />
                         </t>
                     </t>

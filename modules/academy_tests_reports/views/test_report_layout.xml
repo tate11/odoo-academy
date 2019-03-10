@@ -24,6 +24,8 @@
                 <t t-set="company" t-value="res_company"/>
             </t>
 
+            <t t-set="o" t-value="test" />
+
             <div class="header">
                 <div class="row">
                     <div class="col-xs-10">

@@ -13,6 +13,7 @@ odoo.define('academy_tests.QuestionKanbanView', function(require) {
         events: _.defaults({
             'click .o_question_kanban_status_bar': '_onKanbanStatusMenuClick',
             'click #question_kanban_status_menu_add_to_test': '_onKanbanStatusMenuAddToTest',
+            'click a[data-markdown]': '_onKanbanDataMarkdown',
         }, KanbanRecord.prototype.events),
 
         _onKanbanStatusMenuClick: function(event) {
@@ -36,6 +37,32 @@ odoo.define('academy_tests.QuestionKanbanView', function(require) {
                 context: {'default_question_ids': [(4, data['id'])]}
             });
 
+        },
+
+        _onKanbanDataMarkdown: function (event) {
+            var self = this;
+            var data = this.recordData;
+
+            event.preventDefault();
+
+            try {
+                var text = jQuery(event.target).data('markdown');
+                self._copyStringToClipboard(text);
+            } catch(err) {
+                console.log('Markdown could no be copied to clipboard')
+            }
+
+        },
+
+        _copyStringToClipboard: function (str) {
+           var el = document.createElement('textarea');
+           el.value = str;
+           el.setAttribute('readonly', '');
+           el.style = {position: 'absolute', left: '-9999px'};
+           document.body.appendChild(el);
+           el.select();
+           document.execCommand('copy');
+           document.body.removeChild(el);
         },
 
     });

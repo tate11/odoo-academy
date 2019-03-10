@@ -36,7 +36,7 @@ class AcademyTestsAnswer(models.Model):
     """
 
     _name = 'academy.tests.answer'
-    _description = u'Answer for a question'
+    _description = u'Question answer'
 
     _rec_name = 'name'
     _order = 'sequence ASC, id ASC'

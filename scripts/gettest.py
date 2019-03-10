@@ -91,8 +91,8 @@ class Attachment(Entity):
                     ata.url
             FROM
                     ir_attachment AS ata
-            inner join at_question_ir_attachment_rel as rel on rel.ir_attachment_id = ata."id"
-            INNER JOIN at_question AS atq ON rel.at_question_id = atq."id"
+            inner join academy_tests_question_ir_attachment_rel as rel on rel.attachment_id = ata."id"
+            INNER JOIN academy_tests_question AS atq ON rel.question_id = atq."id"
             WHERE atq."id" = {}
             ORDER BY
                     atq."id" ASC;
@@ -148,8 +148,8 @@ class Answer(Entity):
                 ata.name,
                 ata.is_correct
             FROM
-                at_answer AS ata
-            INNER JOIN at_question AS atq ON ata.at_question_id = atq."id"
+                academy_tests_answer AS ata
+            INNER JOIN academy_tests_question AS atq ON ata.question_id = atq."id"
             WHERE atq."id" = {}
             ORDER BY
                 atq."id" ASC,
@@ -216,9 +216,9 @@ class Question(Entity):
                 atq.preamble,
                 atq.description
             FROM
-                at_question AS atq
-            INNER JOIN at_test_at_question_rel AS attqr ON attqr.at_question_id = atq."id"
-            INNER JOIN at_test AS att ON attqr.at_test_id = att."id"
+                academy_tests_question AS atq
+            INNER JOIN academy_tests_test_question_rel AS attqr ON attqr.question_id = atq."id"
+            INNER JOIN academy_tests_test AS att ON attqr.test_id = att."id"
             WHERE att."id" = {}
             ORDER BY
                 att."id" ASC,
@@ -272,7 +272,7 @@ class Test(Entity):
 
     @classmethod
     def browse(cls, test_id):
-        conn_pattern = u'SELECT id, name, description FROM at_test WHERE at_test."id" = {};'
+        conn_pattern = u'SELECT id, name, description FROM academy_tests_test WHERE "id" = {};'
         conn_string = conn_pattern.format(test_id)
         cur = cls.conn.cursor()
         cur.execute(conn_string)
@@ -387,7 +387,7 @@ class App(object):
             try:
                 string.decode('utf-8', errors='ignore')
             except Exception as ex:
-                print ex
+                print(ex)
 
         else:
             try:
@@ -396,18 +396,18 @@ class App(object):
                 try:
                     result = result.encode(codepage, errors='ignore')
                 except Exception as ex:
-                    print ex
+                    print(ex)
 
         return result
 
     @staticmethod
     def _autodecode(_in_text):
         """ Encode text in UTF-8 """
+
         if _in_text:
-            dbcode = 'utf-8' # chardet.detect(_in_text)['encoding']
-            return _in_text.decode(dbcode, errors='replace')
-        else:
-            return u''
+            return _in_text #.decode('utf-8', errors='replace')
+
+        return ''
 
 
     def _get_test(self):
@@ -470,7 +470,7 @@ class App(object):
 
 
 
-        print os_encoding
+        print(os_encoding)
 
         # except Exception as ex:
         #     print ex

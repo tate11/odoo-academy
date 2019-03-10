@@ -12,11 +12,15 @@ Classes:
     AcademyTest: This is the unique model class in this module
     and it defines an Odoo model with all its attributes and related behavior.
 
+
+TODO:
+
+- [x] Used in view should be shown test information intead of quesition data
+
 """
 
 
 from logging import getLogger
-from re import search
 
 # pylint: disable=locally-disabled, E0401
 from openerp import models, fields, api
@@ -29,7 +33,7 @@ _logger = getLogger(__name__)
 
 
 
-# pylint: disable=locally-disabled, R0903
+# pylint: disable=locally-disabled, R0903, W0212
 class AcademyTestsQuestion(models.Model):
     """ Questions are the academy testss cornerstone. Each one of the questions
     belongs to a single topic but they can belong to more than one question in
@@ -41,10 +45,10 @@ class AcademyTestsQuestion(models.Model):
     """
 
     _name = 'academy.tests.question'
-    _description = u'Referred question'
+    _description = u'Question'
 
     _rec_name = 'name'
-    _order = 'name ASC'
+    _order = 'write_date DESC, create_date DESC'
 
     _inherit = ['mail.thread']
 
@@ -105,7 +109,6 @@ class AcademyTestsQuestion(models.Model):
         ondelete='cascade',
         auto_join=False,
         track_visibility='onchange',
-        oldname='academy_topic_id'
     )
 
     category_ids = fields.Many2many(
@@ -123,7 +126,6 @@ class AcademyTestsQuestion(models.Model):
         context={},
         limit=None,
         track_visibility='onchange',
-        oldname='academy_category_ids'
     )
 
     answer_ids = fields.One2many(
@@ -140,7 +142,6 @@ class AcademyTestsQuestion(models.Model):
         auto_join=False,
         limit=None,
         track_visibility='onchange',
-        oldname='academy_answer_ids'
     )
 
     tag_ids = fields.Many2many(
@@ -158,7 +159,6 @@ class AcademyTestsQuestion(models.Model):
         context={},
         limit=None,
         track_visibility='onchange',
-        oldname='academy_tag_ids'
     )
 
     level_id = fields.Many2one(
@@ -166,7 +166,7 @@ class AcademyTestsQuestion(models.Model):
         required=True,
         readonly=False,
         index=False,
-        default=lambda self: self._default_level_id(),
+        default=lambda self: self.default_level_id(),
         help='Difficulty level of this question',
         comodel_name='academy.tests.level',
         domain=[],
@@ -174,7 +174,6 @@ class AcademyTestsQuestion(models.Model):
         ondelete='cascade',
         auto_join=False,
         track_visibility='onchange',
-        oldname='academy_level_id'
     )
 
     ir_attachment_ids = fields.Many2many(
@@ -191,22 +190,6 @@ class AcademyTestsQuestion(models.Model):
         domain=[],
         context={},
         limit=None,
-        oldname='academy_ir_attachment_ids'
-    )
-
-    ir_attachment_image_ids = fields.Many2many(
-        string='Images',
-        required=False,
-        readonly=True,
-        index=False,
-        default=None,
-        help='Images needed to solve this question',
-        comodel_name='ir.attachment',
-        domain=[('index_content', '=', 'image')],
-        context={},
-        limit=None,
-        compute='_compute_ir_attachment_image_ids',
-        oldname='academy_ir_attachment_image_ids'
     )
 
     test_ids = fields.One2many(
@@ -215,96 +198,28 @@ class AcademyTestsQuestion(models.Model):
         readonly=True,
         index=False,
         default=None,
-        help='Test in witch this question has been used',
+        help='Test in which this question has been used',
         comodel_name='academy.tests.test.question.rel',
         inverse_name='question_id',
         domain=[],
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_test_ids',
     )
 
-    kind = fields.Selection(
-        string='Kind',
+    type_id = fields.Many2one(
+        string='Type',
         required=True,
         readonly=False,
         index=False,
-        default='th',
-        help=False,
-        selection=[
-            ('th', 'Theoretical'),
-            ('pr', 'Practical'),
-            ('mx', 'Mixed')
-        ]
+        default=None,
+        help='Choose type for this question',
+        comodel_name='academy.tests.question.type',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
     )
-
-    # ----------------------- AUXILIARY FIELD METHODS -------------------------
-
-
-    def _default_level_id(self):
-        """ Computes the level_id default value
-        """
-
-        # STEP 1: Set default to none
-        level_id = None
-
-        # STEP 2: Search for all levels sorted by sequence
-        academy_level_domain = []
-        academy_level_obj = self.env['academy.tests.level']
-        academy_level_set = academy_level_obj.search(
-            academy_level_domain, order="sequence ASC")
-
-        # STEP 3: Gets the middel item from sorted set
-        if academy_level_set:
-            middle = len(academy_level_set) // 2
-            level_id = academy_level_set[middle].id
-
-
-        return level_id
-
-
-    @api.multi
-    @api.depends('ir_attachment_ids')
-    def _compute_ir_attachment_image_ids(self):
-        for record in self:
-            record.ir_attachment_image_ids = record.ir_attachment_ids.filtered(
-                lambda r: r.index_content == u'image')
-
-
-    # --------------------------- ONCHANGE EVENTS -----------------------------
-
-    @api.onchange('topic_id')
-    def _onchange_academy_topid_id(self):
-        """ Updates domain form category_ids, this shoud allow categories
-        only in the selected topic.
-        """
-        topic_set = self.topic_id
-        valid_ids = topic_set.category_ids & self.category_ids
-
-        self.category_ids = [(6, None, valid_ids.mapped('id'))]
-
-
-    @api.onchange('ir_attachment_ids')
-    def _onchange_ir_attachment_id(self):
-        self._compute_ir_attachment_image_ids()
-
-
-    # -------------------------- PYTHON CONSTRAINS ----------------------------
-
-    @api.constrains('answer_ids', 'name')
-    def _check_answer_ids(self):
-        """ Check if question have at last one valid answer
-        """
-
-        if self.active:
-            if not True in self.answer_ids.mapped('is_correct'):
-                message = _(u'You must specify at least one correct answer')
-                raise ValidationError(message)
-            if not False in self.answer_ids.mapped('is_correct'):
-                message = _(u'You must specify at least one incorrect answer')
-                raise ValidationError(message)
-
 
     test_ids = fields.One2many(
         string='Tests',
@@ -319,9 +234,31 @@ class AcademyTestsQuestion(models.Model):
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_test_ids'
     )
 
+
+    # -------------------------- MANAGEMENT FIELDS ----------------------------
+
+    ir_attachment_image_ids = fields.Many2many(
+        string='Images',
+        required=False,
+        readonly=True,
+        index=False,
+        default=None,
+        help='Images needed to solve this question',
+        comodel_name='ir.attachment',
+        domain=[('index_content', '=', 'image')],
+        context={},
+        limit=None,
+        compute='_compute_ir_attachment_image_ids',
+    )
+
+    @api.multi
+    @api.depends('ir_attachment_ids')
+    def _compute_ir_attachment_image_ids(self):
+        for record in self:
+            record.ir_attachment_image_ids = record.ir_attachment_ids.filtered(
+                lambda r: r.index_content == u'image')
 
     attachment_count = fields.Integer(
         string='Attachments',
@@ -338,7 +275,6 @@ class AcademyTestsQuestion(models.Model):
     def _compute_attachment_count(self):
         for record in self:
             record.attachment_count = len(record.ir_attachment_ids)
-
 
     answer_count = fields.Integer(
         string='Answers',
@@ -373,15 +309,78 @@ class AcademyTestsQuestion(models.Model):
         for record in self:
             record.category_count = len(record.category_ids)
 
-    @api.multi
-    def townhall_file(self):
-        """ Get filename to use in townhall report
-        """
-        result = u''
-        for record in self:
-            if record.preamble:
-                matches = search(r'[a-zA-Z0-9-_]+\.[A-Za-z]{1,3}(?!\w)', record.preamble)
-                if matches:
-                    result += matches.group()
 
-        return result
+    # --------------- ONCHANGE EVENTS AND OTHER FIELD METHODS -----------------
+
+    def default_level_id(self):
+        """ Computes the level_id default value
+        """
+
+        # STEP 1: Set default to none
+        level_id = None
+
+        # STEP 2: Search for all levels sorted by sequence
+        academy_level_domain = []
+        academy_level_obj = self.env['academy.tests.level']
+        academy_level_set = academy_level_obj.search(
+            academy_level_domain, order="sequence ASC")
+
+        # STEP 3: Gets the middel item from sorted set
+        if academy_level_set:
+            middle = len(academy_level_set) // 2
+            level_id = academy_level_set[middle].id
+
+
+        return level_id
+
+
+    @api.onchange('topic_id')
+    def _onchange_academy_topid_id(self):
+        """ Updates domain form category_ids, this shoud allow categories
+        only in the selected topic.
+        """
+        topic_set = self.topic_id
+        valid_ids = topic_set.category_ids & self.category_ids
+
+        self.category_ids = [(6, None, valid_ids.mapped('id'))]
+
+
+    @api.onchange('ir_attachment_ids')
+    def _onchange_ir_attachment_id(self):
+        self._compute_ir_attachment_image_ids()
+
+
+    # -------------------------- PYTHON CONSTRAINS ----------------------------
+
+    @api.constrains('answer_ids', 'name')
+    def _check_answer_ids(self):
+        """ Check if question have at last one valid answer
+        """
+
+        if self.active:
+            if not True in self.answer_ids.mapped('is_correct'):
+                message = _(u'You must specify at least one correct answer')
+                raise ValidationError(message)
+            if not False in self.answer_ids.mapped('is_correct'):
+                message = _(u'You must specify at least one incorrect answer')
+                raise ValidationError(message)
+
+
+    # ------------------------- OVERWRITTEN METHODS ---------------------------
+
+    @api.model
+    def _generate_order_by(self, order_spec, query):
+        """ This overwrites order query string using PostgreSQL `RANDOM()`
+        method if context variable `sort_by_random` has been set to TRUE.
+
+        This is used by random wizard to select random questions.
+        """
+
+        random = self.env.context.get('sort_by_random', False)
+        if not random:
+            _super = super(AcademyTestsQuestion, self)
+            order_str = _super._generate_order_by(order_spec, query)
+        else:
+            order_str = ' ORDER BY RANDOM() '
+
+        return order_str

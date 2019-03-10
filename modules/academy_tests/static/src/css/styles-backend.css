@@ -91,3 +91,26 @@
     padding-left: 10px!important;
     padding-right: 10px!important;
 }
+
+
+
+/* STYLES WILL BE USED BY IMPORT WIZARD
+******************************************************************************/
+
+.oe_view_academy_tests_question_import_form .oe_field_content {
+    min-height: 15em;
+}
+
+.oe_view_academy_tests_question_import_form .oe_import_wizard_attachments .fa-copy {
+    margin-right: 12px;
+}
+
+
+/* PATCH ODOO CSS
+******************************************************************************/
+
+/* Breadcrumbs patch to cut question title, this should be changed in python
+code but I have not found where I should make the change */
+.o_main_content > .o_breadcrumb_full > .breadcrumb > li {
+    max-width: 300px;
+}

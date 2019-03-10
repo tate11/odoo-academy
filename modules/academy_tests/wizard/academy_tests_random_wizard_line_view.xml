@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data noupdate="0">
+
+        <!-- VIEWS: "Academy Tests Question Random Line"
+
+            - Model·········: academy.tests.random.wizard.line
+            - _rec_name·····: id
+            - Domain········: []
+            - Context·······: {}
+            - Parent menu ··: base.menu_custom
+            - View priority·: 16    Sequence····: 10
+            - Action help···: There is not any record
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <!-- Tree view for "academy.tests.random.wizard.line" -->
+        <record id="view_academy_tests_random_wizard_line_tree" model="ir.ui.view">
+            <field name="name">view.academy.tests.random.wizard.line.tree</field>
+            <field name="model">academy.tests.random.wizard.line</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <tree string="academy_tests_random_wizard_line_tree" create="1" delete="1" edit="1">
+                    <field name="name" class="oe_field_name" />
+                    <field name="quantity" class="oe_field_quantity" />
+                    <field name="type_count" class="oe_field_type_count" />
+                    <field name="test_count" class="oe_field_test_count" />
+                    <field name="topic_count" class="oe_field_topic_count" />
+                    <field name="category_count" class="oe_field_category_count" />
+                    <field name="tag_count" class="oe_field_tag_count" />
+                    <field name="level_count" class="oe_field_level_count" />
+                    <field name="question_count" class="oe_field_question_count" />
+                    <field name="disallow_attachments" string="No attach" class="oe_field_disallow_attachments" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for "academy.tests.random.wizard.line" -->
+        <record id="view_academy_tests_random_wizard_line_form" model="ir.ui.view">
+            <field name="name">view.academy.tests.random.wizard.line.form</field>
+            <field name="model">academy.tests.random.wizard.line</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <form string="academy_tests_random_wizard_line_form" create="1" delete="1" edit="1">
+
+                    <header>
+                        <!-- <button name="get_domain" type="object"
+                                string="Append" class="oe_highlight"
+                                attrs="{'invisible': [('quantity', '&lt;=', 1)]}"/> -->
+
+                        <field name="state" widget="statusbar" clickable="1" />
+                    </header>
+
+                    <group states="step1" col="8">
+                        <field name="name" class="oe_field_name"
+                            placeholder="Enter new value for name" colspan="4" />
+                        <field name="quantity" class="oe_field_quantity"
+                            placeholder="Enter new value for quantity" colspan="2" />
+                        <field name="disallow_attachments"
+                            class="oe_field_disallow_attachments"
+                            placeholder="Check to exclude all attachments"
+                            string="No attachments" colspan="2" />
+
+                        <separator colspan="8" />
+
+                        <field name="description" class="oe_field_description"
+                            placeholder="Enter new value for description" colspan="8" />
+
+                        <separator colspan="8" />
+
+                        <field name="type_ids" class="oe_field_type_ids"
+                            widget="many2many_tags" colspan="6"
+                            placeholder="Choose types to include/exclude" />
+                        <field name="exclude_types" class="oe_field_exclude_types"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" colspan="2" />
+
+                        <field name="level_ids" class="oe_field_level_ids"
+                            widget="many2many_tags" colspan="6"
+                            placeholder="Choose levels to include/exclude" />
+                        <field name="exclude_levels" class="oe_field_exclude_levels"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" colspan="2" />
+                        <field name="tag_ids" class="oe_field_tag_ids"
+                            widget="many2many_tags" colspan="6"
+                            placeholder="Choose tags to include/exclude" />
+                        <field name="exclude_tags" class="oe_field_exclude_tags"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" colspan="2" />
+
+                    </group>
+
+                    <group states="step2">
+                        <field name="topic_ids" class="oe_field_topic_ids"
+                            widget="many2many_tags"
+                            placeholder="Choose topics to include/exclude" />
+                        <field name="exclude_topics" class="oe_field_exclude_topics"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" />
+
+                        <field name="category_ids" class="oe_field_category_ids"
+                            widget="many2many_tags" domain="[('topic_id', 'in', topic_ids)]"
+                            placeholder="Choose categories to include/exclude" />
+                        <field name="exclude_categories" class="oe_field_exclude_categories"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" />
+                    </group>
+
+                    <group states="step3">
+                        <field name="test_ids" class="oe_field_test_ids"
+                            placeholder="Choose tests include/exclude" />
+                        <field name="exclude_tests" class="oe_field_exclude_tests"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" />
+                    </group>
+
+                    <group states="step4">
+                        <field name="question_ids" class="oe_field_question_ids"
+                            placeholder="Choose questions to include/exclude" />
+                        <field name="exclude_questions" class="oe_field_exclude_questions"
+                            placeholder="Check to include or uncheck to exclude"
+                            string="Exclude selected" />
+                    </group>
+
+                    <!-- Required to trigger onchange events -->
+                    <field name="type_count" invisible="1" />
+                    <field name="test_count" invisible="1" />
+                    <field name="topic_count" invisible="1" />
+                    <field name="category_count" invisible="1" />
+                    <field name="tag_count" invisible="1" />
+                    <field name="level_count" invisible="1" />
+                    <field name="question_count" invisible="1" />
+
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for "academy.tests.random.wizard.line" -->
+        <record id="view_academy_tests_random_wizard_line_search" model="ir.ui.view">
+            <field name="name">view.academy.tests.random.wizard.line.search</field>
+            <field name="model">academy.tests.random.wizard.line</field>
+            <field name="type">search</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="16" />
+            <field name="active" eval="True" />
+            <field name="arch" type="xml">
+                <search string="academy_tests_random_wizard_line_search">
+                    <field name="id" />
+                    <!-- ··· -->
+                </search>
+            </field>
+        </record>
+
+    </data>
+</openerp>
