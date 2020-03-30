@@ -30,11 +30,11 @@ Todo:
 
 
 from logging import getLogger
-from pprint import pprint
+from datetime import datetime
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -51,7 +51,7 @@ WIZARD_LINE_STATES = [
 # in question, in this line, exclude/include
 FIELD_MAPPING = [
     ('type_id', 'type_ids', 'exclude_types'),
-    ('test_ids', 'test_ids', 'exclude_tests'),
+    ('id', 'test_ids.question_ids', 'exclude_tests'),
     ('topic_id', 'topic_ids', 'exclude_topics'),
     ('category_ids', 'category_ids', 'exclude_categories'),
     ('tag_ids', 'tag_ids', 'exclude_tags'),
@@ -97,7 +97,7 @@ class AcademyTestsRandomWizardLine(models.Model):
         required=True,
         readonly=False,
         index=True,
-        default=None,
+        default=lambda self: self.default_name(),
         help="Name for this line",
         size=255,
         translate=True,
@@ -120,7 +120,7 @@ class AcademyTestsRandomWizardLine(models.Model):
         readonly=False,
         index=False,
         default=True,
-        help=('If the active field is  to false, it will allow you to '
+        help=('If the active field is set to false, it will allow you to '
               'hide record without removing it')
     )
 
@@ -144,7 +144,7 @@ class AcademyTestsRandomWizardLine(models.Model):
         readonly=False,
         index=False,
         default=20,
-        help='Maximum number of questions can be append'
+        help='Maximum number of questions can be appended'
     )
 
     type_ids = fields.Many2many(
@@ -332,11 +332,19 @@ class AcademyTestsRandomWizardLine(models.Model):
     )
 
 
+    # ----------------------- AUXILIARY FIELD METHODS -------------------------
+
+    def default_name(self):
+        """ Computes default value for name
+        """
+        current_time = datetime.now()
+        return fields.Datetime.context_timestamp(self, timestamp=current_time)
+
+
     # -------------------------- MANAGEMENT FIELDS ----------------------------
 
-
     type_count = fields.Integer(
-        string='Types',
+        string='Number of types',
         required=False,
         readonly=True,
         index=False,
@@ -346,8 +354,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_type_count'
     )
 
+    # @api.multi
+    @api.depends('type_ids', 'exclude_types')
+    def compute_type_count(self):
+        """ This computes type_count field """
+        for record in self:
+            sign = -1 if record.exclude_types else 1
+            record.type_count = len(record.type_ids) * sign
+
     test_count = fields.Integer(
-        string='Tests',
+        string='Number of tests',
         required=False,
         readonly=True,
         index=False,
@@ -357,8 +373,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_test_count'
     )
 
+    # @api.multi
+    @api.depends('test_ids', 'exclude_tests')
+    def compute_test_count(self):
+        """ This computes test_count field """
+        for record in self:
+            sign = -1 if record.exclude_tests else 1
+            record.test_count = len(record.test_ids) * sign
+
     topic_count = fields.Integer(
-        string='Topics',
+        string='Number of topics',
         required=False,
         readonly=True,
         index=False,
@@ -368,8 +392,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_topic_count'
     )
 
+    # @api.multi
+    @api.depends('topic_ids', 'exclude_topics')
+    def compute_topic_count(self):
+        """ This computes topic_count field """
+        for record in self:
+            sign = -1 if record.exclude_topics else 1
+            record.topic_count = len(record.topic_ids) * sign
+
     category_count = fields.Integer(
-        string='Categories',
+        string='Number of categories',
         required=False,
         readonly=True,
         index=False,
@@ -379,8 +411,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_category_count'
     )
 
+    # @api.multi
+    @api.depends('category_ids', 'exclude_categories')
+    def compute_category_count(self):
+        """ This computes category_count field """
+        for record in self:
+            sign = -1 if record.exclude_categories else 1
+            record.category_count = len(record.category_ids) * sign
+
     tag_count = fields.Integer(
-        string='Tags',
+        string='Number of tags',
         required=False,
         readonly=True,
         index=False,
@@ -390,8 +430,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_tag_count'
     )
 
+    # @api.multi
+    @api.depends('tag_ids', 'exclude_tags')
+    def compute_tag_count(self):
+        """ This computes tag_count field """
+        for record in self:
+            sign = -1 if record.exclude_tags else 1
+            record.tag_count = len(record.tag_ids) * sign
+
     level_count = fields.Integer(
-        string='Levels',
+        string='Number of levels',
         required=False,
         readonly=True,
         index=False,
@@ -401,8 +449,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_level_count'
     )
 
+    # @api.multi
+    @api.depends('level_ids', 'exclude_levels')
+    def compute_level_count(self):
+        """ This computes level_count field """
+        for record in self:
+            sign = -1 if record.exclude_levels else 1
+            record.level_count = len(record.level_ids) * sign
+
     question_count = fields.Integer(
-        string='Questions',
+        string='Number of questions',
         required=False,
         readonly=True,
         index=False,
@@ -412,56 +468,16 @@ class AcademyTestsRandomWizardLine(models.Model):
         compute='compute_question_count'
     )
 
-
-    @api.multi
-    @api.depends('type_ids')
-    def compute_type_count(self):
-        for record in self:
-            sign = -1 if record.exclude_types else 1
-            record.type_count = len(record.type_ids) * sign
-
-    @api.multi
-    @api.depends('test_ids')
-    def compute_test_count(self):
-        for record in self:
-            sign = -1 if record.exclude_tests else 1
-            record.test_count = len(record.test_ids) * sign
-
-    @api.multi
-    @api.depends('topic_ids')
-    def compute_topic_count(self):
-        for record in self:
-            sign = -1 if record.exclude_topics else 1
-            record.topic_count = len(record.topic_ids) * sign
-
-    @api.multi
-    @api.depends('category_ids')
-    def compute_category_count(self):
-        for record in self:
-            sign = -1 if record.exclude_categories else 1
-            record.category_count = len(record.category_ids) * sign
-
-    @api.multi
-    @api.depends('tag_ids')
-    def compute_tag_count(self):
-        for record in self:
-            sign = -1 if record.exclude_tags else 1
-            record.tag_count = len(record.tag_ids) * sign
-
-    @api.multi
-    @api.depends('level_ids')
-    def compute_level_count(self):
-        for record in self:
-            sign = -1 if record.exclude_levels else 1
-            record.level_count = len(record.level_ids) * sign
-
-    @api.multi
-    @api.depends('question_ids')
+    # @api.multi
+    @api.depends('question_ids', 'exclude_questions')
     def compute_question_count(self):
+        """ This computes question_count field """
         for record in self:
             sign = -1 if record.exclude_questions else 1
             record.question_count = len(record.question_ids) * sign
 
+
+    # --------------------------- PRIVATE METHODS -----------------------------
 
     def _reload_on_step1(self):
         """ Builds an action which loads again transient model record using
@@ -474,7 +490,7 @@ class AcademyTestsRandomWizardLine(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'academy.tests.random.wizard.line',
             'view_mode': 'form',
-            'view_type': 'form',
+            # 'view_type': 'form',
             'res_id': self.id,
             'views': [(False, 'form')],
             'target': 'new'
@@ -483,6 +499,13 @@ class AcademyTestsRandomWizardLine(models.Model):
 
     @staticmethod
     def _domain_item(leaf, ids, exclude):
+        """ Builds a domain leaf. All leafs created by this method will be
+        `in` or `not in`.
+
+        @param leaf (string): realational field name
+        @param ids (list): list of ids to include or exclude
+        @param exclude (bool): True to use `not in` or False to use `in`
+        """
 
         if ids:
             operator = 'not in' if exclude else 'in'
@@ -491,62 +514,30 @@ class AcademyTestsRandomWizardLine(models.Model):
         return None
 
 
-    @api.multi
-    def get_leafs(self):
-        """ Search for questions to append
+    def _get_ids(self, field_path):
+        """This gets ids from given relational field set, this can be
+        referred by a single field name or by dots separated field path.
+
+        @param field_path (string): field names separated by dots, like:
+        test_ids.question_ids
+        @return (list): list of ids in set
         """
+        result = self
 
-        self.ensure_one()
+        for step in field_path.split('.'):
+            result = result.mapped(step)
 
-        leafs = []
-        for field_map in FIELD_MAPPING:
-            leaf = field_map[0]
-            ids = getattr(self, field_map[1]).mapped('id')
-            exclude = getattr(self, field_map[2])
-            ditem = self._domain_item(leaf, ids, exclude)
-            if ditem:
-                leafs.append(ditem)
-
-        if self.disallow_attachments:
-            leafs.append(('ir_attachment_ids', '=', False))
-
-        return leafs
-
-
-    @api.multi
-    def get_domain(self):
-        """ Search for questions to append
-        """
-
-        self.ensure_one()
-
-        domain = self.get_leafs()
-        if len(domain) > 1:
-            domain = ['&'] + domain
-
-        return domain
-
-
-    @api.multi
-    def perform_search(self):
-        """ Search for questions to append
-        """
-        question_obj = self.env['academy.tests.question']
-
-        question = self.env['academy.tests.question']
-        for record in self:
-            domain = record.get_domain()
-            limit = record.quantity
-
-            ctx = {'sort_by_random' : True}
-            result = question_obj.with_context(ctx).search(domain, limit=limit)
-            print(domain, '\n', result)
-            question = question + result
-
-        return question
+        return result.mapped('id')
 
 
     def _get_values(self):
+        """ This gets all field values from record except the Odoo MAGIC COLUMNS
+        @note: this will be used by copy_to method
+        @return (dict): returns a valid dictionary can be used in CRUD methods
+        """
+
+        self.ensure_one()
+
         values = {}
 
         for k, v in self._fields.items():
@@ -571,7 +562,76 @@ class AcademyTestsRandomWizardLine(models.Model):
         return values
 
 
-    @api.multi
+    # --------------------------- PUBLIC METHODS ------------------------------
+
+    # @api.multi
+    def get_leafs(self):
+        """ Walk over field mapping making domain leafs for each of those that
+         have been set.
+
+        @note: FIELD_MAPPING has been defined at the top of this module, it's
+        a list of items like: ('type_id', 'type_ids', 'exclude_types')
+
+        @return (list): list of domain leafs without ampersand
+        """
+
+        self.ensure_one()
+
+        leafs = []
+        for field_map in FIELD_MAPPING:
+            leaf = field_map[0]
+            ids = self._get_ids(field_map[1])
+            exclude = getattr(self, field_map[2])
+            ditem = self._domain_item(leaf, ids, exclude)
+            if ditem:
+                leafs.append(ditem)
+
+        if self.disallow_attachments:
+            leafs.append(('ir_attachment_ids', '=', False))
+
+        return leafs
+
+
+    # @api.multi
+    def get_domain(self, extra_leafs=None):
+        """ Search for questions to append
+        """
+
+        self.ensure_one()
+
+        domain = self.get_leafs()
+        if extra_leafs:
+            domain = domain + extra_leafs
+
+        if len(domain) > 1:
+            domain = ['&'] + domain
+
+        msg = _('Domain {} will be used to append random questions')
+        _logger.warning(msg.format(domain))
+
+        return domain
+
+
+    # @api.multi
+    def perform_search(self, extra_leafs=None):
+        """ Search for questions to append
+        """
+        question_obj = self.env['academy.tests.question']
+
+        question = self.env['academy.tests.question']
+        for record in self:
+            domain = record.get_domain(extra_leafs)
+            limit = record.quantity
+
+            ctx = {'sort_by_random' : True}
+            result = question_obj.with_context(ctx).search(domain, limit=limit)
+            print(domain, '\n', result)
+            question = question + result
+
+        return question
+
+
+    # @api.multi
     def copy_to(self, recordset=None):
         """ Copy values from current record to all records in recordset
         """

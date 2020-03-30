@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="access_model_academy_public_tendering_vacancy_position_type_base_group_user" model="ir.model.access">
+            <field name="name">Model academy public tendering vacancy position type base group user</field>
+            <field name="model_id" ref="model_academy_public_tendering_vacancy_position_type"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

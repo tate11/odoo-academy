@@ -91,7 +91,7 @@
             <field name="name">Topics</field>
             <field name="res_model">academy.tests.topic</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

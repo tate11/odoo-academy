@@ -9,7 +9,7 @@ all professional area attributes and behavior.
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields
+from odoo import models, fields
 
 
 # pylint: disable=locally-disabled, C0103
@@ -28,7 +28,7 @@ class AcademyProfessionalArea(models.Model):
     _name = 'academy.professional.area'
     _description = u'Academy professional area'
 
-    _inherit = ['academy.abstract.image']
+    _inherit = ['image.mixin']
 
     _rec_name = 'name'
     _order = 'name ASC'

@@ -9,8 +9,8 @@ all training action attributes and behavior.
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -129,7 +129,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='Data in which student has been unsubscribed'
+        help='Date in which student has been unsubscribed'
     )
 
     student_name = fields.Char(
@@ -144,7 +144,7 @@ class AcademyTrainingActionEnrolment(models.Model):
         compute=lambda self: self._compute_student_name()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('res_partner_id')
     def _compute_student_name(self):
         for record in self:
@@ -153,7 +153,7 @@ class AcademyTrainingActionEnrolment(models.Model):
 
     # ---------------------------- ONCHANGE EVENTS ----------------------------
 
-    @api.multi
+    # @api.multi
     @api.onchange('training_action_id')
     def _onchange_training_action_id(self):
         action_set = self.training_action_id
@@ -173,7 +173,7 @@ class AcademyTrainingActionEnrolment(models.Model):
 
     # -------------------------- OVERLOADED METHODS ---------------------------
 
-    @api.one
+    # @api.one
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         """ Prevents new record of the inherited (_inherits) models will
@@ -193,7 +193,7 @@ class AcademyTrainingActionEnrolment(models.Model):
 
     # -------------------------- PYTHON CONSTRAINTS ---------------------------
 
-    @api.one
+    # @api.one
     @api.constrains('training_action_id', 'res_partner_id')
     def _check_unique_enrolment(self):
 

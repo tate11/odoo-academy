@@ -37,6 +37,7 @@
             </field>
         </record>
 
+
         <!-- Form view for "academy.tests.question" -->
         <record id="view_academy_question_form" model="ir.ui.view">
             <field name="name">view.academy.tests.question.form</field>
@@ -48,8 +49,11 @@
             <field name="arch" type="xml">
                 <form string="academy_question_form" create="1" delete="1" edit="1">
                     <sheet>
-
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        
                         <div class="oe_title_question">
+                            <field name="active" invisible="1"/>
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
@@ -100,7 +104,6 @@
                                     <field name="id"/>
                                     <field name="mimetype"/>
                                     <field name="type"/>
-                                    <field name="datas_fname"/>
                                     <field name="name"/>
                                     <templates>
                                         <t t-name="kanban-box">
@@ -113,7 +116,7 @@
                                                             <t t-set="webimage" t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
                                                             <div t-if="!webimage" class="o_image" t-att-data-mimetype="record.mimetype.value"/>
                                                             <div t-if="webimage" class="o_attachment_image">
-                                                                <img t-attf-src="/web/image/#{record.id.raw_value}?download=1"/>
+                                                                <img t-attf-src="/web/image/#{record.id.raw_value}?download=1" alt="Related image" />
                                                             </div>
                                                         </a>
                                                     </div>
@@ -150,6 +153,7 @@
                 </form>
             </field>
         </record>
+
 
         <record id="view_academy_tests_question_kanban" model="ir.ui.view">
             <field name="name">view.academy.tests.question.kanban</field>
@@ -200,11 +204,15 @@
 
                                     <td class="o_question_kanban_status_menu" id="question_kanban_status_menu">
                                         <div class="dropdown">
-                                            <a class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="question_kanban_status_menu_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="btn btn-sm btn-outline-light dropdown-toggle" type="button" 
+                                               id="question_kanban_status_menu_button" data-toggle="dropdown" 
+                                               aria-haspopup="true" aria-expanded="false" role='button'>
                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="question_kanban_status_menu_button">
-                                                <a class="dropdown-item" id="question_kanban_status_menu_add_to_test" href="#">Add to test</a>
+                                            <div class="dropdown-menu" aria-labelledby="question_kanban_status_menu_button" role='menu'>
+                                                <a class="dropdown-item" id="question_kanban_status_menu_add_to_test" href="#">
+                                                    Add to test
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -219,6 +227,7 @@
                 </kanban>
             </field>
         </record>
+
 
         <!-- Search view for "academy.tests.question" -->
         <record id="view_academy_question_search" model="ir.ui.view">
@@ -237,13 +246,14 @@
             </field>
         </record>
 
+
         <!-- Main window action for model.name -->
         <record id="action_questions_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Questions</field>
             <field name="res_model">academy.tests.question</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
@@ -259,12 +269,139 @@
             </field>
         </record>
 
+
+        <record id="action_questions_act_window_kanban" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="view_academy_tests_question_kanban"/>
+            <field name="act_window_id" ref="action_questions_act_window"/>
+        </record>
+
+
+        <record id="action_questions_act_window_tree" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_academy_question_tree"/>
+            <field name="act_window_id" ref="action_questions_act_window"/>
+        </record>
+
+
+        <record id="action_questions_act_window_form" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_academy_question_form"/>
+            <field name="act_window_id" ref="action_questions_act_window"/>
+        </record>
+
+
         <!-- Main menu for model.name -->
         <record id="menu_questions" model="ir.ui.menu" >
             <field name="name">Questions</field>
             <field name="sequence" eval="15" />
             <field name="action" ref="action_questions_act_window" />
             <field name="parent_id" ref="academy_tests.menu_test_top" />
+        </record>
+
+
+
+
+        <!-- view_academy_question_keep_items views and action
+        Following views and action will be used by `show_questions`
+        method from `academy.tests.test` model. This extends main views
+        removing create and delete buttons
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <record id="view_academy_question_keep_items_tree" model="ir.ui.view">
+            <field name="name">view.academy.tests.question.tree</field>
+            <field name="model">academy.tests.question</field>
+            <field name="type">tree</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="20" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="view_academy_question_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="delete">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_academy_question_keep_items_form" model="ir.ui.view">
+            <field name="name">view.academy.tests.question.form</field>
+            <field name="model">academy.tests.question</field>
+            <field name="type">form</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="20" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="view_academy_question_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="delete">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_academy_question_keep_items_kanban" model="ir.ui.view">
+            <field name="name">view.academy.tests.question.kanban</field>
+            <field name="model">academy.tests.question</field>
+            <field name="type">kanban</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="20" />
+            <field name="active" eval="True" />
+            <field name="inherit_id" ref="view_academy_tests_question_kanban" />
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="delete">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="action_questions_keep_items_act_window" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Questions</field>
+            <field name="res_model">academy.tests.question</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="limit">0</field>
+            <field name="search_view_id" ref="view_academy_question_search" />
+            <field name="help" type="html">
+                <p>
+                    There are not questions in this test
+                </p>
+            </field>
+        </record>
+
+
+        <record id="action_questions_keep_items_act_window_kanban" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="view_academy_question_keep_items_kanban"/>
+            <field name="act_window_id" ref="action_questions_keep_items_act_window"/>
+        </record>
+
+
+        <record id="action_questions_keep_items_act_window_tree" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_academy_question_keep_items_tree"/>
+            <field name="act_window_id" ref="action_questions_keep_items_act_window"/>
+        </record>
+
+
+        <record id="action_questions_keep_items_act_window_form" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_academy_question_keep_items_form"/>
+            <field name="act_window_id" ref="action_questions_keep_items_act_window"/>
         </record>
 
 

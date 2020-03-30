@@ -32,6 +32,7 @@
             </field>
         </record>
 
+
         <!-- Form view for "academy.training.module" -->
         <record id="view_academy_training_module_form" model="ir.ui.view">
             <field name="name">view.academy.training.module.form</field>
@@ -43,15 +44,13 @@
             <field name="arch" type="xml">
                 <form string="academy_training_module_form" create="1" delete="1" edit="1">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                            </button>
-                        </div>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
 
-                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                        <field name="image_128" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
 
                         <div class="oe_title">
+                            <field name="active" invisible="1"/>
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
@@ -70,15 +69,13 @@
                                     placeholder="Enter new value for description" />
                             </page>
                             <page string="Resources" class="oe_page_resources" accesskey="R">
-                                <br />
-                                <p><label for="training_resource_ids" /></p>
+                                <p groups="base.group_no_one"><label for="training_resource_ids" /></p>
                                 <field name="training_resource_ids" class="oe_field_training_resource_ids"
                                     placeholder="Choose resources will be available to this module" />
 
-                                <p><label for="training_unit_resource_ids" /></p>
-                                <field name="training_unit_resource_ids" class="oe_field_training_unit_resource_ids"
-                                    placeholder="Enter new value for training unit resource ids"
-                                    context="{'form_view_ref' : 'academy_base.view_academy_training_module_embed_units_tree'}" />
+                                <p groups="base.group_no_one"><label for="available_training_resource_ids" /></p>
+                                <field name="available_training_resource_ids" class="oe_field_available_training_resource_ids"
+                                     groups="base.group_no_one" placeholder="Enter new value for available training resources" />
                             </page>
                         </notebook>
                     </sheet>
@@ -90,6 +87,7 @@
                 </form>
             </field>
         </record>
+
 
         <!-- Search view for "academy.training.module" -->
         <record id="view_academy_training_module_search" model="ir.ui.view">
@@ -110,6 +108,7 @@
             </field>
         </record>
 
+
         <!-- Kanban view for "academy.training.module" -->
         <record id="view_academy_training_module_kanban" model="ir.ui.view">
             <field name="name">view.academy.training.module.kanban</field>
@@ -119,9 +118,9 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <kanban>
+                <kanban create="1" delete="1" edit="1">
                     <field name="training_module_id" />
-                    <field name="image_small"/>
+                    <field name="image_128"/>
                     <field name="name" />
                     <field name="hours" />
                     <field name="module_code" />s
@@ -130,16 +129,16 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-module.png&quot;" class="o_kanban_image"/>
+                                    <img t-if="record.image_128.raw_value" t-att-src="'data:image/png;base64,'+record.image_128.raw_value" alt="Training module photo" />
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-module.png&quot;" class="o_kanban_image" alt="Training module photo" />
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
                                     <strong class="oe_partner_heading"><field name="name"/></strong>
                                     <ul>
                                        <li><strong>Code:&#160;</strong><field name="module_code" /></li>
-                                       <li><strong>Lifespan:&#160;</strong><field name="hours" widget="float_time" />&#160;horas</li>
+                                       <li><strong>Lifespan:&#160;</strong><field name="hours" widget="float_time" />&#160;hours</li>
                                      </ul>
                                 </div>
                             </div>
@@ -173,6 +172,7 @@
             </field>
         </record>
 
+
         <!-- Tree view for "academy.training.module" -->
         <record id="view_academy_training_module_module_form" model="ir.ui.view">
             <field name="name">view.academy.training.module.module.form</field>
@@ -202,6 +202,7 @@
             </field>
         </record>
 
+
         <!-- Tree view for "academy.training.module" -->
         <record id="view_academy_training_module_module_kanban" model="ir.ui.view">
             <field name="name">view.academy.training.module.module.kanban</field>
@@ -218,23 +219,18 @@
             </field>
         </record>
 
+
         <!-- Main window action for model.name -->
         <record id="action_training_module_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Training module</field>
             <field name="res_model">academy.training.module</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+
             <field name="target">current</field>
             <field name="domain">[('training_module_id', '=', False)]</field>
             <field name="context">{}</field>
             <field name="search_view_id" ref="view_academy_training_module_search" />
-            <field name="view_ids"
-                   eval="[(5, 0, 0),
-                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('academy_base.view_academy_training_module_module_kanban')}),
-                          (0, 0, {'view_mode': 'form', 'view_id': ref('academy_base.view_academy_training_module_module_form')}),
-                          (0, 0, {'view_mode': 'tree', 'view_id': ref('academy_base.view_academy_training_module_module_tree')})
-                         ]"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to add new training module
@@ -243,6 +239,31 @@
                 </p>
             </field>
         </record>
+
+
+        <record id="action_training_module_act_window_kanban" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="academy_base.view_academy_training_module_module_kanban"/>
+            <field name="act_window_id" ref="action_training_module_act_window"/>
+        </record>
+
+
+        <record id="action_training_module_act_window_form" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="academy_base.view_academy_training_module_module_form"/>
+            <field name="act_window_id" ref="action_training_module_act_window"/>
+        </record>
+
+
+        <record id="action_training_module_act_window_tree" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="academy_base.view_academy_training_module_module_tree"/>
+            <field name="act_window_id" ref="action_training_module_act_window"/>
+        </record>
+
 
         <!-- Main menu for model.name -->
         <record id="menu_training_module" model="ir.ui.menu" >
@@ -274,6 +295,7 @@
             </field>
         </record>
 
+
         <record id="view_academy_training_module_unit_form" model="ir.ui.view">
             <field name="name">view.academy.training.module.unit.form</field>
             <field name="model">academy.training.module</field>
@@ -294,6 +316,7 @@
             </field>
         </record>
 
+
         <record id="view_academy_training_module_unit_kanban" model="ir.ui.view">
             <field name="name">view.academy.training.module.unit.kanban</field>
             <field name="model">academy.training.module</field>
@@ -309,23 +332,18 @@
             </field>
         </record>
 
+
         <!-- Main window action for model.name -->
         <record id="action_training_module_units_act_window" model="ir.actions.act_window">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Training units</field>
             <field name="res_model">academy.training.module</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+
             <field name="target">current</field>
             <field name="domain">[('training_module_id', '!=', False)]</field>
             <field name="context">{}</field>
             <field name="search_view_id" ref="view_academy_training_module_search" />
-            <field name="view_ids"
-                   eval="[(5, 0, 0),
-                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('academy_base.view_academy_training_module_unit_kanban')}),
-                          (0, 0, {'view_mode': 'form', 'view_id': ref('academy_base.view_academy_training_module_unit_form')}),
-                          (0, 0, {'view_mode': 'tree', 'view_id': ref('academy_base.view_academy_training_module_unit_tree')})
-                         ]"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to add new training module
@@ -334,6 +352,31 @@
                 </p>
             </field>
         </record>
+
+
+        <record id="action_training_module_units_act_window_kanban" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="view_academy_training_module_unit_kanban"/>
+            <field name="act_window_id" ref="action_training_module_units_act_window"/>
+        </record>
+
+
+        <record id="action_training_module_units_act_window_form" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_academy_training_module_unit_form"/>
+            <field name="act_window_id" ref="action_training_module_units_act_window"/>
+        </record>
+
+
+        <record id="action_training_module_units_act_window_tree" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_academy_training_module_unit_tree"/>
+            <field name="act_window_id" ref="action_training_module_units_act_window"/>
+        </record>
+
 
         <!-- Main menu for model.name -->
         <record id="menu_training_module_unit" model="ir.ui.menu" >
@@ -361,6 +404,7 @@
                 </xpath>
             </field>
         </record>
+
 
     </data>
 </openerp>

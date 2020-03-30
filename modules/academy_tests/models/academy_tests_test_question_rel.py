@@ -18,8 +18,8 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -58,12 +58,12 @@ class AcademyTestsTestQuestionRel(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_test_id'
+        # oldname='academy_test_id'
     )
 
     question_id = fields.Many2one(
         string='Question',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=None,
@@ -73,7 +73,7 @@ class AcademyTestsTestQuestionRel(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_question_id'
+        # oldname='academy_question_id'
     )
 
     sequence = fields.Integer(

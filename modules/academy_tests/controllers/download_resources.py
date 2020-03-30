@@ -15,9 +15,9 @@ from dicttoxml import dicttoxml
 from lxml import etree
 from re import sub as replace, UNICODE
 
-from openerp.http import route, request, Controller, Response
-from openerp.tools.translate import _
-from openerp.addons.web.controllers.main import serialize_exception, content_disposition
+from odoo.http import route, request, Controller, Response
+from odoo.tools.translate import _
+from odoo.addons.web.controllers.main import serialize_exception, content_disposition
 from odoo.tools import ustr
 
 
@@ -103,7 +103,7 @@ class PublishResources(Controller):
             tdata = tdata + '\n{}'.format(text)
 
         text = self._clear_text(qitem.name)
-        tdata = '\n{}. {}'.format(qindex, text)
+        tdata = tdata + '\n{}. {}'.format(qindex, text)
 
         return tdata
 

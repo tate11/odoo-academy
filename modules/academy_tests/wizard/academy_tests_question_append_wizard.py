@@ -11,8 +11,8 @@ to append some question to one or more tests
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 from odoo.exceptions import ValidationError
 
 
@@ -110,7 +110,7 @@ class Nameofmodel(models.TransientModel):
         return rel_set.sequence if rel_set else 0
 
 
-    @api.multi
+    # @api.multi
     def execute(self):
         """ Performs the wizard action
         """

@@ -37,8 +37,8 @@ Todo:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -114,7 +114,6 @@ attended.
         help='Enter new name',
         size=12,
         translate=True,
-        oldname='name'
     )
 
     description = fields.Text(
@@ -209,7 +208,7 @@ attended.
         for res in module_set.training_resource_ids:
             res_list.append((4, res.id, None))
 
-        for res in module_set.training_unit_resource_ids:
+        for res in module_set.available_training_resource_ids:
             res_list.append((4, res.id, None))
 
         self.training_resource_ids = res_list

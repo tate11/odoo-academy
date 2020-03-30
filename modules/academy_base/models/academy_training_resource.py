@@ -16,8 +16,8 @@ import base64
 from pathlib import Path
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools import config
+from odoo import models, fields, api
+from odoo.tools import config
 
 from .lib.custom_model_fields import Many2manyThroughView, \
     TRAINING_RESOURCE_IDS_SQL, TRAINING_ACTION_RESOURCE_IDS_SQL
@@ -53,7 +53,7 @@ class AcademyTrainingResource(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['academy.abstract.image', 'mail.thread']
+    _inherit = ['image.mixin', 'mail.thread']
 
     # ---------------------------- ENTITY FIELDS ------------------------------
 
@@ -266,7 +266,7 @@ class AcademyTrainingResource(models.Model):
     # --------------------------- COMPUTED FIELDS -----------------------------
 
     attachmentcounting = fields.Integer(
-        string='Attachments',
+        string='Number of attachments',
         required=False,
         readonly=True,
         index=False,
@@ -275,7 +275,7 @@ class AcademyTrainingResource(models.Model):
         compute='_compute_attachmentcounting',
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('ir_attachment_ids')
     def _compute_attachmentcounting(self):
         """ Computes the number of ir.attachment records related with resource
@@ -286,7 +286,7 @@ class AcademyTrainingResource(models.Model):
 
 
     directory_filecounting = fields.Integer(
-        string='Files',
+        string='Number of files',
         required=False,
         readonly=True,
         index=False,
@@ -296,7 +296,7 @@ class AcademyTrainingResource(models.Model):
     )
 
 
-    @api.multi
+    # @api.multi
     @api.depends('directory_file_ids')
     def _compute_directory_filecounting(self):
         """ Computes the number of files in resource related directory
@@ -411,7 +411,7 @@ class AcademyTrainingResource(models.Model):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def reload_directory(self):
         """ Reload directory filenames
         """
@@ -420,7 +420,7 @@ class AcademyTrainingResource(models.Model):
             record._reload_single_directory() # pylint: disable=locally-disabled, W0212
 
 
-    @api.multi
+    # @api.multi
     def download_directory(self):
         """ Download related directory as a zip file. This method will be
         called by the Download button in VIEW
@@ -500,7 +500,7 @@ class AcademyTrainingResource(models.Model):
         compute=lambda self: self._compute_historical_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('historical_ids')
     def _compute_historical_count(self):
         for record in self:
@@ -508,7 +508,7 @@ class AcademyTrainingResource(models.Model):
 
 
 
-    @api.multi
+    # @api.multi
     def button_snapshot(self, values):
         """
             Update all record(s) in recordset, with new value comes as {values}

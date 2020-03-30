@@ -17,8 +17,8 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -88,7 +88,7 @@ class AcademyTestsAnswer(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_question_id'
+        # oldname='academy_question_id'
     )
 
     is_correct = fields.Boolean(
@@ -121,11 +121,11 @@ class AcademyTestsAnswer(models.Model):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def cmd_open_in_form(self):
         return {
             'name': 'Answers',
-            'view_type': 'form',
+            # 'view_type': 'form',
             "view_mode": 'form',
             'res_model': 'academy.tests.answer',
             'type': 'ir.actions.act_window',

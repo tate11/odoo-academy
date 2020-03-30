@@ -23,9 +23,9 @@ TODO:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api
+from odoo.tools.translate import _
+from odoo.exceptions import ValidationError, UserError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -251,17 +251,42 @@ class AcademyTestsQuestion(models.Model):
         context={},
         limit=None,
         compute='_compute_ir_attachment_image_ids',
+        search='_search_ir_attachment_image_ids',
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('ir_attachment_ids')
     def _compute_ir_attachment_image_ids(self):
         for record in self:
             record.ir_attachment_image_ids = record.ir_attachment_ids.filtered(
                 lambda r: r.index_content == u'image')
 
+
+    def _search_ir_attachment_image_ids(self, operator, value):
+        error_message = _(('Operation not supported on {}.{}. Only the «Established» and «Not established» '
+                           'operators can be used'))
+
+        if operator not in ['=', '!='] or not isinstance(value, bool):
+            _logger.warning(error_message.format(self._name, 'ir_attachment_image_ids'))
+            return [('id', '=', '-1')]
+        else:
+            if operator != '=':
+                value = not value
+
+            self._cr.execute("""
+                SELECT
+                    question_id as "id"
+                FROM
+                    academy_tests_question_ir_attachment_rel AS rel
+                INNER JOIN ir_attachment AS ira ON ira."id" = rel.attachment_id
+                WHERE ira.index_content = 'image'
+            """)
+
+            return [('id', 'in' if value else 'not in', [r[0] for r in self._cr.fetchall()])]
+
+
     attachment_count = fields.Integer(
-        string='Attachments',
+        string='Number of attachments',
         required=False,
         readonly=False,
         index=False,
@@ -270,14 +295,14 @@ class AcademyTestsQuestion(models.Model):
         compute=lambda self: self._compute_attachment_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('ir_attachment_ids')
     def _compute_attachment_count(self):
         for record in self:
             record.attachment_count = len(record.ir_attachment_ids)
 
     answer_count = fields.Integer(
-        string='Answers',
+        string='Number of answers',
         required=False,
         readonly=False,
         index=False,
@@ -286,7 +311,7 @@ class AcademyTestsQuestion(models.Model):
         compute=lambda self: self._compute_answer_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('answer_ids')
     def _compute_answer_count(self):
         for record in self:
@@ -294,7 +319,7 @@ class AcademyTestsQuestion(models.Model):
 
 
     category_count = fields.Integer(
-        string='Categories',
+        string='Number of categories',
         required=False,
         readonly=True,
         index=False,
@@ -303,7 +328,7 @@ class AcademyTestsQuestion(models.Model):
         compute=lambda self: self._compute_category_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('category_ids')
     def _compute_category_count(self):
         for record in self:

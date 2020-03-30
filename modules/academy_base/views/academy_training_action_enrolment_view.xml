@@ -119,8 +119,8 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <kanban>
-                    <field name="image_small"/>
+                <kanban create="1" delete="1" edit="1">
+                    <field name="image_128"/>
                     <field name="register" />
                     <field name="deregister" />
                     <field name="training_action_id" />
@@ -130,10 +130,10 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_action_enrolment">
                                 <div class="o_kanban_image">
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+                                    <img t-if="record.image_128.raw_value" t-att-src="'data:image/png;base64,'+record.image_128.raw_value" alt="Training action enrolment photo" />
 
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-action.png&quot;" class="o_kanban_image"/>
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/training-action.png&quot;" class="o_kanban_image" alt="Training action enrolment photo" />
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
@@ -203,7 +203,7 @@
             <field name="name">Training action enrolment</field>
             <field name="res_model">academy.training.action.enrolment</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

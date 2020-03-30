@@ -33,8 +33,8 @@ Todo:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api, _
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 from .lib.custom_model_fields import Many2manyThroughView
 
@@ -44,19 +44,13 @@ _logger = getLogger(__name__)
 
 
 INHERITED_RESOURCES_REL = """
-    SELECT
-        COALESCE(
-            atm.training_module_id, atm."id"
-        )::INTEGER as training_unit_id,
-        atr."id" as training_resource_id
+    SELECT DISTINCT
+        tree.requested_module_id AS training_module_id,
+        rel.training_resource_id 
     FROM
-        academy_training_module AS atm
-    INNER JOIN academy_training_module_training_resource_rel AS rel
-        ON atm."id" = rel.training_module_id
-    INNER JOIN academy_training_resource AS atr
-        ON rel.training_resource_id = atr."id"
-    WHERE
-        atr.training_resource_id IS NULL;
+        academy_training_module_tree_readonly AS tree
+    INNER JOIN academy_training_module_training_resource_rel AS rel 
+        ON tree."responded_module_id" = rel.training_module_id
 """
 
 
@@ -72,7 +66,7 @@ class AcademyTrainingModule(models.Model):
     _name = 'academy.training.module'
     _description = u'Academy training module'
 
-    _inherit = ['academy.abstract.image', 'mail.thread']
+    _inherit = ['image.mixin', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -141,7 +135,7 @@ class AcademyTrainingModule(models.Model):
     )
 
     module_code = fields.Char(
-        string='Code',
+        string='Module code',
         required=False,
         readonly=False,
         index=False,
@@ -153,7 +147,7 @@ class AcademyTrainingModule(models.Model):
     )
 
     ownhours = fields.Float(
-        string='Hours',
+        string='Own hours',
         required=True,
         readonly=False,
         index=False,
@@ -163,7 +157,7 @@ class AcademyTrainingModule(models.Model):
     )
 
     training_resource_ids = fields.Many2many(
-        string='Resources',
+        string='Own resources',
         required=False,
         readonly=False,
         index=False,
@@ -178,8 +172,8 @@ class AcademyTrainingModule(models.Model):
         limit=None
     )
 
-    training_unit_resource_ids = Many2manyThroughView(
-        string='Inherited resources',
+    available_training_resource_ids = Many2manyThroughView(
+        string='Available resources',
         required=False,
         readonly=True,
         index=False,
@@ -187,7 +181,7 @@ class AcademyTrainingModule(models.Model):
         help=False,
         comodel_name='academy.training.resource',
         relation='academy_training_unit_training_resource_rel',
-        column1='training_unit_id',
+        column1='training_module_id',
         column2='training_resource_id',
         domain=[],
         context={},
@@ -217,7 +211,7 @@ class AcademyTrainingModule(models.Model):
         compute=lambda self: self._compute_hours(), # pylint: disable=locally-disabled, W0212
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('training_unit_ids', 'ownhours')
     def _compute_hours(self):
         units_obj = self.env['academy.training.module']
@@ -243,7 +237,7 @@ class AcademyTrainingModule(models.Model):
     )
 
 
-    @api.multi
+    # @api.multi
     @api.depends('training_unit_ids')
     def _compute_training_unit_count(self):
         for record in self:
@@ -263,7 +257,7 @@ class AcademyTrainingModule(models.Model):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def get_imparted_hours_in(self, action_id):
         """ Get all hours assigned an a given action (id) for this recordset
 

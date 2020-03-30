@@ -87,7 +87,7 @@
             <field name="name">Academy Training Session wizard</field>
             <field name="res_model">academy.training.session.wizard</field>
             <field name="view_mode">form</field>
-            <field name="view_type">form</field>
+
             <field name="target">new</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

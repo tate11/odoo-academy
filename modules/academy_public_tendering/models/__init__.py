@@ -10,6 +10,7 @@ from . import academy_public_tendering_employment_group
 from . import academy_public_tendering_exam_type
 from . import academy_public_tendering_hiring_type
 
+from . import academy_public_tendering_vacancy_position_type
 from . import academy_public_tendering_vacancy_position
 from . import academy_public_tendering_process
 

@@ -23,15 +23,15 @@
             <field name="vat">ESP1507700A</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+<!--            <field name="supplier" eval="False" />-->
+<!--            <field name="customer" eval="False" />-->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_sansa_city_hall.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_sansa_city_hall.png"/>
 
         </record>
 

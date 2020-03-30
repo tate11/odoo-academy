@@ -20,9 +20,9 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
-from openerp.tools import drop_view_if_exists
+from odoo import models, fields, api
+from odoo.tools.translate import _
+from odoo.tools import drop_view_if_exists
 
 
 # pylint: disable=locally-disabled, C0103
@@ -80,7 +80,7 @@ class AcademyTestsAnswersTable(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_test_id'
+        # oldname='academy_test_id'
     )
 
     question_id = fields.Many2one(
@@ -95,7 +95,7 @@ class AcademyTestsAnswersTable(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_question_id'
+        # oldname='academy_question_id'
     )
 
     sequence = fields.Integer(
@@ -123,7 +123,7 @@ class AcademyTestsAnswersTable(models.Model):
         compute=lambda self: self._compute_topic_id()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('question_id')
     def _compute_topic_id(self):
         for record in self:
@@ -147,7 +147,7 @@ class AcademyTestsAnswersTable(models.Model):
         compute=lambda self: self._compute_category_ids()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('question_id')
     def _compute_category_ids(self):
         for record in self:
@@ -155,7 +155,7 @@ class AcademyTestsAnswersTable(models.Model):
             record.category_ids = [(6, None, ids)]
 
 
-    @api.model_cr
+    # @api.model_cr
     def init(self):
         """ Build database view which will be used as module origin
 

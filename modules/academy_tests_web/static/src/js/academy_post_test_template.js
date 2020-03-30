@@ -180,7 +180,8 @@ odoo.define('academy_tests_web.service', function (require) {
                 action_id = action_id[1];
 
                 /** --- THIS MUST BE CHANGED ---**/
-                url = '/web#id=' + question_id + '&view_type=form&model=academy.tests.question&menu_id=128&action=' + action_id;
+                //url = '/web#id=' + question_id + '&view_type=form&model=academy.tests.question&menu_id=128&action=' + action_id;
+                url = '/web#id=' + question_id + '&model=academy.tests.question&menu_id=128&action=' + action_id;
                 window.open(url, 'backend').focus();
 
                 obj.requery(question_id, 'show');

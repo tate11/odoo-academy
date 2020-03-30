@@ -32,8 +32,8 @@ Todo:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -121,6 +121,7 @@ class AcademyTestsRandomWizardSet(models.Model):
         limit=None
     )
 
+    # -------------------------------- CRUD -----------------------------------
 
     @api.model
     def create(self, values):
@@ -134,7 +135,7 @@ class AcademyTestsRandomWizardSet(models.Model):
 
         return result
 
-    @api.multi
+    # @api.multi
     def write(self, values):
         """ Update all record(s) in recordset, with new value comes as {values}
             @param values: dict of new values to be set

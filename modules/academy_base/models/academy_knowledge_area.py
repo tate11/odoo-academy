@@ -4,8 +4,8 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api, api
-from openerp.tools.translate import _
+from odoo import models, fields, api, api
+from odoo.tools.translate import _
 from logging import getLogger
 
 

@@ -43,7 +43,7 @@ from math import ceil
 
 # pylint: disable=locally-disabled, E0401
 from dateutil.relativedelta import relativedelta
-from openerp import models, fields, api, _
+from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -325,7 +325,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         limit=None,
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('training_action_id')
     def _default_training_unit_ids(self):
         unit_set = self._get_units()
@@ -333,7 +333,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
 
 
     wizard_line_ids = fields.One2many(
-        string='Training units',
+        string='Wizard lines',
         required=True,
         readonly=False,
         index=False,
@@ -452,7 +452,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     # --------------------------- PUBLIC METHODS ------------------------------
 
 
-    @api.multi
+    # @api.multi
     def execute(self):
         """ Wizard execute button method """
 
@@ -859,7 +859,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
         assert_msg = 'There are not enough ({hours}) hours for new lesson'
         assert available > 0, assert_msg.format(hours=available)
 
-        # STEP 3: Lesson will occup full session  if so has been indicated in
+        # STEP 3: Lesson will occupy full session  if so has been indicated in
         # wizard line or if available (hours) value has not been set
         if line.incomplete == 'fill' or available is None:
             duration = line.duration

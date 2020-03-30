@@ -44,13 +44,11 @@
             <field name="arch" type="xml">
                 <form string="academy_training_lesson_form" create="1" delete="1" edit="1">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                            </button>
-                        </div>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
 
                         <div class="oe_title">
+                            <field name="active" invisible="1"/>
                             <label for="code" class="oe_edit_only" />
                             <h1>
                                 <field name="code" class="oe_field_code"
@@ -95,7 +93,6 @@
         </record>
 
 
-
         <record id="view_academy_training_lesson_calendar" model="ir.ui.view">
             <field name="name">view.academy.training.lesson.calendar</field>
             <field name="model">academy.training.lesson</field>
@@ -104,11 +101,12 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
+                <!-- readonly_form_view_id="academy_base.view_academy_training_lesson_form" -->
                 <calendar string="Invoices"
                     date_start="start_date"
                     date_delay="duration"
                     color="training_action_id"
-                    readonly_form_view_id="academy_base.view_academy_training_lesson_form"
+
                     form_view_id="academy_base.view_academy_training_lesson_form">
                     <field name="code"/>
                     <field name="training_action_id" />
@@ -117,7 +115,7 @@
             </field>
         </record>
 
-<!-- Kanban view for "academy.training.lesson" -->
+        <!-- Kanban view for "academy.training.lesson" -->
         <record id="view_academy_training_lesson_kanban" model="ir.ui.view">
             <field name="name">view.academy.training.lesson.kanban</field>
             <field name="model">academy.training.lesson</field>
@@ -127,18 +125,18 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <kanban edit="0">
-                    <field name="image_small"/>
+                    <field name="image_128"/>
                     <field name="code" />
                     <field name="start_date" />
                     <field name="training_action_id" />
                     <field name="training_module_id" />
                     <field name="teacher_id" />
 
-                    <templates>
+                    <templates create="1" delete="1" edit="1">
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_training_lesson">
                                 <div class="o_kanban_image">
-                                    <img t-att-src="_s + &quot;/academy_base/static/src/img/training-lesson.png&quot;" class="o_kanban_image"/>
+                                    <img t-att-src="_s + &quot;/academy_base/static/src/img/training-lesson.png&quot;" class="o_kanban_image" alt="Training lesson photo" />
                                 </div>
                                 <div class="oe_kanban_details">
                                     <h4><strong class="oe_partner_heading"><field name="code"/></strong></h4>
@@ -171,7 +169,7 @@
                     <field name="training_module_id" />
                     <field name="start_date" />
 
-                    <filter string="This week" name="currentandlastlastweeks" domain="[
+                    <!-- <filter string="This week" name="currentandlastlastweeks" domain="[
                             ('start_date','&gt;=',(context_today()+relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
                             ('start_date','&lt;',(context_today()+relativedelta(weekday=7)).strftime('%Y-%m-%d'))
                                         ]" help="Journal invoices of the current and the last weeks" />
@@ -192,7 +190,7 @@
                         <filter name="group_by_teacher" string="Teacher" context="{'group_by': 'teacher_id'}"/>
                         <filter string="Month" domain="[ ]" context="{'group_by': 'start_date:month'}" />
                         <filter string="Week" domain="[ ]" context="{'group_by': 'start_date:week'}" />
-                   </group>
+                   </group> -->
                 </search>
             </field>
         </record>
@@ -203,11 +201,11 @@
             <field name="name">Academy Training Lesson</field>
             <field name="res_model">academy.training.lesson</field>
             <field name="view_mode">calendar,tree,kanban,form</field>
-            <field name="view_type">form</field>
+
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="search_view_id" ref="view_academy_training_lesson_search" />
+            <!-- <field name="search_view_id" ref="view_academy_training_lesson_search" /> -->
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     Click to add new Academy Training Lesson

@@ -46,12 +46,11 @@
                     <field name="type" class="oe_field_type" invisible="1" />
                     <field name="parent_id" class="oe_field_parent_id" invisible="1" />
 
-                    <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                        </button>
-                    </div>
-                    <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                    <div class="oe_button_box" name="button_box"/>
+                            <field name="active" invisible="1"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        
+                    <field name="image_128" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
                     <div class="oe_title">
                         <h1>
                             <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
@@ -114,7 +113,7 @@
             <!-- <field name="inherit_id" ref="base.res_partner_kanban_view" /> -->
             <field name="arch" type="xml">
                 <kanban>
-                    <field name="image_small"/>
+                    <field name="image_128"/>
                     <field name="name" />
 
                     <field name="phone" />
@@ -125,10 +124,10 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_student">
                                 <div class="o_kanban_image">
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+                                    <img t-if="record.image_128.raw_value" t-att-src="'data:image/png;base64,'+record.image_128.raw_value" alt="Student photo" />
 
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/student.png&quot;" class="o_kanban_image"/>
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/student.png&quot;" class="o_kanban_image" alt="Student photo" />
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
@@ -184,15 +183,9 @@
             <field name="name">Students</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
             <field name="target">current</field>
             <field name="domain">[('is_student', '=', True)]</field>
             <field name="context">{'default_is_student': True}</field>
-            <field name="view_ids"
-                   eval="[(5, 0, 0),
-                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_res_partner_student_kanban')}),
-                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_res_partner_student_tree')}),
-                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_student_form')})]"/>
             <field name="search_view_id" ref="academy_base.view_res_partner_student_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -201,6 +194,27 @@
                     Here are not any students
                 </p>
             </field>
+        </record>
+
+        <record id="action_students_act_window_kanban" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="action_students_act_window" />
+            <field name="view_id" ref="view_res_partner_student_kanban" />
+            <field name="view_mode">kanban</field>
+            <field name="sequence" eval="1" />
+        </record>
+
+        <record id="action_students_act_window_tree" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="action_students_act_window" />
+            <field name="view_id" ref="view_res_partner_student_tree" />
+            <field name="view_mode">tree</field>
+            <field name="sequence" eval="2" />
+        </record>
+
+        <record id="action_students_act_window_form" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="action_students_act_window" />
+            <field name="view_id" ref="view_res_partner_student_form" />
+            <field name="view_mode">form</field>
+            <field name="sequence" eval="3" />
         </record>
 
         <record id="menu_students" model="ir.ui.menu">

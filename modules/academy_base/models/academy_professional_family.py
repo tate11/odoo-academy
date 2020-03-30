@@ -10,7 +10,7 @@ from logging import getLogger
 
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 # pylint: disable=locally-disabled, C0103
@@ -30,7 +30,7 @@ class AcademyProfessionalFamily(models.Model):
     _name = 'academy.professional.family'
     _description = u'Academy professional family'
 
-    _inherit = ['academy.abstract.image']
+    _inherit = ['image.mixin']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -109,7 +109,7 @@ class AcademyProfessionalFamily(models.Model):
         compute=lambda self: self._compute_professional_area_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('professional_area_ids')
     def _compute_professional_area_count(self):
         for record in self:

@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: academy_public_tendering.menu_tendering_top
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not any vacancy position yet
+            - Action help···: There is not any vacancy position yet
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.public.tendering.vacancy.position" -->
@@ -24,11 +24,13 @@
             <field name="active" eval="True" />
             <field name="arch" type="xml">
                 <tree string="academy_public_tendering_vacancy_position_tree" create="1" delete="1" edit="1">
+                    <field name="sequence" class="od_field_sequence" widget="handle" />
                     <field name="name" class="oe_field_name" />
                     <field name="employment_group_id" class="oe_field_employment_group_id" />
                     <field name="hiring_type_id" class="oe_field_hiring_type_id" />
                     <field name="exam_type_id" class="oe_field_exam_type_id" />
-                    <field name="total_of_vacancies" class="oe_field_total_of_vacancies" />
+                    <field name="academy_public_tendering_vacancy_position_type_id" class="oe-field-academy-public-tendering-vacancy-position-type" />
+                    <field name="quantity" class="oe_field_total_of_vacancies" />
                 </tree>
             </field>
         </record>
@@ -52,27 +54,15 @@
                             </h1>
                         </div>
 
-                        <group col="4" string="Exam">
-                            <field name="exam_type_id" class="oe_field_exam_type_id_id"
-                                placeholder="Enter new value for kind" />
-                        </group>
-
-                        <group col="4" string="Requirements">
+                        <group col="4">
                             <field name="employment_group_id" class="oe_field_employment_group_id"
-                                placeholder="Enter new value for employment_group_id" />
+                                placeholder="Enter new value for employment group" />
                             <field name="hiring_type_id" class="oe_field_hiring_type_id"
                                 placeholder="Enter new value for class" />
-                        </group>
-
-                        <group col="4" string="Vacancies">
-                            <field name="general_public_access" class="oe_field_general_public_access"
-                                placeholder="Enter new value for general_public_access" />
-                            <field name="general_internal_promotion" class="oe_field_general_internal_promotion"
-                                placeholder="Enter new value for general_internal_promotion" />
-                            <field name="disabilities_public_access" class="oe_field_disabilities_public_access"
-                                placeholder="Enter new value for disabilities_public_access" />
-                            <field name="disabilities_internal_promotion" class="oe_field_disabilities_internal_promotion"
-                                placeholder="Enter new value for disabilities_internal_promotion" />
+                            <field name="academy_public_tendering_vacancy_position_type_id" class="oe-field-academy-public-tendering-vacancy-position-type" />
+                            <field name="quantity" eval="0" />
+                            <field name="exam_type_id" class="oe_field_exam_type_id_id"
+                                placeholder="Enter new value for kind" colspan="4"/>
                         </group>
 
                         <group col="1" string="Description">
@@ -96,7 +86,10 @@
             <field name="arch" type="xml">
                 <search string="academy_public_tendering_vacancy_position_search">
                     <field name="name" />
-                    <!-- ··· -->
+                    <field name="employment_group_id" />
+                    <field name="hiring_type_id" />
+                    <field name="academy_public_tendering_vacancy_position_type_id" />
+                    <field name="exam_type_id" />
                 </search>
             </field>
         </record>
@@ -107,7 +100,7 @@
             <field name="name">Vacancy positions</field>
             <field name="res_model">academy.public.tendering.vacancy.position</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
@@ -116,18 +109,19 @@
                 <p class="oe_view_nocontent_create">
                     Click to add new Vacancy positions
                 </p><p>
-                    There are not any question yet
+                    There is not any question yet
                 </p>
             </field>
         </record>
 
-        <!-- Main menu for model.name -->
+
+        <!-- Main menu for model.name
         <record id="menu_vacancy_positions" model="ir.ui.menu" >
             <field name="name">Vacancy positions</field>
             <field name="sequence" eval="10" />
             <field name="action" ref="action_vacancy_positions_act_window" />
             <field name="parent_id" ref="menu_tendering_settings_top" />
-        </record>
+        </record>-->
 
     </data>
 </openerp>

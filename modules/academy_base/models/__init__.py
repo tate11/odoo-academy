@@ -6,7 +6,7 @@
 
 
 
-from . import academy_abstract_image
+# from . import academy_abstract_image # Not required, it has been replaced by image.mixin
 from . import academy_abstract_observable
 
 from . import academy_training_methodology
@@ -23,6 +23,8 @@ from . import academy_competency_unit
 from . import academy_qualification_level
 from . import academy_training_activity
 from . import academy_training_action
+
+from . import academy_training_module_tree_readonly
 
 from . import res_partner
 from . import res_users

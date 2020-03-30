@@ -7,7 +7,7 @@ image in models which extends this
 
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api, tools
+from odoo import models, fields, api, tools
 
 
 # pylint: disable=locally-disabled, R0903
@@ -71,7 +71,7 @@ class AcademyAbstractImage(models.AbstractModel):
     # ------------------ AUXILIARY FIELD METHOS AND EVENTS --------------------
 
 
-    @api.multi
+    # @api.multi
     @api.depends('image')
     def _get_image(self):
         """ Creates image_medium and image_small thumbs

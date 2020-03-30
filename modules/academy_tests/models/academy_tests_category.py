@@ -17,8 +17,8 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -96,7 +96,7 @@ class AcademyTestsCategory(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_topic_id',
+        # oldname='academy_topic_id',
     )
 
     question_ids = fields.Many2many(
@@ -113,7 +113,7 @@ class AcademyTestsCategory(models.Model):
         domain=[],
         context={},
         limit=None,
-        oldname='academy_question_ids'
+        # oldname='academy_question_ids'
     )
 
     # --------------------------- SQL_CONTRAINTS ------------------------------

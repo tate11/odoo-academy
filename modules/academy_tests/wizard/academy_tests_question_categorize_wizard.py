@@ -23,8 +23,8 @@ from logging import getLogger
 from operator import itemgetter
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 from odoo.exceptions import ValidationError
 
 
@@ -36,7 +36,6 @@ _logger = getLogger(__name__)
 WIZARD_STATES = [
     ('step1', 'Targets'),
     ('step2', 'Batch'),
-    ('step3', 'Finishing')
 ]
 
 MANY2MANY_ACTIONS = [
@@ -222,16 +221,15 @@ class AcademyTestsQuestionCategorizeWizard(models.TransientModel):
 
     @api.onchange('topic_id')
     def _onchange_topic_id(self):
-        pass
-        #self.category_ids = [(5, None, None)]
+        self.category_ids = [(5, None, None)]
 
 
     @api.onchange('state')
     def _onchange_state(self):
-        valid = self._ensure_state()
+        self._ensure_state()
 
-        if valid and self.state == WIZARD_STATES[2][0]:
-            self.update_targets()
+        # if valid and self.state == WIZARD_STATES[2][0]:
+        #     self.update_targets()
 
 
     @api.onchange('question_ids')
@@ -262,7 +260,7 @@ class AcademyTestsQuestionCategorizeWizard(models.TransientModel):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def update_targets(self):
         # pylint: disable=locally-disabled, E1101, C0325
         """ Perform the update
@@ -290,8 +288,8 @@ class AcademyTestsQuestionCategorizeWizard(models.TransientModel):
         if self.question_ids:
             valid.append(WIZARD_STATES[1][0])
 
-        if self.topic_id or self.category_ids:
-            valid.append(WIZARD_STATES[2][0])
+        # if self.topic_id or self.category_ids:
+        #     valid.append(WIZARD_STATES[2][0])
 
         if self.state not in valid:
             self.state = valid[-1]
@@ -311,7 +309,7 @@ class AcademyTestsQuestionCategorizeWizard(models.TransientModel):
             'type': 'ir.actions.act_window',
             'res_model': 'academy.tests.question.categorize.wizard',
             'view_mode': 'form',
-            'view_type': 'form',
+            # 'view_type': 'form',
             'res_id': self.id,
             'views': [(False, 'form')],
             'target': 'new'

@@ -17,8 +17,8 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -74,7 +74,7 @@ class AcademyTestsQuestionImpugnment(models.Model):
         context={},
         ondelete='cascade',
         auto_join=False,
-        oldname='academy_question_id'
+        # oldname='academy_question_id'
     )
 
     active = fields.Boolean(

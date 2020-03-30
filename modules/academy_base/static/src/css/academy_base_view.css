@@ -17,4 +17,6 @@
     text-overflow: ellipsis!important;
 }
 
-
+.table_border_less td, .table_border_less th {
+    border: none;
+}

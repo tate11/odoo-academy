@@ -17,13 +17,13 @@
                                 string="Update" class="oe_highlight"
                                 states="step2" />
 
-                        <button name="write" type="object" string="Save"
-                                states="step3" />
+<!--                         <button name="write" type="object" string="Save"
+                                states="step3" /> -->
 
                         <field name="state" widget="statusbar" clickable="1" />
                     </header>
 
-                    <field name="question_ids" class="oe_field_question_ids" states="step1,step3">
+                    <field name="question_ids" class="oe_field_question_ids" states="step1">
                         <tree string="Questions" create="1" delete="1" edit="1" editable="bottom">
                             <field name="name" class="oe_field_name" autocomplete="off" />
                             <field name="topic_id" class="oe_field_topic_id" autocomplete="off" />
@@ -72,11 +72,11 @@
             <field name="name">Categorize</field>
             <field name="res_model">academy.tests.question.categorize.wizard</field>
             <field name="view_mode">form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">new</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="multi" eval="True" />
+            <!-- <field name="multi" eval="True" /> -->
             <field name="binding_model_id" ref="academy_tests.model_academy_tests_question" />
         </record>
 

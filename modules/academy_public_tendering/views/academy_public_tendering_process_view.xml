@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: base.menu_custom
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not any academy public tendering yet
+            - Action help···: There is not any academy public tendering yet
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.public.tendering.process" -->
@@ -44,9 +44,12 @@
             <field name="arch" type="xml">
                 <form string="academy_public_tendering_process_form" create="1" delete="1" edit="1">
                     <sheet>
-                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="image_1920" widget='image' class="oe_avatar" options='{"preview_image": "image_128"}'/>
 
                         <div class="oe_title">
+                            <field name="active" invisible="1"/>
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
@@ -63,29 +66,29 @@
 
                         <group col="2" string="Internet">
                             <field name="bulletin_board_url" class="oe_bulletin_board_url"
-                                placeholder="Enter new value for bulletin board url"
+                                placeholder="Enter new value for bulletin board URL"
                                 widget="url" />
                             <field name="official_journal_url" class="oe_official_journal_url"
-                                placeholder="Enter new value for official journal url"
+                                placeholder="Enter new value for official journal URL"
                                 widget="url" />
                         </group>
 
                         <notebook>
                             <page string="Vacancies" class="oe_page_vacancies" accesskey="V">
                                 <field name="vacancy_position_ids" class="oe_field_vacancy_position_ids"
-                                    placeholder="Enter new value for Apt vacancy position ids" widget="many2many" />
+                                    placeholder="Enter new value for Apt vacancy position ids" widget="one2many" />
                             </page>
                             <page string="Description" class="oe_page_description" accesskey="D">
                                 <field name="description" class="oe_field_description"
                                     placeholder="Enter new value for description" />
                             </page>
-                            <page string="Attachements" class="oe_page_attachements" accesskey="A">
+                            <page string="Attachments" class="oe_page_attachments" accesskey="A">
                                 <field name="ir_atachment_ids" class="oe_field_ir_atachment_ids"
                                     placeholder="Attach documents and other stuff" />
                             </page>
                             <page string="Training actions" class="oe_page_training_actions" accesskey="T">
                                 <field name="training_action_ids" class="oe_field_training_action_ids"
-                                    placeholder="Chosse related training actions" />
+                                    placeholder="Choose related training actions" />
                             </page>
                         </notebook>
                     </sheet>
@@ -107,38 +110,47 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <kanban default_group_by="state">
-                    <field name="image_small"/>
+                <kanban default_group_by="state" group_create="false" group_delete="false" group_edit="false" records_draggable="false" quick_create="false" archivable="false">
+                    <field name="id" />
+                    <field name="image_128"/>
                     <field name="approval" />
                     <field name="announcement" />
                     <field name="target_date" />
+<!--                     <field name="progress" /> -->
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click oe_kanban_academy_public_tendering_process">
                                 <div class="o_kanban_image">
 
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+                                    <img alt="" t-if="record.image_128.raw_value" t-att-src="kanban_image('academy.public.tendering.process', 'image_128', record.id.raw_value)"/>
 
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_public_tendering/static/src/img/public_tendering.png&quot;" class="o_kanban_image"/>
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_public_tendering/static/src/img/public_tendering.png&quot;" class="o_kanban_image" alt="Image for public tendering"/>
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
-                                    <h4><strong class="oe_partner_heading"><field name="name"/></strong></h4>
-                                    <ul>
-                                        <li><strong>Approval:&#160;</strong><field name="approval" widget="date" /></li>
-                                        <li><strong>Announcement:&#160;</strong><field name="announcement" widget="date" /></li>
-                                        <li><strong>Target:&#160;</strong><field name="target_date" widget="date" /></li>
-                                     </ul>
+                                    <h4 class="o_ellipsis"><strong class="oe_partner_heading"><field name="name"/></strong></h4>
+                                    <table class="table table-sm table_border_less">
+                                        <tbody>
+                                            <tr>
+                                                <th>Approval:</th>
+                                                <td class="text-right"><field name="approval" widget="date" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Announcement:</th>
+                                                <td class="text-right"><field name="announcement" widget="date" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Target:</th>
+                                                <td class="text-right"><field name="target_date" widget="date" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Vacancies:</th>
+                                                <td class="text-right"><field name="total_of_vacancies" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-<!--                                 <div class="row">
-                                    <div class="col-xs-6">
-                                        <field name="progress" widget="gauge"  style="width:100%;cursor:pointer;" />
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        <field name="studentcounting" widget="gauge"  style="width:100%;cursor:pointer;" options="{'max_field': 'seating'}" />
-                                    </div>
-                                </div> -->
                             </div>
                         </t>
                     </templates>
@@ -159,11 +171,17 @@
                     <field name="name" />
                     <field name="administration_id" />
                     <field name="state" />
+                    <field name="approval" />
+                    <field name="announcement" />
+                    <field name="target_date" />
 
                     <group expand="0" name="group_by" string="Group By">
                         <filter name="group_by_administration_id" string="Administration" domain="[]" context="{'group_by' : 'administration_id'}" />
-                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}" />
+                        <filter name="group_by_aproval_year" string="Approval year" domain="[]" context="{'group_by': 'approval'}" />
+                        <filter name="group_by_target_year" string="Target year" domain="[]" context="{'group_by': 'target_date'}" />
                     </group>
+
                 </search>
             </field>
         </record>
@@ -174,7 +192,7 @@
             <field name="name">Public Tendering</field>
             <field name="res_model">academy.public.tendering.process</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
@@ -183,7 +201,7 @@
                 <p class="oe_view_nocontent_create">
                     Click to add new Public Tendering
                 </p><p>
-                    There are not any academy public tendering yet
+                    There is not any academy public tendering yet
                 </p>
             </field>
         </record>

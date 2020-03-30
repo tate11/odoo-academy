@@ -62,7 +62,7 @@
 
                                 <field name="name" />
                                 <field name="id" />
-                                <field name="datas_fname" />
+                                <field name="name" />
                                 <field name="type" />
                                 <field name="mimetype" />
                                 <field name="index_content" />
@@ -85,7 +85,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>File:&#160;</th>
-                                                            <td colspan="3"><field name="datas_fname" /></td>
+                                                            <td colspan="3"><field name="name" /></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Type:&#160;</th>
@@ -116,11 +116,11 @@
             <field name="name">Import</field>
             <field name="res_model">academy.tests.question.import.wizard</field>
             <field name="view_mode">form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">new</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
-            <field name="multi" eval="True" />
+            <!-- <field name="multi" eval="True" /> -->
             <field name="binding_model_id" ref="academy_tests.model_academy_tests_question" />
         </record>
 

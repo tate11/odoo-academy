@@ -17,8 +17,8 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -86,7 +86,7 @@ class AcademyTestsTag(models.Model):
         domain=[],
         context={},
         limit=None,
-        oldname='academy_question_ids'
+        # oldname='academy_question_ids'
     )
 
     # --------------------------- SQL_CONTRAINTS ------------------------------

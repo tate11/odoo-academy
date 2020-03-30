@@ -43,16 +43,11 @@
                 <form string="academy_tests_form" create="1" delete="1" edit="1">
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-                            <div>
                                 <button name="show_questions" type="object"
                                     class="oe_stat_button oe_read_only" icon="fa-list-ol">
                                     <field name="question_count" widget="statinfo" />
                                 </button>
-                                <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                                    <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                                </button>
-                            </div>
-                            <div>
+                                <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                                 <button name="import_questions" type="object"
                                     class="oe_stat_button oe_read_only" icon="fa-upload">
                                     <span>Import</span>
@@ -61,14 +56,14 @@
                                     class="oe_stat_button oe_read_only" icon="fa-random">
                                     <span attrs="{'invisible': [('random_wizard_id', '!=', False)]}">Random</span>
                                     <field name="random_wizard_id" class="oe_field_random_wizard_id"
-                                        placeholder="Enter new value for random wizard id" />
+                                        placeholder="Enter new value for random wizard" />
                                 </button>
-                            </div>
                         </div>
 
-                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                        <field name="image_128" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
 
                         <div class="oe_title">
+                            <field name="active" invisible="1"/>
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
@@ -93,9 +88,16 @@
 
                             <!-- options="{'no_create': 1}" -->
                             <page string="Questions" class="oe_page_questions" accesskey="Q">
-                                <field name="question_ids" class="oe_field_question_ids"
-                                    widget="one2many_list"
-                                    context="{'tree_view_ref' : 'academy_tests.view_academy_tests_test_question_rel_handle_tree'}" />
+                                <field name="question_ids" class="oe_field_question_ids">
+                                    <tree string="Question" create="1" delete="1" edit="1" editable="bottom">
+                                        <field name="sequence" class="oe_field_sequence" widget="handle" />
+                                        <field name="question_id" class="oe_field_name" />
+                                        <field name="topic_id" class="oe_field_topic_id" readonly="1" />
+                                        <field name="level_id" class="oe_field_level_id" readonly="1"  />
+                                        <field name="answer_count" class="oe_field_answer_count" readonly="1"  />
+                                        <field name="attachment_count" class="oe_field_attachment_count" readonly="1"  />
+                                    </tree>
+                                </field>
                             </page>
                             <page string="Topics" class="oe_page_topics" accesskey="T">
                                 <field name="topic_ids" class="oe_field_topic_ids" />
@@ -122,7 +124,7 @@
                 <kanban string="academy_tests_kanban" create="1" delete="1" edit="1"
                     quick_create="0" class="o_kanban_mobile">
 
-                    <field name="image_small"/>
+                    <field name="image_128"/>
                     <field name="name" />
                     <field name="topic_count" />
                     <field name="topic_id" />
@@ -133,10 +135,10 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click">
                                 <div class="o_kanban_image">
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
+                                    <img t-if="record.image_128.raw_value" t-att-src="'data:image/png;base64,'+record.image_128.raw_value" alt="Image for this test" />
 
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_tests/static/src/img/test-kanban-icon.png&quot;" class="o_kanban_image"/>
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_tests/static/src/img/test-kanban-icon.png&quot;" class="o_kanban_image" alt="Image for this test" />
                                     </t>
                                 </div>
 
@@ -147,9 +149,9 @@
                                             <t t-if="record.description.raw_value"><field name="description" /></t>
                                             <t t-else=""><i>(No description)</i></t>
                                         </li>
-                                        <li class="o_ellipsis" t-att-title="record.topic_id.name.raw_value"><strong>Topic:&#160;</strong>
+                                        <li class="o_ellipsis" t-att-title="record.topic_id.name"><strong>Topic:&#160;</strong>
                                             <field name="topic_id" />
-                                            <tag t-if="record.topic_count.raw_value &gt; 1">&#160;(<t t-esc="record.topic_count.raw_value - 1" /> more)</tag>
+                                            <tag t-if="record.topic_count &gt; 1">&#160;(<t t-esc="record.topic_count - 1" /> more)</tag>
                                         </li>
                                         <li class="o_ellipsis" >
                                             <strong>Questions:</strong>&#160;<field name="question_count" />
@@ -187,7 +189,7 @@
             <field name="name">Tests</field>
             <field name="res_model">academy.tests.test</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

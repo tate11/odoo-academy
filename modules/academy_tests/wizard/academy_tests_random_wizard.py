@@ -35,8 +35,8 @@ from logging import getLogger
 from datetime import datetime
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -134,7 +134,7 @@ class AcademyTestsRandomWizard(models.TransientModel):
         index=False,
         default=None,
         help='Last template update',
-        compute='compute_last_update'
+        compute=lambda self: self.compute_last_update()
     )
 
 
@@ -161,7 +161,7 @@ class AcademyTestsRandomWizard(models.TransientModel):
         return lineset_item.id
 
 
-    @api.multi
+    # @api.multi
     @api.depends('random_wizard_template_id')
     def compute_last_update(self):
         """ Change value to last_update field to show choosen template
@@ -192,7 +192,7 @@ class AcademyTestsRandomWizard(models.TransientModel):
 
     # -------------------------------- CRUD -----------------------------------
 
-    @api.multi
+    # @api.multi
     def unlink(self):
         """ Delete all record(s) from recordset
 
@@ -209,7 +209,7 @@ class AcademyTestsRandomWizard(models.TransientModel):
 
     # ---------------------------- PUBIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def append_questions(self):
         """ Calls action by each related line
         """
@@ -219,7 +219,8 @@ class AcademyTestsRandomWizard(models.TransientModel):
         self._overwrite_pre_requirements()
 
         values = self._get_base_values()
-        question_set = self.random_wizard_line_ids.perform_search()
+        current_leaf = self._leaf_to_exclude_current_questions()
+        question_set = self.random_wizard_line_ids.perform_search(current_leaf)
         leafs = self._make_insert_leafs(question_set, values)
         self._write_leafs(leafs)
 
@@ -229,6 +230,16 @@ class AcademyTestsRandomWizard(models.TransientModel):
 
 
     # -------------------------- AUXILIARY METHODS ----------------------------
+
+    def _leaf_to_exclude_current_questions(self):
+        current_leaf = None
+
+        if not self.overwrite and self.test_id and self.test_id.question_ids:
+            question_ids = self.test_id.question_ids.mapped('question_id')
+            current_ids = question_ids.mapped('id')
+            current_leaf = [('id', 'not in', current_ids)]
+
+        return current_leaf
 
     def _overwrite_pre_requirements(self):
         if self.overwrite:

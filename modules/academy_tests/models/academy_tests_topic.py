@@ -17,8 +17,8 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 
 
 # pylint: disable=locally-disabled, C0103
@@ -89,14 +89,14 @@ class AcademyTestsTopic(models.Model):
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_category_ids'
+        # oldname='academy_category_ids'
     )
 
 
     # -------------------------- MANAGEMENT FIELDS ----------------------------
 
     category_count = fields.Integer(
-        string='Categories',
+        string='Number of categories',
         required=False,
         readonly=True,
         index=False,
@@ -105,7 +105,7 @@ class AcademyTestsTopic(models.Model):
         compute=lambda self: self.compute_category_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('category_ids')
     def compute_category_count(self):
         """ Computes `category_count` field value, this will be the number

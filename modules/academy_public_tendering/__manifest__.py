@@ -30,11 +30,14 @@
         'data/academy_public_tendering_employment_group_data.xml',
         'data/academy_public_tendering_exam_type_data.xml',
         'data/academy_public_tendering_hiring_type_data.xml',
+        'data/academy_public_tendering_vacancy_position_type.xml',
+        'data/ir_cron.xml',
 
         'security/academy_public_tendering_hiring_type.xml',
         'security/academy_public_tendering_employment_group.xml',
         'security/academy_public_tendering_exam_type.xml',
         'security/academy_public_tendering_process.xml',
+        'security/academy_public_tendering_vacancy_position_type.xml',
         'security/academy_public_tendering_vacancy_position.xml',
 
         'views/academy_public_tendering.xml',
@@ -42,6 +45,7 @@
         'views/academy_public_tendering_employment_group_view.xml',
         'views/academy_public_tendering_exam_type_view.xml',
         'views/academy_public_tendering_hiring_type_view.xml',
+        'views/academy_public_tendering_vacancy_position_type_view.xml',
         'views/academy_public_tendering_vacancy_position_view.xml',
         'views/academy_public_tendering_process_view.xml',
 

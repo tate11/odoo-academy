@@ -6,8 +6,8 @@
         <record id="academy_demo_student" model="res.partner">
             <field name="name">Demo Student</field>
             <field name="email">student</field>
-            <field name="supplier" eval="False"/>
-            <field name="customer" eval="True"/>
+            <!-- <field name="supplier" eval="False"/> -->
+            <!-- <field name="customer" eval="False"/> -->
             <field name="city">Naraío</field>
             <field name="zip">15576</field>
             <field name="country_id" ref="base.es"/>
@@ -18,8 +18,8 @@
         <record id="academy_demo_consultant" model="res.partner">
             <field name="name">Demo Consultant</field>
             <field name="email">consultant</field>
-            <field name="supplier" eval="False"/>
-            <field name="customer" eval="False"/>
+            <!-- <field name="supplier" eval="False"/> -->
+            <!-- <field name="customer" eval="False"/> -->
             <field name="city">Naraío</field>
             <field name="zip">15576</field>
             <field name="country_id" ref="base.es"/>
@@ -30,8 +30,8 @@
         <record id="academy_demo_teacher" model="res.partner">
             <field name="name">Demo Teacher</field>
             <field name="email">teacher</field>
-            <field name="supplier" eval="False"/>
-            <field name="customer" eval="False"/>
+            <!-- <field name="supplier" eval="False"/> -->
+            <!-- <field name="customer" eval="False"/> -->
             <field name="city">Naraío</field>
             <field name="zip">15576</field>
             <field name="country_id" ref="base.es"/>
@@ -42,8 +42,8 @@
         <record id="academy_demo_technical" model="res.partner">
             <field name="name">Demo Technical</field>
             <field name="email">technical</field>
-            <field name="supplier" eval="False"/>
-            <field name="customer" eval="False"/>
+            <!-- <field name="supplier" eval="False"/> -->
+            <!-- <field name="customer" eval="False"/> -->
             <field name="city">Naraío</field>
             <field name="zip">15576</field>
             <field name="country_id" ref="base.es"/>
@@ -54,8 +54,8 @@
         <record id="academy_demo_manager" model="res.partner">
             <field name="name">Demo Manager</field>
             <field name="email">manager</field>
-            <field name="supplier" eval="False"/>
-            <field name="customer" eval="False"/>
+            <!-- <field name="supplier" eval="False"/> -->
+            <!-- <field name="customer" eval="False"/> -->
             <field name="city">Naraío</field>
             <field name="zip">15576</field>
             <field name="country_id" ref="base.es"/>

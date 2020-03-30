@@ -21,9 +21,9 @@ from re import match, sub as replace, search, MULTILINE, UNICODE, IGNORECASE
 from pprint import pprint
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.tools.translate import _
-from openerp.exceptions import ValidationError, UserError
+from odoo import models, fields, api
+from odoo.tools.translate import _
+from odoo.exceptions import ValidationError, UserError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -42,7 +42,7 @@ x. Respuesta correcta
 '''
 
 WIZARD_STATES = [
-    ('step1', 'Prerequirements'),
+    ('step1', 'Prerequisites'),
     ('step2', 'Content')
 ]
 
@@ -142,7 +142,7 @@ class AcademyTestsQuestionImport(models.TransientModel):
     )
 
     imported_attachment_ids = fields.Many2many(
-        string='Attachments',
+        string='Imported attachments',
         required=False,
         readonly=False,
         index=False,
@@ -296,7 +296,7 @@ class AcademyTestsQuestionImport(models.TransientModel):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def process_text(self):
         """ Perform job """
 

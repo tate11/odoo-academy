@@ -4,4 +4,4 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import test_academy_training_session_wizard
+# from . import test_academy_training_session_wizard

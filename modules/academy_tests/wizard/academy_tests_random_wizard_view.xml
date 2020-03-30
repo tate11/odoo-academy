@@ -48,7 +48,7 @@
                                 <field name="random_wizard_template_id"
                                     class="oe_field_random_wizard_id" colspan="6"
                                     options="{'no_open': True, 'no_create': True, 'no_quick_create': True, 'no_create_edit': True }"
-                                    placeholder="Enter new value for random wizard id" />
+                                    placeholder="Enter new value for random wizard" />
 
                                 <field name="last_update" class="oe_field_last_update"
                                     widget="date" colspan="2"

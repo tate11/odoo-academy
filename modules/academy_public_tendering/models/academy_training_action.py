@@ -12,7 +12,7 @@ Classes:
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields
+from odoo import models, fields
 
 
 # pylint: disable=locally-disabled, C0103

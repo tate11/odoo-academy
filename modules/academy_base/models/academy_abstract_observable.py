@@ -11,7 +11,7 @@ perform some database record updates between related models.
 The Obserser model must have a method with this signature:
 ```
     # pylint: disable=locally-disabled, W0613
-    @api.multi
+    # @api.multi
     def update_from_external(self, crud, fieldname, recordset):
 ```
 
@@ -23,7 +23,7 @@ from logging import getLogger
 import types
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 # pylint: disable=locally-disabled, C0103
@@ -145,7 +145,7 @@ class AcademyObservableModel(models.AbstractModel):
         return result
 
 
-    @api.multi
+    # @api.multi
     def write(self, values):
         """ Call update method in observers
         """
@@ -161,7 +161,7 @@ class AcademyObservableModel(models.AbstractModel):
         return result
 
 
-    @api.multi
+    # @api.multi
     def unlink(self):
         """ Call update method in observers
         """

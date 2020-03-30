@@ -13,8 +13,8 @@ from datetime import datetime, timedelta
 from pytz import timezone, utc
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -39,12 +39,12 @@ class AcademyTrainingAction(models.Model):
     _order = 'action_name ASC'
 
     # 'appointment.manager',
-    _inherit = ['academy.abstract.image', 'mail.thread', 'academy.abstract.observable']
+    _inherit = ['image.mixin', 'mail.thread', 'academy.abstract.observable']
 
     _inherits = {'academy.training.activity': 'training_activity_id'}
 
     action_name = fields.Char(
-        string='Name',
+        string='Action name',
         required=True,
         readonly=False,
         index=True,
@@ -261,7 +261,7 @@ class AcademyTrainingAction(models.Model):
 
     # -------------------------- OVERLOADED METHODS ---------------------------
 
-    @api.one
+    # @api.one
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         """ Prevents new record of the inherited (_inherits) model will be
@@ -278,7 +278,7 @@ class AcademyTrainingAction(models.Model):
 
     # --------------------------- PUBLIC METHODS ------------------------------
 
-    @api.multi
+    # @api.multi
     def session_wizard(self):
         """ Launch the Session wizard.
         This wizard has a related window action, this method reads the action,
@@ -311,7 +311,7 @@ class AcademyTrainingAction(models.Model):
             'name' : action.name,
             'res_model' : action.res_model,
             'view_mode' : action.view_mode,
-            'view_type' : action.view_type,
+            # 'view_type' : action.view_type,
             'target' : action.target,
             'domain' : action.domain,
             'context' : ctx,

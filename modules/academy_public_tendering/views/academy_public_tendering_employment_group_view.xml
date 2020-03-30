@@ -11,7 +11,7 @@
             - Context·······: {}
             - Parent menu ··: base.menu_custom
             - View priority·: 16    Sequence····: 10
-            - Action help···: There are not any group yet
+            - Action help···: There is not any group yet
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
         <!-- Tree view for "academy.public.tendering.employment.group" -->
@@ -23,7 +23,7 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <tree string="academy_public_tendering_employment_group_tree" create="1" delete="1" edit="1">
+                <tree string="academy_public_tendering_employment_group_tree" editable="bottom" create="1" delete="1" edit="1">
                     <field name="name" class="oe_field_name"
                         placeholder="Enter new value for name" />
                     <field name="description" class="oe_field_description"
@@ -81,7 +81,7 @@
             <field name="name">Vacancy position group</field>
             <field name="res_model">academy.public.tendering.employment.group</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
@@ -90,7 +90,7 @@
                 <p class="oe_view_nocontent_create">
                     Click to add new Vacancy position group
                 </p><p>
-                    There are not any academy public tendering yet
+                    There is not any academy public tendering yet
                 </p>
             </field>
         </record>

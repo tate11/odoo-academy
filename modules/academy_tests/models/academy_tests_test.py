@@ -28,8 +28,8 @@ from logging import getLogger
 from operator import itemgetter
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.addons.academy_base.models.lib.custom_model_fields import Many2manyThroughView
+from odoo import models, fields, api
+from odoo.addons.academy_base.models.lib.custom_model_fields import Many2manyThroughView
 from odoo.tools.safe_eval import safe_eval
 from .lib.libuseful import ACADEMY_TESTS_TEST_TOPIC_IDS_SQL
 
@@ -51,7 +51,7 @@ class AcademyTestsTest(models.Model):
     _rec_name = 'name'
     _order = 'write_date DESC, create_date DESC'
 
-    _inherit = ['academy.abstract.image', 'mail.thread']
+    _inherit = ['image.mixin', 'mail.thread']
 
 
     name = fields.Char(
@@ -109,7 +109,7 @@ class AcademyTestsTest(models.Model):
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_question_ids'
+        # oldname='academy_question_ids'
     )
 
     answers_table_ids = fields.One2many(
@@ -125,7 +125,7 @@ class AcademyTestsTest(models.Model):
         context={},
         auto_join=False,
         limit=None,
-        oldname='academy_answers_table_ids'
+        # oldname='academy_answers_table_ids'
     )
 
     random_wizard_id = fields.Many2one(
@@ -146,7 +146,7 @@ class AcademyTestsTest(models.Model):
     # -------------------------- MANAGEMENT FIELDS ----------------------------
 
     question_count = fields.Integer(
-        string='Questions',
+        string='Number of questions',
         required=False,
         readonly=False,
         index=False,
@@ -155,7 +155,7 @@ class AcademyTestsTest(models.Model):
         compute='_compute_question_count'
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('question_ids')
     def _compute_question_count(self):
         for record in self:
@@ -179,7 +179,7 @@ class AcademyTestsTest(models.Model):
     )
 
     topic_count = fields.Integer(
-        string='Topics',
+        string='Number of topics',
         required=False,
         readonly=True,
         index=False,
@@ -188,7 +188,7 @@ class AcademyTestsTest(models.Model):
         compute=lambda self: self._compute_topic_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('question_ids')
     def _compute_topic_count(self):
         for record in self:
@@ -213,7 +213,7 @@ class AcademyTestsTest(models.Model):
         compute=lambda self: self._compute_topic_id()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('question_ids')
     def _compute_topic_id(self):
         for record in self:
@@ -248,7 +248,7 @@ class AcademyTestsTest(models.Model):
 
     # ----------------------- AUXILIARY FIELD METHODS -------------------------
 
-    @api.multi
+    # @api.multi
     @api.depends('name')
     def _compute_lang(self):
         """ Gets the language used by the current user and sets it as `lang`
@@ -261,7 +261,7 @@ class AcademyTestsTest(models.Model):
             record.lang = user_id.lang
 
 
-    @api.multi
+    # @api.multi
     def import_questions(self):
         """ Runs a wizard to import questions from plain text
         @note: actually this method is not used
@@ -270,14 +270,14 @@ class AcademyTestsTest(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'academy.tests.question.import.wizard',
             'view_mode': 'form',
-            'view_type': 'form',
+            # 'view_type': 'form',
             'views': [(False, 'form')],
             'target': 'new',
             'context': {'default_test_id' : self.id}
         }
 
 
-    @api.multi
+    # @api.multi
     def random_questions(self):
         """ Runs wizard to append random questions. This allows uses to set
         filter criteria, maximum number of questions, etc.
@@ -286,20 +286,21 @@ class AcademyTestsTest(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'academy.tests.random.wizard',
             'view_mode': 'form',
-            'view_type': 'form',
+            # 'view_type': 'form',
             'views': [(False, 'form')],
             'target': 'new',
             'context': {'default_test_id' : self.id}
         }
 
 
-    @api.multi
+    # @api.multi
     def show_questions(self):
         """ Runs default view for academy.tests.question with a filter to
         show only current test questions
         """
 
-        act_wnd = self.env.ref('academy_tests.action_questions_act_window')
+        act_wnd = self.env.ref(
+            'academy_tests.action_questions_keep_items_act_window')
 
         if act_wnd.domain:
             if isinstance(act_wnd.domain, str):
@@ -317,12 +318,13 @@ class AcademyTestsTest(models.Model):
             'name' : act_wnd['name'],
             'res_model' : act_wnd['res_model'],
             'view_mode' : act_wnd['view_mode'],
-            'view_type' : act_wnd['view_type'],
             'target' : act_wnd['target'],
             'domain' : domain,
             'context' : self.env.context,
             'limit' : act_wnd['limit'],
             'help' : act_wnd['help'],
+            'view_ids' : act_wnd['view_ids'],
+            'views' : act_wnd['views']
         }
 
         if act_wnd.search_view_id:
@@ -344,7 +346,7 @@ class AcademyTestsTest(models.Model):
         return result
 
 
-    @api.multi
+    # @api.multi
     def write(self, values):
         """ Update all record(s) in recordset, with new value comes as {values}
             @param values: dict of new values to be set
@@ -368,12 +370,13 @@ class AcademyTestsTest(models.Model):
         # rel_obj = self.env['academy.tests.test.question.rel']
         # rel_set = rel_obj.search(rel_domain, order=order_by)
 
-        rel_set = self.question_ids.sorted()
+        for record in self:
+            rel_set = record.question_ids.sorted()
 
-        index = 1
-        for rel_item in rel_set:
-            rel_item.write({'sequence' : index})
-            index = index + 1
+            index = 1
+            for rel_item in rel_set:
+                rel_item.write({'sequence' : index})
+                index = index + 1
 
 
 

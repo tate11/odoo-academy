@@ -5,8 +5,8 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api, api
-from openerp.tools.translate import _
+from odoo import models, fields, api, api
+from odoo.tools.translate import _
 from logging import getLogger
 
 
@@ -47,10 +47,19 @@ class AptVacancyPosition(models.Model):
         help='Something about this vacancy position',
         translate=True
     )
+    
+    sequence = fields.Integer(
+        string='Sequence',
+        required=False,
+        readonly=False,
+        index=False,
+        default=1,
+        help='Order in which this vacancy position will be displayed in the tender process view'
+    )
 
     active = fields.Boolean(
         string='Active',
-        required=True,
+        required=False,
         readonly=False,
         index=False,
         default=True,
@@ -60,7 +69,7 @@ class AptVacancyPosition(models.Model):
 
     employment_group_id = fields.Many2one(
         string='Group',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=lambda self: self._default_employment_group_id(),
@@ -74,7 +83,7 @@ class AptVacancyPosition(models.Model):
 
     exam_type_id = fields.Many2one(
         string='Exam type',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=lambda self: self._default_exam_type_id(),
@@ -88,7 +97,7 @@ class AptVacancyPosition(models.Model):
 
     hiring_type_id = fields.Many2one(
         string='Hiring type',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=lambda self: self._default_hiring_type_id(),
@@ -100,47 +109,32 @@ class AptVacancyPosition(models.Model):
         auto_join=False,
     )
 
-    general_public_access = fields.Integer(
-        string='Public',
+    academy_public_tendering_vacancy_position_type_id = fields.Many2one(
+        string='Vacancy position type',
         required=True,
         readonly=False,
-        index=False,
-        default=0,
-        help='Number of vacancy will be offered for new employees'
+        index=True,
+        default=None,
+        help=False,
+        comodel_name='academy.public.tendering.vacancy.position.type',
+        domain=[],
+        context={},
+        ondelete='cascade',
+        auto_join=False
     )
 
-    general_internal_promotion = fields.Integer(
-        string='Promotion',
+    quantity = fields.Integer(
+        string='Quantity',
         required=True,
         readonly=False,
         index=False,
         default=0,
-        help=('Number of vacancy will be offered for internal promotion to '
-              ' current employees')
-    )
-
-    disabilities_public_access = fields.Integer(
-        string='Disabilities',
-        required=True,
-        readonly=False,
-        index=False,
-        default=0,
-        help='Number of vacancy will be offered for new employees with disabilities'
-    )
-
-    disabilities_internal_promotion = fields.Integer(
-        string='Disabilities Promotion',
-        required=True,
-        readonly=False,
-        index=False,
-        default=0,
-        help=('Number of vacancy will be offered for internal promotion to '
-              ' current employees with disabilities')
+        help=False
     )
 
     academy_public_tendering_process_id = fields.Many2one(
         string='Public tendering',
-        required=False,
+        required=True,
         readonly=False,
         index=False,
         default=None,
@@ -152,15 +146,7 @@ class AptVacancyPosition(models.Model):
         auto_join=False
     )
 
-    total_of_vacancies = fields.Integer(
-        string='Vacancies',
-        required=False,
-        readonly=True,
-        index=False,
-        default=0,
-        compute='compute_total_of_vacancies',
-        help='Set number of vacancies'
-    )
+
 
     # ----------------------- AUXILIAR FIELD METHODS --------------------------
 
@@ -194,58 +180,5 @@ class AptVacancyPosition(models.Model):
         record = self.env.ref(xid)
 
         return record
-
-    @api.multi
-    @api.depends(
-        'general_public_access',
-        'general_internal_promotion',
-        'disabilities_public_access',
-        'disabilities_internal_promotion')
-    def compute_total_of_vacancies(self):
-        """ Returns computed value for total_of_vacancies field
-        """
-        for record in self:
-            aggregate = record.general_public_access
-            aggregate = aggregate + record.general_internal_promotion
-            aggregate = aggregate + record.disabilities_public_access
-            aggregate = aggregate + record.disabilities_internal_promotion
-            record.total_of_vacancies = aggregate
-
-    # --------------------------- ONCHANGE EVENTS -----------------------------
-
-    # @api.one
-    @api.onchange('general_public_access')
-    def _onchange_general_public(self):
-        """ Onchange event for general_public_access field
-        """
-
-        self.compute_total_of_vacancies()
-
-
-    # @api.one
-    @api.onchange('general_internal_promotion')
-    def _onchange_general_internal(self):
-        """ Onchange event for general_internal_promotion field
-        """
-
-        self.compute_total_of_vacancies()
-
-
-    # @api.one
-    @api.onchange('disabilities_public_access')
-    def _onchange_disabilities_public(self):
-        """ Onchange event for disabilities_public_access field
-        """
-
-        self.compute_total_of_vacancies()
-
-
-    # @api.one
-    @api.onchange('disabilities_internal_promotion')
-    def _onchange_disabilities_internal(self):
-        """ Onchange event for disabilities_internal_promotion field
-        """
-
-        self.compute_total_of_vacancies()
 
 

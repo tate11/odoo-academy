@@ -10,7 +10,7 @@ all training activity attributes and behavior.
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from odoo import models, fields, api
 from .lib.custom_model_fields import Many2manyThroughView, \
     TRAINING_MODULE_IDS_SQL, TRAINING_UNIT_IDS_SQL, TRAINING_RESOURCE_IDS_SQL
 
@@ -30,7 +30,7 @@ class AcademyTrainingActivity(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    _inherit = ['academy.abstract.image', 'mail.thread']
+    _inherit = ['image.mixin', 'mail.thread']
 
 
     name = fields.Char(
@@ -106,7 +106,7 @@ class AcademyTrainingActivity(models.Model):
     )
 
     activity_code = fields.Char(
-        string='Code',
+        string='Activity code',
         required=False,
         readonly=False,
         index=False,
@@ -233,7 +233,7 @@ class AcademyTrainingActivity(models.Model):
 
     # pylint: disable=W0212
     competency_unit_count = fields.Integer(
-        string='Competency units',
+        string='Number of competency units',
         required=False,
         readonly=True,
         index=False,
@@ -242,7 +242,7 @@ class AcademyTrainingActivity(models.Model):
         compute=lambda self: self._compute_competency_unit_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('competency_unit_ids')
     def _compute_competency_unit_count(self):
         for record in self:
@@ -251,7 +251,7 @@ class AcademyTrainingActivity(models.Model):
 
     # pylint: disable=W0212
     training_action_count = fields.Integer(
-        string='Training actions',
+        string='Number of training actions',
         required=False,
         readonly=True,
         index=False,
@@ -261,7 +261,7 @@ class AcademyTrainingActivity(models.Model):
         compute=lambda self: self._compute_training_action_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('training_action_ids')
     def _compute_training_action_count(self):
         for record in self:
@@ -279,7 +279,7 @@ class AcademyTrainingActivity(models.Model):
     #     compute=lambda self: self._compute_training_unit_count()
     # )
 
-    # @api.multi
+    # # @api.multi
     # @api.depends('training_unit_ids')
     # def _compute_training_unit_count(self):
     #     for record in self:
@@ -297,7 +297,7 @@ class AcademyTrainingActivity(models.Model):
         compute=lambda self: self._compute_training_resource_count()
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('training_resource_ids')
     def _compute_training_resource_count(self):
         for record in self:
@@ -307,7 +307,7 @@ class AcademyTrainingActivity(models.Model):
     # ---------------------------- PUBLIC FIELDS ------------------------------
 
     # pylint: disable=locally-disabled, W0613
-    @api.multi
+    # @api.multi
     def update_from_external(self, crud, fieldname, recordset):
         """ Observer notify method, will be called by academy.professional.action
         """

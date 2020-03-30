@@ -43,15 +43,13 @@
             <field name="arch" type="xml">
                 <form string="academy_professional_qualification_form" create="1" delete="1" edit="1">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                            </button>
-                        </div>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
 
-                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                        <field name="image_128" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
 
                         <div class="oe_title">
+                            <field name="active" invisible="1"/>
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="name" class="oe_field_name"
@@ -98,8 +96,8 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <kanban>
-                    <field name="image_small" />
+                <kanban create="1" delete="1" edit="1">
+                    <field name="image_128" />
                     <field name="name" />
                     <field name="qualification_code" />
                     <field name="qualification_level_id" />
@@ -109,12 +107,12 @@
                         <t t-name="kanban-box">
                              <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <!-- <t t-if="record.image_small.raw_value">
-                                        <img t-att-src="kanban_image('academy.professional.qualification', 'image_small', record.id.value)"/>
+                                    <!-- <t t-if="record.image_128.raw_value">
+                                        <img t-att-src="kanban_image('academy.professional.qualification', 'image_small', record.id.value)" alt="Professional qualification photo" />
                                     </t> -->
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/professional-qualification.png&quot;" class="o_kanban_image"/>
+                                    <img t-if="record.image_128.raw_value" t-att-src="'data:image/png;base64,'+record.image_128.raw_value" alt="Professional qualification photo" />
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/professional-qualification.png&quot;" class="o_kanban_image" alt="Professional qualification photo" />
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
@@ -152,19 +150,19 @@
                     <filter string="By family"
                         name="qualification_grouped_by_family"
                         domain="[]"
-                        context="{'group_by':['professional_family_id']}"
+                        context="{'group_by': 'professional_family_id'}"
                         help="Group by professional family" />
 
                     <filter string="By area"
                         name="qualification_grouped_by_area"
                         domain="[]"
-                        context="{'group_by':['professional_area_id']}"
+                        context="{'group_by': 'professional_area_id'}"
                         help="Group by professional area" />
 
                     <filter string="By level"
                         name="qualification_grouped_by_level"
                         domain="[]"
-                        context="{'group_by':['qualification_level_id']}"
+                        context="{'group_by': 'qualification_level_id'}"
                         help="Group by qualification level" />
 
                     <separator/>
@@ -182,7 +180,7 @@
             <field name="name">Professional qualification</field>
             <field name="res_model">academy.professional.qualification</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="academy_public_tendering_vacancy_position_type_general_public_access"
+                model="academy.public.tendering.vacancy.position.type">
+            <field name="name">General public access</field>
+            <field name="description">Selection process in which the candidates will access the organization for the first time</field>
+        </record>
+
+        <record id="academy_public_tendering_vacancy_position_type_general_internal_promotion"
+                model="academy.public.tendering.vacancy.position.type">
+            <field name="name">General internal promotion</field>
+            <field name="description">Selection process in which the candidates are already workers of the organization itself</field>
+        </record>
+
+        <record id="academy_public_tendering_vacancy_position_type_general_consolidation"
+                model="academy.public.tendering.vacancy.position.type">
+            <field name="name">General consolidation</field>
+            <field name="description">Selection process by which temporary positions are transformed into structural positions, candidates must meet certain requirements related to disabilities</field>
+        </record>
+
+        <record id="academy_public_tendering_vacancy_position_type_disabilities_public_access"
+                model="academy.public.tendering.vacancy.position.type">
+            <field name="name">Disabilities public access</field>
+            <field name="description">Selection process in which the candidates will access the organization for the first time, candidates must meet certain requirements related to disabilities</field>
+        </record>
+
+        <record id="academy_public_tendering_vacancy_position_type_disabilities_internal_promotion"
+                model="academy.public.tendering.vacancy.position.type">
+            <field name="name">Disabilities internal promotion</field>
+            <field name="description">Selection process in which the candidates are already workers of the organization itself, candidates must meet certain requirements related to disabilities</field>
+        </record>
+
+        <record id="academy_public_tendering_vacancy_position_type_disabilities_consolidation"
+                model="academy.public.tendering.vacancy.position.type">
+            <field name="name">Disabilities consolidation</field>
+            <field name="description">Selection process by which temporary positions are transformed into structural positions</field>
+        </record>
+
+    </data>
+</odoo>

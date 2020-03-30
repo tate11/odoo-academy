@@ -4,8 +4,10 @@
 #    __openerp__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from openerp import models, fields, api, api
-from openerp.tools.translate import _
+from odoo import models, fields, api, api
+from odoo.tools.translate import _
+from odoo.exceptions import AccessDenied
+
 from logging import getLogger
 from datetime import datetime, timedelta
 
@@ -23,17 +25,18 @@ class AptPublicTendering(models.Model):
     _name = 'academy.public.tendering.process'
     _description = u'Public tendering'
 
-    _inherit = ['academy.abstract.image', 'mail.thread']
+    _inherit = ['image.mixin', 'mail.thread']
 
     _rec_name = 'name'
     _order = 'approval DESC'
 
 
     STATES = [
-        ('0', 'Expected'),
-        ('1', 'Announced'),
-        ('2', 'Approved'),
-        ('3', 'Finished')
+        ('0', _('Expected')),
+        ('1', _('Approved')),
+        ('2', _('Announced')),
+        ('3', _('Convened')),
+        ('4', _('Finished'))
     ]
 
     # States that should be folded in Kanban view
@@ -51,7 +54,8 @@ class AptPublicTendering(models.Model):
         default=None,
         help='Name for this academy public tendering',
         size=50,
-        translate=True
+        translate=True,
+        track_visibility='always'
     )
 
     description = fields.Text(
@@ -71,7 +75,8 @@ class AptPublicTendering(models.Model):
         index=False,
         default=True,
         help=('If the active field is set to false, it will allow you '
-              'to hide record without removing it.')
+              'to hide record without removing it.'),
+        track_visibility='onchange'
     )
 
     administration_id = fields.Many2one(
@@ -85,7 +90,8 @@ class AptPublicTendering(models.Model):
         domain=lambda self: self.administration_id_domain(),
         context={},
         ondelete='cascade',
-        auto_join=False
+        auto_join=False,
+        track_visibility='always'
     )
 
     approval = fields.Date(
@@ -94,7 +100,8 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         default=fields.Date.today(),
-        help='Choose the approval date'
+        help='Choose the approval date',
+        track_visibility = 'onchange'
     )
 
     announcement = fields.Date(
@@ -103,7 +110,8 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         default=fields.Date.today(),
-        help='Choose the Announcement date'
+        help='Choose the Announcement date',
+        track_visibility = 'onchange'
     )
 
     target_date = fields.Date(
@@ -112,7 +120,8 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         # default=lambda self: self.default_submissions_deadline()
-        help='Choose the last day for training'
+        help='Choose the last day for training',
+        track_visibility='onchange'
     )
 
     vacancy_position_ids = fields.One2many(
@@ -143,7 +152,8 @@ class AptPublicTendering(models.Model):
         column2='ir_atachment_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        track_visibility='onchange'
     )
 
     bulletin_board_url = fields.Char(
@@ -152,7 +162,7 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='URl of the bulletin board url',
+        help='URL of the bulletin board',
         size=256,
         translate=True
     )
@@ -163,7 +173,7 @@ class AptPublicTendering(models.Model):
         readonly=False,
         index=False,
         default=None,
-        help='URl of the article in the official journal',
+        help='URL of the article in the official journal',
         size=256,
         translate=True
     )
@@ -191,7 +201,8 @@ class AptPublicTendering(models.Model):
         column2='training_action_id',
         domain=[],
         context={},
-        limit=None
+        limit=None,
+        track_visibility='onchange'
     )
 
     state = fields.Selection(
@@ -230,14 +241,14 @@ class AptPublicTendering(models.Model):
         ]
 
 
-    @api.multi
+    # @api.multi
     @api.depends('vacancy_position_ids')
     def compute_total_of_vacancies(self):
         """ Returns computed value for total_of_vacancies field
         """
         for record in self:
             record.total_of_vacancies = \
-                sum(record.vacancy_position_ids.mapped('total_of_vacancies'))
+                sum(record.vacancy_position_ids.mapped('quantity'))
 
 
     # ------------------------- OVERLOADED METHODS ----------------------------
@@ -247,18 +258,25 @@ class AptPublicTendering(models.Model):
         minstr = datetime.min.strftime('%Y-%m-%d %H:%M:%S')
         now = datetime.now()
 
-        announced = values.get('announcement', self.announcement) or minstr
-        approval = values.get('approval', self.approval) or minstr
-        target_date = values.get('target_date', self.target_date) or minstr
+        target_date = values.get('target_date', self.target_date)
+        approval = values.get('approval', self.approval)
+        announced = values.get('announcement', self.announcement)
 
-        print(announced, approval, target_date)
-
-        if fields.Datetime.from_string(target_date) <= now:
-            values['state'] = self.STATES[3][0]
-        elif fields.Datetime.from_string(approval) <= now:
-            values['state'] = self.STATES[2][0]
-        elif fields.Datetime.from_string(announced) <= now:
-            values['state'] = self.STATES[1][0]
+        if target_date:
+            if fields.Datetime.from_string(target_date) < now:
+                values['state'] = self.STATES[4][0]
+            else:
+                values['state'] = self.STATES[3][0]
+        elif announced:
+                if fields.Datetime.from_string(announced) <= now:
+                    values['state'] = self.STATES[2][0]
+                else:
+                    values['state'] = self.STATES[1][0]
+        elif approval:
+            if fields.Datetime.from_string(approval) <= now:
+                values['state'] = self.STATES[1][0]
+            else:
+                values['state'] = self.STATES[0][0]
         else:
             values['state'] = self.STATES[0][0]
 
@@ -277,7 +295,7 @@ class AptPublicTendering(models.Model):
         return result
 
 
-    @api.multi
+    # @api.multi
     def write(self, values):
         """ Set right state
         """
@@ -288,3 +306,9 @@ class AptPublicTendering(models.Model):
 
         return result
 
+    @api.model
+    def update_states(self):
+        if not self.env.is_admin():
+            raise AccessDenied()
+        for record in self.search([]):
+            record.write({})

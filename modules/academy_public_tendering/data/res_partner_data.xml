@@ -23,15 +23,15 @@
             <field name="vat">ESP3605700H</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_vigo_city_hall.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_vigo_city_hall.png"/>
 
         </record>
 
@@ -55,15 +55,15 @@
             <field name="vat">ESS1511001H</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_vigo_government_of_galicia.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_vigo_government_of_galicia.png"/>
 
         </record>
 
@@ -87,15 +87,15 @@
             <field name="vat">ESQ6550006H</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_galician_healthcare_service.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_galician_healthcare_service.png"/>
 
         </record>
 
@@ -114,20 +114,20 @@
 
             <field name="email">informacion.administrativa@minhap.es</field>
             <field name="phone">+34900567765</field>
-            <field name="fax">+34915958869</field>
+            <!-- <field name="fax">+34915958869</field> -->
             <field name="website">http://www.minhap.gob.es</field>
             <field name="vat">S2833002E</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_ministry_of_public_admon.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_ministry_of_public_admon.png"/>
 
         </record>
 
@@ -150,15 +150,15 @@
             <field name="vat">ESS2813001A</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_ministry_of_justice.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_ministry_of_justice.png"/>
 
         </record>
 
@@ -182,15 +182,15 @@
             <field name="vat">ESS2816015H</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_police.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_police.png"/>
 
         </record>
 
@@ -209,20 +209,20 @@
 
             <field name="email">prensa@mjusticia.es</field>
             <field name="phone">+34915146001</field>
-            <field name="fax">+34915146007</field>
+            <!-- <field name="fax">+34915146007</field> -->
             <field name="website">http://www.interior.gob.es/</field>
             <field name="vat">ESS2816003D</field>
 
             <field name="is_company" eval="True" />
-            <field name="supplier" eval="False" />
-            <field name="customer" eval="False" />
+            <!-- <field name="supplier" eval="False" /> -->
+            <!-- <field name="customer" eval="False" /> -->
             <field name="category_id" eval="[(4, ref('academy_public_tendering.res_partner_category_civil_service'))]" />
 
-            <field name="lang">es_ES</field>
+            <!-- <field name="lang">es_ES</field> -->
             <field name="type">contact</field>
             <field name="tz">Europe/Madrid</field>
 
-            <field name="image" type="base64" file="academy_public_tendering/static/src/img/res_partner_civil_guard.png"/>
+            <field name="image_128" type="base64" file="academy_public_tendering/static/src/img/res_partner_civil_guard.png"/>
 
         </record>
 

@@ -10,7 +10,7 @@ all professional.qualification attributes and behavior.
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 # pylint: disable=locally-disabled, c0103
@@ -30,7 +30,7 @@ class AcademyProfessionalQualification(models.Model):
     _name = 'academy.professional.qualification'
     _description = u'Academy professional qualification'
 
-    _inherit = ['academy.abstract.image']
+    _inherit = ['image.mixin']
 
     _rec_name = 'name'
     _order = 'name ASC'
@@ -78,7 +78,6 @@ class AcademyProfessionalQualification(models.Model):
         context={},
         auto_join=False,
         limit=None,
-        oldname='competency_unit_ids'
     )
 
 
@@ -119,7 +118,6 @@ class AcademyProfessionalQualification(models.Model):
         help='Enter new internal code',
         size=12,
         translate=True,
-        oldname='internal_code'
     )
 
     qualification_level_id = fields.Many2one(
@@ -151,7 +149,7 @@ class AcademyProfessionalQualification(models.Model):
     )
 
 
-    @api.multi
+    # @api.multi
     @api.depends('competency_unit_ids')
     def _compute_competency_unit_count(self):
         for record in self:

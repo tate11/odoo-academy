@@ -16,3 +16,6 @@ from . import academy_tests_test_question_rel
 from . import academy_tests_test
 from . import academy_tests_answers_table
 from . import academy_tests_question_impugnment
+
+from . import academy_tests_topic_training_module_link
+from . import academy_training_module

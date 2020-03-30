@@ -35,8 +35,8 @@ from logging import getLogger
 from datetime import date, time, datetime
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 # pylint: disable=locally-disabled, C0103
@@ -114,7 +114,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
     )
 
     own_sequence = fields.Integer(
-        string='Sequence',
+        string='Own sequence',
         required=True,
         readonly=False,
         index=False,
@@ -129,7 +129,6 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         index=False,
         default=False,
         help='Check it if this unit starts after previous unit is complete',
-        oldname='follow_previous'
     )
 
     start_date = fields.Date(
@@ -172,7 +171,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         selection=[
             ('next', 'Use next'),
             ('void', 'Unoccupied'),
-            ('fill', 'Occup')
+            ('fill', 'Occupy')
         ]
     )
 
@@ -214,7 +213,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
         compute=lambda self: self._compute_imparted()   # pylint: disable=locally-disabled, W0212
     )
 
-    @api.multi
+    # @api.multi
     @api.depends('training_unit_id')
     def _compute_imparted(self):
         for record in self:

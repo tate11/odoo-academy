@@ -41,7 +41,7 @@
             <field name="comment">Users who can create/edit information in all models</field>
             <field name="category_id" ref="module_category_academy"/>
             <field name="implied_ids" eval="[(4, ref('academy_group_teacher'))]"/>
-            <field name="users" eval="[(5, ref('base.user_root'))]" />
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
         </record>
 
     </data>

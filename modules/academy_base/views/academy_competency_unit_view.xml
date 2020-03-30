@@ -42,15 +42,13 @@
             <field name="arch" type="xml">
                 <form string="academy_competency_unit_form" create="1" delete="1" edit="1">
                     <sheet>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                            </button>
-                        </div>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
 
-                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                        <field name="image_128" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
 
                         <div class="oe_title">
+                            <field name="active" invisible="1"/>
                             <label for="name" class="oe_edit_only" />
                             <h1>
                                 <field name="competency_name" class="oe_field_name"
@@ -94,8 +92,8 @@
             <field name="priority" eval="16" />
             <field name="active" eval="True" />
             <field name="arch" type="xml">
-                <kanban>
-                    <field name="image_small" />
+                <kanban create="1" delete="1" edit="1">
+                    <field name="image_128" />
                     <field name="competency_name" />
                     <!-- <field name="training_unit_count" /> -->
                     <field name="hours" />
@@ -104,9 +102,9 @@
                         <t t-name="kanban-box">
                              <div class="oe_kanban_global_click oe_kanban_academy_training_module">
                                 <div class="o_kanban_image">
-                                    <img t-if="record.image_small.raw_value" t-att-src="'data:image/png;base64,'+record.image_small.raw_value"/>
-                                    <t t-if="!record.image_small.raw_value">
-                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/compentency-unit.png&quot;" class="o_kanban_image"/>
+                                    <img t-if="record.image_128.raw_value" t-att-src="'data:image/png;base64,'+record.image_128.raw_value" alt="Competency unit photo" />
+                                    <t t-if="!record.image_128.raw_value">
+                                        <img t-att-src="_s + &quot;/academy_base/static/src/img/compentency-unit.png&quot;" class="o_kanban_image" alt="Competency unit photo" />
                                     </t>
                                 </div>
                                 <div class="oe_kanban_details">
@@ -140,7 +138,7 @@
                     <filter string="By professional qualification"
                         name="competency_units_by_professional_qualification"
                         domain="[]"
-                        context="{'group_by': ['professional_qualification_id']}"
+                        context="{'group_by': 'professional_qualification_id'}"
                         help="" />
 
                     <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
@@ -155,7 +153,7 @@
             <field name="name">Competency unit</field>
             <field name="res_model">academy.competency.unit</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
+
             <field name="target">current</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>

@@ -140,7 +140,7 @@ After running the modules list update you can confirm the new modules are availa
       - Add a page or button in student form view displaying training actions
 
 
-- [] Finish custom model field
+- [ ] Finish custom model field
       - Views always should be rebuild
       - View rules should be removed on uninstall hook
 
@@ -240,6 +240,13 @@ After running the modules list update you can confirm the new modules are availa
 
 academy.tests.question.import.wizard
 
+#### Update to Odoo v13
+
+- [ ] academy_base wizards have not been tested
+- [ ] academy_base.view_academy_training_lesson_search has not been updated, 
+several lines have been commented instead
+- [ ] ERROR odoo_postal_dev odoo.osv.expression: Non-stored field 
+academy.tests.question.ir_attachment_image_ids cannot be searched 
 
 #### Create ap3_academy_tests
 

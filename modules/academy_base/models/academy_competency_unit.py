@@ -10,7 +10,7 @@ all competency.unit attributes and behavior.
 from logging import getLogger
 
 # pylint: disable=locally-disabled, E0401
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 # pylint: disable=locally-disabled, c0103
@@ -36,7 +36,7 @@ class AcademyCompetencyUnit(models.Model):
     _inherits = {'academy.training.module': 'training_module_id'}
 
     competency_name = fields.Char(
-        string='Name',
+        string='Competency name',
         required=True,
         readonly=False,
         index=True,
@@ -44,7 +44,6 @@ class AcademyCompetencyUnit(models.Model):
         help='Enter new name',
         size=100,
         translate=True,
-        oldname='name'
     )
 
     description = fields.Text(
@@ -132,7 +131,7 @@ class AcademyCompetencyUnit(models.Model):
     # )
 
 
-    # @api.multi
+    # # @api.multi
     # @api.depends('training_module_id')
     # def _compute_training_unit_count(self):
     #     for record in self:
@@ -142,7 +141,7 @@ class AcademyCompetencyUnit(models.Model):
 
     # -------------------------- OVERLOADED METHODS ---------------------------
 
-    @api.one
+    # @api.one
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         """ Prevents new record of the inherited (_inherits) model will be
