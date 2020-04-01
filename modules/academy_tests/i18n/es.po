@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 14:40+0000\n"
-"PO-Revision-Date: 2020-03-29 18:54+0200\n"
+"POT-Creation-Date: 2020-04-01 16:20+0000\n"
+"PO-Revision-Date: 2020-04-01 18:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,21 @@ msgstr ""
 "Plural-Forms: \n"
 "Language: es\n"
 "X-Generator: Poedit 2.3\n"
+
+#. module: academy_tests
+#: code:addons/academy_tests/wizard/academy_tests_question_import_wizard.py:0
+#, python-format
+msgid ""
+"\n"
+"> Optional comment for question\n"
+"Optional preamble to the question\n"
+"![Image title](image name or ID)\n"
+"1. Question text\n"
+"a) Answer 1\n"
+"b) Answer 2\n"
+"c) Answer 3\n"
+"x) Right answer\n"
+msgstr ""
 
 #. module: academy_tests
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_random_wizard_form
@@ -57,35 +72,104 @@ msgid "Academy Question Kanban"
 msgstr "Vista Kanban de preguntas"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_question_append_wizard
-msgid "Academy Tests Question Append Wizard"
-msgstr "Asistente para añadir preguntas"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_question_categorize_wizard
-msgid "Academy Tests Question Categorize Wizard"
-msgstr "Asistente para categorizar preguntas"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_question_import_wizard
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_import_form
 msgid "Academy Tests Question Import"
 msgstr "Asistente para importar preguntas"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_random_wizard
-msgid "Academy Tests Random Wizard"
-msgstr "Asistente de preguntas aleatorias"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_random_wizard_line
-msgid "Academy Tests Random Wizard Line"
-msgstr "Línea de preguntas aleatorias"
-
-#. module: academy_tests
 #: model:ir.model,name:academy_tests.model_academy_tests_random_wizard_set
 msgid "Academy Tests Random Wizard Set"
 msgstr "Conjunto de preguntas aleatorias"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_answers_table
+msgid "Academy tests, answers table entry"
+msgstr "Academy tests, entrada en la tabla de respuestas"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_question
+msgid "Academy tests, question"
+msgstr "Academy tests, pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_answer
+msgid "Academy tests, question answer"
+msgstr "Academy tests, respuesta a la pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_question_append_wizard
+msgid "Academy tests, question append wizard"
+msgstr "Academy tests, asistente para anexar preguntas"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_question_categorize_wizard
+msgid "Academy tests, question categorize wizard"
+msgstr "Academy tests, asistente para categorizar preguntas"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_category
+msgid "Academy tests, question category"
+msgstr "Academy tests, categoría de la pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_level
+msgid "Academy tests, question difficulty level"
+msgstr "Academy tests, nivel de dificultad"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_question_import_wizard
+msgid "Academy tests, question import"
+msgstr "Academy tests, importación de preguntas"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_question_impugnment
+msgid "Academy tests, question impugnment"
+msgstr "Academy tests, impugnación a la pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_tag
+msgid "Academy tests, question tag"
+msgstr "Academy tests, etiqueta de la pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_topic
+msgid "Academy tests, question topic"
+msgstr "Academy tests, tema de la pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_question_type
+msgid "Academy tests, question type"
+msgstr "Academy tests, tipo de pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_random_wizard
+msgid "Academy tests, random wizard"
+msgstr "Academy tests, asistente para test aleatorio"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_random_wizard_line
+msgid "Academy tests, random wizard line"
+msgstr "Academy tests, línea del asistente para test aleatorio"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_test
+msgid "Academy tests, test"
+msgstr "Academy tests, test"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_test_question_rel
+msgid "Academy tests, test-question relationship"
+msgstr "Academy tests, relación test-pregunta"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_tests_topic_training_module_link
+msgid "Academy tests, topic-training module link"
+msgstr "Academy tests, relación de enlace entre tema y modulo"
+
+#. module: academy_tests
+#: model:ir.model,name:academy_tests.model_academy_training_module
+msgid "Academy training module"
+msgstr "Módulo formativo"
 
 #. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_answer__message_needaction
@@ -154,11 +238,6 @@ msgid "Answers table"
 msgstr "Tabla de respuestas"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_answers_table
-msgid "Answers table entry"
-msgstr "Entrada en la tabla de respuestas"
-
-#. module: academy_tests
 #: model_terms:ir.actions.act_window,help:academy_tests.action_answers_act_window
 msgid "Answers will be shown as choice options for questions"
 msgstr "Las respuestas se mostrarán como opciones de elección para preguntas"
@@ -184,6 +263,12 @@ msgstr "Añadir"
 #: model:ir.actions.act_window,name:academy_tests.action_tests_question_append_wizard_form_act_window
 msgid "Append to test"
 msgstr "Añadir al test"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_form
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_form
+msgid "Archived"
+msgstr "Archivado"
 
 #. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_answer__message_attachment_count
@@ -221,6 +306,22 @@ msgid "Attachments needed to solve this question"
 msgstr "Adjuntos para resolver esta pregunta"
 
 #. module: academy_tests
+#: model:ir.model.fields,field_description:academy_tests.field_academy_competency_unit__available_categories_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_lesson__available_categories_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_module__available_categories_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_session_wizard_line__available_categories_ids
+msgid "Available categories"
+msgstr "Categorías disponibles"
+
+#. module: academy_tests
+#: model:ir.model.fields,field_description:academy_tests.field_academy_competency_unit__available_topic_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_lesson__available_topic_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_module__available_topic_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_session_wizard_line__available_topic_ids
+msgid "Available topics"
+msgstr "Temas disponibles"
+
+#. module: academy_tests
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_question_categorize_wizard__state__step2
 msgid "Batch"
 msgstr "Lote"
@@ -234,6 +335,7 @@ msgstr "Lote"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_random_wizard_line__category_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__category_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__category_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__category_ids
 #: model:ir.ui.menu,name:academy_tests.menu_categories
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_topic_form
 msgid "Categories"
@@ -247,6 +349,7 @@ msgstr "Las categorías se usan para agrupar preguntas interrelacionadas"
 #. module: academy_tests
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_question__category_ids
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_test_question_rel__category_ids
+#: model:ir.model.fields,help:academy_tests.field_academy_tests_topic_training_module_link__category_ids
 msgid "Categories relating to this question"
 msgstr "Categorías relacionadas con esta pregunta"
 
@@ -429,6 +532,11 @@ msgid "Choose questions to include/exclude"
 msgstr "Elegir las preguntas para incluir/excluir"
 
 #. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_training_module_form_add_test_page
+msgid "Choose related topics"
+msgstr "Selecciones los temas relacionados"
+
+#. module: academy_tests
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_import_form
 msgid "Choose required attachments"
 msgstr "Elegir los adjuntos requeridos"
@@ -472,6 +580,11 @@ msgstr "Elegir los tests a incluir/excluir"
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_form
 msgid "Choose the type for this question"
 msgstr "Elegir el tipo para esta pregunta"
+
+#. module: academy_tests
+#: model:ir.model.fields,help:academy_tests.field_academy_tests_topic_training_module_link__sequence
+msgid "Choose the unit order"
+msgstr "Seleccione el orden de las unidades"
 
 #. module: academy_tests
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_category_form
@@ -573,6 +686,7 @@ msgstr "Contenido"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__create_uid
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__create_uid
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__create_uid
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__create_uid
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_search
 msgid "Created by"
 msgstr "Creado por"
@@ -594,6 +708,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__create_date
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__create_date
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__create_date
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__create_date
 msgid "Created on"
 msgstr "Creado en"
 
@@ -668,6 +783,7 @@ msgstr "No permitir adjuntos"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__display_name
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__display_name
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__display_name
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__display_name
 msgid "Display Name"
 msgstr "Nombre para mostrar"
 
@@ -690,10 +806,16 @@ msgstr "Adjunto duplicado para el URI: %s"
 
 #. module: academy_tests
 #: code:addons/academy_tests/models/academy_tests_test_question_rel.py:0
-#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_test_question_rel_prevent_duplicate_questions
 #, python-format
 msgid "Duplicate question in test"
 msgstr "Pregunta duplicada en el test"
+
+#. module: academy_tests
+#: code:addons/academy_tests/models/academy_tests_topic_training_module_link.py:0
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_topic_training_module_link_unique_topic_id_training_module_id
+#, python-format
+msgid "Each topic can only be linked once"
+msgstr "Cada tema puede ser enlazado una sola vez"
 
 #. module: academy_tests
 #: model:academy.tests.level,name:academy_tests.academy_level_12
@@ -911,6 +1033,7 @@ msgstr "Tiene tema"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__id
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__id
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__id
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__id
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_import_form
 msgid "ID"
 msgstr "ID"
@@ -960,12 +1083,12 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
 
 #. module: academy_tests
-#: model:ir.model.fields,help:academy_tests.field_academy_tests_random_wizard_line__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_answer__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_category__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_level__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_question__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_question_impugnment__active
+#: model:ir.model.fields,help:academy_tests.field_academy_tests_random_wizard_line__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_tag__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_test__active
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_test_question_rel__active
@@ -979,6 +1102,7 @@ msgstr ""
 
 #. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__image_1920
+#: model_terms:ir.ui.view,arch_db:academy_tests.academy_post_test_question_image
 msgid "Image"
 msgstr "Imagen"
 
@@ -1008,11 +1132,6 @@ msgid "Image for this test"
 msgstr "Imagen para el test"
 
 #. module: academy_tests
-#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_form
-msgid "Related image"
-msgstr "Imagen relacionada"
-
-#. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_question__ir_attachment_image_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__ir_attachment_image_ids
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_form
@@ -1029,6 +1148,11 @@ msgstr "Imágenes necesarias para resolver esta pregunta"
 #: model:ir.actions.act_window,name:academy_tests.action_academy_tests_question_import_wizard_act_window
 msgid "Import"
 msgstr "Importar"
+
+#. module: academy_tests
+#: model:ir.ui.menu,name:academy_tests.menu_import_questions
+msgid "Import questions"
+msgstr "Importar preguntas"
 
 #. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_question_import_wizard__imported_attachment_ids
@@ -1089,6 +1213,7 @@ msgstr "Idioma"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test____last_update
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel____last_update
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic____last_update
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
 
@@ -1109,6 +1234,7 @@ msgstr "Última modificación el"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__write_uid
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__write_uid
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__write_uid
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
@@ -1129,6 +1255,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__write_date
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__write_date
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__write_date
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__write_date
 msgid "Last Updated on"
 msgstr "Ultima actualización en"
 
@@ -1165,6 +1292,34 @@ msgid "Levels are useful to establish the difficulty scale of questions"
 msgstr ""
 "Los niveles son útiles para establecer la escala de dificultad de las "
 "preguntas"
+
+#. module: academy_tests
+#: model:ir.model.fields,help:academy_tests.field_academy_competency_unit__topic_link_ids
+#: model:ir.model.fields,help:academy_tests.field_academy_training_lesson__topic_link_ids
+#: model:ir.model.fields,help:academy_tests.field_academy_training_module__topic_link_ids
+#: model:ir.model.fields,help:academy_tests.field_academy_training_session_wizard_line__topic_link_ids
+msgid "Link test topics to this module"
+msgstr "Enlazar temas de test a este módulo"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_search
+msgid "List only the own questions"
+msgstr "Listar sólo las preguntas propias"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tag_search
+msgid "List only the own tags"
+msgstr "Listar sólo las etiquetas propias"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_search
+msgid "List only the own tests"
+msgstr "Listar sólo los test propios"
+
+#. module: academy_tests
+#: model:ir.ui.menu,name:academy_tests.menu_questions
+msgid "List questions"
+msgstr "Listar preguntas"
 
 #. module: academy_tests
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_question_impugnment__description
@@ -1207,6 +1362,26 @@ msgstr "Mensaje de entrega de error"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic__message_ids
 msgid "Messages"
 msgstr "Mensajes"
+
+#. module: academy_tests
+#: model:ir.model.fields,help:academy_tests.field_academy_tests_topic_training_module_link__training_module_id
+msgid "Module will be linked to the topic"
+msgstr "El módulo será enlazado al tema"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_search
+msgid "My questions"
+msgstr "Mis preguntas"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tag_search
+msgid "My tags"
+msgstr "Mis etiquetas"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_search
+msgid "My tests"
+msgstr "Mis tests"
 
 #. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_answer__name
@@ -1422,6 +1597,11 @@ msgid "Preference order for this question"
 msgstr "Orden de preferencia para esta pregunta"
 
 #. module: academy_tests
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_test_question_rel_prevent_duplicate_questions
+msgid "Pregunta duplicada en el test"
+msgstr "Pregunta duplicada en el test"
+
+#. module: academy_tests
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_question_import_wizard__state__step1
 msgid "Prerequisites"
 msgstr "Prerrequisitos"
@@ -1453,7 +1633,6 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_question
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_answer__question_id
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_answers_table__question_id
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_question_impugnment__question_id
@@ -1476,23 +1655,7 @@ msgid "Question Categorize Wizard"
 msgstr "Asistente para categorizar preguntas"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_answer
-msgid "Question answer"
-msgstr "Respuesta para la pregunta"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_category
-msgid "Question category"
-msgstr "Categoría para la pregunta"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_level
-msgid "Question difficulty level"
-msgstr "Nivel de dificultad de la pregunta"
-
-#. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_question_impugnment_act_window
-#: model:ir.model,name:academy_tests.model_academy_tests_question_impugnment
 msgid "Question impugnment"
 msgstr "Impugnación de la pregunta"
 
@@ -1507,25 +1670,10 @@ msgid "Question sequence order"
 msgstr "Orden de secuencia de preguntas"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_tag
-msgid "Question tag"
-msgstr "Etiqueta de pregunta"
-
-#. module: academy_tests
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_answer__question_id
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_answers_table__question_id
 msgid "Question to which this answer belongs"
 msgstr "Pregunta a la que pertenece esta respuesta"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_topic
-msgid "Question topic"
-msgstr "Tema de la pregunta"
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_question_type
-msgid "Question type"
-msgstr "Tipo de pregunta"
 
 #. module: academy_tests
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_test_question_rel__question_id
@@ -1548,16 +1696,6 @@ msgstr "La pregunta estará relacionada con el test"
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_categorize_wizard_form
 msgid "Questions"
 msgstr "Preguntas"
-
-#. module: academy_tests
-#: model:ir.ui.menu,name:academy_tests.menu_questions
-msgid "List questions"
-msgstr "Listar preguntas"
-
-#. module: academy_tests
-#: model:ir.ui.menu,name:academy_tests.menu_import_questions
-msgid "Import questions"
-msgstr "Importar preguntas"
 
 #. module: academy_tests
 #: model:academy.tests.question.type,description:academy_tests.academy_tests_question_type_1
@@ -1605,6 +1743,11 @@ msgid "Random set"
 msgstr "Conjunto aleatorio"
 
 #. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_form
+msgid "Related image"
+msgstr "Imagen relacionada"
+
+#. module: academy_tests
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_question_categorize_wizard__category_action__sub
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_question_categorize_wizard__tag_action__sub
 msgid "Replace"
@@ -1627,6 +1770,7 @@ msgstr "Guardar cambios"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_category__sequence
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_level__sequence
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__sequence
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__sequence
 msgid "Sequence"
 msgstr "Secuencia"
 
@@ -1806,17 +1950,13 @@ msgid "Test to which this item belongs"
 msgstr "Prueba al cual pertenece el elemento"
 
 #. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_test_question_rel
-msgid "Test-question relationship"
-msgstr "Relación test-pregunta"
-
-#. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_tests_act_window
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_question__test_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_random_wizard_line__test_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__test_ids
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_random_wizard_line__state__step3
 #: model:ir.ui.menu,name:academy_tests.menu_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_training_module_form_add_test_page
 msgid "Tests"
 msgstr "Tests"
 
@@ -1833,11 +1973,6 @@ msgid ""
 msgstr ""
 "Los tests deben realizarse con asistentes, una vez que se haya creado un "
 "nuevo test, se podrá guardar. El test guardado se mostrará aquí."
-
-#. module: academy_tests
-#: model:ir.model,name:academy_tests.model_academy_tests_test
-msgid "Tests with several questions"
-msgstr "Pruebas con varias preguntas"
 
 #. module: academy_tests
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_answer__name
@@ -1941,6 +2076,7 @@ msgstr "Título"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_question_import_wizard__topic_id
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__topic_id
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test_question_rel__topic_id
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__topic_id
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_answers_table_qweb
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_question_search
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_kanban
@@ -1971,9 +2107,18 @@ msgid "Topic to which this question belongs"
 msgstr "Tema al que pertenece esta pregunta"
 
 #. module: academy_tests
+#: model:ir.model.fields,help:academy_tests.field_academy_tests_topic_training_module_link__topic_id
+msgid "Topic will be linked to the module"
+msgstr "El tema será enlazado al módulo"
+
+#. module: academy_tests
 #: model:ir.actions.act_window,name:academy_tests.action_topics_act_window
+#: model:ir.model.fields,field_description:academy_tests.field_academy_competency_unit__topic_link_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_random_wizard_line__topic_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__topic_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_lesson__topic_link_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_module__topic_link_ids
+#: model:ir.model.fields,field_description:academy_tests.field_academy_training_session_wizard_line__topic_link_ids
 #: model:ir.ui.menu,name:academy_tests.menu_topics
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_form
 msgid "Topics"
@@ -1992,6 +2137,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_random_wizard_line__state__step2
 msgid "Topics/Categories"
 msgstr "Temas/Categorías"
+
+#. module: academy_tests
+#: model:ir.model.fields,field_description:academy_tests.field_academy_tests_topic_training_module_link__training_module_id
+msgid "Training module"
+msgstr "Módulo formativo"
 
 #. module: academy_tests
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_question__type_id
@@ -2061,6 +2211,31 @@ msgstr "Texto mostrado antes de la pregunta"
 #: model:ir.model.fields,help:academy_tests.field_academy_tests_test__preamble
 msgid "What it is said before beginning to test"
 msgstr "Texto mostrado al principio del test"
+
+#. module: academy_tests
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_category_categoryr_by_topic_uniq
+msgid "Ya existe otra categoría con el mismo nombre en este tema"
+msgstr "Ya existe otra categoría con el mismo nombre en este tema"
+
+#. module: academy_tests
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_tag_tag_uniq
+msgid "Ya hay otra etiqueta con el mismo nombre"
+msgstr "Ya hay otra etiqueta con el mismo nombre"
+
+#. module: academy_tests
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_answer_answer_by_question_uniq
+msgid "Ya hay otra respuesta con el mismo texto"
+msgstr "Ya hay otra respuesta con el mismo texto"
+
+#. module: academy_tests
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_level_level_uniq
+msgid "Ya hay otro nivel con el mismo nombre"
+msgstr "Ya hay otro nivel con el mismo nombre"
+
+#. module: academy_tests
+#: model:ir.model.constraint,message:academy_tests.constraint_academy_tests_topic_category_uniq
+msgid "Ya hay otro tema con el mismo nombre"
+msgstr "Ya hay otro tema con el mismo nombre"
 
 #. module: academy_tests
 #: code:addons/academy_tests/wizard/academy_tests_question_categorize_wizard.py:0
@@ -2210,6 +2385,11 @@ msgstr "academy_tests_random_wizard_line_tree"
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_search
 msgid "academy_tests_search"
 msgstr "academy_tests_search"
+
+#. module: academy_tests
+#: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_topic_training_module_link_tree
+msgid "academy_tests_topic_training_module_link_tree"
+msgstr "academy_tests_topic_training_module_link_tree"
 
 #. module: academy_tests
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_tree
