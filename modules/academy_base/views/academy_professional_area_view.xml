@@ -9,7 +9,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_settings_catalog
+            - Parent menu ··: academy_base.menu_academy_settings_helper
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not professional areas in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -123,6 +123,7 @@
             <field name="sequence" eval="15" />
             <field name="action" ref="action_professional_area_act_window" />
             <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_manager'))]"/>
         </record>
 
     </data>

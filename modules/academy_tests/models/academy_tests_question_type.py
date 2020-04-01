@@ -56,7 +56,7 @@ class AcademyTestsQuestionType(models.Model):
 
 
     _name = 'academy.tests.question.type'
-    _description = u'Question type'
+    _description = u'Academy tests, question type'
 
     _rec_name = 'name'
     _order = 'name ASC'

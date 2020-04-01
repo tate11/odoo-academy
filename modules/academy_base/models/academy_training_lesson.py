@@ -63,7 +63,7 @@ attended.
 
 
     _name = 'academy.training.lesson'
-    _description = u'Academy Training Lesson'
+    _description = u'Academy training lesson'
 
     _inherits = {
         'academy.training.action' : 'training_action_id',

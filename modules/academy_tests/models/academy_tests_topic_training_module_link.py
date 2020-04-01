@@ -24,7 +24,7 @@ class AcademyTestsTopicTrainingModuleLink(models.Model):
     """
 
     _name = 'academy.tests.topic.training.module.link'
-    _description = u'Academy tests topic training module link'
+    _description = u'Academy tests, topic-training module link'
 
     _rec_name = 'topic_id'
     _order = 'topic_id ASC'

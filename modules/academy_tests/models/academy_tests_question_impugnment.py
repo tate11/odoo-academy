@@ -36,7 +36,7 @@ class AcademyTestsQuestionImpugnment(models.Model):
     """
 
     _name = 'academy.tests.question.impugnment'
-    _description = u'Question impugnment'
+    _description = u'Academy tests, question impugnment'
 
     _rec_name = 'name'
     _order = 'write_date DESC, create_date DESC'

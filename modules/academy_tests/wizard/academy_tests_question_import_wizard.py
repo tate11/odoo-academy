@@ -30,16 +30,16 @@ from odoo.exceptions import ValidationError, UserError
 _logger = getLogger(__name__)
 
 
-QUESTION_TEMPLATE = '''
-> Descripción
-Preámbulo
-![Título](ruta/imagen)
-1.- Pregunta
-a. Respuesta 1
-b. Respuesta 2
-c. Respuesta 3
-x. Respuesta correcta
-'''
+QUESTION_TEMPLATE = _('''
+> Optional comment for question
+Optional preamble to the question
+![Image title](image name or ID)
+1. Question text
+a) Answer 1
+b) Answer 2
+c) Answer 3
+x) Right answer
+''')
 
 WIZARD_STATES = [
     ('step1', 'Prerequisites'),
@@ -70,10 +70,10 @@ class AcademyTestsQuestionImport(models.TransientModel):
 
 
     _name = 'academy.tests.question.import.wizard'
-    _description = u'Academy Tests Question Import'
+    _description = u'Academy tests, question import'
 
     _rec_name = 'id'
-    _order = 'name DESC'
+    _order = 'id DESC'
 
     test_id = fields.Many2one(
         string='Test',
@@ -391,7 +391,8 @@ class AcademyTestsQuestionImport(models.TransientModel):
         """ Gets description, image, preamble, statement, and answers
         from a given group of lines
         """
-
+        
+        sequence = 0
         regex = r'((^[0-9]+\. )|(((^[a-wy-z])|(^x))\) )|(^> )|(^\!\[([^]]+)\]\(([^)]+)))?(.+)'
         flags = UNICODE|IGNORECASE
 
@@ -421,9 +422,11 @@ class AcademyTestsQuestionImport(models.TransientModel):
                     values['name'] = groups[Mi.CONTENT.value]
 
                 elif groups[Mi.ANSWER.value]:
+                    sequence = sequence + 1
                     ansvalues = {
                         'name' : groups[Mi.CONTENT.value],
-                        'is_correct' : (groups[Mi.TRUE.value] is not None)
+                        'is_correct' : (groups[Mi.TRUE.value] is not None),
+                        'sequence': sequence
                     }
                     values['answer_ids'].append((0, None, ansvalues))
 
@@ -490,16 +493,19 @@ class AcademyTestsQuestionImport(models.TransientModel):
 
     def _create_questions(self, value_set):
         question_obj = self.env['academy.tests.question']
-
+        sequence = 0
+        
         # pylint: disable=locally-disabled, W0703
         try:
             for values in value_set:
                 question_set = question_obj.create(values)
                 if self.test_id:
+                    sequence = sequence + 1
                     tvalues = {
                         'question_ids' : [(0, None, {
                             'test_id' : self.test_id.id,
-                            'question_id' : question_set.id
+                            'question_id' : question_set.id,
+                            'sequence': sequence
                         })]
                     }
                     self.test_id.write(tvalues)
@@ -544,7 +550,6 @@ class AcademyTestsQuestionImport(models.TransientModel):
         domain.append(('create_uid', '=', uid))
         order = 'create_date DESC'
         question_obj = self.env['academy.tests.question']
-        print(domain)
         question_set = question_obj.search(domain, limit=100, order=order)
 
         if question_set:

@@ -468,11 +468,9 @@ class AcademyTrainingResource(models.Model):
                 }
 
                 if not record.zip_attachment_id:
-                    print('Creating')
                     record.zip_attachment_id = \
                         record.zip_attachment_id.create(values)
                 else:
-                    print('Writing')
                     _id = record.zip_attachment_id.id
                     record.zip_attachment_id.write(values)
 
@@ -535,8 +533,6 @@ class AcademyTrainingResource(models.Model):
                 'training_action_ids' : [(6, None, self.training_action_ids._ids)],
                 'historical_ids' : [(5, None, None)],
             }
-
-            print(old_values)
 
             super(AcademyTrainingResource, self).create(old_values)
 

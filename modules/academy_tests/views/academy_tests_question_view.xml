@@ -242,6 +242,12 @@
                     <field name="name" string="Name" />
                     <field name="test_ids" string="Test" />
                     <field name="topic_id" string="Topic" />
+
+                    <filter string="My questions"
+                        name="my_questions"
+                        domain="[('create_uid', '=', uid)]"
+                        context="{}"
+                        help="List only the own questions" />
                 </search>
             </field>
         </record>
@@ -256,7 +262,7 @@
             <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
-            <field name="context">{}</field>
+            <field name="context">{"search_default_my_questions":1}</field>
             <field name="limit">24</field>
             <field name="search_view_id" ref="view_academy_question_search" />
             <field name="help" type="html">
@@ -296,10 +302,11 @@
 
         <!-- Main menu for model.name -->
         <record id="menu_questions" model="ir.ui.menu" >
-            <field name="name">Questions</field>
+            <field name="name">List questions</field>
             <field name="sequence" eval="15" />
             <field name="action" ref="action_questions_act_window" />
             <field name="parent_id" ref="academy_tests.menu_test_top" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_technical')), (4, ref('academy_base.academy_group_teacher'))]"/>
         </record>
 
 

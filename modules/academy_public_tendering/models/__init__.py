@@ -5,7 +5,6 @@
 ###############################################################################
 
 
-from . import academy_public_tendering_abstract_image
 from . import academy_public_tendering_employment_group
 from . import academy_public_tendering_exam_type
 from . import academy_public_tendering_hiring_type

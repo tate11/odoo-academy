@@ -619,7 +619,7 @@ msgid "Cartographic, Geodetic and Photogrammetric Enginee"
 msgstr "Ingeniero cartográfico, geodésico y fotogramétrico"
 
 #. module: academy_base
-#: model:ir.ui.menu,name:academy_base.menu_academy_settings_catalog
+#: model:ir.ui.menu,name:academy_base.menu_academy_catalog
 msgid "Catalog"
 msgstr "Catálogo"
 

@@ -36,7 +36,7 @@ class AcademyTestsCategory(models.Model):
     """
 
     _name = 'academy.tests.category'
-    _description = u'Question category'
+    _description = u'Academy tests, question category'
 
     _rec_name = 'name'
     _order = 'sequence ASC, name ASC'

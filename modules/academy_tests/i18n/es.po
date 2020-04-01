@@ -1543,12 +1543,21 @@ msgstr "La pregunta estará relacionada con el test"
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_tag__question_ids
 #: model:ir.model.fields,field_description:academy_tests.field_academy_tests_test__question_ids
 #: model:ir.model.fields.selection,name:academy_tests.selection__academy_tests_random_wizard_line__state__step4
-#: model:ir.ui.menu,name:academy_tests.menu_questions
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_form
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_append_wizard_form
 #: model_terms:ir.ui.view,arch_db:academy_tests.view_academy_tests_question_categorize_wizard_form
 msgid "Questions"
 msgstr "Preguntas"
+
+#. module: academy_tests
+#: model:ir.ui.menu,name:academy_tests.menu_questions
+msgid "List questions"
+msgstr "Listar preguntas"
+
+#. module: academy_tests
+#: model:ir.ui.menu,name:academy_tests.menu_import_questions
+msgid "Import questions"
+msgstr "Importar preguntas"
 
 #. module: academy_tests
 #: model:academy.tests.question.type,description:academy_tests.academy_tests_question_type_1

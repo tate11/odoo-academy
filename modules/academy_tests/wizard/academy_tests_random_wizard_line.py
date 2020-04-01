@@ -75,7 +75,7 @@ class AcademyTestsRandomWizardLine(models.Model):
 
 
     _name = 'academy.tests.random.wizard.line'
-    _description = u'Academy Tests Random Wizard Line'
+    _description = u'Academy tests, random wizard line'
 
 
     _rec_name = 'name'
@@ -625,7 +625,6 @@ class AcademyTestsRandomWizardLine(models.Model):
 
             ctx = {'sort_by_random' : True}
             result = question_obj.with_context(ctx).search(domain, limit=limit)
-            print(domain, '\n', result)
             question = question + result
 
         return question
@@ -643,10 +642,8 @@ class AcademyTestsRandomWizardLine(models.Model):
 
         if not recordset:
             result = self.create(values)
-            print('create result {}'.format(result))
         else:
             result = recordset.write(values)
-            print('write result {}'.format(result))
 
         return result
 

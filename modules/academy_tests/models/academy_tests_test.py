@@ -46,7 +46,7 @@ class AcademyTestsTest(models.Model):
     """
 
     _name = 'academy.tests.test'
-    _description = u'Tests with several questions'
+    _description = u'Academy tests, test'
 
     _rec_name = 'name'
     _order = 'write_date DESC, create_date DESC'

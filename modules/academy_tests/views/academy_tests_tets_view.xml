@@ -179,6 +179,12 @@
                     <field name="name" string="Name" />
                     <field name="topic_ids" string="Has topic" />
                     <field name="create_uid" string ="Created by" />
+
+                    <filter string="My tests"
+                        name="my_tests"
+                        domain="[('create_uid', '=', uid)]"
+                        context="{}"
+                        help="List only the own tests" />
                 </search>
             </field>
         </record>
@@ -192,7 +198,7 @@
             <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
-            <field name="context">{}</field>
+            <field name="context">{"search_default_my_tests":1}</field>
             <field name="limit">15</field>
             <field name="search_view_id" ref="view_academy_tests_search" />
             <field name="help" type="html">
@@ -211,6 +217,7 @@
             <field name="sequence" eval="10" />
             <field name="action" ref="action_tests_act_window" />
             <field name="parent_id" ref="academy_tests.menu_test_top" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_technical')), (4, ref('academy_base.academy_group_teacher'))]"/>
         </record>
 
     </data>

@@ -38,7 +38,7 @@ class AcademyTestReportTownhall(models.AbstractModel):
 
 
     _name = 'report.academy_tests_reports.view_academy_test_townhall_qweb'
-    _description = u'Academy Test Report Townhall'
+    _description = u'Academy tests, report for townhall'
 
     _model = 'academy.tests.test'
 

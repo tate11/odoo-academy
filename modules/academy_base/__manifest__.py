@@ -80,13 +80,15 @@
         'security/academy_training_activity.xml',
         'security/academy_training_action.xml',
 
-        'security/res_parter.xml',
         'security/academy_training_action_enrolment.xml',
         'security/academy_training_lesson.xml',
 
         'security/academy_teacher.xml',
         'security/academy_training_resource.xml',
         'security/academy_training_resource_file.xml',
+
+        'security/res_parter.xml',
+        'security/res_users.xml',
     ],
     'qweb': [
 

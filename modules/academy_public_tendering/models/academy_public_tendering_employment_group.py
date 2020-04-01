@@ -21,7 +21,7 @@ class AptGroup(models.Model):
     """
 
     _name = 'academy.public.tendering.employment.group'
-    _description = u'Group for vacancy position'
+    _description = u'Public tendering, employment group of vacancy position'
 
     _rec_name = 'name'
     _order = 'name ASC'

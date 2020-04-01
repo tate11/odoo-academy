@@ -59,10 +59,10 @@ class AcademyTestsRandomWizard(models.TransientModel):
 
 
     _name = 'academy.tests.random.wizard'
-    _description = u'Academy Tests Random Wizard'
+    _description = u'Academy tests, random wizard'
 
-    _rec_name = 'name'
-    _order = 'name ASC'
+    _rec_name = 'id'
+    _order = 'id DESC'
 
     _inherits = {'academy.tests.random.wizard.set': 'random_wizard_set_id'}
 
@@ -169,7 +169,7 @@ class AcademyTestsRandomWizard(models.TransientModel):
         """
 
         for record in self:
-            record.compute_last_update = self.random_wizard_template_id.write_date
+            record.last_update = self.random_wizard_template_id.write_date
 
 
     @api.onchange('random_wizard_template_id')

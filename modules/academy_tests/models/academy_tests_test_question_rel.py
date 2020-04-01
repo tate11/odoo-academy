@@ -37,7 +37,7 @@ class AcademyTestsTestQuestionRel(models.Model):
     """
 
     _name = 'academy.tests.test.question.rel'
-    _description = (u'Test-question relationship')
+    _description = u'Academy tests, test-question relationship'
 
     _inherits = {
         'academy.tests.question': 'question_id'

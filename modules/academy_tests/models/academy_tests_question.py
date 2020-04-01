@@ -45,7 +45,7 @@ class AcademyTestsQuestion(models.Model):
     """
 
     _name = 'academy.tests.question'
-    _description = u'Question'
+    _description = u'Academy tests, question'
 
     _rec_name = 'name'
     _order = 'write_date DESC, create_date DESC'
@@ -409,3 +409,19 @@ class AcademyTestsQuestion(models.Model):
             order_str = ' ORDER BY RANDOM() '
 
         return order_str
+
+
+    def write(self, values):
+        """
+            When a question is added to a test, active field is set to True
+            IMPORTANT: I don't know why Odoo performs this action
+            This method allows to users who have no access rights to link questions to tests
+
+        """
+    
+        if len(values.keys()) == 1 and 'active' in values.keys():
+            result = super(AcademyTestsQuestion, self.sudo()).write(values)
+        else:
+            result = super(AcademyTestsQuestion, self).write(values)
+    
+        return result

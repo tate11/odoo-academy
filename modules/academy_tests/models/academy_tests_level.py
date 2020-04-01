@@ -36,7 +36,7 @@ class AcademyTestsLevel(models.Model):
     """
 
     _name = 'academy.tests.level'
-    _description = u'Question difficulty level'
+    _description = u'Academy tests, question difficulty level'
 
     _rec_name = 'name'
     _order = 'sequence ASC, name ASC'

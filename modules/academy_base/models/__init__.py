@@ -6,7 +6,6 @@
 
 
 
-# from . import academy_abstract_image # Not required, it has been replaced by image.mixin
 from . import academy_abstract_observable
 
 from . import academy_training_methodology

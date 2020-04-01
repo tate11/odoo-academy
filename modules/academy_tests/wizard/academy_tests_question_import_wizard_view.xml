@@ -124,5 +124,12 @@
             <field name="binding_model_id" ref="academy_tests.model_academy_tests_question" />
         </record>
 
+        <record id="menu_import_questions" model="ir.ui.menu" >
+            <field name="name">Import questions</field>
+            <field name="sequence" eval="10" />
+            <field name="action" ref="action_academy_tests_question_import_wizard_act_window" />
+            <field name="parent_id" ref="academy_tests.menu_test_top" />
+        </record>
+
     </data>
 </openerp>

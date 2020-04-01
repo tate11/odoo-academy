@@ -37,7 +37,7 @@ class AcademyTestsTopic(models.Model):
     """
 
     _name = 'academy.tests.topic'
-    _description = u'Question topic'
+    _description = u'Academy tests, question topic'
 
     _rec_name = 'name'
     _order = 'name ASC'

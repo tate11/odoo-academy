@@ -54,8 +54,10 @@ class AcademyTestsQuestionCategorizeWizard(models.TransientModel):
 
 
     _name = 'academy.tests.question.categorize.wizard'
-    _description = u'Academy Tests Question Categorize Wizard'
+    _description = u'Academy tests, question categorize wizard'
 
+    _rec_name = 'id'
+    _order = 'id DESC'
 
     question_ids = fields.Many2many(
         string='Questions',
@@ -270,7 +272,6 @@ class AcademyTestsQuestionCategorizeWizard(models.TransientModel):
         self._validate_form(raise_error=True)
 
         values = self._get_values()
-        print(values)
 
         self.question_ids.write(values)
 

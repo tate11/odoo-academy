@@ -289,7 +289,6 @@ class AptPublicTendering(models.Model):
         """
 
         values = self._state_updated(values)
-        print(values)
         result = super(AptPublicTendering, self).create(values)
 
         return result
@@ -301,7 +300,6 @@ class AptPublicTendering(models.Model):
         """
 
         values = self._state_updated(values)
-        print(values)
         result = super(AptPublicTendering, self).write(values)
 
         return result

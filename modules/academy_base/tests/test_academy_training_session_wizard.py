@@ -54,7 +54,6 @@ class TestAcademyTrainingSessionWizard(TransactionCase):
         line_set = wizard_set.wizard_line_ids.sorted( \
             key=lambda p: (p.training_module_id.sequence, p.sequence))
 
-        print(line_set)
         line_set[0].update(values)
 
         wizard_set.training_lesson_ids.unlink()

@@ -61,7 +61,7 @@ class AcademyTrainingSessionWizard(models.TransientModel):
 
 
     _name = 'academy.training.session.wizard'
-    _description = u'Academy Training Session Wizard'
+    _description = u'Academy training session wizard'
 
     _rec_name = 'id'
     _order = 'id ASC'
@@ -890,7 +890,6 @@ class AcademyTrainingSessionWizard(models.TransientModel):
     def _process_line(self, line, last_date, to_complete):
         """ Proccess each line in wizard an creates needed sessions
         """
-        print(line.training_unit_id.name, last_date, '<-', to_complete)
 
         # STEP 1: Complete last session if there are to_complete hours
         complete = to_complete

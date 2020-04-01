@@ -10,7 +10,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_settings_catalog
+            - Parent menu ··: academy_base.menu_academy_catalog
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not training modules in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -270,7 +270,8 @@
             <field name="name">Training modules</field>
             <field name="sequence" eval="20" />
             <field name="action" ref="action_training_module_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_technical'))]"/>
         </record>
 
 
@@ -383,7 +384,8 @@
             <field name="name">Training units</field>
             <field name="sequence" eval="20" />
             <field name="action" ref="action_training_module_units_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_catalog" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_technical'))]"/>
         </record>
 
 

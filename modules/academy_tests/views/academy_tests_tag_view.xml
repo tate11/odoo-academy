@@ -69,7 +69,12 @@
             <field name="arch" type="xml">
                 <search string="academy_tag_search">
                     <field name="name" string="Name" />
-                    <!-- ··· -->
+                    
+                    <filter string="My tags"
+                        name="my_tags"
+                        domain="[('create_uid', '=', uid)]"
+                        context="{}"
+                        help="List only the own tags" />
                 </search>
             </field>
         </record>
@@ -83,7 +88,7 @@
             <!-- <field name="view_type">form</field> -->
             <field name="target">current</field>
             <field name="domain">[]</field>
-            <field name="context">{}</field>
+            <field name="context">{"search_default_my_tags":1}</field>
             <field name="search_view_id" ref="view_academy_tag_search" />
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -101,6 +106,7 @@
             <field name="sequence" eval="10" />
             <field name="action" ref="action_tags_act_window" />
             <field name="parent_id" ref="menu_test_settings_top" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_technical')), (4, ref('academy_base.academy_group_teacher'))]"/>
         </record>
 
     </data>

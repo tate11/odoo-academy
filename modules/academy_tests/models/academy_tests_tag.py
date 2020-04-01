@@ -36,7 +36,7 @@ class AcademyTestsTag(models.Model):
     """
 
     _name = 'academy.tests.tag'
-    _description = u'Question tag'
+    _description = u'Academy tests, question tag'
 
     _rec_name = 'name'
     _order = 'name ASC'

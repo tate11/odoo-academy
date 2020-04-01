@@ -24,7 +24,7 @@ class AcademyTrainingActionEnrolment(models.Model):
     """
 
     _name = 'academy.training.action.enrolment'
-    _description = u'Academy action enrolment'
+    _description = u'Academy training action enrolment'
 
     _rec_name = 'code'
     _order = 'code ASC'

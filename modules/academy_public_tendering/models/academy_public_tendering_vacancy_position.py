@@ -22,7 +22,7 @@ class AptVacancyPosition(models.Model):
     """
 
     _name = 'academy.public.tendering.vacancy.position'
-    _description = u'Vacancy position'
+    _description = u'Public tendering, vacancy position'
 
     _rec_name = 'name'
     _order = 'name ASC'

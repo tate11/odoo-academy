@@ -77,7 +77,7 @@ class AcademyTrainingSessionWizardLine(models.TransientModel):
 
 
     _name = 'academy.training.session.wizard.line'
-    _description = u'Academy Training Session Wizard Line'
+    _description = u'Academy training session wizard line'
 
     _inherits = {'academy.training.module': 'training_unit_id'}
 

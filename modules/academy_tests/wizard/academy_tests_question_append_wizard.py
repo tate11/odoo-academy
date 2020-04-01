@@ -28,8 +28,10 @@ class Nameofmodel(models.TransientModel):
 
 
     _name = 'academy.tests.question.append.wizard'
-    _description = u'Academy Tests Question Append Wizard'
+    _description = u'Academy tests, question append wizard'
 
+    _rec_name = 'id'
+    _order = 'id DESC'
 
     test_id = fields.Many2one(
         string='Test',

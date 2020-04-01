@@ -101,6 +101,7 @@
           <field name="sequence" eval="30" />
           <field name="action" ref="action_application_scope_act_window" />
           <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
+          <field name="groups_id" eval="[(4, ref('academy_base.academy_group_manager'))]"/>
       </record>
     </data>
 </openerp>

@@ -24,7 +24,7 @@ class AcademyPublicTenderingVacancyPositionType(models.Model):
     """
 
     _name = 'academy.public.tendering.vacancy.position.type'
-    _description = u'Academy public tendering vacancy position type'
+    _description = u'Public tendering, vacancy position type'
 
     _rec_name = 'name'
     _order = 'name ASC'

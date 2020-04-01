@@ -21,7 +21,7 @@ class AptKind(models.Model):
     """
 
     _name = 'academy.public.tendering.exam.type'
-    _description = u'Kind for vacancy position'
+    _description = u'Public tendering, kind of vacancy position'
 
     _rec_name = 'name'
     _order = 'name ASC'

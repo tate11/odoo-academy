@@ -18,7 +18,7 @@
                     <div class="ir-attachment-image-ids row">
                         <div class="col-xs-12">
                             <figure class="ir-attachment-image">
-                                <span t-field="ir_attachment_image_id.datas" t-field-options='{"widget": "image"}'/>
+                                <img t-attf-src="/web/image/{{ ir_attachment_image_id.id }}" alt="Image" class="o_attachment_image"/>
                                 <figcaption class="figure-caption ir-attachment-image-name"
                                     t-attf-title="{{ ir_attachment_image_id.name }}">
                                     <t t-esc="ir_attachment_image_id.name" />

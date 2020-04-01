@@ -33,14 +33,14 @@
             <field name="name">Technical</field>
             <field name="comment">Users who can read and manage full catalog, create/edit training actions and assign to them teachers or consultants</field>
             <field name="category_id" ref="module_category_academy"/>
-            <field name="implied_ids" eval="[(4, ref('academy_group_consultant'))]"/>
+            <field name="implied_ids" eval="[(4, ref('academy_group_teacher')), (4, ref('base.group_partner_manager'))]"/>
         </record>
 
         <record id="academy_group_manager" model="res.groups">
             <field name="name">Manager</field>
             <field name="comment">Users who can create/edit information in all models</field>
             <field name="category_id" ref="module_category_academy"/>
-            <field name="implied_ids" eval="[(4, ref('academy_group_teacher'))]"/>
+            <field name="implied_ids" eval="[(4, ref('academy_group_technical'))]"/>
             <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
         </record>
 

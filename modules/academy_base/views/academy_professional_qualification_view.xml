@@ -9,7 +9,7 @@
             - _rec_name·····: name
             - Domain········: []
             - Context·······: {}
-            - Parent menu ··: academy_base.menu_academy_catalog
+            - Parent menu ··: academy_base.menu_academy_settings_helper
             - View priority·: 16    Sequence····: 10
             - Action help···: There are not professional qualifications in catalog
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -199,7 +199,8 @@
             <field name="name">Professional qualifications</field>
             <field name="sequence" eval="30" />
             <field name="action" ref="action_professional_qualification_act_window" />
-            <field name="parent_id" ref="academy_base.menu_academy_settings_catalog" />
+            <field name="parent_id" ref="academy_base.menu_academy_settings_helper" />
+            <field name="groups_id" eval="[(4, ref('academy_base.academy_group_manager'))]"/>
         </record>
 
     </data>

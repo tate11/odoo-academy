@@ -40,7 +40,7 @@ class AcademyTestsAnswersTable(models.Model):
     """
 
     _name = 'academy.tests.answers.table'
-    _description = u'Answers table entry'
+    _description = u'Academy tests, answers table entry'
 
     _rec_name = 'name'
     _order = 'sequence ASC, id ASC'

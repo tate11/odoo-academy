@@ -21,7 +21,7 @@ class AptClass(models.Model):
     """
 
     _name = 'academy.public.tendering.hiring.type'
-    _description = u'Class of public employee'
+    _description = u'Public tendering, hiring type of public employee'
 
     _rec_name = 'name'
     _order = 'name ASC'

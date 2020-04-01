@@ -56,7 +56,7 @@ class AcademyTeacher(models.Model):
 
 
     _name = 'academy.teacher'
-    _description = u'Academy Teacher'
+    _description = u'Academy teacher'
 
     _rec_name = 'name'
     _order = 'name ASC'
